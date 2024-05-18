@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "fiercedecoration:block/fake_hopper"
+    },
+    "facing=east": {
+      "model": "fiercedecoration:block/fake_hopper_side",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fiercedecoration:block/fake_hopper_side"
+    },
+    "facing=south": {
+      "model": "fiercedecoration:block/fake_hopper_side",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fiercedecoration:block/fake_hopper_side",
+      "y": 270
+    }
+  }
+}

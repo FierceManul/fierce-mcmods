@@ -1,0 +1,52 @@
+package net.fiercemanul.fiercesource.world.level.block.entity;
+
+import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.capabilities.IManaStorage;
+import net.fiercemanul.fiercesource.capabilities.ManaCapabilities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import org.jetbrains.annotations.Nullable;
+
+
+public class CreativeManaOutputBlockEntity extends BlockEntity {
+
+
+    @Nullable
+    private BlockCapabilityCache<IManaStorage, @Nullable Direction> cache;
+
+    public CreativeManaOutputBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get(), pPos, pBlockState);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        newCache();
+    }
+
+    private void newCache() {
+        if (level instanceof ServerLevel serverLevel) {
+            Direction direction = getBlockState().getValue(BlockStateProperties.FACING);
+            cache = BlockCapabilityCache.create(
+                    ManaCapabilities.BLOCK,
+                    serverLevel,
+                    getBlockPos().relative(direction),
+                    direction.getOpposite(),
+                    () -> !isRemoved(),
+                    () -> {}
+            );
+        }
+    }
+
+    public void tick() {
+        if (cache == null) return;
+        IManaStorage manaStorage = cache.getCapability();
+        if (manaStorage != null) manaStorage.receiveMana(Long.MAX_VALUE, false);
+    }
+
+}

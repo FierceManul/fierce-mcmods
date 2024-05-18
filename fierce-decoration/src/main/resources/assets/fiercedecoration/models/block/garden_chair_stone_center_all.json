@@ -1,0 +1,8 @@
+{
+	"parent": "fiercedecoration:block/garden_chair_stone_center",
+	"textures": {
+		"top": "#all",
+		"side": "#all",
+		"bottom": "#all"
+	}
+}

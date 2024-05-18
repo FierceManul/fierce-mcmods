@@ -1,0 +1,8 @@
+{
+	"parent": "fiercedecoration:block/lamp_in_glass_inventory",
+	"textures": {
+		"lamp_side": "#all",
+		"lamp_top": "#all",
+		"lamp_bottom": "#all"
+	}
+}

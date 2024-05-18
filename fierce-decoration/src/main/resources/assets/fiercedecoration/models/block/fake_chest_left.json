@@ -1,0 +1,35 @@
+{
+	"ambientocclusion": false,
+	"parent": "minecraft:block/block",
+	"textures": {
+		"north": "fiercedecoration:block/fake_chest_left_north",
+		"south": "fiercedecoration:block/fake_chest_left_south",
+		"west": "fiercedecoration:block/fake_chest_single_west",
+		"particle": "fiercedecoration:block/fake_chest_left_up",
+		"up": "fiercedecoration:block/fake_chest_left_up",
+		"down": "fiercedecoration:block/fake_chest_left_down"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [16, 14, 15],
+			"faces": {
+				"north": {"uv": [0, 2, 15, 16], "texture": "#north"},
+				"south": {"uv": [1, 2, 16, 16], "texture": "#south"},
+				"west": {"uv": [1, 2, 15, 16], "texture": "#west"},
+				"up": {"uv": [1, 1, 16, 15], "texture": "#up"},
+				"down": {"uv": [1, 1, 16, 15], "texture": "#down", "cullface": "down"}
+			}
+		},
+		{
+			"from": [15, 7, 0],
+			"to": [16, 11, 1],
+			"faces": {
+				"north": {"uv": [0, 5, 1, 9], "texture": "#north", "cullface": "north"},
+				"west": {"uv": [0, 5, 1, 9], "texture": "#north"},
+				"up": {"uv": [0, 5, 1, 6], "rotation": 180, "texture": "#north"},
+				"down": {"uv": [0, 8, 1, 9], "rotation": 180, "texture": "#north"}
+			}
+		}
+	]
+}

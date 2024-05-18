@@ -1,0 +1,48 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#top"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#side", "cullface": "south"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 8, 13],
+			"to": [16, 19, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 11], "texture": "#top"},
+				"east": {"uv": [0, 0, 11, 3], "rotation": 90, "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 11], "texture": "#bottom"},
+				"up": {"uv": [0, 0, 16, 3], "texture": "#side", "cullface": "up"}
+			}
+		},
+		{
+			"from": [0, 8, 10],
+			"to": [15, 16, 13],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0, 8, 10]},
+			"faces": {
+				"north": {"uv": [1, 4, 16, 12], "texture": "#top"},
+				"east": {"uv": [4, 0, 12, 3], "rotation": 90, "texture": "#side"}
+			}
+		},
+		{
+			"from": [14, 8, 0],
+			"to": [16, 13, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 5], "texture": "#side", "cullface": "north"},
+				"east": {"uv": [3, 0, 16, 5], "texture": "#side", "cullface": "east"},
+				"west": {"uv": [0, 0, 13, 5], "texture": "#side"},
+				"up": {"uv": [14, 0, 16, 13], "texture": "#top"}
+			}
+		}
+	]
+}

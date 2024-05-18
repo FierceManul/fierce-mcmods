@@ -1,0 +1,32 @@
+{
+	"parent": "fiercecraft:block/model",
+	"render_type": "minecraft:translucent",
+	"textures": {
+		"particle": "block/glass",
+		"glass": "block/glass"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 13],
+			"to": [16, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 3, 16], "texture": "#glass", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#glass"},
+				"west": {"uv": [13, 0, 16, 16], "texture": "#glass", "cullface": "west"},
+				"up": {"uv": [0, 13, 16, 16], "texture": "#glass", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 3], "texture": "#glass", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 0, 10],
+			"to": [16, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#glass", "cullface": "north"},
+				"east": {"uv": [13, 0, 16, 16], "texture": "#glass", "cullface": "east"},
+				"west": {"uv": [0, 0, 3, 16], "texture": "#glass", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 3], "texture": "#glass", "cullface": "up"},
+				"down": {"uv": [0, 13, 16, 16], "texture": "#glass", "cullface": "down"}
+			}
+		}
+	]
+}

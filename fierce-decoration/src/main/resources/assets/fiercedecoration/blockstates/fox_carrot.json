@@ -1,0 +1,92 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age0"
+      },
+      "when": {
+        "age": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age1"
+      },
+      "when": {
+        "age": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age2"
+      },
+      "when": {
+        "age": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age3"
+      },
+      "when": {
+        "age": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age4"
+      },
+      "when": {
+        "age": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age5"
+      },
+      "when": {
+        "age": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age6"
+      },
+      "when": {
+        "age": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot_age7"
+      },
+      "when": {
+        "age": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot0"
+      },
+      "when": {
+        "age": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot1"
+      },
+      "when": {
+        "age": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fox_carrot2"
+      },
+      "when": {
+        "age": "5|6|7"
+      }
+    }
+  ]
+}

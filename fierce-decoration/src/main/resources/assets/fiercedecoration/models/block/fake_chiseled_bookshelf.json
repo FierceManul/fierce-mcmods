@@ -1,0 +1,9 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"top": "minecraft:block/chiseled_bookshelf_top",
+		"side": "minecraft:block/chiseled_bookshelf_side",
+		"front": "minecraft:block/chiseled_bookshelf_empty",
+		"particle": "minecraft:block/chiseled_bookshelf_top"
+	}
+}

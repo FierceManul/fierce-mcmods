@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "fiercedecoration:item/fox_carrot_seeds"
+	}
+}

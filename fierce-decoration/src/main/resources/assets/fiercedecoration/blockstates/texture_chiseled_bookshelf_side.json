@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "fiercedecoration:block/texture_chiseled_bookshelf_side"
+    },
+    "axis=z": {
+      "model": "fiercedecoration:block/texture_chiseled_bookshelf_side",
+      "y": 90
+    }
+  }
+}

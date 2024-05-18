@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercecraft:block/soul_crystal_medium"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercecraft:block/soul_crystal_medium_base"
+      }
+    }
+  ]
+}

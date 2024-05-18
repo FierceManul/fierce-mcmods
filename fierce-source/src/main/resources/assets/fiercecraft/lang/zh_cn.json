@@ -1,0 +1,15 @@
+{
+  "block.fiercecraft.soul_crystal_small": "小型灵魂水晶",
+  "block.fiercecraft.soul_crystal_medium": "中型灵魂水晶",
+  "block.fiercecraft.soul_crystal_large": "大型灵魂水晶",
+  "block.fiercecraft.creative_mana_block": "创造魔能方块",
+  "block.fiercecraft.creative_mana_output": "创造魔能输出器",
+  "block.fiercecraft.world_locator": "世界定位锚",
+  "item.fiercecraft.soul_crystal_shard": "灵魂水晶碎片",
+  "item.fiercecraft.pos_recorder": "坐标记录器",
+  "item.fiercecraft.claw_hammer": "羊角锤",
+  "item.fiercecraft.netherite_claw_hammer": "下界合金羊角锤",
+  "item.fiercecraft.crowbar": "撬棒",
+  "item.fiercecraft.netherite_crowbar": "下界合金撬棒",
+  "itemGroup.fiercecraft": "狂野工艺"
+}

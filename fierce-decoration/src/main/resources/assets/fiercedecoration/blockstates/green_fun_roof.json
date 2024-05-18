@@ -1,0 +1,47 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercedecoration:block/green_fun_roof_a"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "fiercedecoration:block/green_fun_roof_b",
+          "weight": 3
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_b",
+          "y": 90,
+          "weight": 3
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_b",
+          "y": 180,
+          "weight": 3
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_b",
+          "y": 270,
+          "weight": 3
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_c"
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_c",
+          "y": 90
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_c",
+          "y": 180
+        },
+        {
+          "model": "fiercedecoration:block/green_fun_roof_c",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}

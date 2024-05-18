@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "fiercedecoration:block/texture_composter_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "fiercedecoration:block/texture_composter_bottom"
+    },
+    "axis=z": {
+      "model": "fiercedecoration:block/texture_composter_bottom",
+      "x": 90
+    }
+  }
+}

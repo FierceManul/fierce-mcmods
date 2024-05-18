@@ -1,0 +1,50 @@
+{
+	"parent": "fiercecraft:block/model",
+	"textures": {
+		"particle": "fiercedecoration:block/smooth_glowstone",
+		"tube": "fiercedecoration:block/smooth_glowstone",
+		"iron": "fiercecraft:block/black_iron"
+	},
+	"elements": [
+		{
+			"from": [1, 7, 14],
+			"to": [15, 9, 16],
+			"faces": {
+				"north": {"uv": [1, 7, 15, 9], "texture": "#tube"},
+				"east": {"uv": [1, 7, 3, 9], "texture": "#tube"},
+				"south": {"uv": [1, 7, 15, 9], "texture": "#tube", "cullface": "south"},
+				"west": {"uv": [13, 7, 15, 9], "texture": "#tube"},
+				"up": {"uv": [1, 7, 15, 9], "texture": "#tube"},
+				"down": {"uv": [1, 7, 15, 9], "texture": "#tube"}
+			}
+		},
+		{
+			"from": [0, 7, 15],
+			"to": [1, 9, 16],
+			"faces": {
+				"north": {"uv": [15, 7, 16, 9], "texture": "#iron"},
+				"south": {"uv": [0, 7, 1, 9], "texture": "#iron", "cullface": "south"},
+				"west": {"uv": [15, 7, 16, 9], "texture": "#iron", "cullface": "west"},
+				"up": {"uv": [0, 15, 1, 16], "texture": "#iron"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#iron"}
+			}
+		},
+		{
+			"from": [15, 7, 15],
+			"to": [16, 9, 16],
+			"faces": {
+				"north": {"uv": [0, 7, 1, 9], "texture": "#iron"},
+				"east": {"uv": [0, 7, 1, 9], "texture": "#iron", "cullface": "east"},
+				"south": {"uv": [15, 7, 16, 9], "texture": "#iron", "cullface": "south"},
+				"up": {"uv": [15, 15, 16, 16], "texture": "#iron"},
+				"down": {"uv": [15, 0, 16, 1], "texture": "#iron"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 0, -12.75],
+			"scale": [0.8, 0.8, 0.8]
+		}
+	}
+}

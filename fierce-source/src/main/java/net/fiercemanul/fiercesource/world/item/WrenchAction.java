@@ -1,0 +1,95 @@
+package net.fiercemanul.fiercesource.world.item;
+
+import net.fiercemanul.fiercesource.tags.FSItemTags;
+import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.BlockHitResult;
+
+import java.util.Collections;
+import java.util.List;
+
+public class WrenchAction {
+
+
+    /**
+     * @return 成功?
+     */
+    public static <T extends Comparable<T>> boolean doDefaultWrenchAction(Property<T> property, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand) {
+        if (notWrench(pPlayer, pHand)) return false;
+        if (pPlayer.isCrouching()) return wrenchDismantle(pState, pLevel, pPos, pPlayer, pHand);
+        else return pLevel.setBlock(
+                pPos, pState.setValue(property, Util.findNextInIterable(property.getPossibleValues(), pState.getValue(property))), 11);
+    }
+
+    /**
+     * @return 成功?
+     */
+    public static boolean doWrenchAction(BooleanProperty property, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand) {
+        if (notWrench(pPlayer, pHand)) return false;
+        if (pPlayer.isCrouching()) return wrenchDismantle(pState, pLevel, pPos, pPlayer, pHand);
+        else return pLevel.setBlock(pPos, pState.setValue(property, !pState.getValue(property)), 11);
+    }
+
+
+    /**
+     * 扳手拆除
+     */
+    public static boolean doWrenchDismantleAction(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand) {
+        if (notWrench(pPlayer, pHand)) return false;
+        if (pPlayer.isCrouching()) return wrenchDismantle(pState, pLevel, pPos, pPlayer, pHand);
+        return false;
+    }
+
+    public static boolean wrenchDismantle(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand) {
+        List<ItemStack> items = Collections.emptyList();
+        if (pLevel instanceof ServerLevel serverLevel) {
+            items = Block.getDrops(pState, serverLevel, pPos, pLevel.getBlockEntity(pPos), pPlayer, pPlayer.getItemInHand(pHand));
+        }
+        if (pLevel.destroyBlock(pPos, false, pPlayer)) {
+            items.forEach(pPlayer::addItem);
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * 扳手调整六向开关
+     */
+    public static boolean doWrenchConnectAction(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, float apothem, BlockHitResult pHit) {
+        if (notWrench(pPlayer, pHand)) return false;
+        if (pPlayer.isCrouching()) return wrenchDismantle(pState, pLevel, pPos, pPlayer, pHand);
+        else {
+            BooleanProperty property = BlockUtils.getInteractionDirectionProperty(
+                    apothem, pHit.getLocation().subtract(pPos.getX(), pPos.getY(), pPos.getZ()), PipeBlock.PROPERTY_BY_DIRECTION.get(pHit.getDirection()));
+            return pLevel.setBlock(pPos, pState.setValue(property, !pState.getValue(property)), 11);
+        }
+    }
+
+    /**
+     * 扳手调整机器面
+     */
+    public static boolean doWrenchMachineAction(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (notWrench(pPlayer, pHand)) return false;
+        if (pPlayer.isCrouching()) return wrenchDismantle(pState, pLevel, pPos, pPlayer, pHand);
+        else {
+            BooleanProperty property = PipeBlock.PROPERTY_BY_DIRECTION.get(pHit.getDirection());
+            return pLevel.setBlock(pPos, pState.setValue(property, !pState.getValue(property)), 11);
+        }
+    }
+
+    private static boolean notWrench(Player pPlayer, InteractionHand pHand) {
+        return pPlayer.getItemInHand(pHand).getTags().noneMatch(tagKey -> tagKey.equals(FSItemTags.WRENCH_ITEM));
+    }
+}

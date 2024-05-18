@@ -1,0 +1,33 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "minecraft:block/glass",
+		"iron": "fiercecraft:block/black_iron"
+	},
+	"elements": [
+		{
+			"from": [3, 3, 3],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#lamp_side"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#lamp_side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#lamp_side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#lamp_side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#lamp_top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#lamp_bottom"}
+			}
+		},
+		{
+			"from": [6, -0.75, 6],
+			"to": [10, 3.25, 10],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [6, 6, 10, 10], "texture": "#iron"},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#iron"},
+				"south": {"uv": [6, 6, 10, 10], "texture": "#iron"},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#iron"},
+				"down": {"uv": [6, 6, 10, 10], "texture": "#iron", "cullface": "down"}
+			}
+		}
+	]
+}

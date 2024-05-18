@@ -1,0 +1,27 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "fiercecraft:block/world_locator",
+		"all": "fiercecraft:block/world_locator"
+	},
+	"elements": [
+		{
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#all"},
+				"east": {"uv": [0, 5, 6, 11], "texture": "#all"},
+				"south": {"uv": [5, 0, 11, 6], "texture": "#all"},
+				"west": {"uv": [5, 5, 11, 11], "texture": "#all"},
+				"up": {"uv": [10, 0, 16, 6], "texture": "#all"},
+				"down": {"uv": [10, 5, 16, 11], "texture": "#all"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [ 30, 225, 0 ],
+			"scale":[ 1, 1, 1 ]
+		}
+	}
+}

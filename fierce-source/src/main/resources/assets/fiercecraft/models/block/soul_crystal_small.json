@@ -1,0 +1,21 @@
+{
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:translucent",
+	"textures": {
+		"particle": "fiercecraft:block/soul_crystal_small",
+		"all": "fiercecraft:block/soul_crystal_small"
+	},
+	"elements": [
+		{
+			"from": [7, 1, 7],
+			"to": [9, 7, 9],
+			"faces": {
+				"north": {"uv": [0, 2, 2, 8], "texture": "#all"},
+				"east": {"uv": [2, 2, 4, 8], "texture": "#all"},
+				"south": {"uv": [4, 2, 6, 8], "texture": "#all"},
+				"west": {"uv": [6, 2, 8, 8], "texture": "#all"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#all"}
+			}
+		}
+	]
+}

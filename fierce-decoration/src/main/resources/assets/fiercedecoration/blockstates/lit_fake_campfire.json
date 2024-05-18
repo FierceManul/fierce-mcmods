@@ -1,0 +1,26 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fake_campfire_b"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fake_campfire_a"
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fake_campfire_a",
+        "y": 90
+      },
+      "when": {
+        "axis": "z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "fiercedecoration:block/fake_campfire_a_template",
+  "textures": {
+    "lit_log": "minecraft:block/soul_campfire_log_lit"
+  }
+}

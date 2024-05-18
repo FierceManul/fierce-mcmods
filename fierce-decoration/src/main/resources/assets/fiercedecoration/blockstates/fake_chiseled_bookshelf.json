@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fiercedecoration:block/fake_chiseled_bookshelf",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fiercedecoration:block/fake_chiseled_bookshelf"
+    },
+    "facing=south": {
+      "model": "fiercedecoration:block/fake_chiseled_bookshelf",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fiercedecoration:block/fake_chiseled_bookshelf",
+      "y": 270
+    }
+  }
+}

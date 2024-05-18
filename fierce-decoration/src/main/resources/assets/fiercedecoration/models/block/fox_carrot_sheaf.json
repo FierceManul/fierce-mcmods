@@ -1,0 +1,21 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "fiercedecoration:block/fox_carrot_sheaf",
+		"all": "fiercedecoration:block/fox_carrot_sheaf"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 10, 12],
+			"faces": {
+				"north": {"uv": [0, 6, 8, 16], "texture": "#all"},
+				"east": {"uv": [0, 6, 8, 16], "texture": "#all"},
+				"south": {"uv": [0, 6, 8, 16], "texture": "#all"},
+				"west": {"uv": [0, 6, 8, 16], "texture": "#all"},
+				"up": {"uv": [8, 0, 16, 8], "texture": "#all"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "#all"}
+			}
+		}
+	]
+}

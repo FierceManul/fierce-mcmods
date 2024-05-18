@@ -1,0 +1,8 @@
+{
+	"parent": "fiercedecoration:block/one_cut_block_horizontal",
+	"textures": {
+		"side": "#all",
+		"top": "#all",
+		"bottom": "#all"
+	}
+}

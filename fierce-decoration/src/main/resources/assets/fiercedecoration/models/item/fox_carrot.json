@@ -1,0 +1,53 @@
+{
+	"textures": {
+		"particle": "fiercedecoration:item/fox_carrot",
+		"all": "fiercedecoration:item/fox_carrot"
+	},
+	"elements": [
+		{
+			"from": [6, 4, 6],
+			"to": [10, 14, 10],
+			"faces": {
+				"north": {"uv": [6, 2, 10, 12], "texture": "#all"},
+				"east": {"uv": [6, 2, 10, 12], "texture": "#all"},
+				"south": {"uv": [6, 2, 10, 12], "texture": "#all"},
+				"west": {"uv": [6, 2, 10, 12], "texture": "#all"},
+				"up": {"uv": [10, 0, 14, 4], "texture": "#all"},
+				"down": {"uv": [6, 12, 10, 16], "texture": "#all"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [28, 45, 0],
+			"translation": [0, 2, 1.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [28, 45, 0],
+			"translation": [0, 2, 1.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"ground": {
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"gui": {
+			"rotation": [30, 45, 0]
+		},
+		"head": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 8, 0]
+		},
+		"fixed": {
+			"translation": [0, 0, -1]
+		}
+	}
+}

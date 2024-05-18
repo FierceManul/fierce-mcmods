@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minecraft:block/blast_furnace",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "minecraft:block/blast_furnace"
+    },
+    "facing=south": {
+      "model": "minecraft:block/blast_furnace",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft:block/blast_furnace",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/cube_bottom_top",
+	"textures": {
+		"side": "fiercedecoration:block/fox_carrot_basket_side",
+		"top": "fiercedecoration:block/fox_carrot_basket_top",
+		"bottom": "fiercedecoration:block/fox_carrot_basket_bottom"
+	}
+}

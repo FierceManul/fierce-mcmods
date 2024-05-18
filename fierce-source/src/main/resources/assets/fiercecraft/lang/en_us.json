@@ -1,0 +1,15 @@
+{
+  "block.fiercecraft.soul_crystal_small": "Small Soul Crystal",
+  "block.fiercecraft.soul_crystal_medium": "Medium Soul Crystal",
+  "block.fiercecraft.soul_crystal_large": "Large Soul Crystal",
+  "block.fiercecraft.creative_mana_block": "Creative Mana Block",
+  "block.fiercecraft.creative_mana_output": "Creative Mana Output",
+  "block.fiercecraft.world_locator": "World Locator",
+  "item.fiercecraft.soul_crystal_shard": "Soul Crystal Shard",
+  "item.fiercecraft.pos_recorder": "Pos Recorder",
+  "item.fiercecraft.claw_hammer": "Claw Hammer",
+  "item.fiercecraft.netherite_claw_hammer": "Netherite Claw Hammer",
+  "item.fiercecraft.crowbar": "Crowbar",
+  "item.fiercecraft.netherite_crowbar": "Netherite Crowbar",
+  "itemGroup.fiercecraft": "Fierce Craft"
+}

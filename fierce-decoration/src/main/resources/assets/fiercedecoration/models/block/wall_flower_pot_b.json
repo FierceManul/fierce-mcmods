@@ -1,0 +1,8 @@
+{
+	"parent": "fiercedecoration:block/wall_flower_pot",
+	"textures": {
+		"plant_a": "minecraft:block/lily_of_the_valley",
+		"plant_b": "minecraft:block/cornflower",
+		"plant_c": "minecraft:block/oxeye_daisy"
+	}
+}

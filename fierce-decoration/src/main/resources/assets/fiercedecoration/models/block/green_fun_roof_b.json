@@ -1,0 +1,38 @@
+{
+    "parent": "minecraft:block/block",
+    "render_type": "minecraft:cutout_mipped",
+    "textures": {
+        "particle": "minecraft:block/oak_log",
+        "all": "minecraft:block/azalea_leaves"
+    },
+    "elements": [
+        {
+            "from": [0, 4, 0],
+            "to": [16, 5, 16],
+            "faces": {
+                "north": {"uv": [0, 11, 16, 12], "texture": "#all", "cullface": "north"},
+                "east": {"uv": [0, 11, 16, 12], "texture": "#all", "cullface": "east"},
+                "south": {"uv": [0, 11, 16, 12], "texture": "#all", "cullface": "south"},
+                "west": {"uv": [0, 11, 16, 12], "texture": "#all", "cullface": "west"},
+                "up": {"uv": [0, 0, 16, 16], "texture": "#all"},
+                "down": {"uv": [0, 0, 16, 16], "texture": "#all", "cullface": "down"}
+            }
+        },
+        {
+            "from": [0, -2, 8],
+            "to": [16, 4, 8],
+            "faces": {
+                "north": {"uv": [0, 10, 16, 16], "texture": "#all", "cullface": "down"},
+                "south": {"uv": [0, 10, 16, 16], "texture": "#all", "cullface": "down"}
+            }
+        },
+        {
+            "from": [8, -2, 0],
+            "to": [8, 4, 16],
+            "faces": {
+                "east": {"uv": [0, 0, 16, 6], "texture": "#all", "cullface": "down"},
+                "west": {"uv": [0, 0, 16, 6], "texture": "#all", "cullface": "down"}
+            }
+        }
+    ]
+}
