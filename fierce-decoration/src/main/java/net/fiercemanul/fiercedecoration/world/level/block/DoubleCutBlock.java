@@ -4,9 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
 import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -260,12 +262,13 @@ public class DoubleCutBlock extends ModelBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("fiercedecoration.tip.snake_vertical"));
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTootipComponents, TooltipFlag pTooltipFlag) {
+        pTootipComponents.add(Component.translatable("fiercedecoration.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
+        super.appendHoverText(pStack, pContext, pTootipComponents, pTooltipFlag);
     }
 
     @Override
-    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
+    protected boolean isPathfindable(BlockState pState, PathComputationType pPathComputationType) {
         return false;
     }
 }

@@ -21,6 +21,8 @@ public final class FDBlocks {
             "portable_workstation", PortableWorkstationBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> LAPTOP_TERMINAL = FierceDecoration.BLOCKS.registerBlock(
             "laptop_terminal", LaptopTerminalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> BOOK_AND_LAMP = FierceDecoration.BLOCKS.registerBlock(
+            "book_and_lamp", BookAndLampBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> ITEM_FRAME_SHELL_THIN = FierceDecoration.BLOCKS.registerBlock(
             "item_frame_shell_thin", ItemFrameShellThinBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS));
     public static final DeferredBlock<Block> ITEM_FRAME_SHELL_BIG = FierceDecoration.BLOCKS.registerBlock(
@@ -39,6 +41,20 @@ public final class FDBlocks {
             "light_plate", LightPlateBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> GREEN_FUN_ROOF = FierceDecoration.BLOCKS.registerBlock(
             "green_fun_roof", GreenFunRoofBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> HALF_GRASS_BLOCK = FierceDecoration.BLOCKS.registerBlock(
+            "half_grass_block", HalfGrassBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.GRASS).sound(SoundType.GRASS));
+    public static final DeferredBlock<Block> HALF_PODZOL = FierceDecoration.BLOCKS.registerBlock(
+            "half_podzol_block", HalfPodzolBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.PODZOL).sound(SoundType.GRAVEL));
+    public static final DeferredBlock<Block> HALF_MYCELIUM = FierceDecoration.BLOCKS.registerBlock(
+            "half_mycelium_block", HalfMyceliumBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.COLOR_PURPLE).sound(SoundType.GRASS));
+    public static final DeferredBlock<Block> HALF_DIRT = FierceDecoration.BLOCKS.registerBlock(
+            "half_dirt_block", HalfDirtBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.DIRT).sound(SoundType.GRAVEL));
+    public static final DeferredBlock<Block> HALF_PATH_BLOCK = FierceDecoration.BLOCKS.registerBlock(
+            "half_path_block", HalfPathBlock::new, BlockBehaviour.Properties.of().strength(0.65F).mapColor(MapColor.DIRT).sound(SoundType.GRASS));
+    public static final DeferredBlock<Block> FIREWOOD = FierceDecoration.BLOCKS.registerBlock(
+            "firewood", Firewood::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> FIREPLACE_HEART = FierceDecoration.BLOCKS.registerBlock(
+            "fireplace_heart", FireplaceHeartBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> ROCK_PATH = FierceDecoration.BLOCKS.registerBlock(
             "rock_path", RockPathBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> CRAFTING_PAD = FierceDecoration.BLOCKS.registerBlock(

@@ -14,7 +14,7 @@ public class BlockStateGen extends FSBlockStateProvider{
     @Override
     protected void registerStatesAndModels() {
         simple(FierceSource.CREATIVE_MANA_BLOCK);
-        directionModel(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK, false);
+        directionBlock(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK, false);
         simpleWithModel(FierceSource.WORLD_LOCATOR_BLOCK);
 
         itemModels().basicItem(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM.get());

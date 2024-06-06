@@ -1,0 +1,8 @@
+{
+	"parent": "fiercedecoration:block/double_cut_block_inv",
+	"textures": {
+		"side": "#all",
+		"top": "#all",
+		"bottom": "#all"
+	}
+}

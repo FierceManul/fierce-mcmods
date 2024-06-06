@@ -71,10 +71,20 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void directionModel(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+    /**
+     * 以 NORTH 为默认,使用同名模型,带物品模型
+     */
+    protected void directionBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(new ResourceLocation(id.getNamespace(), "block/" + id.getPath()));
-        getVariantBuilder(deferredBlock.get())
+        directionModel(deferredBlock.get(), id.getPath(), model, lockUV);
+    }
+
+    /**
+     * 以 NORTH 为默认,带物品模型
+     */
+    protected void directionModel(Block block, String path, ModelFile model, boolean lockUV) {
+        getVariantBuilder(block)
                 .partialState()
                 .with(BlockStateProperties.FACING, Direction.NORTH).modelForState()
                 .modelFile(model).addModel()
@@ -98,31 +108,21 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
                 .with(BlockStateProperties.FACING, Direction.DOWN).modelForState()
                 .modelFile(model)
                 .rotationX(90).uvLock(lockUV).addModel();
-        itemModels().getBuilder(id.getPath()).parent(model);
+        itemModels().getBuilder(path).parent(model);
     }
 
-    protected void horizontalDirectionModel(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+    /**
+     * 以 NORTH 为默认,使用同名模型,带物品模型
+     */
+    protected void horizontalDirectionBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(new ResourceLocation(id.getNamespace(), "block/" + id.getPath()));
-        getVariantBuilder(deferredBlock.get())
-                .partialState()
-                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).modelForState()
-                .modelFile(model).addModel()
-                .partialState()
-                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH).modelForState()
-                .modelFile(model)
-                .rotationY(180).uvLock(lockUV).addModel()
-                .partialState()
-                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST).modelForState()
-                .modelFile(model)
-                .rotationY(270).uvLock(lockUV).addModel()
-                .partialState()
-                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST).modelForState()
-                .modelFile(model)
-                .rotationY(90).uvLock(lockUV).addModel();
-        itemModels().getBuilder(id.getPath()).parent(model);
+        horizontalDirectionModel(deferredBlock.get(), id.getPath(), model, lockUV);
     }
 
+    /**
+     * 以 NORTH 为默认,带物品模型
+     */
     protected void horizontalDirectionModel(Block block, String path, ModelFile model, boolean lockUV) {
         getVariantBuilder(block)
                 .partialState()
@@ -138,6 +138,49 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
                 .rotationY(270).uvLock(lockUV).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST).modelForState()
+                .modelFile(model)
+                .rotationY(90).uvLock(lockUV).addModel();
+        itemModels().getBuilder(path).parent(model);
+    }
+
+    /**
+     * 以 Y 为默认,带物品模型
+     */
+    protected void yAxisModel(String path, Block block, ModelFile model, boolean lockUV) {
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.Y).modelForState()
+                .modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.X).modelForState()
+                .modelFile(model)
+                .rotationX(90).rotationY(270).uvLock(lockUV).addModel()
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.Z).modelForState()
+                .modelFile(model)
+                .rotationX(90).uvLock(lockUV).addModel();
+        itemModels().getBuilder(path).parent(model);
+    }
+
+    /**
+     * 以 X 为默认,使用同名模型,带物品模型
+     */
+    protected void horizontalAxisBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(new ResourceLocation(id.getNamespace(), "block/" + id.getPath()));
+        horizontalAxisModel(deferredBlock.get(), id.getPath(), model, lockUV);
+    }
+
+    /**
+     * 以 X 为默认,带物品模型
+     */
+    protected void horizontalAxisModel(Block block, String path, ModelFile model, boolean lockUV) {
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X).modelForState()
+                .modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z).modelForState()
                 .modelFile(model)
                 .rotationY(90).uvLock(lockUV).addModel();
         itemModels().getBuilder(path).parent(model);

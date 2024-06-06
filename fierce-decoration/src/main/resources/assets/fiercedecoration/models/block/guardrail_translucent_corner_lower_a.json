@@ -1,5 +1,5 @@
 {
-	"parent": "fiercedecoration:block/guardrail_translucent",
+	"parent": "fiercedecoration:block/guardrail_translucent_a",
 	"elements": [
 		{
 			"from": [0, 6, 1],
@@ -58,15 +58,6 @@
 			}
 		},
 		{
-			"from": [1, -8, 2],
-			"to": [12.5, 4, 3],
-			"faces": {
-				"north": {"uv": [3.5, 4, 15, 16], "texture": "#glass"},
-				"south": {"uv": [1, 4, 12.5, 16], "texture": "#glass"},
-				"down": {"uv": [1, 15, 12.5, 16], "texture": "#glass", "cullface": "down"}
-			}
-		},
-		{
 			"from": [12, 6, 4],
 			"to": [15, 8, 16],
 			"faces": {
@@ -107,15 +98,6 @@
 				"west": {"uv": [15, 3, 16, 16], "texture": "#all"},
 				"up": {"uv": [13, 15, 15, 16], "texture": "#all"},
 				"down": {"uv": [13, 0, 15, 1], "texture": "#all", "cullface": "down"}
-			}
-		},
-		{
-			"from": [13, -8, 3.5],
-			"to": [14, 4, 15],
-			"faces": {
-				"east": {"uv": [1, 4, 12.5, 16], "texture": "#glass"},
-				"west": {"uv": [3.5, 4, 15, 16], "texture": "#glass"},
-				"down": {"uv": [15, 1, 16, 12.5], "texture": "#glass", "cullface": "down"}
 			}
 		}
 	]

@@ -11,6 +11,7 @@ import net.fiercemanul.fiercedecoration.world.item.FDItems;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
 import net.fiercemanul.fiercesource.FierceSource;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.Registries;
@@ -20,24 +21,31 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -61,7 +69,7 @@ public class FierceDecoration {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StarBlockEntity>> STAR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
             "star_block", () -> BlockEntityType.Builder.of(StarBlockEntity::new, FDBlocks.STAR_BLOCK.get()).build(null));
     public static final DeferredHolder<EntityType<?>, EntityType<Seat>> SEAT = ENTITY_TYPES.register(
-            "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).noSave().clientTrackingRange(10).fireImmune().build("seat"));
+            "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).eyeHeight(0.0F).noSave().clientTrackingRange(10).fireImmune().build("seat"));
 
 
     
@@ -126,7 +134,7 @@ public class FierceDecoration {
     static {
         FDBlocks.init();
         FDItems.init();
-        boolean isData = FMLLoader.getLaunchHandler().isData();
+        //boolean isData = Launcher.INSTANCE.environment() instanceof IEnvironment environment && ((CommonLaunchHandler) environment.findLaunchHandler(environment.getProperty(IEnvironment.Keys.LAUNCHTARGET.get()).orElse("MISSING")).get()).isData();
         for (BlockMaterial blockMaterial : BlockMaterial.BLOCK_MATERIALS) {
             if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockMaterial.getBlockItemLike());
             else BUILDING_BLOCKS.add(blockMaterial.getBlockItemLike());
@@ -170,25 +178,27 @@ public class FierceDecoration {
                     BUILDING_BLOCKS.add(blockItem7);
                     BUILDING_BLOCKS.add(blockItem8);
                 }
-                if (isData) {
-                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block5, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block6, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block7, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block8, blockMaterial);
-                }
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block5, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block6, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block7, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block8, blockMaterial);
             }
             if (blockMaterial.allowHorizonPanel) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_panel_horizon", HorizonPanelBlock::new, blockMaterial.getHorizonPanelProperties());
+                    blockMaterial, blockMaterial.getPath() + "_panel_horizon", HorizonPanelBlock::new, blockMaterial.getHorizonGlassPanelProperties());
+            if (blockMaterial.allowWindowA) simplerReg(
+                    blockMaterial, blockMaterial.getPath() + "_window_a", WindowTypeABlock::new, blockMaterial.getDefaultBlockProperties());
             if (blockMaterial.allowTable) simplerReg(
                     blockMaterial, blockMaterial.getPath() + "_table", TableBlock::new, blockMaterial.getTableProperties());
             if (blockMaterial.allowChair) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_chair", ChairBlock::new, blockMaterial.getCutBlockProperties());
+                    blockMaterial, blockMaterial.getPath() + "_chair", SimpleChairBlock::new, blockMaterial.getDefaultBlockProperties());
             if (blockMaterial.allowGardenChair) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_garden_chair", GardenChairBlock::new, blockMaterial.getCutBlockProperties());
+                    blockMaterial, blockMaterial.getPath() + "_garden_chair", GardenChairBlock::new, blockMaterial.getDefaultBlockProperties());
+            if (blockMaterial.allowWoolSofa) simplerReg(
+                    blockMaterial, blockMaterial.getPath() + "_sofa", WoolSofaBlock::new, blockMaterial.getDefaultBlockProperties());
             if (blockMaterial.allowGuardrail) {
                 String id = blockMaterial.getPath() + "_guardrail";
                 DeferredBlock<Block> block = null;
@@ -205,13 +215,13 @@ public class FierceDecoration {
                     DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
                     if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
                     else BUILDING_BLOCKS.add(blockItem);
-                    if (isData) DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
                 }
             }
             if (blockMaterial.allowPeepWindow) simplerReg(
                     blockMaterial, blockMaterial.getPath() + "_peep_window", PeepWindowBlock::new, blockMaterial.getPeepWindowProperties());
             if (blockMaterial.allowVanillaSlab) {
-                DeferredBlock<Block> block = BLOCKS.register(blockMaterial.getPath() + "_stairs", () -> new StairBlock(() -> blockMaterial.getMaterialBlock().defaultBlockState(), blockMaterial.getProperties()));
+                DeferredBlock<Block> block = BLOCKS.register(blockMaterial.getPath() + "_stairs", () -> new StairBlock(blockMaterial.getMaterialBlock().defaultBlockState(), blockMaterial.getProperties()));
                 DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_slab", SlabBlock::new, blockMaterial.getProperties());
                 DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
                 DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
@@ -223,38 +233,44 @@ public class FierceDecoration {
                     BUILDING_BLOCKS.add(blockItem);
                     BUILDING_BLOCKS.add(blockItem2);
                 }
-                if (isData) {
-                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                }
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
             }
             if (blockMaterial.allowCutBlock) {
-                DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_one_cut_block", OneCutBlock::new, blockMaterial.getCutBlockProperties());
-                DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_thin_stairs", ThinStairBlock::new, blockMaterial.getCutBlockProperties());
-                DeferredBlock<Block> block3 = BLOCKS.registerBlock(blockMaterial.getPath() + "_double_cut_block", DoubleCutBlock::new, blockMaterial.getCutBlockProperties());
-                DeferredBlock<Block> block4 = BLOCKS.registerBlock(blockMaterial.getPath() + "_triple_cut_block", TripleCutBlock::new, blockMaterial.getCutBlockProperties());
+                DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_one_cut_block", OneCutBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_thin_stairs", ThinStairBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block3 = BLOCKS.registerBlock(blockMaterial.getPath() + "_double_cut_block", DoubleCutBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block4 = BLOCKS.registerBlock(blockMaterial.getPath() + "_triple_cut_block", TripleCutBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block5 = BLOCKS.registerBlock(blockMaterial.getPath() + "_panel_4px", Panel4PXBlock::new, blockMaterial.getPanelProperties());
+                DeferredBlock<Block> block6 = BLOCKS.registerBlock(blockMaterial.getPath() + "_panel_2px", Panel2PXBlock::new, blockMaterial.getPanelProperties());
                 DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
                 DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
                 DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
                 DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
+                DeferredItem<BlockItem> blockItem5 = ITEMS.registerSimpleBlockItem(block5);
+                DeferredItem<BlockItem> blockItem6 = ITEMS.registerSimpleBlockItem(block6);
                 if (blockMaterial.isColored()) {
                     COLORED_BLOCKS.add(blockItem);
                     COLORED_BLOCKS.add(blockItem2);
                     COLORED_BLOCKS.add(blockItem3);
                     COLORED_BLOCKS.add(blockItem4);
+                    COLORED_BLOCKS.add(blockItem5);
+                    COLORED_BLOCKS.add(blockItem6);
                 }
                 else {
                     BUILDING_BLOCKS.add(blockItem);
                     BUILDING_BLOCKS.add(blockItem2);
                     BUILDING_BLOCKS.add(blockItem3);
                     BUILDING_BLOCKS.add(blockItem4);
+                    BUILDING_BLOCKS.add(blockItem5);
+                    BUILDING_BLOCKS.add(blockItem6);
                 }
-                if (isData) {
-                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-                }
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block5, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block6, blockMaterial);
             }
             if (blockMaterial.vanillaPlanksLike) {
                 DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_fence", FenceBlock::new, blockMaterial.getProperties());
@@ -291,12 +307,10 @@ public class FierceDecoration {
                     BUILDING_BLOCKS.add(blockItem3);
                     BUILDING_BLOCKS.add(blockItem4);
                 }
-                if (isData) {
-                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-                }
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
             }
         }
     }
@@ -306,23 +320,29 @@ public class FierceDecoration {
         DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
         if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
         else BUILDING_BLOCKS.add(blockItem);
-        if (FMLLoader.getLaunchHandler().isData()) DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+        //if (FMLLoader.getLaunchHandler().isData())
+        DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
     }
 
     private static void applyDecorationBlocks(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output pOutput) {
         pOutput.accept(FDItems.PORTABLE_WORKSTATION);
         pOutput.accept(FDItems.LAPTOP_TERMINAL);
+        pOutput.accept(FDItems.BOOK_AND_LAMP);
         pOutput.accept(FDItems.LIGHT_TUBE);
         pOutput.accept(FDItems.LIGHT_PLATE);
         pOutput.accept(FDItems.GREEN_FUN_ROOF);
+        pOutput.accept(FDItems.FIREWOOD);
+        pOutput.accept(FDItems.FIREPLACE_HEART);
         pOutput.accept(FDItems.ROCK_PATH);
         pOutput.accept(FDItems.ITEM_FRAME_SHELL_THIN);
         pOutput.accept(FDItems.ITEM_FRAME_SHELL_BIG);
         pOutput.accept(FDItems.STAR_BLOCK);
         pOutput.accept(FDItems.HEAVY_CHAINS);
-        pOutput.accept(FDItems.NEO_FORGE);
+        pOutput.accept(FDItems.FOX_CARROT_SEED);
+        pOutput.accept(FDItems.FOX_CARROT);
         pOutput.accept(FDItems.FOX_CARROT_SHEAF);
         pOutput.accept(FDItems.FOX_CARROT_BASKET);
+        pOutput.accept(FDItems.NEO_FORGE);
         pOutput.accept(FDItems.CRAFTING_PAD);
         pOutput.accept(FDItems.CRAFTING_DESK);
         pOutput.accept(FDItems.CRAFTING_BLOCK);
@@ -332,6 +352,11 @@ public class FierceDecoration {
         pOutput.accept(FDItems.WALL_FLOWER_POT_D);
         pOutput.accept(FDItems.WALL_FLOWER_POT_E);
         pOutput.accept(FDItems.WALL_FLOWER_POT_F);
+        pOutput.accept(FDItems.HALF_GRASS_BLOCK);
+        pOutput.accept(FDItems.HALF_PODZOL);
+        pOutput.accept(FDItems.HALF_MYCELIUM);
+        pOutput.accept(FDItems.HALF_DIRT);
+        pOutput.accept(FDItems.HALF_PATH);
         pOutput.accept(FDItems.WATERLOGGED_COBBLESTONE);
         pOutput.accept(FDItems.ROTTEN_FLESH_BLOCK);
         pOutput.accept(FDItems.SMOOTH_GLOWSTONE);
@@ -438,12 +463,9 @@ public class FierceDecoration {
         pOutput.accept(FDItems.TEXTURE_LODESTONE);
         pOutput.accept(FDItems.TEXTURE_LODESTONE_SIDE);
         pOutput.accept(FDItems.TEXTURE_LODESTONE_TOP);
-        pOutput.accept(FDItems.FOX_CARROT_SEED);
-        pOutput.accept(FDItems.FOX_CARROT);
     }
 
-
-    public FierceDecoration(IEventBus modEventBus) {
+    public FierceDecoration(IEventBus modEventBus, ModContainer modContainer) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -451,11 +473,21 @@ public class FierceDecoration {
         CREATIVE_MODE_TABS.register(modEventBus);
 
         NeoForge.EVENT_BUS.addListener(this::registerCommandsEvent);
+        NeoForge.EVENT_BUS.addListener(this::blockPlacedEvent);
 
+        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilitiesEvent);
     }
 
-    public void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
+    private void registerCommandsEvent(RegisterCommandsEvent event) {
+        SitCommand.register(event.getDispatcher());
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        DataGen.BLOCKS_AND_MATERIALS.clear();
+    }
+
+    private void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
         event.registerBlock(
                 Capabilities.FluidHandler.BLOCK,
                 (level, pos, state, blockEntity, context) -> InfinityWaterHandler.INSTANCE,
@@ -463,27 +495,50 @@ public class FierceDecoration {
         );
     }
 
-    public void registerCommandsEvent(RegisterCommandsEvent event) {
-        SitCommand.register(event.getDispatcher());
+    private void blockPlacedEvent(BlockEvent.EntityPlaceEvent event) {
+        BlockState replacedBlock = event.getBlockSnapshot().getState();
+        if (replacedBlock.getBlock() instanceof HalfPodzolBlock && event.getPlacedBlock().is(Blocks.SNOW)) {
+            event.getLevel().setBlock(
+                    event.getPos(),
+                    replacedBlock.setValue(
+                            HalfPodzolBlock.LAYERS,
+                            Integer.min(replacedBlock.getValue(HalfPodzolBlock.LAYERS) + 1, 4)
+                    ),
+                    11
+            );
+        }
     }
 
-
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
 
         @SubscribeEvent
-        public static void registerBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers register) {
-            register.registerBlockEntityRenderer(STAR_BLOCK_ENTITY.get(), StarBlockRender::new);
+        public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
+            event.register(
+                    (pState, pLevel, pPos, pTintIndex) -> pLevel != null && pPos != null
+                    ? BiomeColors.getAverageGrassColor(pLevel, pPos)
+                    : GrassColor.getDefaultColor(),
+                    FDBlocks.HALF_GRASS_BLOCK.get()
+            );
+        }
+
+        @SubscribeEvent
+        public static void registerColorHandlers(RegisterColorHandlersEvent.Item event) {
+            event.register(
+                    (pStack, pTintIndex) -> event.getBlockColors().getColor(((BlockItem)pStack.getItem()).getBlock().defaultBlockState(), null, null, pTintIndex),
+                    FDItems.HALF_GRASS_BLOCK
+            );
         }
 
         @SubscribeEvent
         public static void registerEntityRenderer(EntityRenderersEvent.RegisterRenderers register) {
+            register.registerBlockEntityRenderer(STAR_BLOCK_ENTITY.get(), StarBlockRender::new);
             register.registerEntityRenderer(SEAT.get(), NoopRenderer::new);
         }
 
         @SubscribeEvent
-        public static void onBakeModel(ModelEvent.ModifyBakingResult event) {
+        public static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
             ModelResourceLocation location = new ModelResourceLocation(MODID, "star_block", "inventory");
             event.getModels().put(location, new StarBlockModel(event.getModels().get(location)));
         }

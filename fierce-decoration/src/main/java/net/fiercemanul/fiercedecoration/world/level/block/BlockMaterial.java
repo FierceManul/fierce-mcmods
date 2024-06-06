@@ -342,9 +342,11 @@ public class BlockMaterial {
     public final boolean allowCutBlock;
     public final boolean allowPillar;
     public final boolean allowHorizonPanel;
+    public final boolean allowWindowA;
     public final boolean allowTable;
     public final boolean allowChair;
     public final boolean allowGardenChair;
+    public final boolean allowWoolSofa;
 
     private BlockMaterial(
             Supplier<Block> materialBlockSupplier, ItemLike blockItemLike, ResourceLocation id, Supplier<BlockBehaviour.Properties> propertiesSupplier,
@@ -374,9 +376,11 @@ public class BlockMaterial {
         this.allowCutBlock = allowCutBlock();
         this.allowHorizonPanel = allowHorizonPanel();
         this.allowPillar = allowPillar();
+        this.allowWindowA = allowWindowA();
         this.allowTable = allowTable();
         this.allowChair = allowChair();
         this.allowGardenChair = allowGardenChair();
+        this.allowWoolSofa = allowWoolSofa();
     }
 
     private boolean allowLampInGlass() {
@@ -419,6 +423,19 @@ public class BlockMaterial {
             default -> false;
         };
         return (wood || flag1) && (model && !totemTexture && !isLamp) || flag3;
+    }
+
+    private boolean allowWindowA() {
+        boolean model = switch (modelType) {
+            case CUBE_ALL, CUBE_ALL_FRAMED -> true;
+            default -> false;
+        };
+        boolean flag3 = switch (id.toString()) {
+            case "minecraft:sandstone", "minecraft:red_sandstone", "minecraft:smooth_sandstone", "minecraft:smooth_red_sandstone",
+                    "minecraft:quartz_block", "minecraft:smooth_quartz" -> true;
+            default -> false;
+        };
+        return (vanillaPlanksLike || materialType.equals(MaterialType.STONE)) && (model && !totemTexture && !isLamp) || flag3;
     }
 
     private boolean allowTable() {
@@ -466,6 +483,10 @@ public class BlockMaterial {
         return (vanillaPlanksLike || materialType.equals(MaterialType.STONE)) && (model && !totemTexture && !isLamp) || flag3;
     }
 
+    private boolean allowWoolSofa() {
+        return getPath().contains("wool");
+    }
+
     private boolean allowVanillaSlab() {
         return !getNamespace().equals("minecraft") && isSturdy() && !isLamp;
     }
@@ -502,7 +523,7 @@ public class BlockMaterial {
         return mapColorHelper.applyPeepWindowMapColor(propertiesSupplier.get());
     }
 
-    public BlockBehaviour.Properties getCutBlockProperties() {
+    public BlockBehaviour.Properties getDefaultBlockProperties() {
         return mapColorHelper.applyDefaultMapColor(propertiesSupplier.get());
     }
 
@@ -510,8 +531,12 @@ public class BlockMaterial {
         return mapColorHelper.applyPillarMapColor(propertiesSupplier.get());
     }
 
-    public BlockBehaviour.Properties getHorizonPanelProperties() {
+    public BlockBehaviour.Properties getHorizonGlassPanelProperties() {
         return propertiesSupplier.get().mapColor(MapColor.NONE);
+    }
+
+    public BlockBehaviour.Properties getPanelProperties() {
+        return mapColorHelper.applyPanelMapColor(propertiesSupplier.get());
     }
 
     public ResourceLocation getId() {
@@ -623,6 +648,7 @@ public class BlockMaterial {
         public abstract BlockBehaviour.Properties applyTableMapColor(BlockBehaviour.Properties properties);
         public abstract BlockBehaviour.Properties applyDefaultMapColor(BlockBehaviour.Properties properties);
         public abstract BlockBehaviour.Properties applyPillarMapColor(BlockBehaviour.Properties properties);
+        public abstract BlockBehaviour.Properties applyPanelMapColor(BlockBehaviour.Properties properties);
 
         protected static BlockBehaviour.Properties peepWindow(BlockBehaviour.Properties properties, MapColor mapColor) {
             return properties.mapColor(state -> state.getValue(BlockStateProperties.FACING).getAxis().equals(Direction.Axis.Y) ? mapColor : MapColor.NONE);
@@ -660,6 +686,11 @@ public class BlockMaterial {
         public BlockBehaviour.Properties applyPillarMapColor(BlockBehaviour.Properties properties) {
             return properties;
         }
+
+        @Override
+        public BlockBehaviour.Properties applyPanelMapColor(BlockBehaviour.Properties properties) {
+            return properties;
+        }
     }
 
     public static class CubeMapColorHelper extends MapColorHelper {
@@ -694,6 +725,11 @@ public class BlockMaterial {
         @Override
         public BlockBehaviour.Properties applyPillarMapColor(BlockBehaviour.Properties properties) {
             return properties.mapColor(mapColor);
+        }
+
+        @Override
+        public BlockBehaviour.Properties applyPanelMapColor(BlockBehaviour.Properties properties) {
+            return peepWindow(properties, mapColor);
         }
     }
 
@@ -731,6 +767,11 @@ public class BlockMaterial {
         @Override
         public BlockBehaviour.Properties applyPillarMapColor(BlockBehaviour.Properties properties) {
             return pillar(properties, topColor, sideColor);
+        }
+
+        @Override
+        public BlockBehaviour.Properties applyPanelMapColor(BlockBehaviour.Properties properties) {
+            return peepWindow(properties, topColor);
         }
     }
 
@@ -777,6 +818,15 @@ public class BlockMaterial {
         @Override
         public BlockBehaviour.Properties applyPillarMapColor(BlockBehaviour.Properties properties) {
             return properties.mapColor(topColor);
+        }
+
+        @Override
+        public BlockBehaviour.Properties applyPanelMapColor(BlockBehaviour.Properties properties) {
+            return properties.mapColor(state -> switch (state.getValue(BlockStateProperties.FACING)){
+                case DOWN -> downColor;
+                case UP -> topColor;
+                default -> MapColor.NONE;
+            });
         }
     }
 

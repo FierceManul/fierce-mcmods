@@ -1,6 +1,7 @@
 {
 	"parent": "fiercedecoration:block/one_cut_block_horizontal",
 	"textures": {
+		"particle": "#all",
 		"side": "#all",
 		"top": "#all",
 		"bottom": "#all"

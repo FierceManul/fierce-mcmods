@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercesource.data;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -11,11 +12,13 @@ import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 
+import java.util.concurrent.CompletableFuture;
+
 public class RecipeGen extends FSRecipeProvider {
 
 
-    public RecipeGen(PackOutput packOutput) {
-        super(packOutput);
+    public RecipeGen(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
+        super(packOutput, pRegistries);
     }
 
     @Override

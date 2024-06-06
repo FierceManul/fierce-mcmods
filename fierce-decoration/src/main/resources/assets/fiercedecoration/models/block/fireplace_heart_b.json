@@ -1,0 +1,42 @@
+{
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"particle": "fiercedecoration:block/fireplace_heart",
+		"a": "fiercedecoration:block/fireplace_heart"
+	},
+	"elements": [
+		{
+			"from": [0, 1, 0],
+			"to": [16, 9, 0],
+			"faces": {
+				"north": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "north"},
+				"south": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "north"}
+			}
+		},
+		{
+			"from": [0, 1, 16],
+			"to": [16, 9, 16],
+			"faces": {
+				"north": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "south"},
+				"south": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "south"}
+			}
+		},
+		{
+			"from": [0, 1, 0],
+			"to": [0, 9, 16],
+			"faces": {
+				"east": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "west"},
+				"west": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "west"}
+			}
+		},
+		{
+			"from": [16, 1, 0],
+			"to": [16, 9, 16],
+			"faces": {
+				"east": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "east"},
+				"west": {"uv": [0, 7, 16, 15], "texture": "#a", "cullface": "east"}
+			}
+		}
+	]
+}

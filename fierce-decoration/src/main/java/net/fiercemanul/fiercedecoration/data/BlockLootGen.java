@@ -7,7 +7,9 @@ import net.fiercemanul.fiercedecoration.world.level.block.OneCutBlock;
 import net.fiercemanul.fiercedecoration.world.level.block.TripleCutBlock;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
@@ -35,7 +37,7 @@ public class BlockLootGen extends BlockLootSubProvider {
     protected void generate() {}
 
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
+    public void generate(HolderLookup.Provider pRegistries, BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
 
         FierceDecoration.BLOCKS.getEntries().forEach(deferredBlock -> {
             Block block = deferredBlock.get();
@@ -140,7 +142,7 @@ public class BlockLootGen extends BlockLootSubProvider {
         });
 
         this.map.forEach((location, builder) -> {
-            if (builder != null) pOutput.accept(location, builder);
+            if (builder != null) pGenerator.accept(location, builder);
         });
         this.map.clear();
     }

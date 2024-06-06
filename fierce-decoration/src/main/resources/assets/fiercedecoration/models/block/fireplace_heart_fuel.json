@@ -1,0 +1,31 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "fiercecraft:block/black_iron",
+		"fuel": "minecraft:block/campfire_log"
+	},
+	"elements": [
+		{
+			"from": [4, 1, 4],
+			"to": [12, 2, 12],
+			"faces": {
+				"north": {"uv": [5, 12, 13, 13], "texture": "#fuel"},
+				"east": {"uv": [6, 11, 14, 12], "texture": "#fuel"},
+				"south": {"uv": [2, 14, 10, 15], "texture": "#fuel"},
+				"west": {"uv": [1, 13, 9, 14], "texture": "#fuel"},
+				"up": {"uv": [5, 8, 13, 16], "texture": "#fuel"}
+			}
+		},
+		{
+			"from": [6, 2, 6],
+			"to": [10, 3, 10],
+			"faces": {
+				"north": {"uv": [3, 12, 7, 13], "texture": "#fuel"},
+				"east": {"uv": [4, 11, 8, 12], "texture": "#fuel"},
+				"south": {"uv": [2, 14, 6, 15], "texture": "#fuel"},
+				"west": {"uv": [1, 13, 5, 14], "texture": "#fuel"},
+				"up": {"uv": [10, 11, 14, 15], "texture": "#fuel"}
+			}
+		}
+	]
+}

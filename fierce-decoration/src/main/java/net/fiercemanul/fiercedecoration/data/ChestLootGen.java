@@ -1,7 +1,10 @@
 package net.fiercemanul.fiercedecoration.data;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.packs.VanillaChestLoot;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -20,9 +23,9 @@ public class ChestLootGen extends VanillaChestLoot {
 
 
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
-        pOutput.accept(
-                new ResourceLocation(FierceDecoration.MODID, "chests/rundown_hut"),
+    public void generate(HolderLookup.Provider pRegistries, BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+        pGenerator.accept(
+                ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(FierceDecoration.MODID, "chests/rundown_hut")),
                 LootTable.lootTable()
                          .withPool(
                                  LootPool.lootPool()

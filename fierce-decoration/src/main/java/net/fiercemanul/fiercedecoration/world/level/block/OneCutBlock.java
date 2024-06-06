@@ -3,9 +3,11 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
 import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -116,7 +118,7 @@ public class OneCutBlock extends FacingModelBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("fiercedecoration.tip.snake_horizontal"));
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
+        pTooltip.add(Component.translatable("fiercedecoration.tip.snake_horizontal").withStyle(ChatFormatting.GRAY));
     }
 }

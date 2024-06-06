@@ -6,7 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -92,8 +94,10 @@ public class AxisBlock extends WrenchDismantleBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        boolean success = WrenchAction.doDefaultWrenchAction(AXIS, pState, pLevel, pPos, pPlayer, pHand);
-        return success ? InteractionResult.sidedSuccess(pLevel.isClientSide) : InteractionResult.PASS;
+    protected ItemInteractionResult useItemOn(
+            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+    ) {
+        boolean success = WrenchAction.doDefaultWrenchAction(AXIS, pStack, pState, pLevel, pPos, pPlayer);
+        return success ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

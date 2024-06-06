@@ -39,13 +39,11 @@ public class BlockStateGen extends FSBlockStateProvider {
         simple(FDBlocks.SMOOTH_CHERRY_PLANKS);
         simple(FDBlocks.SMOOTH_CRIMSON_PLANKS);
         simple(FDBlocks.SMOOTH_WARPED_PLANKS);
-        simpleNature(FDBlocks.ROTTEN_FLESH_BLOCK);
         simple(FDBlocks.RAINBOW_WOOL);
         simple(FDBlocks.RAINBOW_TERRACOTTA);
         simple(FDBlocks.RAINBOW_CONCRETE);
         simple(FDBlocks.RAINBOW_SEA_LANTERN);
         simple(FDBlocks.RAINBOW_REINFORCED_SEA_LANTERN);
-        simpleWithModel(FDBlocks.RAINBOW_GLASS);
         simple(FDBlocks.WHITE_SEA_LANTERN);
         simple(FDBlocks.ORANGE_SEA_LANTERN);
         simple(FDBlocks.MAGENTA_SEA_LANTERN);
@@ -85,27 +83,36 @@ public class BlockStateGen extends FSBlockStateProvider {
         simple(FDBlocks.YELLOW_LAMP);
         simple(FDBlocks.CYAN_LAMP);
         simple(FDBlocks.PURPLE_LAMP);
+
+        simpleNature(FDBlocks.ROTTEN_FLESH_BLOCK);
+
+        simpleWithModel(FDBlocks.RAINBOW_GLASS);
         simpleWithModel(FDBlocks.FOX_CARROT_SHEAF);
         simpleWithModel(FDBlocks.FOX_CARROT_BASKET);
-        directionModel(FDBlocks.CRAFTING_PAD, false);
         simpleWithModel(FDBlocks.CRAFTING_DESK);
         simpleWithModel(FDBlocks.CRAFTING_BLOCK);
         simpleWithModel(FDBlocks.ROCK_PATH);
 
-        horizontalDirectionModel(FDBlocks.PORTABLE_WORKSTATION, false);
-        horizontalDirectionModel(FDBlocks.LAPTOP_TERMINAL, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_A, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_B, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_C, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_D, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_E, false);
-        horizontalDirectionModel(FDBlocks.WALL_FLOWER_POT_F, false);
-        horizontalDirectionModel(FDBlocks.NEO_FORGE, false);
+        directionBlock(FDBlocks.CRAFTING_PAD, false);
+
+        horizontalDirectionBlock(FDBlocks.PORTABLE_WORKSTATION, false);
+        horizontalDirectionBlock(FDBlocks.LAPTOP_TERMINAL, false);
+        horizontalDirectionBlock(FDBlocks.BOOK_AND_LAMP, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_A, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_B, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_C, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_D, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_E, false);
+        horizontalDirectionBlock(FDBlocks.WALL_FLOWER_POT_F, false);
+        horizontalDirectionBlock(FDBlocks.NEO_FORGE, false);
+
+        horizontalAxisBlock(FDBlocks.FIREWOOD, false);
 
         itemFrameShell();
         lightTube();
         lightPlate();
         heavyChains();
+        halfGrassBlock();
 
         doubleBlock(FDBlocks.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE, mcLoc("block/oak_planks"), mcLoc("block/light_gray_concrete"));
         doubleBlock(FDBlocks.SPRUCE_PLANKS_AND_GRAY_CONCRETE, mcLoc("block/spruce_planks"), mcLoc("block/gray_concrete"));
@@ -133,6 +140,8 @@ public class BlockStateGen extends FSBlockStateProvider {
         ResourceLocation quartz_block_bottom = mcLoc("block/quartz_block_bottom");
         ResourceLocation snow = mcLoc("block/snow");
         ResourceLocation magma = mcLoc("block/magma");
+        ResourceLocation netherrack = mcLoc("block/netherrack");
+        ResourceLocation dirt = mcLoc("block/dirt");
 
         BlockModelBuilder dirtPeepWindow = models()
                 .withExistingParent("dirt_peep_window", modLoc("block/peep_window"))
@@ -206,14 +215,14 @@ public class BlockStateGen extends FSBlockStateProvider {
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial, "top"),
-                            new ResourceLocation("block/dirt"),
+                            dirt,
                             false
                     );
                     case NYLIUM -> customGuardrail(
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial),
-                            new ResourceLocation("block/netherrack"),
+                            netherrack,
                             false
                     );
                     case CUSTOM -> {
@@ -225,8 +234,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                 }
             }
             else if (block instanceof GlassGuardrailBlock) {
-                ResourceLocation glass = texture(blockMaterial);
-                glassGuardrail(deferredBlock, glass, glass);
+                glassGuardrail(deferredBlock, texture(blockMaterial));
             }
             else if (block instanceof PeepWindowBlock) {
                 switch (modelType) {
@@ -380,13 +388,13 @@ public class BlockStateGen extends FSBlockStateProvider {
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial, "top"),
-                            new ResourceLocation("block/dirt")
+                            dirt
                     );
                     case NYLIUM -> oneCutBlockUpDown(
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial),
-                            new ResourceLocation("block/netherrack")
+                            netherrack
                     );
                     case CUSTOM -> {
                         if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) oneCutBlock(deferredBlock, quartz_block_side);
@@ -439,13 +447,13 @@ public class BlockStateGen extends FSBlockStateProvider {
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial, "top"),
-                            new ResourceLocation("block/dirt")
+                            dirt
                     );
                     case NYLIUM -> thinStairUpDown(
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial),
-                            new ResourceLocation("block/netherrack")
+                            netherrack
                     );
                     case CUSTOM -> {
                         if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) thinStair(deferredBlock, quartz_block_side);
@@ -498,13 +506,13 @@ public class BlockStateGen extends FSBlockStateProvider {
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial, "top"),
-                            new ResourceLocation("block/dirt")
+                            dirt
                     );
                     case NYLIUM -> doubleCutBlockCustom(
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial),
-                            new ResourceLocation("block/netherrack")
+                            netherrack
                     );
                     case CUSTOM -> {
                         if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) doubleCutBlock(deferredBlock, quartz_block_side);
@@ -553,19 +561,117 @@ public class BlockStateGen extends FSBlockStateProvider {
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial, "top"),
-                            new ResourceLocation("block/dirt")
+                            dirt
                     );
                     case NYLIUM -> tripleCutCustom(
                             deferredBlock,
                             texture(blockMaterial, "side"),
                             texture(blockMaterial),
-                            new ResourceLocation("block/netherrack")
+                            netherrack
                     );
                     case CUSTOM -> {
                         if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) tripleCut(deferredBlock, quartz_block_side);
                         if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) tripleCut(deferredBlock, quartz_block_bottom);
                         if (materialBlock.equals(Blocks.SNOW_BLOCK)) tripleCut(deferredBlock, snow);
                         if (materialBlock.equals(Blocks.MAGMA_BLOCK)) tripleCut(deferredBlock, magma);
+                    }
+                }
+            }
+            else if (block instanceof Panel4PXBlock) {
+                switch (modelType) {
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel4px(deferredBlock, texture(blockMaterial));
+                    case LOG -> panel4px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
+                    case PILLAR -> panel4px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case UP_DOWN -> panel4px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial, "top"),
+                            texture(blockMaterial, "bottom")
+                    );
+                    case SANDSTONE -> {
+                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel4px(deferredBlock, sandstone_top);
+                        else panel4px(
+                                deferredBlock,
+                                texture(blockMaterial),
+                                sandstone_top,
+                                sandstone_bottom
+                        );
+                    }
+                    case RED_SANDSTONE -> {
+                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel4px(deferredBlock, red_sandstone_top);
+                        else panel4px(
+                                deferredBlock,
+                                texture(blockMaterial),
+                                red_sandstone_top,
+                                red_sandstone_bottom
+                        );
+                    }
+                    case GRASS -> panel4px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial, "top"),
+                            dirt
+                    );
+                    case NYLIUM -> panel4px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial),
+                            netherrack
+                    );
+                    case CUSTOM -> {
+                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) panel4px(deferredBlock, quartz_block_side);
+                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) panel4px(deferredBlock, quartz_block_bottom);
+                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) panel4px(deferredBlock, snow);
+                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) panel4px(deferredBlock, magma);
+                    }
+                }
+            }
+            else if (block instanceof Panel2PXBlock) {
+                switch (modelType) {
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel2px(deferredBlock, texture(blockMaterial));
+                    case LOG -> panel2px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
+                    case PILLAR -> panel2px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case UP_DOWN -> panel2px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial, "top"),
+                            texture(blockMaterial, "bottom")
+                    );
+                    case SANDSTONE -> {
+                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel2px(deferredBlock, sandstone_top);
+                        else panel2px(
+                                deferredBlock,
+                                texture(blockMaterial),
+                                sandstone_top,
+                                sandstone_bottom
+                        );
+                    }
+                    case RED_SANDSTONE -> {
+                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel2px(deferredBlock, red_sandstone_top);
+                        else panel2px(
+                                deferredBlock,
+                                texture(blockMaterial),
+                                red_sandstone_top,
+                                red_sandstone_bottom
+                        );
+                    }
+                    case GRASS -> panel2px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial, "top"),
+                            dirt
+                    );
+                    case NYLIUM -> panel2px(
+                            deferredBlock,
+                            texture(blockMaterial, "side"),
+                            texture(blockMaterial),
+                            netherrack
+                    );
+                    case CUSTOM -> {
+                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) panel2px(deferredBlock, quartz_block_side);
+                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) panel2px(deferredBlock, quartz_block_bottom);
+                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) panel2px(deferredBlock, snow);
+                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) panel2px(deferredBlock, magma);
                     }
                 }
             }
@@ -705,6 +811,25 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                 }
             }
+            else if (block instanceof WindowTypeABlock) {
+                switch (modelType) {
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> windowA(deferredBlock, texture(blockMaterial));
+                    case SANDSTONE -> {
+                        if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
+                            windowA(deferredBlock, sandstone_top);
+                        else windowA(deferredBlock, sandstone_bottom);
+                    }
+                    case RED_SANDSTONE -> {
+                        if (materialBlock.equals(Blocks.SMOOTH_RED_SANDSTONE))
+                            windowA(deferredBlock, red_sandstone_top);
+                        else windowA(deferredBlock, red_sandstone_bottom);
+                    }
+                    case CUSTOM -> {
+                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) windowA(deferredBlock, quartz_block_side);
+                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) windowA(deferredBlock, quartz_block_bottom);
+                    }
+                }
+            }
             else if (block instanceof TableBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS))
                     tableGlass(deferredBlock, texture(blockMaterial));
@@ -729,7 +854,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                 }
             }
-            else if (block instanceof ChairBlock) {
+            else if (block instanceof SimpleChairBlock) {
                 switch (modelType) {
                     case CUBE_ALL, CUBE_ALL_FRAMED -> chair(deferredBlock, texture(blockMaterial));
                     case LOG -> chair(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
@@ -774,6 +899,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                 }
             }
+            else if (block instanceof WoolSofaBlock) woolSofa(deferredBlock, texture(blockMaterial));
             else if (block instanceof HorizonPanelBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS)) {
                     ModelFile modelFile = models().withExistingParent(deferredBlock.getId().getPath(), modLoc("block/translucent_panel_horizon"))
@@ -888,7 +1014,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_4px"))
                 .texture("side", side).texture("end", top);
-        pillarYModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(path, deferredBlock.get(), modelFile, false);
     }
 
     private void pillar6px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -896,7 +1022,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_6px"))
                 .texture("side", side).texture("end", top);
-        pillarYModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(path, deferredBlock.get(), modelFile, false);
     }
 
     private void pillar8px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -904,7 +1030,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_8px"))
                 .texture("side", side).texture("end", top);
-        pillarYModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(path, deferredBlock.get(), modelFile, false);
     }
     
     private void pillar12px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -912,32 +1038,190 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_12px"))
                 .texture("side", side).texture("end", top);
-        pillarYModel(path, deferredBlock.get(), modelFile, false);
-    }
-    
-    private void pillarYModel(String path, Block block, ModelFile model, boolean lockUV) {
-        getVariantBuilder(block)
-                .partialState()
-                .with(BlockStateProperties.AXIS, Direction.Axis.Y).modelForState()
-                .modelFile(model).addModel()
-                .partialState()
-                .with(BlockStateProperties.AXIS, Direction.Axis.X).modelForState()
-                .modelFile(model)
-                .rotationX(90).rotationY(270).uvLock(lockUV).addModel()
-                .partialState()
-                .with(BlockStateProperties.AXIS, Direction.Axis.Z).modelForState()
-                .modelFile(model)
-                .rotationX(90).uvLock(lockUV).addModel();
-        itemModels().getBuilder(path).parent(model);
+        yAxisModel(path, deferredBlock.get(), modelFile, false);
     }
 
     private void itemFrameShell() {
-        directionModel(FDBlocks.ITEM_FRAME_SHELL_THIN, true);
+        directionBlock(FDBlocks.ITEM_FRAME_SHELL_THIN, true);
         simple(
                 FDBlocks.ITEM_FRAME_SHELL_BIG.get(),
                 FDBlocks.ITEM_FRAME_SHELL_BIG.getId().getPath(),
                 models().getExistingFile(modLoc("block/custom_glass"))
         );
+    }
+
+    private void halfGrassBlock() {
+
+        ModelFile modelGrass = models().getExistingFile(modLoc("block/half_grass_block"));
+        ModelFile modelPodzol = models().withExistingParent(FDBlocks.HALF_PODZOL.getId().getPath(), modLoc("block/one_cut_block_down"))
+                                        .texture("side", mcLoc("block/podzol_side"))
+                                        .texture("top", mcLoc("block/podzol_top"))
+                                        .texture("bottom", mcLoc("block/dirt"));
+        ModelFile modelMycelium = models().withExistingParent(FDBlocks.HALF_MYCELIUM.getId().getPath(), modLoc("block/one_cut_block_down"))
+                                        .texture("side", mcLoc("block/mycelium_side"))
+                                        .texture("top", mcLoc("block/mycelium_top"))
+                                        .texture("bottom", mcLoc("block/dirt"));
+        ModelFile modelDirt = models().withExistingParent(FDBlocks.HALF_DIRT.getId().getPath(), modLoc("block/one_cut_block_down"))
+                                          .texture("side", mcLoc("block/dirt"))
+                                          .texture("top", mcLoc("block/dirt"))
+                                          .texture("bottom", mcLoc("block/dirt"));
+        ModelFile modelDirt2 = models().withExistingParent(FDBlocks.HALF_DIRT.getId().getPath() + "_2", modLoc("block/half_grass_block_snow"))
+                                      .texture("side", mcLoc("block/dirt"));
+        ModelFile modelOvl = models().getExistingFile(modLoc("block/half_grass_block_overlay"));
+        ModelFile modelSnow = models().getExistingFile(modLoc("block/half_grass_block_snow"));
+        ModelFile layer1 = models().getExistingFile(modLoc("block/half_snow_height2"));
+        ModelFile layer2 = models().getExistingFile(modLoc("block/half_snow_height4"));
+        ModelFile layer3 = models().getExistingFile(modLoc("block/half_snow_height6"));
+        ModelFile layer4 = models().getExistingFile(modLoc("block/half_snow_height8"));
+
+        getMultipartBuilder(FDBlocks.HALF_GRASS_BLOCK.get())
+                .part()
+                .modelFile(modelGrass).nextModel()
+                .modelFile(modelGrass).rotationY(90).nextModel()
+                .modelFile(modelGrass).rotationY(180).nextModel()
+                .modelFile(modelGrass).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 0).end()
+
+                .part().modelFile(modelOvl).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 0).end()
+
+                .part()
+                .modelFile(modelSnow).nextModel()
+                .modelFile(modelSnow).rotationY(90).nextModel()
+                .modelFile(modelSnow).rotationY(180).nextModel()
+                .modelFile(modelSnow).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1, 2, 3, 4).end()
+
+                .part()
+                .modelFile(layer1).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1).end()
+
+                .part()
+                .modelFile(layer2).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 2).end()
+
+                .part()
+                .modelFile(layer3).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 3).end()
+
+                .part()
+                .modelFile(layer4).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 4).end();
+
+        itemModels().withExistingParent(FDBlocks.HALF_GRASS_BLOCK.getId().getPath(), modLoc("block/half_grass_block_inv"));
+
+
+        getMultipartBuilder(FDBlocks.HALF_PODZOL.get())
+                .part()
+                .modelFile(modelPodzol).nextModel()
+                .modelFile(modelPodzol).rotationY(90).nextModel()
+                .modelFile(modelPodzol).rotationY(180).nextModel()
+                .modelFile(modelPodzol).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 0).end()
+
+                .part()
+                .modelFile(modelSnow).nextModel()
+                .modelFile(modelSnow).rotationY(90).nextModel()
+                .modelFile(modelSnow).rotationY(180).nextModel()
+                .modelFile(modelSnow).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1, 2, 3, 4).end()
+
+                .part()
+                .modelFile(layer1).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1).end()
+
+                .part()
+                .modelFile(layer2).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 2).end()
+
+                .part()
+                .modelFile(layer3).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 3).end()
+
+                .part()
+                .modelFile(layer4).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 4).end();
+
+        itemModels().getBuilder(FDBlocks.HALF_PODZOL.getId().getPath()).parent(modelPodzol);
+
+
+        getMultipartBuilder(FDBlocks.HALF_MYCELIUM.get())
+                .part()
+                .modelFile(modelMycelium).nextModel()
+                .modelFile(modelMycelium).rotationY(90).nextModel()
+                .modelFile(modelMycelium).rotationY(180).nextModel()
+                .modelFile(modelMycelium).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 0).end()
+
+                .part()
+                .modelFile(modelSnow).nextModel()
+                .modelFile(modelSnow).rotationY(90).nextModel()
+                .modelFile(modelSnow).rotationY(180).nextModel()
+                .modelFile(modelSnow).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1, 2, 3, 4).end()
+
+                .part()
+                .modelFile(layer1).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1).end()
+
+                .part()
+                .modelFile(layer2).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 2).end()
+
+                .part()
+                .modelFile(layer3).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 3).end()
+
+                .part()
+                .modelFile(layer4).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 4).end();
+
+        itemModels().getBuilder(FDBlocks.HALF_MYCELIUM.getId().getPath()).parent(modelMycelium);
+
+
+        getMultipartBuilder(FDBlocks.HALF_DIRT.get())
+                .part()
+                .modelFile(modelDirt).nextModel()
+                .modelFile(modelDirt).rotationY(90).nextModel()
+                .modelFile(modelDirt).rotationY(180).nextModel()
+                .modelFile(modelDirt).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 0).end()
+
+                .part()
+                .modelFile(modelDirt2).nextModel()
+                .modelFile(modelDirt2).rotationY(90).nextModel()
+                .modelFile(modelDirt2).rotationY(180).nextModel()
+                .modelFile(modelDirt2).rotationY(270).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1, 2, 3, 4).end()
+
+                .part()
+                .modelFile(layer1).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 1).end()
+
+                .part()
+                .modelFile(layer2).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 2).end()
+
+                .part()
+                .modelFile(layer3).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 3).end()
+
+                .part()
+                .modelFile(layer4).addModel()
+                .condition(FDBlockStateProperties.HALF_LAYERS, 4).end();
+
+        itemModels().getBuilder(FDBlocks.HALF_DIRT.getId().getPath()).parent(modelDirt);
+
+
+        ModelFile modelPath = models().getExistingFile(modLoc("block/half_dirt_path"));
+
+        getVariantBuilder(FDBlocks.HALF_PATH_BLOCK.get())
+                .partialState().modelForState()
+                .modelFile(modelPath).nextModel()
+                .modelFile(modelPath).rotationY(90).nextModel()
+                .modelFile(modelPath).rotationY(180).nextModel()
+                .modelFile(modelPath).rotationY(270).addModel();
+        itemModels().withExistingParent(FDBlocks.HALF_PATH_BLOCK.getId().getPath(), modLoc("block/half_dirt_path"));
     }
 
     private void lightTube() {
@@ -1107,32 +1391,208 @@ public class BlockStateGen extends FSBlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    private void glassGuardrail(DeferredBlock<Block> deferredBlock, ResourceLocation textureSide, ResourceLocation textureTop) {
+    private void glassGuardrail(DeferredBlock<Block> deferredBlock, ResourceLocation textureSide) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
 
-        BlockModelBuilder model = models().getBuilder(path)
-                                          .parent(models().getExistingFile(modLoc("block/guardrail_translucent")))
-                                          .texture("glass", textureSide)
-                                          .texture("glass_side", textureTop);
+        BlockModelBuilder model = models().getBuilder(path + "_b")
+                                          .parent(models().getExistingFile(modLoc("block/guardrail_translucent_b")))
+                                          .texture("glass", textureSide);
 
-        BlockModelBuilder modelL = models().getBuilder(path + "_lower")
-                                           .parent(models().getExistingFile(modLoc("block/guardrail_translucent_lower")))
-                                           .texture("glass", textureSide)
-                                           .texture("glass_side", textureTop);
+        BlockModelBuilder modelL = models().getBuilder(path + "_lower_b")
+                                           .parent(models().getExistingFile(modLoc("block/guardrail_translucent_lower_b")))
+                                           .texture("glass", textureSide);
 
-        BlockModelBuilder modelC = models().getBuilder(path + "_corner")
-                                           .parent(models().getExistingFile(modLoc("block/guardrail_translucent_corner")))
-                                           .texture("glass", textureSide)
-                                           .texture("glass_side", textureTop);
+        BlockModelBuilder modelC = models().getBuilder(path + "_corner_b")
+                                           .parent(models().getExistingFile(modLoc("block/guardrail_translucent_corner_b")))
+                                           .texture("glass", textureSide);
 
-        BlockModelBuilder modelCL = models().getBuilder(path + "_corner_lower")
-                                            .parent(models().getExistingFile(modLoc("block/guardrail_translucent_corner_lower")))
-                                            .texture("glass", textureSide)
-                                            .texture("glass_side", textureTop);
+        BlockModelBuilder modelCL = models().getBuilder(path + "_corner_lower_b")
+                                            .parent(models().getExistingFile(modLoc("block/guardrail_translucent_corner_lower_b")))
+                                            .texture("glass", textureSide);
 
-        guardrailStates(block, model, modelL, modelC, modelCL, false);
-        itemModels().getBuilder(path).parent(model);
+        ModelFile model1 = models().getExistingFile(modLoc("block/guardrail_translucent_a"));
+        ModelFile model2 = models().getExistingFile(modLoc("block/guardrail_translucent_lower_a"));
+        ModelFile model3 = models().getExistingFile(modLoc("block/guardrail_translucent_corner_a"));
+        ModelFile model4 = models().getExistingFile(modLoc("block/guardrail_translucent_corner_lower_a"));
+        getMultipartBuilder(block)
+                .part().modelFile(model).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().modelFile(model1).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(model).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model1).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(model).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model1).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(model).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model1).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().modelFile(modelL).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().modelFile(model2).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelL).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().uvLock(true).modelFile(model2).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelL).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().uvLock(true).modelFile(model2).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelL).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().uvLock(true).modelFile(model2).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, false)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().modelFile(modelC).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().modelFile(model3).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(modelC).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model3).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(modelC).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model3).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().uvLock(true).modelFile(modelC).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+                .part().uvLock(true).modelFile(model3).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, false)
+                .end()
+
+                .part().modelFile(modelCL).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().modelFile(model4).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelCL).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+                .part().uvLock(true).modelFile(model4).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelCL).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end().part().uvLock(true).modelFile(model4).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end()
+
+                .part().uvLock(true).modelFile(modelCL).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end().part().uvLock(true).modelFile(model4).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .condition(GuardrailBlock.CORNER, true)
+                .condition(GuardrailBlock.LOWER, true)
+                .end();
+
+        itemModels().getBuilder(path).parent(models().getBuilder(path + "_inv")
+                                                     .parent(models().getExistingFile(modLoc("block/guardrail_translucent_inv")))
+                                                     .texture("glass", textureSide));
     }
 
     private void customGuardrail(DeferredBlock<Block> deferredBlock, ResourceLocation textureSide, ResourceLocation textureTop, ResourceLocation textureBottom, boolean lockUV) {
@@ -1408,6 +1868,20 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .condition(BlockStateProperties.FACING, Direction.DOWN).end();
     }
 
+    private void windowA(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        horizontalAxisModel(
+                block,
+                path,
+                models()
+                        .withExistingParent(path, modLoc("block/window_a"))
+                        .texture("all", material),
+                true
+        );
+    }
+
     private void table(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
@@ -1569,7 +2043,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelLeft = models().withExistingParent(path + "_left", modLoc("block/garden_chair_wooden_left")).texture("all", material);
         ModelFile modelRight = models().withExistingParent(path + "_right", modLoc("block/garden_chair_wooden_right")).texture("all", material);
 
-        gardenChair(block, modelSingle, modelCenter, modelLeft, modelRight);
+        longChair(block, modelSingle, modelCenter, modelLeft, modelRight);
 
         itemModels().getBuilder(path).parent(modelSingle);
     }
@@ -1587,7 +2061,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelLeft = models().withExistingParent(path + "_left", modLoc("block/garden_chair_stone_left_all")).texture("all", material);
         ModelFile modelRight = models().withExistingParent(path + "_right", modLoc("block/garden_chair_stone_right_all")).texture("all", material);
 
-        gardenChair(block, modelSingle, modelCenter, modelLeft, modelRight);
+        longChair(block, modelSingle, modelCenter, modelLeft, modelRight);
 
         itemModels().getBuilder(path).parent(modelSingle);
     }
@@ -1613,12 +2087,26 @@ public class BlockStateGen extends FSBlockStateProvider {
                                        .texture("top", materialTop)
                                        .texture("bottom", materialBottom);
 
-        gardenChair(block, modelSingle, modelCenter, modelLeft, modelRight);
+        longChair(block, modelSingle, modelCenter, modelLeft, modelRight);
 
         itemModels().getBuilder(path).parent(modelSingle);
     }
 
-    private void gardenChair(Block block, ModelFile modelSingle, ModelFile modelCenter, ModelFile modelLeft, ModelFile modelRight) {
+    private void woolSofa(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        ModelFile modelSingle = models().withExistingParent(path + "_single", modLoc("block/wool_sofa_single")).texture("all", material);
+        ModelFile modelCenter = models().withExistingParent(path + "_center", modLoc("block/wool_sofa_center")).texture("all", material);
+        ModelFile modelLeft = models().withExistingParent(path + "_left", modLoc("block/wool_sofa_left")).texture("all", material);
+        ModelFile modelRight = models().withExistingParent(path + "_right", modLoc("block/wool_sofa_right")).texture("all", material);
+
+        longChair(block, modelSingle, modelCenter, modelLeft, modelRight);
+
+        itemModels().getBuilder(path).parent(modelSingle);
+    }
+
+    private void longChair(Block block, ModelFile modelSingle, ModelFile modelCenter, ModelFile modelLeft, ModelFile modelRight) {
         getVariantBuilder(block)
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
@@ -1693,37 +2181,65 @@ public class BlockStateGen extends FSBlockStateProvider {
         BlockModelBuilder model = models().getBuilder(path)
                                               .parent(models().getExistingFile(modLoc("block/one_cut_block_all")))
                                               .texture("all", material);
-        getMultipartBuilder(block)
-                .part().modelFile(model).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH).end()
-                .part().modelFile(model).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(model).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH).end()
-                .part().modelFile(model).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(model).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST).end()
-                .part().modelFile(model).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(model).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST).end()
-                .part().modelFile(model).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(model).rotationX(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP).end()
-                .part().modelFile(model).rotationX(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(model).rotationX(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN).end()
-                .part().modelFile(model).rotationX(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN)
-                .condition(OneCutBlock.DOUBLE, true).end();
+        BlockModelBuilder modelD = models().getBuilder(path + "_double")
+                                          .parent(models().getExistingFile(modLoc("block/one_cut_block_all_double")))
+                                          .texture("all", material);
+
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(180).uvLock(true).modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(270).uvLock(true).modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(90).uvLock(true).modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationX(270).uvLock(true).modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationX(90).uvLock(true).modelFile(modelD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationX(90).uvLock(true).modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationX(90).uvLock(true).modelFile(modelD).addModel();
+
         itemModels().getBuilder(path).parent(model);
     }
 
@@ -1736,43 +2252,77 @@ public class BlockStateGen extends FSBlockStateProvider {
                                               .texture("side", materialSide)
                                               .texture("top", materialTop)
                                               .texture("bottom", materialTop);
-        BlockModelBuilder modelDown = models().getBuilder(path + "_down")
+        BlockModelBuilder modelSideD = models().getBuilder(path + "_horizontal_double")
+                                              .parent(models().getExistingFile(modLoc("block/one_cut_block_horizontal_double")))
+                                              .texture("side", materialSide)
+                                              .texture("top", materialTop)
+                                              .texture("bottom", materialTop);
+        BlockModelBuilder modelVertical = models().getBuilder(path + "_vertical")
                                               .parent(models().getExistingFile(modLoc("block/one_cut_block_down")))
                                               .texture("side", materialSide)
                                               .texture("top", materialTop)
                                               .texture("bottom", materialTop);
+        BlockModelBuilder modelVerticalD = models().getBuilder(path + "_vertical_double")
+                                              .parent(models().getExistingFile(modLoc("block/one_cut_block_vertical_double")))
+                                              .texture("side", materialSide)
+                                              .texture("top", materialTop)
+                                              .texture("bottom", materialTop);
 
-        getMultipartBuilder(block)
-                .part().modelFile(modelSide).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH).end()
-                .part().modelFile(modelSide).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH).end()
-                .part().modelFile(modelSide).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST).end()
-                .part().modelFile(modelSide).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST).end()
-                .part().modelFile(modelSide).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelDown).rotationX(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP).end()
-                .part().modelFile(modelDown).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelDown).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN).end()
-                .part().modelFile(modelDown).rotationX(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN)
-                .condition(OneCutBlock.DOUBLE, true).end();
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(180).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(270).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationX(180).uvLock(true).modelFile(modelVertical).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelVerticalD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(modelVertical).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelVerticalD).addModel();
+
         itemModels().getBuilder(path).parent(modelSide);
     }
 
@@ -1785,47 +2335,83 @@ public class BlockStateGen extends FSBlockStateProvider {
                                               .texture("side", materialSide)
                                               .texture("top", materialTop)
                                               .texture("bottom", materialBottom);
+        BlockModelBuilder modelSideD = models().getBuilder(path + "_horizontal_double")
+                                               .parent(models().getExistingFile(modLoc("block/one_cut_block_horizontal_double")))
+                                               .texture("side", materialSide)
+                                               .texture("top", materialTop)
+                                               .texture("bottom", materialBottom);
         BlockModelBuilder modelDown = models().getBuilder(path + "_down")
                                               .parent(models().getExistingFile(modLoc("block/one_cut_block_down")))
                                               .texture("side", materialSide)
                                               .texture("top", materialTop)
                                               .texture("bottom", materialBottom);
         BlockModelBuilder modelUp = models().getBuilder(path + "_up")
-                                              .parent(models().getExistingFile(modLoc("block/one_cut_block_up")))
-                                              .texture("side", materialSide)
-                                              .texture("bottom", materialBottom);
+                                            .parent(models().getExistingFile(modLoc("block/one_cut_block_up")))
+                                            .texture("side", materialSide)
+                                            .texture("top", materialBottom)
+                                            .texture("bottom", materialBottom);
+        BlockModelBuilder modelVerticalD = models().getBuilder(path + "_vertical_double")
+                                                   .parent(models().getExistingFile(modLoc("block/one_cut_block_vertical_double")))
+                                                   .texture("side", materialSide)
+                                                   .texture("top", materialBottom)
+                                                   .texture("bottom", materialBottom);
 
-        getMultipartBuilder(block)
-                .part().modelFile(modelSide).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH).end()
-                .part().modelFile(modelSide).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.NORTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH).end()
-                .part().modelFile(modelSide).addModel()
-                .condition(BlockStateProperties.FACING, Direction.SOUTH)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST).end()
-                .part().modelFile(modelSide).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.WEST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelSide).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST).end()
-                .part().modelFile(modelSide).rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.EAST)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelUp).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP).end()
-                .part().modelFile(modelDown).addModel()
-                .condition(BlockStateProperties.FACING, Direction.UP)
-                .condition(OneCutBlock.DOUBLE, true).end()
-                .part().modelFile(modelDown).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN).end()
-                .part().modelFile(modelUp).uvLock(true).addModel()
-                .condition(BlockStateProperties.FACING, Direction.DOWN)
-                .condition(OneCutBlock.DOUBLE, true).end();
+
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(180).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(270).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSide).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().rotationY(90).uvLock(true).modelFile(modelSideD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(modelUp).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelVerticalD).addModel()
+
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, false)
+                .modelForState().modelFile(modelDown).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN)
+                .with(OneCutBlock.DOUBLE, true)
+                .modelForState().modelFile(modelVerticalD).addModel();
+
         itemModels().getBuilder(path).parent(modelSide);
     }
 
@@ -1927,166 +2513,272 @@ public class BlockStateGen extends FSBlockStateProvider {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
 
-        BlockModelBuilder model1 = models().getBuilder(path)
+        BlockModelBuilder model = models().getBuilder(path)
                                            .parent(models().getExistingFile(modLoc("block/double_cut_block_all")))
                                            .texture("all", material);
-        BlockModelBuilder model2 = models().getBuilder(path + "_vertical")
+        BlockModelBuilder modelC = models().getBuilder(path + "_clip")
+                                          .parent(models().getExistingFile(modLoc("block/double_cut_block_clip")))
+                                          .texture("all", material);
+        BlockModelBuilder modelV = models().getBuilder(path + "_vertical")
                                            .parent(models().getExistingFile(modLoc("block/double_cut_block_vertical_all")))
                                            .texture("all", material);
-        getMultipartBuilder(block)
-                .part().modelFile(model1).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model1)
-                .rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model1)
-                .rotationX(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model1)
-                .rotationX(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_D, true).end()
-                .part().modelFile(model1)
-                .rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model1)
-                .rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model1)
-                .rotationX(180).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model1)
-                .rotationX(270).rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_D, true).end()
-                .part().modelFile(model2)
-                .addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model2)
-                .rotationY(90).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model2)
-                .rotationY(270).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model2)
-                .rotationY(180).uvLock(true).addModel()
-                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_D, true).end();
-        itemModels().getBuilder(path).parent(model1);
+        BlockModelBuilder modelVC = models().getBuilder(path + "_vertical_clip")
+                                           .parent(models().getExistingFile(modLoc("block/double_cut_block_vertical_clip")))
+                                           .texture("all", material);
+        BlockModelBuilder modelInv = models().getBuilder(path + "_inv")
+                                            .parent(models().getExistingFile(modLoc("block/double_cut_block_inv_all")))
+                                            .texture("all", material);
+
+        doubleCutBlockState(block, path, model, modelC, modelC, modelC, modelV, modelVC, modelInv);
     }
 
     private void doubleCutBlockCustom(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop, ResourceLocation materialBottom) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
 
-        BlockModelBuilder model1 = models().getBuilder(path)
-                                           .parent(models().getExistingFile(modLoc("block/double_cut_block")))
-                                           .texture("side", materialSide)
-                                           .texture("top", materialTop)
-                                           .texture("bottom", materialBottom);
-        BlockModelBuilder model2 = models().getBuilder(path + "_top")
-                                           .parent(models().getExistingFile(modLoc("block/double_cut_block_top")))
-                                           .texture("side", materialSide)
-                                           .texture("bottom", materialBottom);
+        BlockModelBuilder model = models().getBuilder(path)
+                                          .parent(models().getExistingFile(modLoc("block/double_cut_block")))
+                                          .texture("side", materialSide)
+                                          .texture("bottom", materialBottom);
+        BlockModelBuilder modelC_top = models().getBuilder(path + "_clip_top")
+                                               .parent(models().getExistingFile(modLoc("block/double_cut_block_clip")))
+                                               .texture("all", materialTop);
+        BlockModelBuilder modelC_bottom = models().getBuilder(path + "_clip_bottom")
+                                                  .parent(models().getExistingFile(modLoc("block/double_cut_block_clip")))
+                                                  .texture("all", materialBottom);
+        BlockModelBuilder modelC_side = models().getBuilder(path + "_clip_side")
+                                                .parent(models().getExistingFile(modLoc("block/double_cut_block_clip")))
+                                                .texture("all", materialSide);
         BlockModelBuilder modelV = models().getBuilder(path + "_vertical")
                                            .parent(models().getExistingFile(modLoc("block/double_cut_block_vertical")))
                                            .texture("side", materialSide)
                                            .texture("top", materialTop)
                                            .texture("bottom", materialBottom);
+        BlockModelBuilder modelVC = models().getBuilder(path + "_vertical_clip")
+                                            .parent(models().getExistingFile(modLoc("block/double_cut_block_vertical_clip")))
+                                            .texture("all", materialSide);
+        BlockModelBuilder modelInv = models().getBuilder(path + "_inv")
+                                             .parent(models().getExistingFile(modLoc("block/double_cut_block_inv")))
+                                             .texture("side", materialSide)
+                                             .texture("top", materialTop)
+                                             .texture("bottom", materialBottom);
 
+        doubleCutBlockState(block, path, model, modelC_top, modelC_bottom, modelC_side, modelV, modelVC, modelInv);
+    }
+
+    private void doubleCutBlockState(
+            Block block,
+            String path,
+            ModelFile model,
+            ModelFile modelC_top,
+            ModelFile modelC_bottom,
+            ModelFile modelC_side,
+            ModelFile modelV,
+            ModelFile modelVC,
+            ModelFile modelInv
+    ) {
         getMultipartBuilder(block)
-                .part().modelFile(model1).addModel()
+                .part().modelFile(model).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model1)
-                .rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(90).rotationY(180).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model2).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+                .part().modelFile(modelC_top).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model2)
-                .rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+
+                .part().modelFile(model).rotationY(180).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.X)
-                .condition(FDBlockStateProperties.PART_D, true).end()
-                .part().modelFile(model1)
-                .rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .end()
+                .part().modelFile(modelC_bottom).rotationX(180).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC_side).rotationX(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(270).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+                .part().modelFile(modelC_bottom).rotationX(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.X)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+
+                .part().modelFile(model).rotationY(270).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model1)
-                .rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(90).rotationY(90).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model2)
-                .rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(270).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model2)
-                .rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+
+                .part().modelFile(model).rotationY(90).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
-                .condition(FDBlockStateProperties.PART_D, true).end()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(90).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .end()
+                .part().modelFile(modelC_bottom).rotationX(180).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC_side).rotationX(270).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .end()
+                .part().modelFile(modelC_side).rotationX(270).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+                .part().modelFile(modelC_bottom).rotationX(180).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+
                 .part().modelFile(modelV).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(modelV)
-                .rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .end()
+                .part().modelFile(modelVC).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(modelV)
-                .rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+                .part().modelFile(modelVC).rotationX(180).rotationY(90).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(modelV)
-                .rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+
+                .part().modelFile(modelV).rotationY(90).uvLock(true).addModel()
                 .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
-                .condition(FDBlockStateProperties.PART_D, true).end();
-        itemModels().getBuilder(path).parent(model1);
+                .condition(FDBlockStateProperties.PART_B, true)
+                .end()
+                .part().modelFile(modelVC).rotationX(180).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelVC).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(modelV).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .end()
+                .part().modelFile(modelVC).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelVC).rotationX(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+
+                .part().modelFile(modelV).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .end()
+                .part().modelFile(modelVC).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+                .part().modelFile(modelVC).rotationX(180).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end();
+
+        itemModels().getBuilder(path).parent(modelInv);
     }
 
     private void tripleCut(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
 
-        BlockModelBuilder modelFile = models().getBuilder(path)
+        BlockModelBuilder model = models().getBuilder(path)
                                               .parent(models().getExistingFile(modLoc("block/triple_cut_block_all")))
                                               .texture("all", material);
+        BlockModelBuilder modelC = models().getBuilder(path + "_clip")
+                                           .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_top")))
+                                           .texture("all", material);
+        BlockModelBuilder modelC2 = models().getBuilder(path + "_clip_2")
+                                            .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_bottom")))
+                                            .texture("all", material);
+        BlockModelBuilder modelInv = models().getBuilder(path + "_inv")
+                                            .parent(models().getExistingFile(modLoc("block/triple_cut_block_inv_all")))
+                                            .texture("all", material);
 
-        getMultipartBuilder(block)
-                .part().modelFile(modelFile)
-                .addModel()
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(modelFile)
-                .rotationY(90).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(modelFile)
-                .rotationY(270).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(modelFile)
-                .rotationY(180).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_D, true).end()
-                .part().modelFile(modelFile)
-                .rotationX(270).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_E, true).end()
-                .part().modelFile(modelFile)
-                .rotationX(270).rotationY(90).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_F, true).end()
-                .part().modelFile(modelFile)
-                .rotationX(180).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_G, true).end()
-                .part().modelFile(modelFile)
-                .rotationX(180).rotationY(270).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_H, true).end();
-
-        itemModels().getBuilder(path).parent(modelFile);
+        tripleCutState(block, path, model, modelC, modelC2, modelC, modelC2, modelInv);
     }
 
     private void tripleCutCustom(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop, ResourceLocation materialBottom) {
@@ -2096,39 +2788,215 @@ public class BlockStateGen extends FSBlockStateProvider {
         BlockModelBuilder model = models().getBuilder(path)
                                           .parent(models().getExistingFile(modLoc("block/triple_cut_block")))
                                           .texture("side", materialSide)
+                                          .texture("bottom", materialBottom);
+        BlockModelBuilder modelC = models().getBuilder(path + "_clip")
+                                            .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_top")))
+                                            .texture("all", materialSide);
+        BlockModelBuilder modelC2 = models().getBuilder(path + "_clip_2")
+                                           .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_bottom")))
+                                           .texture("all", materialSide);
+        BlockModelBuilder modelCU = models().getBuilder(path + "_clip_up")
+                                           .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_top")))
+                                           .texture("all", materialTop);
+        BlockModelBuilder modelCD = models().getBuilder(path + "_clip_bottom")
+                                            .parent(models().getExistingFile(modLoc("block/triple_cut_block_clip_bottom")))
+                                            .texture("all", materialBottom);
+        BlockModelBuilder modelInv = models().getBuilder(path + "_inv")
+                                          .parent(models().getExistingFile(modLoc("block/triple_cut_block_inv")))
+                                          .texture("side", materialSide)
                                           .texture("top", materialTop)
                                           .texture("bottom", materialBottom);
-        BlockModelBuilder model2 = models().getBuilder(path + "_up")
-                                           .parent(models().getExistingFile(modLoc("block/triple_cut_block_up")))
-                                           .texture("side", materialSide)
-                                           .texture("bottom", materialBottom);
 
+        tripleCutState(block, path, model, modelC, modelC2, modelCU, modelCD, modelInv);
+    }
+
+    private void tripleCutState(Block block, String path, ModelFile model, ModelFile modelC, ModelFile modelC2, ModelFile modelC_top, ModelFile modelC_bottom, ModelFile modelInv) {
         getMultipartBuilder(block)
                 .part().modelFile(model).addModel()
-                .condition(FDBlockStateProperties.PART_A, true).end()
-                .part().modelFile(model)
-                .rotationY(90).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_B, true).end()
-                .part().modelFile(model)
-                .rotationY(270).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_C, true).end()
-                .part().modelFile(model)
-                .rotationY(180).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_D, true).end()
-                .part().modelFile(model2).addModel()
-                .condition(FDBlockStateProperties.PART_E, true).end()
-                .part().modelFile(model2)
-                .rotationY(90).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_F, true).end()
-                .part().modelFile(model2)
-                .rotationY(270).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_G, true).end()
-                .part().modelFile(model2)
-                .rotationY(180).uvLock(true).addModel()
-                .condition(FDBlockStateProperties.PART_H, true).end();
+                .condition(FDBlockStateProperties.PART_A, true)
+                .end()
+                .part().modelFile(modelC).rotationX(90).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+                .part().modelFile(modelC2).rotationX(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+                .part().modelFile(modelC_top).addModel()
+                .condition(FDBlockStateProperties.PART_A, true)
+                .condition(FDBlockStateProperties.PART_E, false)
+                .end()
 
-        itemModels().getBuilder(path).parent(model);
+                .part().modelFile(model).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .end()
+                .part().modelFile(modelC2).rotationX(90).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC).rotationX(90).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_B, true)
+                .condition(FDBlockStateProperties.PART_F, false)
+                .end()
+
+                .part().modelFile(model).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_C, true)
+                .end()
+                .part().modelFile(modelC).rotationX(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+                .part().modelFile(modelC2).rotationX(90).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_C, true)
+                .condition(FDBlockStateProperties.PART_G, false)
+                .end()
+
+                .part().modelFile(model).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_D, true)
+                .end()
+                .part().modelFile(modelC2).rotationX(90).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+                .part().modelFile(modelC).rotationX(90).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+                .part().modelFile(modelC_top).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_D, true)
+                .condition(FDBlockStateProperties.PART_H, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_E, true)
+                .end()
+                .part().modelFile(modelC2).rotationX(270).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_E, true)
+                .condition(FDBlockStateProperties.PART_F, false)
+                .end()
+                .part().modelFile(modelC).rotationX(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_E, true)
+                .condition(FDBlockStateProperties.PART_G, false)
+                .end()
+                .part().modelFile(modelC_bottom).addModel()
+                .condition(FDBlockStateProperties.PART_E, true)
+                .condition(FDBlockStateProperties.PART_A, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_F, true)
+                .end()
+                .part().modelFile(modelC).rotationX(270).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_F, true)
+                .condition(FDBlockStateProperties.PART_E, false)
+                .end()
+                .part().modelFile(modelC2).rotationX(270).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_F, true)
+                .condition(FDBlockStateProperties.PART_H, false)
+                .end()
+                .part().modelFile(modelC_bottom).rotationY(90).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_F, true)
+                .condition(FDBlockStateProperties.PART_B, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_G, true)
+                .end()
+                .part().modelFile(modelC2).rotationX(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_G, true)
+                .condition(FDBlockStateProperties.PART_E, false)
+                .end()
+                .part().modelFile(modelC).rotationX(270).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_G, true)
+                .condition(FDBlockStateProperties.PART_H, false)
+                .end()
+                .part().modelFile(modelC_bottom).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_G, true)
+                .condition(FDBlockStateProperties.PART_C, false)
+                .end()
+
+                .part().modelFile(model).rotationX(180).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_H, true)
+                .end()
+                .part().modelFile(modelC).rotationX(270).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_H, true)
+                .condition(FDBlockStateProperties.PART_F, false)
+                .end()
+                .part().modelFile(modelC2).rotationX(270).rotationY(270).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_H, true)
+                .condition(FDBlockStateProperties.PART_G, false)
+                .end()
+                .part().modelFile(modelC_bottom).rotationY(180).uvLock(true).addModel()
+                .condition(FDBlockStateProperties.PART_H, true)
+                .condition(FDBlockStateProperties.PART_D, false)
+                .end();
+
+        itemModels().getBuilder(path).parent(modelInv);
     }
-    
+
+    private void panel4px(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        BlockModelBuilder model = models().getBuilder(path)
+                                          .parent(models().getExistingFile(modLoc("block/panel_4px")))
+                                          .texture("all", material);
+
+        directionModel(block, path, model, true);
+    }
+
+    private void panel4px(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop) {
+        panel4px(deferredBlock, materialSide, materialTop, materialTop);
+    }
+
+    private void panel4px(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop, ResourceLocation materialBottom) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        BlockModelBuilder model = models().getBuilder(path)
+                                          .parent(models().getExistingFile(modLoc("block/panel_4px_face")))
+                                          .texture("side", materialSide)
+                                          .texture("top", materialTop)
+                                          .texture("bottom", materialBottom);
+
+        directionModel(block, path, model, false);
+    }
+
+    private void panel2px(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        BlockModelBuilder model = models().getBuilder(path)
+                                          .parent(models().getExistingFile(modLoc("block/panel_2px")))
+                                          .texture("all", material);
+
+        directionModel(block, path, model, true);
+    }
+
+    private void panel2px(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop) {
+        panel2px(deferredBlock, materialSide, materialTop, materialTop);
+    }
+
+    private void panel2px(DeferredBlock<Block> deferredBlock, ResourceLocation materialSide, ResourceLocation materialTop, ResourceLocation materialBottom) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        BlockModelBuilder model = models().getBuilder(path)
+                                          .parent(models().getExistingFile(modLoc("block/panel_2px_face")))
+                                          .texture("side", materialSide)
+                                          .texture("top", materialTop)
+                                          .texture("bottom", materialBottom);
+
+        directionModel(block, path, model, false);
+    }
 
 }

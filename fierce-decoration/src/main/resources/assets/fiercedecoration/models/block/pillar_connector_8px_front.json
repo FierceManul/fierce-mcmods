@@ -7,7 +7,6 @@
 		{
 			"from": [4, 4, 0],
 			"to": [12, 12, 4],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
 				"north": {"uv": [4, 4, 12, 12], "texture": "#end", "cullface": "north"},
 				"east": {"uv": [4, 0, 12, 4], "rotation": 90, "texture": "#side"},

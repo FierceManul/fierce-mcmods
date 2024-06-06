@@ -22,7 +22,7 @@
 				"north": {"uv": [0, 0, 16, 11], "texture": "#top"},
 				"south": {"uv": [0, 0, 16, 11], "texture": "#bottom"},
 				"west": {"uv": [5, 0, 16, 3], "rotation": 270, "texture": "#side"},
-				"up": {"uv": [0, 0, 16, 3], "texture": "#side", "cullface": "up"}
+				"up": {"uv": [0, 0, 16, 3], "texture": "#side"}
 			}
 		},
 		{

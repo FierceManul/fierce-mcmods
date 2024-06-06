@@ -1,0 +1,44 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "minecraft:block/oak_log",
+		"side": "minecraft:block/oak_log",
+		"end": "fiercedecoration:block/firewood_end"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 2],
+			"to": [16, 4, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 16], "rotation": 270, "texture": "#side"},
+				"east": {"uv": [2, 12, 14, 16], "texture": "#end", "cullface": "east"},
+				"south": {"uv": [12, 0, 16, 16], "rotation": 90, "texture": "#side"},
+				"west": {"uv": [2, 12, 14, 16], "texture": "#end", "cullface": "west"},
+				"up": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#side"},
+				"down": {"uv": [0, 2, 16, 14], "texture": "#side", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 4, 4],
+			"to": [16, 8, 12],
+			"faces": {
+				"north": {"uv": [2, 0, 6, 16], "rotation": 90, "texture": "#side"},
+				"east": {"uv": [4, 8, 12, 12], "texture": "#end", "cullface": "east"},
+				"south": {"uv": [10, 0, 14, 16], "rotation": 270, "texture": "#side"},
+				"west": {"uv": [4, 8, 12, 12], "texture": "#end", "cullface": "west"},
+				"up": {"uv": [4, 0, 12, 16], "rotation": 270, "texture": "#side"}
+			}
+		},
+		{
+			"from": [0, 8, 6],
+			"to": [16, 12, 10],
+			"faces": {
+				"north": {"uv": [8, 0, 12, 16], "rotation": 270, "texture": "#side"},
+				"east": {"uv": [6, 4, 10, 8], "texture": "#end", "cullface": "east"},
+				"south": {"uv": [4, 0, 8, 16], "rotation": 90, "texture": "#side"},
+				"west": {"uv": [6, 4, 10, 8], "texture": "#end", "cullface": "west"},
+				"up": {"uv": [6, 0, 10, 16], "rotation": 90, "texture": "#side"}
+			}
+		}
+	]
+}

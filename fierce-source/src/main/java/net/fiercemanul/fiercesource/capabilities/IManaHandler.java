@@ -3,7 +3,7 @@ package net.fiercemanul.fiercesource.capabilities;
 /**
  * 魔能能力,与电力相同的行为.
  */
-public interface IManaStorage {
+public interface IManaHandler {
 
     /**
      * 注入魔能.返回接受的量.

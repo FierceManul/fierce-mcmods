@@ -1,10 +1,10 @@
 package net.fiercemanul.fiercesource.capabilities;
 
-public class InfiniteManaStorage implements IManaStorage{
+public class InfiniteManaContainer implements IManaHandler {
 
-    public static final InfiniteManaStorage INSTANCE = new InfiniteManaStorage();
+    public static final InfiniteManaContainer INSTANCE = new InfiniteManaContainer();
 
-    private InfiniteManaStorage() {}
+    private InfiniteManaContainer() {}
 
     @Override
     public long receiveMana(long maxReceive, boolean simulate){

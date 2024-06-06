@@ -1,0 +1,15 @@
+{
+	"parent": "fiercedecoration:block/double_cut_block",
+	"textures": {
+		"particle": "#all"
+	},
+	"elements": [
+		{
+			"from": [0, 8, 0],
+			"to": [16, 8, 8],
+			"faces": {
+				"up": {"uv": [0, 8, 16, 16], "texture": "#all"}
+			}
+		}
+	]
+}

@@ -8,7 +8,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -26,7 +25,6 @@ public class GreenFunRoofBlock extends ModelBlock {
         super(pProperties
                       .strength(2.0F)
                       .ignitedByLava()
-                      .instrument(NoteBlockInstrument.BASS)
                       .mapColor(MapColor.PODZOL)
                       .sound(SoundType.WOOD)
                       .noOcclusion());

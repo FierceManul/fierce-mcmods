@@ -1,0 +1,38 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fireplace_heart_a"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fireplace_heart_b"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fireplace_heart_fire"
+      },
+      "when": {
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+          "model": "fiercedecoration:block/fireplace_heart_lit"
+      },
+      "when": {
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercedecoration:block/fireplace_heart_fuel"
+      },
+      "when": {
+        "lit": "false"
+      }
+    }
+  ]
+}

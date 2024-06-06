@@ -62,11 +62,6 @@ public class ModelBlock extends WrenchDismantleBlock implements SimpleWaterlogge
     }
 
     @Override
-    public boolean placeLiquid(LevelAccessor pLevel, BlockPos pPos, BlockState pState, FluidState pFluidState) {
-        return !isShapeFullBlock(pState.getShape(pLevel, pPos)) && SimpleWaterloggedBlock.super.placeLiquid(pLevel, pPos, pState, pFluidState);
-    }
-
-    @Override
     public boolean canPlaceLiquid(@Nullable Player pPlayer, BlockGetter pLevel, BlockPos pPos, BlockState pState, Fluid pFluid) {
         return !isShapeFullBlock(pState.getShape(pLevel, pPos)) && SimpleWaterloggedBlock.super.canPlaceLiquid(pPlayer, pLevel, pPos, pState, pFluid);
     }

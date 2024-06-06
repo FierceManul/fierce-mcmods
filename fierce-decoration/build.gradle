@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.80'
+    id 'net.neoforged.gradle.userdev' version '7.0.133'
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 java{
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(javaLanguageVersion)
     withSourcesJar()
 }
 
@@ -20,6 +20,12 @@ group = mod_group_id
 
 base {
     archivesName = mod_archivesName
+}
+
+minecraft {
+    accessTransformers {
+        file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
 }
 
 runs {
@@ -34,7 +40,6 @@ runs {
     }
     server {
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
     }
     gameTestServer {
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
@@ -45,6 +50,10 @@ runs {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
@@ -68,7 +77,7 @@ tasks.withType(ProcessResources).configureEach {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml']) {
+    filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -88,4 +97,11 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class FSRecipeProvider extends RecipeProvider {
 
@@ -52,7 +54,7 @@ public abstract class FSRecipeProvider extends RecipeProvider {
                                .save(pRecipeOutput, BuiltInRegistries.ITEM.getKey(pResult.asItem()).getNamespace() + ":stonecutting/" + getConversionRecipeName(pResult, pMaterial));
     }
 
-    public FSRecipeProvider(PackOutput pOutput) {
-        super(pOutput);
+    public FSRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
+        super(pOutput, pRegistries);
     }
 }

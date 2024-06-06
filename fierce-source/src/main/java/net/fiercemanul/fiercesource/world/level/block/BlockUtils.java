@@ -3,9 +3,12 @@ package net.fiercemanul.fiercesource.world.level.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.function.ToIntFunction;
 
 public final class BlockUtils {
 
@@ -33,5 +36,9 @@ public final class BlockUtils {
         else if (hitRelativePos.y < 0.5F - apothem) return BlockStateProperties.DOWN;
         else if (hitRelativePos.y > 0.5F + apothem) return BlockStateProperties.UP;
         else return defaultProperty;
+    }
+
+    public static ToIntFunction<BlockState> litBlockEmission(int plightValue) {
+        return state -> state.getValue(BlockStateProperties.LIT) ? plightValue : 0;
     }
 }

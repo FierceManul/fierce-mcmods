@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource;
 
 import com.mojang.logging.LogUtils;
-import net.fiercemanul.fiercesource.capabilities.InfiniteManaStorage;
+import net.fiercemanul.fiercesource.capabilities.InfiniteManaContainer;
 import net.fiercemanul.fiercesource.capabilities.ManaCapabilities;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
 import net.fiercemanul.fiercesource.config.Config;
@@ -18,10 +18,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,7 +30,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -87,10 +86,10 @@ public class FierceSource
 
     public static final DeferredItem<Item> SOUL_CRYSTAL_SHARD_ITEM = ITEMS.registerSimpleItem("soul_crystal_shard");
     public static final DeferredItem<Item> POS_RECORDER_ITEM = ITEMS.registerSimpleItem("pos_recorder");
-    public static final DeferredItem<Item> CLAW_HAMMER_ITEM = ITEMS.register("claw_hammer", () -> new CrowbarItem(new Item.Properties(), false));
-    public static final DeferredItem<Item> NETHERITE_CLAW_HAMMER_ITEM = ITEMS.register("netherite_claw_hammer", () -> new CrowbarItem(new Item.Properties(), true));
-    public static final DeferredItem<Item> CROWBAR_ITEM = ITEMS.register("crowbar", () -> new CrowbarItem(new Item.Properties(), false));
-    public static final DeferredItem<Item> NETHERITE_CROWBAR_ITEM = ITEMS.register("netherite_crowbar", () -> new CrowbarItem(new Item.Properties(), true));
+    public static final DeferredItem<Item> CLAW_HAMMER_ITEM = ITEMS.register("claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
+    public static final DeferredItem<Item> NETHERITE_CLAW_HAMMER_ITEM = ITEMS.register("netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
+    public static final DeferredItem<Item> CROWBAR_ITEM = ITEMS.register("crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
+    public static final DeferredItem<Item> NETHERITE_CROWBAR_ITEM = ITEMS.register("netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
     public static final DeferredItem<Item> MANA_ICON = ITEMS.registerSimpleItem("mana_icon");
     public static final DeferredItem<Item> FE_ICON = ITEMS.registerSimpleItem("fe_icon");
 
@@ -107,7 +106,7 @@ public class FierceSource
             }).build());
 
 
-    public FierceSource(IEventBus modEventBus) {
+    public FierceSource(IEventBus modEventBus, ModContainer modContainer) {
         TAB_ITEMS.add(new CreativeModeTabItem(LARGE_SOUL_CRYSTAL_BLOCK_ITEM, 0));
         TAB_ITEMS.add(new CreativeModeTabItem(MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM, 1));
         TAB_ITEMS.add(new CreativeModeTabItem(SMALL_SOUL_CRYSTAL_BLOCK_ITEM, 2));
@@ -122,8 +121,8 @@ public class FierceSource
         TAB_ITEMS.add(new CreativeModeTabItem(NETHERITE_CROWBAR_ITEM, 308));
 
 
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
         modEventBus.addListener(this::registerCapabilitiesEvent);
 
         BLOCKS.register(modEventBus);
@@ -140,26 +139,18 @@ public class FierceSource
         // Register the item to a creative tab
         //modEventBus.addListener(this::addCreative);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        // Register the commonSetup method for modloading
+        modEventBus.addListener(this::commonSetup);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+    private void commonSetup(FMLCommonSetupEvent event) {
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     public void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
         event.registerBlock(
                 ManaCapabilities.BLOCK,
-                (level, pos, state, blockEntity, context) -> InfiniteManaStorage.INSTANCE,
+                (level, pos, state, blockEntity, context) -> InfiniteManaContainer.INSTANCE,
                 CREATIVE_MANA_BLOCK.get()
         );
     }
@@ -186,7 +177,8 @@ public class FierceSource
         if (breakSpeedEvent.getEntity().getMainHandItem().getItem() instanceof CrowbarItem crowbarItem) {
             float destroySpeed = breakSpeedEvent.getState().getDestroySpeed(breakSpeedEvent.getEntity().level(), breakSpeedEvent.getPosition().orElse(BlockPos.ZERO));
             float newSpeed = 1.0F;
-            if (crowbarItem.is_netherite || destroySpeed <= 10.0F) newSpeed = (crowbarItem.is_netherite ? 8.0F : 4.0F) * destroySpeed;
+            boolean is_netherite = crowbarItem.getTier().equals(Tiers.NETHERITE);
+            if (is_netherite || destroySpeed <= 10.0F) newSpeed = (is_netherite ? 8.0F : 4.0F) * destroySpeed;
 
             //TODO: 以下为原版复制,注意版本更新.
             if (breakSpeedEvent.getEntity().hasEffect(MobEffects.DIG_SLOWDOWN)) {
@@ -212,7 +204,7 @@ public class FierceSource
 
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
         @SubscribeEvent

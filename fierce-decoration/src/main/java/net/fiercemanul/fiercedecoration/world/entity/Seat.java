@@ -18,6 +18,7 @@ import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 public class Seat extends VehicleEntity {
 
 
-    public static final Vector3f PASSENGER_ATTACHMENT_POINT = new Vector3f(0.0F, 0.0F, 0.0F);
+    public static final Vec3 PASSENGER_ATTACHMENT_POINT = new Vec3(0.0, 0.0, 0.0);
     public static final ImmutableMap<Direction, Vec3i[]> DISMOUNT_LOCATIONS = ImmutableMap
             .<Direction, Vec3i[]>builder()
             .put(Direction.NORTH, getOffsets(Direction.NORTH))
@@ -50,11 +51,8 @@ public class Seat extends VehicleEntity {
         };
     }
 
-    private EntityDimensions dimensions;
-
     public Seat(EntityType<? extends Seat> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.dimensions = pEntityType.getDimensions();
     }
 
     public Seat(Level pLevel, double pX, double pY, double pZ) {
@@ -66,18 +64,8 @@ public class Seat extends VehicleEntity {
     }
 
     @Override
-    public float getStepHeight() {
+    public float maxUpStep() {
         return 0.25F;
-    }
-
-    @Override
-    public float getEyeHeight(Pose pPose) {
-        return 0.0F;
-    }
-
-    @Override
-    protected float getEyeHeight(Pose pPose, EntityDimensions pDimensions) {
-        return 0.0F;
     }
 
     @Override
@@ -91,7 +79,7 @@ public class Seat extends VehicleEntity {
     }
 
     @Override
-    protected Vector3f getPassengerAttachmentPoint(Entity pEntity, EntityDimensions pDimensions, float pScale) {
+    protected Vec3 getPassengerAttachmentPoint(Entity pEntity, EntityDimensions pDimensions, float pScale) {
         return PASSENGER_ATTACHMENT_POINT;
     }
 
@@ -137,8 +125,9 @@ public class Seat extends VehicleEntity {
     @Override
     protected AABB makeBoundingBox() {
         if (getFirstPassenger() != null) {
-            AABB aabb = getFirstPassenger().getType().getDimensions().makeBoundingBox(position());
-            return aabb.setMaxY(aabb.maxY + getFirstPassenger().getMyRidingOffset(this));
+            EntityDimensions dimensions = getFirstPassenger().getType().getDimensions();
+            AABB aabb = dimensions.makeBoundingBox(position());
+            return aabb.setMaxY(aabb.maxY - dimensions.attachments().get(EntityAttachment.VEHICLE, 0, this.getYRot()).y);
         }
         return super.makeBoundingBox();
     }

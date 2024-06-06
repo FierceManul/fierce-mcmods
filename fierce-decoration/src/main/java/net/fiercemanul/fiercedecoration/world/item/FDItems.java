@@ -15,6 +15,7 @@ public final class FDItems {
 
     public static final DeferredItem<BlockItem> PORTABLE_WORKSTATION = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.PORTABLE_WORKSTATION);
     public static final DeferredItem<BlockItem> LAPTOP_TERMINAL = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.LAPTOP_TERMINAL);
+    public static final DeferredItem<BlockItem> BOOK_AND_LAMP = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.BOOK_AND_LAMP);
     public static final DeferredItem<BlockItem> STAR_BLOCK = FierceDecoration.ITEMS.registerItem("star_block", StarBlockItem::new);
     public static final DeferredItem<BlockItem> ITEM_FRAME_SHELL_THIN = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.ITEM_FRAME_SHELL_THIN);
     public static final DeferredItem<BlockItem> ITEM_FRAME_SHELL_BIG = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.ITEM_FRAME_SHELL_BIG);
@@ -24,6 +25,13 @@ public final class FDItems {
     public static final DeferredItem<BlockItem> LIGHT_TUBE = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.LIGHT_TUBE_BLOCK);
     public static final DeferredItem<BlockItem> LIGHT_PLATE = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.LIGHT_PLATE_BLOCK);
     public static final DeferredItem<BlockItem> GREEN_FUN_ROOF = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.GREEN_FUN_ROOF);
+    public static final DeferredItem<BlockItem> HALF_GRASS_BLOCK = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.HALF_GRASS_BLOCK);
+    public static final DeferredItem<BlockItem> HALF_PODZOL = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.HALF_PODZOL);
+    public static final DeferredItem<BlockItem> HALF_MYCELIUM = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.HALF_MYCELIUM);
+    public static final DeferredItem<BlockItem> HALF_DIRT = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.HALF_DIRT);
+    public static final DeferredItem<BlockItem> HALF_PATH = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.HALF_PATH_BLOCK);
+    public static final DeferredItem<BlockItem> FIREWOOD = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.FIREWOOD);
+    public static final DeferredItem<BlockItem> FIREPLACE_HEART = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.FIREPLACE_HEART);
     public static final DeferredItem<BlockItem> ROCK_PATH = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.ROCK_PATH);
     public static final DeferredItem<BlockItem> CRAFTING_PAD = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.CRAFTING_PAD);
     public static final DeferredItem<BlockItem> CRAFTING_DESK = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.CRAFTING_DESK);
@@ -142,7 +150,7 @@ public final class FDItems {
     public static final DeferredItem<BlockItem> PURPLE_LAMP = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.PURPLE_LAMP);
     public static final DeferredItem<BlockItem> RAINBOW_LAMP = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.RAINBOW_LAMP);
     public static final DeferredItem<Item> FOX_CARROT = FierceDecoration.ITEMS.registerSimpleItem(
-            "fox_carrot", new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationMod(0.3F).build()));
+            "fox_carrot", new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.3F).build()));
     public static final DeferredItem<Item> FOX_CARROT_SEED = FierceDecoration.ITEMS.register(
             "fox_carrot_seeds", () -> new ItemNameBlockItem(FDBlocks.FOX_CARROT.get(), new Item.Properties()));
 

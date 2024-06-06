@@ -1,56 +1,51 @@
 package net.fiercemanul.fiercesource.world.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.TierSortingRegistry;
 
-public class CrowbarItem extends Item implements Vanishable {
-
-
-    public final boolean is_netherite;
-    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+public class CrowbarItem extends TieredItem {
 
 
-    public CrowbarItem(Properties pProperties, boolean is_netherite) {
-        super(pProperties.durability(is_netherite ? 4000 : 500));
-        this.is_netherite = is_netherite;
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(
-                Attributes.ATTACK_DAMAGE,
-                new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", is_netherite ? 6 : 4, AttributeModifier.Operation.ADDITION)
+    public CrowbarItem(Tier pTier, Item.Properties pProperties) {
+        super(
+                pTier,
+                pProperties.attributes(
+                        ItemAttributeModifiers.builder()
+                                              .add(
+                                                      Attributes.ATTACK_DAMAGE,
+                                                      new AttributeModifier(
+                                                              BASE_ATTACK_DAMAGE_UUID,
+                                                              "Tool modifier",
+                                                              1 + pTier.getAttackDamageBonus(),
+                                                              AttributeModifier.Operation.ADD_VALUE
+                                                      ),
+                                                      EquipmentSlotGroup.MAINHAND
+                                              )
+                                              .build()
+                )
         );
-        this.defaultModifiers = builder.build();
-    }
-
-    @Override
-    public boolean isFireResistant() {
-        return is_netherite;
-    }
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot pEquipmentSlot) {
-        return pEquipmentSlot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(pEquipmentSlot);
     }
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        pStack.hurtAndBreak(2, pAttacker, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        pStack.hurtAndBreak(2, pAttacker, EquipmentSlot.MAINHAND);
         return true;
     }
 
@@ -61,17 +56,14 @@ public class CrowbarItem extends Item implements Vanishable {
     }
 
     @Override
-    public boolean isCorrectToolForDrops(BlockState pBlock) {
-        if (TierSortingRegistry.isTierSorted(Tiers.DIAMOND)) {
-            return TierSortingRegistry.isCorrectTierForDrops(Tiers.DIAMOND, pBlock);
-        }
+    public boolean isCorrectToolForDrops(ItemStack pStack, BlockState pState) {
         return true;
     }
 
     @Override
     public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
         if (!pLevel.isClientSide && pState.getDestroySpeed(pLevel, pPos) != 0.0F) {
-            pStack.hurtAndBreak(1, pEntityLiving, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            pStack.hurtAndBreak(1, pEntityLiving, EquipmentSlot.MAINHAND);
         }
         return true;
     }
@@ -79,16 +71,6 @@ public class CrowbarItem extends Item implements Vanishable {
     @Override
     public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
         return true;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return is_netherite ? 15 : 14;
-    }
-
-    @Override
-    public int getEnchantmentValue(ItemStack stack) {
-        return is_netherite ? 15 : 14;
     }
 
     @Override

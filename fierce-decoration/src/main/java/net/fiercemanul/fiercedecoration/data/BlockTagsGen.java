@@ -32,6 +32,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.ITEM_FRAME_SHELL_THIN.get(),
                 FDBlocks.ITEM_FRAME_SHELL_BIG.get(),
                 FDBlocks.STAR_BLOCK.get(),
+                FDBlocks.FIREPLACE_HEART.get(),
                 FDBlocks.SMOOTH_GLOWSTONE.get(),
                 FDBlocks.REINFORCED_SMOOTH_GLOWSTONE.get(),
                 FDBlocks.REINFORCED_SEA_LANTERN.get(),
@@ -131,6 +132,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.SMOOTH_CRIMSON_PLANKS.get(),
                 FDBlocks.SMOOTH_WARPED_PLANKS.get(),
                 FDBlocks.GREEN_FUN_ROOF.get(),
+                FDBlocks.FIREWOOD.get(),
                 FDBlocks.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE.get(),
                 FDBlocks.SPRUCE_PLANKS_AND_GRAY_CONCRETE.get(),
                 FDBlocks.OAK_PLANKS_AND_SPRUCE_PLANKS.get(),
@@ -160,7 +162,21 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.CRAFTING_BLOCK.get()
         );
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-                FDBlocks.ROTTEN_FLESH_BLOCK.get()
+                FDBlocks.ROTTEN_FLESH_BLOCK.get(),
+                FDBlocks.HALF_GRASS_BLOCK.get(),
+                FDBlocks.HALF_PODZOL.get(),
+                FDBlocks.HALF_MYCELIUM.get(),
+                FDBlocks.HALF_PATH_BLOCK.get()
+        );
+        tag(BlockTags.DIRT).add(
+                FDBlocks.HALF_GRASS_BLOCK.get(),
+                FDBlocks.HALF_PODZOL.get(),
+                FDBlocks.HALF_MYCELIUM.get()
+        );
+        tag(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
+                FDBlocks.HALF_GRASS_BLOCK.get(),
+                FDBlocks.HALF_PODZOL.get(),
+                FDBlocks.HALF_MYCELIUM.get()
         );
         tag(BlockTags.MINEABLE_WITH_HOE).add(
                 FDBlocks.FOX_CARROT_SHEAF.get(),
@@ -177,6 +193,12 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.SMOOTH_CHERRY_PLANKS.get(),
                 FDBlocks.SMOOTH_CRIMSON_PLANKS.get(),
                 FDBlocks.SMOOTH_WARPED_PLANKS.get()
+        );
+        tag(BlockTags.CAMPFIRES).add(
+                FDBlocks.FIREPLACE_HEART.get()
+        );
+        tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).add(
+                FDBlocks.HALF_GRASS_BLOCK.get()
         );
         tag(FDBlockTags.SEA_LANTERN_TAG).add(
                 Blocks.SEA_LANTERN,
@@ -215,6 +237,14 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.REINFORCED_BLACK_SEA_LANTERN.get(),
                 FDBlocks.RAINBOW_SEA_LANTERN.get(),
                 FDBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get()
+        );
+        tag(FDBlockTags.PILLAR_FORCE_CONNECT_UP).add(
+                Blocks.LANTERN,
+                Blocks.SOUL_LANTERN
+        );
+        tag(FDBlockTags.PILLAR_FORCE_CONNECT_DOWN).add(
+                Blocks.TORCH,
+                Blocks.SOUL_TORCH
         );
         DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
             Block block = deferredBlock.get();
