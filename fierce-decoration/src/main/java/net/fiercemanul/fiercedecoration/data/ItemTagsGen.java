@@ -4,11 +4,14 @@ import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercedecoration.tags.FDItemTags;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
+import net.fiercemanul.fiercedecoration.world.level.block.CabinetTypeABlock;
+import net.fiercemanul.fiercedecoration.world.level.block.CabinetTypeBBlock;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -50,14 +53,18 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(Tags.Items.SEEDS).add(
                 FDItems.FOX_CARROT_SEED.get()
         );
+        tag(Tags.Items.CHESTS).addTag(FDItemTags.CABINETS);
         this.copy(FDBlockTags.LAMP_IN_GLASS, FDItemTags.LAMP_IN_GLASS);
         this.copy(FDBlockTags.GUARDRAILS_TAG, FDItemTags.GUARDRAILS_TAG);
         this.copy(FDBlockTags.PEEP_WINDOWS_TAG, FDItemTags.PEEP_WINDOWS_TAG);
         this.copy(FDBlockTags.CUT_BLOCKS_TAG, FDItemTags.CUT_BLOCKS_TAG);
         this.copy(FDBlockTags.PILLAR_TAG, FDItemTags.PILLAR_TAG);
         this.copy(FDBlockTags.SEA_LANTERN_TAG, FDItemTags.SEA_LANTERN_TAG);
+        this.copy(FDBlockTags.CABINETS, FDItemTags.CABINETS);
+        this.copy(FDBlockTags.TABLES, FDItemTags.TABLES);
         DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
-            if (blockMaterial.isNonFlammableWood()) tag(ItemTags.NON_FLAMMABLE_WOOD).add(deferredBlock.asItem());
+            Item item = deferredBlock.asItem();
+            if (blockMaterial.isNonFlammableWood()) tag(ItemTags.NON_FLAMMABLE_WOOD).add(item);
         });
     }
 }

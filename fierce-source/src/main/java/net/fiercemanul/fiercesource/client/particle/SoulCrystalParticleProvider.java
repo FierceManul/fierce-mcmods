@@ -71,49 +71,64 @@ public class SoulCrystalParticleProvider implements ParticleProvider<SimpleParti
     }
 
     public static void spawnEmptyLargeSoulCrystalParticle(BlockPos pPos) {
+        spawnLargeSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
+    }
+
+    public static void spawnLargeSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
         Direction direction = Direction.getRandom(RANDOM);
-        double x = direction.getStepX() == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + (double)direction.getStepX() * 0.125 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.125;
-        double y = direction.getStepY() == 0 ? RANDOM.nextDouble() * 0.625 + 0.3125 : 0.875 + RANDOM.nextDouble() * 0.0625;
-        double z = direction.getStepZ() == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + (double)direction.getStepZ() * 0.125 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.125;
+        double stepX = direction.getStepX();
+        double stepY = direction.getStepY();
+        double stepZ = direction.getStepZ();
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepX * 0.125 + stepX * RANDOM.nextDouble() * 0.125;
+        double y = stepY == 0 ? RANDOM.nextDouble() * 0.875 + 0.0625 : 0.5 + stepY * 0.1875 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepZ * 0.125 + stepZ * RANDOM.nextDouble() * 0.125;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,
                 pPos.getZ() + z,
-                1.0F,
-                1.0F,
-                1.0F,
+                r, g, b,
                 DEFAULT_SIZE.get()
         );
     }
 
     public static void spawnEmptyMediumSoulCrystalParticle(BlockPos pPos) {
+        spawnMediumSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
+    }
+
+    public static void spawnMediumSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
         Direction direction = Direction.getRandom(RANDOM);
-        double x = direction.getStepX() == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + (double)direction.getStepX() * 0.09375 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.125;
-        double y = direction.getStepY() == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.6875 + RANDOM.nextDouble() * 0.0625;
-        double z = direction.getStepZ() == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + (double)direction.getStepZ() * 0.09375 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.125;
+        double stepX = direction.getStepX();
+        double stepY = direction.getStepY();
+        double stepZ = direction.getStepZ();
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + stepX * 0.09375 + stepX * RANDOM.nextDouble() * 0.125;
+        double y = stepY == 0 ? RANDOM.nextDouble() * 0.6875 + 0.15625 : 0.5 + stepY * 0.28125 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + stepZ * 0.09375 + stepZ * RANDOM.nextDouble() * 0.125;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,
                 pPos.getZ() + z,
-                1.0F,
-                1.0F,
-                1.0F,
+                r, g, b,
                 DEFAULT_SIZE_MEDIUM.get()
         );
     }
 
     public static void spawnEmptySmallSoulCrystalParticle(BlockPos pPos) {
+        spawnSmallSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
+    }
+
+    public static void spawnSmallSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
         Direction direction = Direction.getRandom(RANDOM);
-        double x = direction.getStepX() == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + (double)direction.getStepX() * 0.0625 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.0625;
-        double y = direction.getStepY() == 0 ? RANDOM.nextDouble() * 0.375 + 0.125 : 0.4375 + RANDOM.nextDouble() * 0.0625;
-        double z = direction.getStepZ() == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + (double)direction.getStepZ() * 0.0625 + (double)direction.getStepZ() * RANDOM.nextDouble() * 0.0625;
+        double stepX = direction.getStepX();
+        double stepY = direction.getStepY();
+        double stepZ = direction.getStepZ();
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + stepX * 0.0625 + stepX * RANDOM.nextDouble() * 0.0625;
+        double y = stepY == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepY * 0.1875 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + stepZ * 0.0625 + stepZ * RANDOM.nextDouble() * 0.0625;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,
                 pPos.getZ() + z,
-                1.0F,
-                1.0F,
-                1.0F,
+                r, g, b,
                 DEFAULT_SIZE_SMALL.get()
         );
     }

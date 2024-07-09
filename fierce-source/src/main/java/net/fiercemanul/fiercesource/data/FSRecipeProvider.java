@@ -17,7 +17,7 @@ public abstract class FSRecipeProvider extends RecipeProvider {
 
 
     protected static ResourceLocation applyBackup(ResourceLocation location) {
-        return new ResourceLocation(location.getNamespace(), location.getPath() + "_backup");
+        return ResourceLocation.fromNamespaceAndPath(location.getNamespace(), location.getPath() + "_backup");
     }
 
     protected static void netheriteSmithing(RecipeOutput pRecipeOutput, Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {

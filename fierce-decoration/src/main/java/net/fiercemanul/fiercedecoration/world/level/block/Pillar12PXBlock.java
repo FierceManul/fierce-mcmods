@@ -6,6 +6,7 @@ import net.fiercemanul.fiercesource.world.level.block.AxisModelBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -40,5 +41,10 @@ public class Pillar12PXBlock extends AxisModelBlock {
             case Y -> SHAPE_Y;
             case Z -> SHAPE_Z;
         };
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState pState, PathComputationType pPathComputationType) {
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
+import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
 import net.fiercemanul.fiercesource.world.level.block.AxisBlock;
 import net.fiercemanul.fiercesource.world.level.block.HorizonAxisModelBlock;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -62,11 +64,11 @@ public class TableBlock extends HorizonAxisModelBlock {
 
     private static boolean needLeg(LevelAccessor pLevel, BlockPos pCurrentPos) {
         return !((
-                pLevel.getBlockState(pCurrentPos.north()).getBlock() instanceof TableBlock
-                        && pLevel.getBlockState(pCurrentPos.south()).getBlock() instanceof TableBlock
+                pLevel.getBlockState(pCurrentPos.north()).is(FDBlockTags.TABLE_CONNECT)
+                        && pLevel.getBlockState(pCurrentPos.south()).is(FDBlockTags.TABLE_CONNECT)
         ) || (
-                pLevel.getBlockState(pCurrentPos.west()).getBlock() instanceof TableBlock
-                        && pLevel.getBlockState(pCurrentPos.east()).getBlock() instanceof TableBlock
+                pLevel.getBlockState(pCurrentPos.west()).is(FDBlockTags.TABLE_CONNECT)
+                        && pLevel.getBlockState(pCurrentPos.east()).is(FDBlockTags.TABLE_CONNECT)
         ));
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,18 @@ public class ItemTagsGen extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(
+                FierceSource.CROWBAR_ITEM.get(),
+                FierceSource.NETHERITE_CROWBAR_ITEM.get(),
+                FierceSource.CLAW_HAMMER_ITEM.get(),
+                FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get()
+        );
+        tag(ItemTags.MINING_LOOT_ENCHANTABLE).add(
+                FierceSource.CROWBAR_ITEM.get(),
+                FierceSource.NETHERITE_CROWBAR_ITEM.get(),
+                FierceSource.CLAW_HAMMER_ITEM.get(),
+                FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get()
+        );
         copy(FSBlockTags.SOUL_CRYSTALS, FSItemTags.SOUL_CRYSTALS);
         tag(FSItemTags.SOUL_CRYSTALS).add(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.get());
         tag(FSItemTags.WRENCH_ITEM).add(

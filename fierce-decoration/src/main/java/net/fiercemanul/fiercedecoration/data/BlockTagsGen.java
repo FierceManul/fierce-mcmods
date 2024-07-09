@@ -29,6 +29,7 @@ public class BlockTagsGen extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                FDBlocks.SOUL_CRYSTAL_ORNAMENT.get(),
                 FDBlocks.ITEM_FRAME_SHELL_THIN.get(),
                 FDBlocks.ITEM_FRAME_SHELL_BIG.get(),
                 FDBlocks.STAR_BLOCK.get(),
@@ -246,6 +247,10 @@ public class BlockTagsGen extends BlockTagsProvider {
                 Blocks.TORCH,
                 Blocks.SOUL_TORCH
         );
+        tag(Tags.Blocks.CHESTS).addTag(FDBlockTags.CABINETS);
+        tag(FDBlockTags.TABLE_CONNECT)
+                .addTag(FDBlockTags.TABLES)
+                .addTag(FDBlockTags.CABINETS);
         DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
             Block block = deferredBlock.get();
             if (block instanceof StairBlock) {
@@ -273,6 +278,8 @@ public class BlockTagsGen extends BlockTagsProvider {
                 tag(BlockTags.PRESSURE_PLATES).add(block);
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_PRESSURE_PLATES).add(block);
             }
+            if (block instanceof CabinetBlock) tag(FDBlockTags.CABINETS).add(block);
+            if (block instanceof TableBlock) tag(FDBlockTags.TABLES).add(block);
             if (block instanceof GuardrailBlock) tag(FDBlockTags.GUARDRAILS_TAG).add(block);
             if (block instanceof PeepWindowBlock) tag(FDBlockTags.PEEP_WINDOWS_TAG).add(block);
             if (block instanceof DoubleCutBlock || block instanceof OneCutBlock || block instanceof TripleCutBlock) tag(FDBlockTags.CUT_BLOCKS_TAG).add(block);

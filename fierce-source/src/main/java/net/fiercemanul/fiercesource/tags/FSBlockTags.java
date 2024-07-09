@@ -8,5 +8,5 @@ import net.minecraft.world.level.block.Block;
 
 public class FSBlockTags {
 
-    public static final TagKey<Block> SOUL_CRYSTALS = BlockTags.create(new ResourceLocation(FierceSource.FC_MODID, "soul_crystals"));
+    public static final TagKey<Block> SOUL_CRYSTALS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "soul_crystals"));
 }

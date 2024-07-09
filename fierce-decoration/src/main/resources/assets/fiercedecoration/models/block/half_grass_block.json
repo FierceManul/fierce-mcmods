@@ -1,7 +1,7 @@
 {
     "parent": "minecraft:block/block",
     "textures": {
-        "particle": "minecraft:block/dirt",
+        "particle": "#top",
         "bottom": "minecraft:block/dirt",
         "top": "minecraft:block/grass_block_top",
         "side": "minecraft:block/grass_block_side"

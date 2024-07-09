@@ -109,8 +109,7 @@ public class HalfPodzolBlock extends Block implements SimpleWaterloggedBlock {
                     pPos,
                     null,
                     pPlayer,
-                    pStack,
-                    false
+                    pStack
             );
             return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
         }
@@ -120,7 +119,7 @@ public class HalfPodzolBlock extends Block implements SimpleWaterloggedBlock {
                 && pState.getValue(LAYERS) < 4
                 && pHitResult.getLocation().y - pHitResult.getBlockPos().getY() >= 0.5 + 0.125 * pState.getValue(LAYERS)
         ) {
-            pStack.shrink(1);
+            if (!pPlayer.isCreative()) pStack.shrink(1);
             return ItemInteractionResult.SUCCESS;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

@@ -3,6 +3,7 @@ package net.fiercemanul.fiercedecoration.data;
 import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.data.loot.packs.VanillaChestLoot;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -19,13 +20,12 @@ import net.neoforged.neoforge.common.Tags;
 import java.util.function.BiConsumer;
 
 
-public class ChestLootGen extends VanillaChestLoot {
-
+public record ChestLootGen(HolderLookup.Provider registries) implements LootTableSubProvider {
 
     @Override
-    public void generate(HolderLookup.Provider pRegistries, BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
         pGenerator.accept(
-                ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(FierceDecoration.MODID, "chests/rundown_hut")),
+                ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "chests/rundown_hut")),
                 LootTable.lootTable()
                          .withPool(
                                  LootPool.lootPool()

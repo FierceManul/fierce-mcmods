@@ -1,7 +1,7 @@
 {
-  "block.fiercecraft.soul_crystal_small": "Small Soul Crystal",
-  "block.fiercecraft.soul_crystal_medium": "Medium Soul Crystal",
-  "block.fiercecraft.soul_crystal_large": "Large Soul Crystal",
+  "block.fiercecraft.small_soul_crystal": "Small Soul Crystal",
+  "block.fiercecraft.medium_soul_crystal": "Medium Soul Crystal",
+  "block.fiercecraft.large_soul_crystal": "Large Soul Crystal",
   "block.fiercecraft.creative_mana_block": "Creative Mana Block",
   "block.fiercecraft.creative_mana_output": "Creative Mana Output",
   "block.fiercecraft.world_locator": "World Locator",

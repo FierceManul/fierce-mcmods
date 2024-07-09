@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public final class FDItems {
 
 
+    public static final DeferredItem<BlockItem> SOUL_CRYSTAL_ORNAMENT = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SOUL_CRYSTAL_ORNAMENT);
     public static final DeferredItem<BlockItem> PORTABLE_WORKSTATION = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.PORTABLE_WORKSTATION);
     public static final DeferredItem<BlockItem> LAPTOP_TERMINAL = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.LAPTOP_TERMINAL);
     public static final DeferredItem<BlockItem> BOOK_AND_LAMP = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.BOOK_AND_LAMP);

@@ -17,6 +17,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 public final class FDBlocks {
 
 
+    public static final DeferredBlock<Block> SOUL_CRYSTAL_ORNAMENT = FierceDecoration.BLOCKS.registerBlock(
+            "soul_crystal_ornament", SoulCrystalOrnamentBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> PORTABLE_WORKSTATION = FierceDecoration.BLOCKS.registerBlock(
             "portable_workstation", PortableWorkstationBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> LAPTOP_TERMINAL = FierceDecoration.BLOCKS.registerBlock(

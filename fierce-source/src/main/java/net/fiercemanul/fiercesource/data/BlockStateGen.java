@@ -17,9 +17,19 @@ public class BlockStateGen extends FSBlockStateProvider{
         directionBlock(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK, false);
         simpleWithModel(FierceSource.WORLD_LOCATOR_BLOCK);
 
-        itemModels().basicItem(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM.get());
-        itemModels().basicItem(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM.get());
-        itemModels().basicItem(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM.get());
+        simpleWithModel(
+                FierceSource.LARGE_SOUL_CRYSTAL_BLOCK,
+                models().getExistingFile(TEMPLATE_LARGE_SOUL_CRYSTAL)
+        );
+        simpleWithModel(
+                FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK,
+                models().getExistingFile(TEMPLATE_MEDIUM_SOUL_CRYSTAL)
+        );
+        simpleWithModel(
+                FierceSource.SMALL_SOUL_CRYSTAL_BLOCK,
+                models().getExistingFile(TEMPLATE_SMALL_SOUL_CRYSTAL)
+        );
+
         itemModels().basicItem(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.get());
         itemModels().basicItem(FierceSource.FE_ICON.get());
         itemModels().basicItem(FierceSource.MANA_ICON.get());

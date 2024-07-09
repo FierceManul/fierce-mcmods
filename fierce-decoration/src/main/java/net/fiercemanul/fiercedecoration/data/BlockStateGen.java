@@ -2,16 +2,18 @@ package net.fiercemanul.fiercedecoration.data;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
-import net.fiercemanul.fiercedecoration.world.level.block.state.properties.ChairType;
-import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
+import net.fiercemanul.fiercedecoration.world.level.block.state.properties.*;
 import net.fiercemanul.fiercesource.data.FSBlockStateProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -108,6 +110,7 @@ public class BlockStateGen extends FSBlockStateProvider {
 
         horizontalAxisBlock(FDBlocks.FIREWOOD, false);
 
+        soulCrystalOrnament();
         itemFrameShell();
         lightTube();
         lightPlate();
@@ -173,14 +176,14 @@ public class BlockStateGen extends FSBlockStateProvider {
             Block materialBlock = blockMaterial.getMaterialBlock();
             BlockMaterial.ModelType modelType = blockMaterial.getModelType();
 
-            if (block instanceof WoodenGuardrailBlock) guardrail(deferredBlock, texture(blockMaterial), "guardrail_wooden", false);
-            else if (block instanceof WoodenGuardrailTypeBBlock) guardrail(deferredBlock, texture(blockMaterial), "guardrail_wooden_b", true);
+            if (block instanceof WoodenGuardrailBlock) guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_wooden", false);
+            else if (block instanceof WoodenGuardrailTypeBBlock) guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_wooden_b", true);
             else if (block instanceof StoneGuardrailBlock) {
                 switch (modelType) {
-                    case CUBE_ALL -> guardrail(deferredBlock, texture(blockMaterial), "guardrail_rock", true);
-                    case CUBE_ALL_FRAMED -> guardrail(deferredBlock, texture(blockMaterial), "guardrail_frame", true);
-                    case PILLAR -> pillarGuardrail(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
-                    case LOG -> pillarGuardrail(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
+                    case CUBE_ALL -> guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_rock", true);
+                    case CUBE_ALL_FRAMED -> guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_frame", true);
+                    case PILLAR -> pillarGuardrail(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                    case LOG -> pillarGuardrail(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE)) guardrail(
                                 deferredBlock,
@@ -190,7 +193,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else customGuardrail(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_top,
                                 false
@@ -205,7 +208,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else customGuardrail(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_top,
                                 false
@@ -213,15 +216,15 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                     case GRASS -> customGuardrail(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt,
                             false
                     );
                     case NYLIUM -> customGuardrail(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack,
                             false
                     );
@@ -234,14 +237,14 @@ public class BlockStateGen extends FSBlockStateProvider {
                 }
             }
             else if (block instanceof GlassGuardrailBlock) {
-                glassGuardrail(deferredBlock, texture(blockMaterial));
+                glassGuardrail(deferredBlock, blockTexture(blockMaterial));
             }
             else if (block instanceof PeepWindowBlock) {
                 switch (modelType) {
                     case CUBE_ALL, CUBE_ALL_FRAMED -> {
                         ResourceLocation material;
-                        if (materialBlock.equals(Blocks.GLASS)) material = new ResourceLocation(FierceDecoration.MODID, "block/glass_peep_window");
-                        else material = texture(blockMaterial);
+                        if (materialBlock.equals(Blocks.GLASS)) material = ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "block/glass_peep_window");
+                        else material = blockTexture(blockMaterial);
                         peepWindow(
                                 deferredBlock,
                                 material,
@@ -250,14 +253,14 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                     case LOG, PILLAR -> peepWindow(
                             deferredBlock,
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "top"),
                             false
                     );
                     case UP_DOWN -> peepWindowUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case SANDSTONE -> {
                         String path = deferredBlock.getId().getPath();
@@ -275,7 +278,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         else {
                             BlockModelBuilder modelSide = models()
                                     .withExistingParent(path, modLoc("block/peep_window"))
-                                    .texture("all", texture(blockMaterial));
+                                    .texture("all", blockTexture(blockMaterial));
                             peepWindowStates(block, modelSide, sandstonePeepWindowTop, sandstonePeepWindowTop);
                             itemModels().getBuilder(path).parent(modelSide);
                         }
@@ -296,7 +299,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         else {
                             BlockModelBuilder modelSide = models()
                                     .withExistingParent(path, modLoc("block/peep_window"))
-                                    .texture("all", texture(blockMaterial));
+                                    .texture("all", blockTexture(blockMaterial));
                             peepWindowStates(block, modelSide, redSandstonePeepWindowTop, redSandstonePeepWindowTop);
                             itemModels().getBuilder(path).parent(modelSide);
                         }
@@ -305,10 +308,10 @@ public class BlockStateGen extends FSBlockStateProvider {
                         String path = deferredBlock.getId().getPath();
                         BlockModelBuilder modelSide = models()
                                 .withExistingParent(path, modLoc("block/peep_window"))
-                                .texture("all", texture(blockMaterial, "side"));
+                                .texture("all", blockTexture(blockMaterial, "side"));
                         BlockModelBuilder modelTop = models()
                                 .withExistingParent(path + "_top", modLoc("block/peep_window"))
-                                .texture("all", texture(blockMaterial, "top"));
+                                .texture("all", blockTexture(blockMaterial, "top"));
                         peepWindowStates(block, modelSide, modelTop, dirtPeepWindow);
                         itemModels().getBuilder(path).parent(modelSide);
                     }
@@ -316,10 +319,10 @@ public class BlockStateGen extends FSBlockStateProvider {
                         String path = deferredBlock.getId().getPath();
                         BlockModelBuilder modelSide = models()
                                 .withExistingParent(path, modLoc("block/peep_window"))
-                                .texture("all", texture(blockMaterial, "side"));
+                                .texture("all", blockTexture(blockMaterial, "side"));
                         BlockModelBuilder modelTop = models()
                                 .withExistingParent(path + "_top", modLoc("block/peep_window"))
-                                .texture("all", texture(blockMaterial));
+                                .texture("all", blockTexture(blockMaterial));
                         peepWindowStates(block, modelSide, modelTop, netherrackPeepWindow);
                         itemModels().getBuilder(path).parent(modelSide);
                     }
@@ -333,42 +336,42 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof LampInGlassBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> lampInGlass(deferredBlock, texture(blockMaterial));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> lampInGlass(deferredBlock, blockTexture(blockMaterial));
                     case LOG -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, texture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, texture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
                     }
                     case FACING -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, texture(blockMaterial, "front"), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial, "front"), top, top);
                     }
-                    case REDSTONE_LAMP -> lampInGlass(deferredBlock, texture(blockMaterial, "on"));
+                    case REDSTONE_LAMP -> lampInGlass(deferredBlock, blockTexture(blockMaterial, "on"));
                     case PUMPKIN_LAMP -> {
-                        ResourceLocation top = new ResourceLocation("block/pumpkin_top");
-                        lampInGlassCustom(deferredBlock, texture(blockMaterial), top, top);
+                        ResourceLocation top = ResourceLocation.withDefaultNamespace("block/pumpkin_top");
+                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial), top, top);
                     }
                 }
             }
             else if (block instanceof OneCutBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> oneCutBlock(deferredBlock, texture(blockMaterial));
-                    case LOG -> oneCutBlockPillar(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> oneCutBlockPillar(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> oneCutBlock(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> oneCutBlockPillar(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> oneCutBlockPillar(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case UP_DOWN -> oneCutBlockUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) oneCutBlock(deferredBlock, sandstone_top);
                         else oneCutBlockUpDown(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -379,21 +382,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else oneCutBlockUpDown(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> oneCutBlockUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> oneCutBlockUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -406,20 +409,20 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof ThinStairBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> thinStair(deferredBlock, texture(blockMaterial));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> thinStair(deferredBlock, blockTexture(blockMaterial));
                     case UP_DOWN -> thinStairUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        thinStairUpDown(deferredBlock, texture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        thinStairUpDown(deferredBlock, blockTexture(blockMaterial), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        thinStairUpDown(deferredBlock, texture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        thinStairUpDown(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
                     }
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) thinStair(
@@ -427,7 +430,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else thinStairUpDown(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -438,21 +441,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else thinStairUpDown(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> thinStairUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> thinStairUpDown(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -465,20 +468,20 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof DoubleCutBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> doubleCutBlock(deferredBlock, texture(blockMaterial));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> doubleCutBlock(deferredBlock, blockTexture(blockMaterial));
                     case UP_DOWN -> doubleCutBlockCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        doubleCutBlockCustom(deferredBlock, texture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        doubleCutBlockCustom(deferredBlock, blockTexture(blockMaterial), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        doubleCutBlockCustom(deferredBlock, texture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        doubleCutBlockCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
                     }
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) doubleCutBlock(
@@ -486,7 +489,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else doubleCutBlockCustom(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -497,21 +500,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else doubleCutBlockCustom(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> doubleCutBlockCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> doubleCutBlockCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -524,26 +527,26 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof TripleCutBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> tripleCut(deferredBlock, texture(blockMaterial));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> tripleCut(deferredBlock, blockTexture(blockMaterial));
                     case UP_DOWN -> tripleCutCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        tripleCutCustom(deferredBlock, texture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        tripleCutCustom(deferredBlock, blockTexture(blockMaterial), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = texture(blockMaterial, "top");
-                        tripleCutCustom(deferredBlock, texture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(blockMaterial, "top");
+                        tripleCutCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
                     }
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) tripleCut(deferredBlock, sandstone_top);
                         else tripleCutCustom(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -552,21 +555,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) tripleCut(deferredBlock, red_sandstone_top);
                         else tripleCutCustom(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> tripleCutCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> tripleCutCustom(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -579,20 +582,20 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Panel4PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel4px(deferredBlock, texture(blockMaterial));
-                    case LOG -> panel4px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> panel4px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel4px(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> panel4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> panel4px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case UP_DOWN -> panel4px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel4px(deferredBlock, sandstone_top);
                         else panel4px(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -601,21 +604,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel4px(deferredBlock, red_sandstone_top);
                         else panel4px(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> panel4px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> panel4px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -628,20 +631,20 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Panel2PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel2px(deferredBlock, texture(blockMaterial));
-                    case LOG -> panel2px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> panel2px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel2px(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> panel2px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> panel2px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case UP_DOWN -> panel2px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
-                            texture(blockMaterial, "bottom")
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "bottom")
                     );
                     case SANDSTONE -> {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel2px(deferredBlock, sandstone_top);
                         else panel2px(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 sandstone_top,
                                 sandstone_bottom
                         );
@@ -650,21 +653,21 @@ public class BlockStateGen extends FSBlockStateProvider {
                         if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel2px(deferredBlock, red_sandstone_top);
                         else panel2px(
                                 deferredBlock,
-                                texture(blockMaterial),
+                                blockTexture(blockMaterial),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> panel2px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial, "top"),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial, "top"),
                             dirt
                     );
                     case NYLIUM -> panel2px(
                             deferredBlock,
-                            texture(blockMaterial, "side"),
-                            texture(blockMaterial),
+                            blockTexture(blockMaterial, "side"),
+                            blockTexture(blockMaterial),
                             netherrack
                     );
                     case CUSTOM -> {
@@ -677,9 +680,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Pillar12PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar12px(deferredBlock, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillar12px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillar12px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar12px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillar12px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillar12px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar12px(deferredBlock, sandstone_top, sandstone_top);
@@ -694,9 +697,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Pillar8PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar8px(deferredBlock, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillar8px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillar8px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar8px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillar8px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillar8px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar8px(deferredBlock, sandstone_top, sandstone_top);
@@ -711,9 +714,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Pillar6PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar6px(deferredBlock, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillar6px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillar6px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar6px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillar6px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillar6px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar6px(deferredBlock, sandstone_top, sandstone_top);
@@ -728,9 +731,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof Pillar4PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar4px(deferredBlock, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillar4px(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillar4px(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillar4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillar4px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar4px(deferredBlock, sandstone_top, sandstone_top);
@@ -745,9 +748,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof PillarConnector4PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 4, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 4, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 4, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 4, sandstone_top, sandstone_top);
@@ -762,9 +765,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof PillarConnector6PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 6, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 6, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 6, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 6, sandstone_top, sandstone_top);
@@ -779,9 +782,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof PillarConnector8PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 8, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 8, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 8, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 8, sandstone_top, sandstone_top);
@@ -796,9 +799,9 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof PillarConnector12PXBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 12, texture(blockMaterial), texture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 12, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 12, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                    case LOG -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 12, sandstone_top, sandstone_top);
@@ -813,7 +816,7 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof WindowTypeABlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> windowA(deferredBlock, texture(blockMaterial));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> windowA(deferredBlock, blockTexture(blockMaterial));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             windowA(deferredBlock, sandstone_top);
@@ -830,14 +833,15 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                 }
             }
+            else if (block instanceof WindowTypeBBlock) windowB(deferredBlock);
             else if (block instanceof TableBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS))
-                    tableGlass(deferredBlock, texture(blockMaterial));
+                    tableGlass(deferredBlock, blockTexture(blockMaterial));
                 else switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> table(deferredBlock, texture(blockMaterial));
-                    case LOG -> table(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> table(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
-                    case UP_DOWN -> table(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"), texture(blockMaterial, "bottom"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> table(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> table(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> table(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                    case UP_DOWN -> table(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             table(deferredBlock, sandstone_top);
@@ -856,10 +860,10 @@ public class BlockStateGen extends FSBlockStateProvider {
             }
             else if (block instanceof SimpleChairBlock) {
                 switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> chair(deferredBlock, texture(blockMaterial));
-                    case LOG -> chair(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> chair(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
-                    case UP_DOWN -> chair(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"), texture(blockMaterial, "bottom"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> chair(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> chair(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> chair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                    case UP_DOWN -> chair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             chair(deferredBlock, sandstone_top);
@@ -877,12 +881,12 @@ public class BlockStateGen extends FSBlockStateProvider {
                 }
             }
             else if (block instanceof GardenChairBlock) {
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) woodenGardenChair(deferredBlock, texture(blockMaterial));
+                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) woodenGardenChair(deferredBlock, blockTexture(blockMaterial));
                 else switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> stoneGardenChair(deferredBlock, texture(blockMaterial));
-                    case LOG -> stoneGardenChair(deferredBlock, texture(blockMaterial), texture(blockMaterial, "top"));
-                    case PILLAR -> stoneGardenChair(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"));
-                    case UP_DOWN -> stoneGardenChair(deferredBlock, texture(blockMaterial, "side"), texture(blockMaterial, "top"), texture(blockMaterial, "bottom"));
+                    case CUBE_ALL, CUBE_ALL_FRAMED -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial));
+                    case LOG -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                    case PILLAR -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                    case UP_DOWN -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             stoneGardenChair(deferredBlock, sandstone_top);
@@ -899,47 +903,51 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                 }
             }
-            else if (block instanceof WoolSofaBlock) woolSofa(deferredBlock, texture(blockMaterial));
+            else if (block instanceof WoolSofaBlock) woolSofa(deferredBlock, blockTexture(blockMaterial));
             else if (block instanceof HorizonPanelBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS)) {
                     ModelFile modelFile = models().withExistingParent(deferredBlock.getId().getPath(), modLoc("block/translucent_panel_horizon"))
-                                                  .texture("all", texture(blockMaterial));
+                                                  .texture("all", blockTexture(blockMaterial));
                     simpleWithModel(deferredBlock, modelFile);
                 }
             }
             else if (block instanceof StairBlock stairBlock) {
-                stairsBlock(stairBlock, texture(blockMaterial));
-                itemModels().stairs(deferredBlock.getId().getPath(), texture(blockMaterial), texture(blockMaterial), texture(blockMaterial));
+                stairsBlock(stairBlock, blockTexture(blockMaterial));
+                itemModels().stairs(deferredBlock.getId().getPath(), blockTexture(blockMaterial), blockTexture(blockMaterial), blockTexture(blockMaterial));
             }
+            else if (block instanceof CabinetTypeABlock) cabinetA(deferredBlock, blockTexture(blockMaterial));
+            else if (block instanceof CabinetTypeBBlock) cabinetB(deferredBlock, blockTexture(blockMaterial));
+            else if (block instanceof CabinetTypeCBlock) cabinetC(deferredBlock, blockTexture(blockMaterial));
+            else if (block instanceof CabinetBlock) cabinetD(deferredBlock, blockTexture(blockMaterial));
             else if (block instanceof SlabBlock slabBlock) {
-                slabBlock(slabBlock, texture(blockMaterial), texture(blockMaterial));
-                itemModels().slab(deferredBlock.getId().getPath(), texture(blockMaterial), texture(blockMaterial), texture(blockMaterial));
+                slabBlock(slabBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
+                itemModels().slab(deferredBlock.getId().getPath(), blockTexture(blockMaterial), blockTexture(blockMaterial), blockTexture(blockMaterial));
             }
             else if (block instanceof FenceBlock fenceBlock) {
-                fenceBlock(fenceBlock, texture(blockMaterial));
-                itemModels().fenceInventory(deferredBlock.getId().getPath(), texture(blockMaterial));
+                fenceBlock(fenceBlock, blockTexture(blockMaterial));
+                itemModels().fenceInventory(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
             }
             else if (block instanceof FenceGateBlock fenceGateBlock) {
-                fenceGateBlock(fenceGateBlock, texture(blockMaterial));
-                itemModels().fenceGate(deferredBlock.getId().getPath(), texture(blockMaterial));
+                fenceGateBlock(fenceGateBlock, blockTexture(blockMaterial));
+                itemModels().fenceGate(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
             }
             else if (block instanceof PressurePlateBlock pressurePlateBlock) {
-                pressurePlateBlock(pressurePlateBlock, texture(blockMaterial));
-                itemModels().pressurePlate(deferredBlock.getId().getPath(), texture(blockMaterial));
+                pressurePlateBlock(pressurePlateBlock, blockTexture(blockMaterial));
+                itemModels().pressurePlate(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
             }
             else if (block instanceof ButtonBlock buttonBlock) {
-                buttonBlock(buttonBlock, texture(blockMaterial));
-                itemModels().buttonInventory(deferredBlock.getId().getPath(), texture(blockMaterial));
+                buttonBlock(buttonBlock, blockTexture(blockMaterial));
+                itemModels().buttonInventory(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
             }
         });
     }
 
-    private ResourceLocation texture(BlockMaterial blockMaterial) {
-        return new ResourceLocation(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath());
+    private ResourceLocation blockTexture(BlockMaterial blockMaterial) {
+        return ResourceLocation.fromNamespaceAndPath(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath());
     }
 
-    private ResourceLocation texture(BlockMaterial blockMaterial, String s) {
-        return new ResourceLocation(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath() + "_" + s);
+    private ResourceLocation blockTexture(BlockMaterial blockMaterial, String s) {
+        return ResourceLocation.fromNamespaceAndPath(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath() + "_" + s);
     }
 
     private void pillarConnector(DeferredBlock<Block> deferredBlock, int px, ResourceLocation side, ResourceLocation top) {
@@ -1039,6 +1047,13 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .withExistingParent(path, modLoc("block/pillar_12px"))
                 .texture("side", side).texture("end", top);
         yAxisModel(path, deferredBlock.get(), modelFile, false);
+    }
+
+    private void soulCrystalOrnament() {
+        getMultipartBuilder(FDBlocks.SOUL_CRYSTAL_ORNAMENT.get())
+                .part().modelFile(models().getExistingFile(modLoc("block/soul_crystal_ornament_a"))).addModel().end()
+                .part().modelFile(models().getExistingFile(modLoc("block/soul_crystal_ornament_b"))).addModel().end();
+        itemModels().withExistingParent(FDBlocks.SOUL_CRYSTAL_ORNAMENT.getId().getPath(), modLoc("block/soul_crystal_ornament_inv"));
     }
 
     private void itemFrameShell() {
@@ -1882,6 +1897,128 @@ public class BlockStateGen extends FSBlockStateProvider {
         );
     }
 
+    private void windowB(DeferredBlock<Block> deferredBlock) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        VariantBlockStateBuilder builder = getVariantBuilder(block);
+
+        builder = windowBStatePart(builder, Direction.NORTH, 0, path);
+        builder = windowBStatePart(builder, Direction.SOUTH, 180, path);
+        builder = windowBStatePart(builder, Direction.WEST, 270, path);
+        windowBStatePart(builder, Direction.EAST, 90, path);
+
+        itemModels().withExistingParent(path, modLoc("block/" + path + "_single"));
+    }
+
+    private VariantBlockStateBuilder windowBStatePart(
+            VariantBlockStateBuilder builder,
+            Direction direction,
+            int rot,
+            String path
+    ) {
+        ResourceLocation side = modLoc("block/" + path + "_side");
+        ResourceLocation end = modLoc("block/" + path + "_end");
+        builder = windowBStatePart2(builder, direction, rot, path + "_single", side, end, TallBlockType.SINGLE);
+        builder = windowBStatePart2(builder, direction, rot, path + "_bottom", side, end, TallBlockType.BOTTOM);
+        builder = windowBStatePart2(builder, direction, rot, path + "_center", side, end, TallBlockType.CENTER);
+        return windowBStatePart2(builder, direction, rot, path + "_top", side, end, TallBlockType.TOP);
+    }
+
+    private VariantBlockStateBuilder windowBStatePart2(
+            VariantBlockStateBuilder builder,
+            Direction direction,
+            int rot,
+            String path,
+            ResourceLocation side,
+            ResourceLocation end,
+            TallBlockType type
+    ) {
+        ResourceLocation frontR = modLoc("block/" + path);
+        ModelFile model = models().withExistingParent(path, modLoc("block/window_b"))
+                                  .texture("front", frontR)
+                                  .texture("side", side)
+                                  .texture("end", end);
+        ModelFile model_open = models().withExistingParent(path + "_open", modLoc("block/window_b_open"))
+                                       .texture("front", frontR)
+                                       .texture("side", side)
+                                       .texture("end", end);
+        ModelFile model_mirror = models().withExistingParent(path + "_mirror", modLoc("block/window_b_mirror"))
+                                         .texture("front", frontR)
+                                         .texture("side", side)
+                                         .texture("end", end);
+        ModelFile model_open_mirror = models().withExistingParent(path + "_open_mirror", modLoc("block/window_b_open_mirror"))
+                                              .texture("front", frontR)
+                                              .texture("side", side)
+                                              .texture("end", end);
+
+        ConfiguredModel.Builder<VariantBlockStateBuilder> a = builder
+                .partialState()
+                .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
+                .with(FDBlockStateProperties.OPEN_TYPE, OpenType.CLOSE)
+                .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+                .modelForState().modelFile(model);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_CLOSE)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_OPEN)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_open);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.OPEN)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_open);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.CLOSE)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_mirror);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_CLOSE)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_mirror);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.OPEN)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_open_mirror);
+        if (rot > 0) a = a.rotationY(rot);
+        a = a.addModel()
+             .partialState()
+             .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+             .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
+             .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_OPEN)
+             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .modelForState().modelFile(model_open_mirror);
+        if (rot > 0) a = a.rotationY(rot);
+        return a.addModel();
+    }
+
     private void table(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
@@ -2002,6 +2139,198 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .condition(TableBlock.LEGGED, true).end();
     }
 
+    private void cabinetA(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        ModelFile modelS = models()
+                .withExistingParent(path, modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_single"));
+        ModelFile modelT = models()
+                .withExistingParent(path + "_top", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_top"));
+        ModelFile modelB = models()
+                .withExistingParent(path + "_bottom", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_bottom"));
+
+        getVariantBuilder(block)
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.SINGLE)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .modelForState().modelFile(modelS).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.TOP)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .modelForState().modelFile(modelT).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.BOTTOM)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .modelForState().modelFile(modelB).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.SINGLE)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .modelForState().modelFile(modelS).rotationY(180).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.TOP)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .modelForState().modelFile(modelT).rotationY(180).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.BOTTOM)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .modelForState().modelFile(modelB).rotationY(180).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.SINGLE)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .modelForState().modelFile(modelS).rotationY(90).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.TOP)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .modelForState().modelFile(modelT).rotationY(90).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.BOTTOM)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .modelForState().modelFile(modelB).rotationY(90).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.SINGLE)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .modelForState().modelFile(modelS).rotationY(270).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.TOP)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .modelForState().modelFile(modelT).rotationY(270).addModel()
+                .partialState()
+                .with(FDBlockStateProperties.CABINET_TYPE_A, ComplexCabinetType.BOTTOM)
+                .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .modelForState().modelFile(modelB).rotationY(270).addModel();
+        itemModels().getBuilder(path).parent(modelS);
+    }
+
+    private void cabinetB(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        ModelFile modelS = models()
+                .withExistingParent(path, modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_single"));
+        ModelFile modelSM = models()
+                .withExistingParent(path + "_mirror", modLoc("block/cabinet_mirror"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_single"));
+        ModelFile modelT = models()
+                .withExistingParent(path + "_top", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_top"));
+        ModelFile modelTM = models()
+                .withExistingParent(path + "_top_mirror", modLoc("block/cabinet_mirror"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_top"));
+        ModelFile modelB = models()
+                .withExistingParent(path + "_bottom", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_bottom"));
+        ModelFile modelBM = models()
+                .withExistingParent(path + "_bottom_mirror", modLoc("block/cabinet_mirror"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_bottom"));
+        ModelFile modelL = models()
+                .withExistingParent(path + "_left", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_left"));
+        ModelFile modelR = models()
+                .withExistingParent(path + "_right", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_right"));
+
+
+        var builder = getVariantBuilder(block);
+        for (Direction direction : BlockStateProperties.HORIZONTAL_FACING.getPossibleValues()) {
+            builder.partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.SINGLE)
+                   .modelForState().modelFile(modelS).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.MIRROR)
+                   .modelForState().modelFile(modelSM).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.TOP)
+                   .modelForState().modelFile(modelT).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.TOP_MIRROR)
+                   .modelForState().modelFile(modelTM).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.BOTTOM)
+                   .modelForState().modelFile(modelB).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.BOTTOM_MIRROR)
+                   .modelForState().modelFile(modelBM).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.LEFT)
+                   .modelForState().modelFile(modelL).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE, ComplexCabinetType.RIGHT)
+                   .modelForState().modelFile(modelR).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel();
+        }
+        itemModels().getBuilder(path).parent(modelS);
+    }
+
+    private void cabinetC(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        Block block = deferredBlock.get();
+        String path = deferredBlock.getId().getPath();
+
+        ModelFile modelS = models()
+                .withExistingParent(path, modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_single"));
+        ModelFile modelL = models()
+                .withExistingParent(path + "_left", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_left"));
+        ModelFile modelR = models()
+                .withExistingParent(path + "_right", modLoc("block/cabinet"))
+                .texture("all", material)
+                .texture("front", modLoc("block/" + path + "_right"));
+
+        var builder = getVariantBuilder(block);
+        for (Direction direction : BlockStateProperties.HORIZONTAL_FACING.getPossibleValues()) {
+            builder.partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE_C, ComplexCabinetType.SINGLE)
+                   .modelForState().modelFile(modelS).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE_C, ComplexCabinetType.LEFT)
+                   .modelForState().modelFile(modelL).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, direction)
+                   .with(FDBlockStateProperties.CABINET_TYPE_C, ComplexCabinetType.RIGHT)
+                   .modelForState().modelFile(modelR).rotationY(YROT_MAP.getOrDefault(direction, 0)).addModel();
+        }
+        itemModels().getBuilder(path).parent(modelS);
+    }
+
+    private void cabinetD(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        String path = deferredBlock.getId().getPath();
+        horizontalDirectionModel(
+                deferredBlock.get(),
+                path,
+                models().withExistingParent(path, modLoc("block/cabinet"))
+                        .texture("all", material)
+                        .texture("front", modLoc("block/" + path)),
+                false
+        );
+    }
+
     private void chair(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
@@ -2110,67 +2439,67 @@ public class BlockStateGen extends FSBlockStateProvider {
         getVariantBuilder(block)
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.SINGLE)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.SINGLE)
                 .modelForState().modelFile(modelSingle).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.CENTER)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.CENTER)
                 .modelForState().modelFile(modelCenter).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.LEFT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.LEFT)
                 .modelForState().modelFile(modelLeft).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.RIGHT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.RIGHT)
                 .modelForState().modelFile(modelRight).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.SINGLE)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.SINGLE)
                 .modelForState().modelFile(modelSingle).rotationY(180).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.CENTER)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.CENTER)
                 .modelForState().modelFile(modelCenter).rotationY(180).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.LEFT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.LEFT)
                 .modelForState().modelFile(modelLeft).rotationY(180).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.RIGHT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.RIGHT)
                 .modelForState().modelFile(modelRight).rotationY(180).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.SINGLE)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.SINGLE)
                 .modelForState().modelFile(modelSingle).rotationY(270).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.CENTER)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.CENTER)
                 .modelForState().modelFile(modelCenter).rotationY(270).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.LEFT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.LEFT)
                 .modelForState().modelFile(modelLeft).rotationY(270).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.RIGHT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.RIGHT)
                 .modelForState().modelFile(modelRight).rotationY(270).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.SINGLE)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.SINGLE)
                 .modelForState().modelFile(modelSingle).rotationY(90).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.CENTER)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.CENTER)
                 .modelForState().modelFile(modelCenter).rotationY(90).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.LEFT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.LEFT)
                 .modelForState().modelFile(modelLeft).rotationY(90).addModel()
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-                .with(FDBlockStateProperties.CHAIR_TYPE, ChairType.RIGHT)
+                .with(FDBlockStateProperties.LONG_BLOCK_TYPE, LongBlockType.RIGHT)
                 .modelForState().modelFile(modelRight).rotationY(90).addModel();
     }
 

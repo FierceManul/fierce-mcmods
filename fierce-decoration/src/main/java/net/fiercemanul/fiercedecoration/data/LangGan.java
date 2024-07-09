@@ -23,6 +23,7 @@ public class LangGan extends LanguageProvider {
         add("fiercedecoration.tip.guardrail", "Stack place make corner");
         add("fiercedecoration.tip.water_cobble", "Give the machine infinite water without lag frame rate");
         add("fiercedecoration.tip.no_more_be", "No more BlockEntity");
+        add("fiercedecoration.container.cabinet", "cabinet");
     }
 
     private String nameFormat(String id) {

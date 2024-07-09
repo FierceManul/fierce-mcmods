@@ -2,7 +2,7 @@ package net.fiercemanul.fiercesource.world.level.block.entity;
 
 import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.capabilities.IManaHandler;
-import net.fiercemanul.fiercesource.capabilities.ManaCapabilities;
+import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +33,7 @@ public class CreativeManaOutputBlockEntity extends BlockEntity {
         if (level instanceof ServerLevel serverLevel) {
             Direction direction = getBlockState().getValue(BlockStateProperties.FACING);
             cache = BlockCapabilityCache.create(
-                    ManaCapabilities.BLOCK,
+                    FSCapabilities.BLOCK_MANA_CAP,
                     serverLevel,
                     getBlockPos().relative(direction),
                     direction.getOpposite(),

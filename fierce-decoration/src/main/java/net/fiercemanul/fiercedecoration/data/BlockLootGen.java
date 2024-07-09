@@ -29,15 +29,15 @@ import java.util.function.BiConsumer;
 public class BlockLootGen extends BlockLootSubProvider {
 
 
-    public BlockLootGen() {
-        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    public BlockLootGen(HolderLookup.Provider provider) {
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), provider);
     }
 
     @Override
     protected void generate() {}
 
     @Override
-    public void generate(HolderLookup.Provider pRegistries, BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
 
         FierceDecoration.BLOCKS.getEntries().forEach(deferredBlock -> {
             Block block = deferredBlock.get();

@@ -112,9 +112,7 @@ public class LitFakeCampfireBlock extends FakeCampfireBlock {
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if (pEntity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)pEntity)) {
-            pEntity.hurt(pLevel.damageSources().inFire(), fireDamage);
-        }
+        if (pEntity instanceof LivingEntity) pEntity.hurt(pLevel.damageSources().campfire(), fireDamage);
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
 }

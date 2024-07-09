@@ -38,8 +38,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 
 public class FireplaceHeartBlock extends ModelBlock {
 
@@ -86,7 +86,7 @@ public class FireplaceHeartBlock extends ModelBlock {
     ) {
         boolean success = WrenchAction.doWrenchDismantleAction(pStack, pState, pLevel, pPos, pPlayer);
         if (success) return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
-        else if (pStack.getItem().canPerformAction(pStack, ToolActions.SHOVEL_FLATTEN)) {
+        else if (pStack.getItem().canPerformAction(pStack, ItemAbilities.SHOVEL_FLATTEN)) {
             pLevel.setBlock(pPos, pState.setValue(LIT, false), 11);
             return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
         }
@@ -95,9 +95,8 @@ public class FireplaceHeartBlock extends ModelBlock {
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if (pState.getValue(LIT)
-                && !(pEntity instanceof LivingEntity livingEntity && EnchantmentHelper.hasFrostWalker(livingEntity)))
-            pEntity.hurt(pLevel.damageSources().inFire(), 1.0F);
+        if (pState.getValue(LIT) && pEntity instanceof LivingEntity)
+            pEntity.hurt(pLevel.damageSources().campfire(), 1.0F);
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
 

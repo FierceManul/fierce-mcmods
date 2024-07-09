@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercedecoration;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import net.fiercemanul.fiercedecoration.capabilities.InfinityWaterHandler;
 import net.fiercemanul.fiercedecoration.client.renderer.blockentity.StarBlockRender;
 import net.fiercemanul.fiercedecoration.client.resources.model.StarBlockModel;
@@ -9,8 +10,10 @@ import net.fiercemanul.fiercedecoration.server.commands.SitCommand;
 import net.fiercemanul.fiercedecoration.world.entity.Seat;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
+import net.fiercemanul.fiercedecoration.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.util.Utils;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -28,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.api.distmarker.Dist;
@@ -46,12 +50,16 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 @Mod(FierceDecoration.MODID)
@@ -68,6 +76,13 @@ public class FierceDecoration {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StarBlockEntity>> STAR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
             "star_block", () -> BlockEntityType.Builder.of(StarBlockEntity::new, FDBlocks.STAR_BLOCK.get()).build(null));
+    private static final Set<DeferredBlock<Block>> CABINETS = new HashSet<>();
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = BLOCK_ENTITIES.register(
+            "cabinet", () -> {
+                ImmutableSet.Builder<Block> validBlocksBuilder = new ImmutableSet.Builder<>();
+                CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
+                return new BlockEntityType<>(CabinetBlockEntity::new, validBlocksBuilder.build(), null);
+            });
     public static final DeferredHolder<EntityType<?>, EntityType<Seat>> SEAT = ENTITY_TYPES.register(
             "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).eyeHeight(0.0F).noSave().clientTrackingRange(10).fireImmune().build("seat"));
 
@@ -80,7 +95,7 @@ public class FierceDecoration {
             "fiercedecoration_decoration",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.fiercedecoration.decoration"))
                                  .withTabsBefore(FierceSource.MAIN_TAB.getKey())
-                                 .icon(() -> FDItems.LAPTOP_TERMINAL.get().getDefaultInstance())
+                                 .icon(() -> FDItems.SOUL_CRYSTAL_ORNAMENT.get().getDefaultInstance())
                                  .displayItems(FierceDecoration::applyDecorationBlocks)
                                  .build()
     );
@@ -103,7 +118,7 @@ public class FierceDecoration {
                                  }).build()
     );
 
-    private static final ImmutableMap<String, WoodType> WOOD_TYPE_MAP =
+    private static final Map<String, WoodType> WOOD_TYPE_MAP =
             new ImmutableMap.Builder<String, WoodType>()
                     .put("smooth_oak_planks", WoodType.OAK)
                     .put("smooth_spruce_planks", WoodType.SPRUCE)
@@ -117,7 +132,7 @@ public class FierceDecoration {
                     .put("smooth_warped_planks", WoodType.WARPED)
                     .build();
 
-    private static final ImmutableMap<String, BlockSetType> BLOCK_SET_TYPE_MAP =
+    private static final Map<String, BlockSetType> BLOCK_SET_TYPE_MAP =
             new ImmutableMap.Builder<String, BlockSetType>()
                     .put("smooth_oak_planks", BlockSetType.OAK)
                     .put("smooth_spruce_planks", BlockSetType.SPRUCE)
@@ -191,8 +206,54 @@ public class FierceDecoration {
                     blockMaterial, blockMaterial.getPath() + "_panel_horizon", HorizonPanelBlock::new, blockMaterial.getHorizonGlassPanelProperties());
             if (blockMaterial.allowWindowA) simplerReg(
                     blockMaterial, blockMaterial.getPath() + "_window_a", WindowTypeABlock::new, blockMaterial.getDefaultBlockProperties());
+            if (blockMaterial.vanillaPlanksLike) {
+                String path = blockMaterial.getPath().replace("smooth_", "").replace("_planks", "");
+                DeferredBlock<Block> block = BLOCKS.register(
+                        path + "_window_b",
+                        () -> new WindowTypeBBlock(
+                                BLOCK_SET_TYPE_MAP.get(blockMaterial.getPath()),
+                                BlockBehaviour.Properties.of()
+                                                         .instrument(NoteBlockInstrument.HAT)
+                                                         .strength(0.3F)
+                                                         .sound(SoundType.GLASS)
+                                                         .isViewBlocking(Utils::getFalse)
+                                                         .noOcclusion()
+                        )
+                );
+                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
+                if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
+                else BUILDING_BLOCKS.add(blockItem);
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+            }
             if (blockMaterial.allowTable) simplerReg(
                     blockMaterial, blockMaterial.getPath() + "_table", TableBlock::new, blockMaterial.getTableProperties());
+            if (blockMaterial.vanillaPlanksLike) {
+                String path = blockMaterial.getPath().replace("smooth_", "").replace("_planks", "");
+
+                DeferredBlock<Block> block = BLOCKS.registerBlock(path + "_cabinet_a", CabinetTypeABlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block2 = BLOCKS.registerBlock(path + "_cabinet_b", CabinetTypeBBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block3 = BLOCKS.registerBlock(path + "_cabinet_c", CabinetTypeCBlock::new, blockMaterial.getDefaultBlockProperties());
+                DeferredBlock<Block> block4 = BLOCKS.registerBlock(path + "_cabinet_d", CabinetBlock::new, blockMaterial.getDefaultBlockProperties());
+
+                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
+                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
+                DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
+                DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
+
+                CABINETS.add(block);
+                CABINETS.add(block2);
+                CABINETS.add(block3);
+                CABINETS.add(block4);
+                BUILDING_BLOCKS.add(blockItem);
+                BUILDING_BLOCKS.add(blockItem2);
+                BUILDING_BLOCKS.add(blockItem3);
+                BUILDING_BLOCKS.add(blockItem4);
+
+                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
+                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
+            }
             if (blockMaterial.allowChair) simplerReg(
                     blockMaterial, blockMaterial.getPath() + "_chair", SimpleChairBlock::new, blockMaterial.getDefaultBlockProperties());
             if (blockMaterial.allowGardenChair) simplerReg(
@@ -325,6 +386,7 @@ public class FierceDecoration {
     }
 
     private static void applyDecorationBlocks(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output pOutput) {
+        pOutput.accept(FDItems.SOUL_CRYSTAL_ORNAMENT);
         pOutput.accept(FDItems.PORTABLE_WORKSTATION);
         pOutput.accept(FDItems.LAPTOP_TERMINAL);
         pOutput.accept(FDItems.BOOK_AND_LAMP);
@@ -493,6 +555,11 @@ public class FierceDecoration {
                 (level, pos, state, blockEntity, context) -> InfinityWaterHandler.INSTANCE,
                 FDBlocks.WATERLOGGED_COBBLESTONE.get()
         );
+        CABINETS.forEach(deferredBlock -> event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                (level, pos, state, blockEntity, context) -> new InvWrapper(((CabinetBlock)state.getBlock()).getContainer(state, level, pos)),
+                deferredBlock.get()
+        ));
     }
 
     private void blockPlacedEvent(BlockEvent.EntityPlaceEvent event) {
@@ -539,7 +606,7 @@ public class FierceDecoration {
 
         @SubscribeEvent
         public static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
-            ModelResourceLocation location = new ModelResourceLocation(MODID, "star_block", "inventory");
+            ModelResourceLocation location = ModelResourceLocation.inventory(FDBlocks.STAR_BLOCK.getId());
             event.getModels().put(location, new StarBlockModel(event.getModels().get(location)));
         }
 

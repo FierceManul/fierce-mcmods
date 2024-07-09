@@ -49,9 +49,9 @@ public class StarBlockItemRender extends BlockEntityWithoutLevelRenderer {
     }
 
     private void renderFace(Matrix4f matrix4f, VertexConsumer consumer, float v1, float v2, float v3, float v4, float v5, float v6, float v7, float v8) {
-        consumer.vertex(matrix4f, v1, v3, v5).endVertex();
-        consumer.vertex(matrix4f, v2, v3, v6).endVertex();
-        consumer.vertex(matrix4f, v2, v4, v7).endVertex();
-        consumer.vertex(matrix4f, v1, v4, v8).endVertex();
+        consumer.addVertex(matrix4f, v1, v3, v5);
+        consumer.addVertex(matrix4f, v2, v3, v6);
+        consumer.addVertex(matrix4f, v2, v4, v7);
+        consumer.addVertex(matrix4f, v1, v4, v8);
     }
 }

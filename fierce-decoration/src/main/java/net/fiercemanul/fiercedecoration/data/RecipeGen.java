@@ -28,6 +28,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
+        soulCrystalOrnament(pRecipeOutput);
         pC(pRecipeOutput);
         bookAndLamp(pRecipeOutput);
         starBlock(pRecipeOutput);
@@ -155,6 +156,8 @@ public class RecipeGen extends FSRecipeProvider {
             else if (block instanceof HorizonPanelBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 8);
             else if (block instanceof WindowTypeABlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 3);
             else if (block instanceof TableBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 5);
+            else if (block instanceof CabinetTypeABlock
+                    || block instanceof CabinetTypeBBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock);
             else if (block instanceof SimpleChairBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 4);
             else if (block instanceof GardenChairBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD))
@@ -206,6 +209,19 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("#O#")
                 .pattern("X#X")
                 .unlockedBy(getHasName(material), has(material))
+                .save(pRecipeOutput);
+    }
+
+    private static void soulCrystalOrnament(RecipeOutput pRecipeOutput) {
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.DECORATIONS, FDItems.SOUL_CRYSTAL_ORNAMENT)
+                .define('#', FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('X', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('P', FDItems.SMOOTH_MANGROVE_PLANKS)
+                .pattern(" X ")
+                .pattern("X#X")
+                .pattern(" XP")
+                .unlockedBy(getHasName(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM))
                 .save(pRecipeOutput);
     }
 
