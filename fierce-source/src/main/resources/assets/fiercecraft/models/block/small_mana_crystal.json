@@ -1,0 +1,7 @@
+{
+	"parent": "fiercecraft:block/template_small_soul_crystal",
+	"textures": {
+		"particle": "fiercecraft:block/small_mana_crystal",
+		"all": "fiercecraft:block/small_mana_crystal"
+	}
+}

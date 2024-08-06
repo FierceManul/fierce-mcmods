@@ -22,9 +22,9 @@ eclipse
 repo
 run
 runs
-run-data
+run-randomData
 **/generated/
-
+*.drawio.bkp
 /black-hole-storage/
 /fierce-craft/
 /media/

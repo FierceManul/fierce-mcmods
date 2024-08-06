@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 
@@ -23,6 +24,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.CROWBAR_ITEM)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
@@ -31,7 +33,9 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" X ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(pRecipeOutput);
+
         netheriteSmithing(pRecipeOutput, FierceSource.CROWBAR_ITEM.get(), RecipeCategory.TOOLS, FierceSource.NETHERITE_CROWBAR_ITEM.get());
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.CLAW_HAMMER_ITEM)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
@@ -41,7 +45,9 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" I ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(pRecipeOutput);
+
         netheriteSmithing(pRecipeOutput, FierceSource.CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get());
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.WORLD_LOCATOR_BLOCK_ITEM)
                 .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
                 .define('I', Items.IRON_INGOT)
@@ -57,10 +63,12 @@ public class RecipeGen extends FSRecipeProvider {
 
 
         RecipeOutput backupRecipeOutput = pRecipeOutput.withConditions(new NotCondition(new ModLoadedCondition("fiercecraft")));
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
                 .requires(Items.AMETHYST_SHARD)
                 .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
                 .save(backupRecipeOutput, applyBackup(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.getId()));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
                 .define('X', Items.GLOWSTONE_DUST)
                 .define('O', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
@@ -70,6 +78,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.GLOWSTONE_DUST), has(Items.GLOWSTONE_DUST))
                 .unlockedBy(getHasName(FierceSource.SOUL_CRYSTAL_SHARD_ITEM), has(FierceSource.SOUL_CRYSTAL_SHARD_ITEM))
                 .save(backupRecipeOutput, applyBackup(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
                 .define('X', Items.GHAST_TEAR)
                 .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
@@ -79,6 +88,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.GHAST_TEAR), has(Items.GHAST_TEAR))
                 .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
                 .save(backupRecipeOutput, applyBackup(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
                 .define('X', Items.NETHER_STAR)
                 .define('O', FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
@@ -88,6 +98,32 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
                 .unlockedBy(getHasName(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM))
                 .save(backupRecipeOutput, applyBackup(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.SMALL_MANA_CRYSTAL_BLOCK_ITEM)
+                           .define('X', Tags.Items.CHESTS)
+                           .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+                           .pattern("X")
+                           .pattern("O")
+                           .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
+                           .save(backupRecipeOutput, applyBackup(FierceSource.SMALL_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK_ITEM)
+                           .define('X', Tags.Items.CHESTS)
+                           .define('O', FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
+                           .pattern("X")
+                           .pattern("O")
+                           .unlockedBy(getHasName(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM))
+                           .save(backupRecipeOutput, applyBackup(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.LARGE_MANA_CRYSTAL_BLOCK_ITEM)
+                           .define('X', Tags.Items.CHESTS)
+                           .define('O', FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
+                           .pattern("X")
+                           .pattern("O")
+                           .unlockedBy(getHasName(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM))
+                           .save(backupRecipeOutput, applyBackup(FierceSource.LARGE_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.POS_RECORDER_ITEM)
                 .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
                 .define('I', Items.IRON_INGOT)

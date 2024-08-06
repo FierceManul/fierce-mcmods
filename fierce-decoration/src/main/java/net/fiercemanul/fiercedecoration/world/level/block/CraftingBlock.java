@@ -5,7 +5,6 @@ import net.fiercemanul.fiercedecoration.world.inventory.CustomCraftingMenu;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -37,13 +36,14 @@ public class CraftingBlock extends CraftingTableBlock {
     protected ItemInteractionResult useItemOn(
             ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
     ) {
-        boolean success = WrenchAction.doWrenchDismantleAction(pStack, pState, pLevel, pPos, pPlayer);
-        if (!success && !pLevel.isClientSide) {
-            pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
-            pPlayer.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
-            return ItemInteractionResult.CONSUME;
-        }
-        return ItemInteractionResult.SUCCESS;
+        return WrenchAction.defaultUseOn(pStack, pState, pLevel, pPos, pPlayer);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
+        pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
+        return InteractionResult.CONSUME;
     }
 
     @Override

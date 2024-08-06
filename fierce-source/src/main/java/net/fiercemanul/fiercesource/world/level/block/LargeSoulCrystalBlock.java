@@ -18,6 +18,7 @@ public class LargeSoulCrystalBlock extends ModelBlock {
     public static final MapCodec<LargeSoulCrystalBlock> CODEC = simpleCodec(LargeSoulCrystalBlock::new);
     public static final VoxelShape SHAPE = box(6.0, 2.0, 6.0, 10.0, 14.0, 10.0);
 
+
     public LargeSoulCrystalBlock(Properties pProperties) {
         super(pProperties.strength(1.5F, 6.0F).lightLevel(value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
     }

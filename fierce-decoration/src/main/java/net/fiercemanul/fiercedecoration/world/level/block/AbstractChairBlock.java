@@ -34,13 +34,6 @@ public abstract class AbstractChairBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
-    ) {
-        return WrenchAction.doDefaultWrenchAction(FACING, pStack, pState, pLevel, pPos, pPlayer) ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         Vec3 vec3 = getSitPos(pState.getValue(FACING));
         Seat seat = new Seat(pLevel, pPos.getX() + vec3.x, pPos.getY() + vec3.y, pPos.getZ() + vec3.z);

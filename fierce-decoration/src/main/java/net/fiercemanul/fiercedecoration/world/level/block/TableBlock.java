@@ -76,8 +76,7 @@ public class TableBlock extends HorizonAxisModelBlock {
     protected ItemInteractionResult useItemOn(
             ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
     ) {
-        boolean success = WrenchAction.doDefaultWrenchAction(LEGGED, pStack, pState, pLevel, pPos, pPlayer);
-        return success ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return WrenchAction.defaultUseOn(LEGGED, pStack, pState, pLevel, pPos, pPlayer);
     }
 
     @Override

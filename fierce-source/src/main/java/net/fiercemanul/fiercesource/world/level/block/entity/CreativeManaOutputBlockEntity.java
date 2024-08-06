@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource.world.level.block.entity;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.capabilities.IManaHandler;
 import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
+import net.fiercemanul.fiercesource.capabilities.IManaHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -43,7 +43,7 @@ public class CreativeManaOutputBlockEntity extends BlockEntity {
         }
     }
 
-    public void tick() {
+    public void serverTick() {
         if (cache == null) return;
         IManaHandler manaStorage = cache.getCapability();
         if (manaStorage != null) manaStorage.receiveMana(Long.MAX_VALUE, false);

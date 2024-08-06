@@ -97,8 +97,7 @@ public class FakeHopperBlock extends ModelBlock {
     protected ItemInteractionResult useItemOn(
             ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
     ) {
-        return WrenchAction.doDefaultWrenchAction(FACING, pStack, pState, pLevel, pPos, pPlayer) ?
-                ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return WrenchAction.defaultUseOn(FACING, pStack, pState, pLevel, pPos, pPlayer);
     }
 
     @Override

@@ -45,9 +45,7 @@ public class CabinetBlock extends HorizonFacingBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) {
-            return InteractionResult.SUCCESS;
-        }
+        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         else {
             MenuProvider menuprovider = this.getMenuProvider(pState, pLevel, pPos);
             if (menuprovider != null) {

@@ -61,7 +61,6 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
         );
         pPoseStack.popPose();
 
-
     }
 
     private void renderFace(Matrix4f matrix4f, VertexConsumer consumer, float v1, float v2, float v3, float v4, float v5, float v6, float v7, float v8) {

@@ -155,9 +155,9 @@ public class RecipeGen extends FSRecipeProvider {
             else if (block instanceof PillarConnector4PXBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 5);
             else if (block instanceof HorizonPanelBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 8);
             else if (block instanceof WindowTypeABlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 3);
+            else if (block instanceof WindowTypeBBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 4);
             else if (block instanceof TableBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 5);
-            else if (block instanceof CabinetTypeABlock
-                    || block instanceof CabinetTypeBBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock);
+            else if (block instanceof CabinetBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock);
             else if (block instanceof SimpleChairBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 4);
             else if (block instanceof GardenChairBlock) {
                 if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD))
@@ -416,7 +416,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" # ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(pRecipeOutput);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_FURNACE, Items.FURNACE, "", 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_FURNACE, Items.FURNACE, 8);
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, FDItems.LIT_FAKE_FURNACE)
                 .define('a', FDItems.FAKE_FURNACE)
@@ -460,7 +460,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("b")
                 .unlockedBy(getHasName(FDItems.FAKE_SMOKER), has(FDItems.FAKE_SMOKER))
                 .save(pRecipeOutput);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_BARREL, Items.BARREL, "", 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_BARREL, Items.BARREL, 8);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FDItems.FAKE_CAMPFIRE, 8)
                            .define('L', ItemTags.LOGS)
                            .define('S', Items.STICK)
@@ -470,12 +470,12 @@ public class RecipeGen extends FSRecipeProvider {
                            .unlockedBy("has_stick", has(Items.STICK))
                            .unlockedBy("has_coal", has(ItemTags.COALS))
                            .save(pRecipeOutput);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.LIT_FAKE_CAMPFIRE, Items.CAMPFIRE, "", 8);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.LIT_FAKE_SOUL_CAMPFIRE, Items.SOUL_CAMPFIRE, "", 8);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_CHEST, Items.CHEST, "", 8);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_CHISELED_BOOKSHELF, Items.CHISELED_BOOKSHELF, "", 8);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_LECTERN, Items.LECTERN, "", 16);
-        oneToOne(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_BEEHIVE, Items.BEEHIVE, "", 16);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.LIT_FAKE_CAMPFIRE, Items.CAMPFIRE, 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.LIT_FAKE_SOUL_CAMPFIRE, Items.SOUL_CAMPFIRE, 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_CHEST, Items.CHEST, 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_CHISELED_BOOKSHELF, Items.CHISELED_BOOKSHELF, 8);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_LECTERN, Items.LECTERN, 16);
+        stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, FDItems.FAKE_BEEHIVE, Items.BEEHIVE, 16);
         fakeBlocks(pRecipeOutput, FDItems.FAKE_IRON_BLOCK, Items.GRAY_DYE);
         fakeBlocks(pRecipeOutput, FDItems.FAKE_GOLD_BLOCK, Items.YELLOW_DYE);
         fakeBlocks(pRecipeOutput, FDItems.FAKE_DIAMOND_BLOCK, Items.LIGHT_BLUE_DYE);

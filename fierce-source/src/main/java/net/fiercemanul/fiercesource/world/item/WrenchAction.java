@@ -5,7 +5,7 @@ import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,20 +22,31 @@ import java.util.List;
 public class WrenchAction {
 
 
+    public static <T extends Comparable<T>> ItemInteractionResult defaultUseOn(
+            Property<T> property, ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer
+    ) {
+        boolean success = doDefaultWrenchAction(property, pStack, pState, pLevel, pPos, pPlayer);
+        return success ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    public static ItemInteractionResult defaultUseOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+        boolean success = doWrenchDismantleAction(pStack, pState, pLevel, pPos, pPlayer);
+        return success ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
     /**
      * @return 成功?
      */
     public static <T extends Comparable<T>> boolean doDefaultWrenchAction(Property<T> property, ItemStack pStack,  BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
         if (notWrench(pStack)) return false;
         if (pPlayer.isCrouching()) return wrenchDismantle(pStack, pState, pLevel, pPos, pPlayer);
-        else return pLevel.setBlock(
-                pPos, pState.setValue(property, Util.findNextInIterable(property.getPossibleValues(), pState.getValue(property))), 11);
+        else return pLevel.setBlock(pPos, pState.setValue(property, Util.findNextInIterable(property.getPossibleValues(), pState.getValue(property))), 11);
     }
 
     /**
      * @return 成功?
      */
-    public static boolean doWrenchAction(ItemStack pStack, BooleanProperty property, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+    public static boolean doDefaultWrenchAction(BooleanProperty property, ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
         if (notWrench(pStack)) return false;
         if (pPlayer.isCrouching()) return wrenchDismantle(pStack, pState, pLevel, pPos, pPlayer);
         else return pLevel.setBlock(pPos, pState.setValue(property, !pState.getValue(property)), 11);

@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercecraft:block/test"
+      }
+    },
+    {
+      "apply": {
+        "model": "fiercecraft:block/test_base"
+      }
+    }
+  ]
+}

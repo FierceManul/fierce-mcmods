@@ -59,7 +59,6 @@ public class CreativeManaOutputBlock extends FacingModelBlock implements EntityB
         };
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new CreativeManaOutputBlockEntity(pPos, pState);
@@ -69,7 +68,7 @@ public class CreativeManaOutputBlock extends FacingModelBlock implements EntityB
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide && pBlockEntityType == FierceSource.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get())
-            return (pLevel1, pPos, pState1, pBlockEntity) -> ((CreativeManaOutputBlockEntity) pBlockEntity).tick();
+            return (pLevel1, pPos, pState1, pBlockEntity) -> ((CreativeManaOutputBlockEntity) pBlockEntity).serverTick();
         else return null;
     }
 }
