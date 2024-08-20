@@ -20,35 +20,26 @@ public class TestCanvas extends Canvas{
 
 
     public TestCanvas(FierceScreen screen, int pX, int pY, Component pMessage) {
-        super(screen, pX, pY, 256, 256, pMessage);
-    }
-
-    @Override
-    public void makeSize(int screenWidth, int screenHeight) {
-        setX(screen.getCenterX() - 128);
-        setY(screen.getCenterY() - 128);
-        xEnd = screen.getCenterX() + 128;
-        yEnd = screen.getCenterY() + 128;
+        super(screen, pX, pY, 154, 241, pMessage);
     }
 
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        pGuiGraphics.enableScissor(getX(), getY(), getRight(), getBottom());
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(getX(), getY(), 0);
-        //pGuiGraphics.enableScissor(0, 0, width, height);
         pGuiGraphics.fill(
                 0, 0, width, height,
                 FastColor.ARGB32.color(230, 230, 255)
         );
         pGuiGraphics.drawString(screen.getFont(), "Random: " + screen.getMenu().random, 8, 6, 4210752, false);
-        pGuiGraphics.renderFakeItem(new ItemStack(Items.NETHERITE_SWORD), 25, 32);
+        pGuiGraphics.renderFakeItem(Items.NETHERITE_SWORD.getDefaultInstance(), 25, 32);
+
         pGuiGraphics.pose().pushPose();
-
-
-        pGuiGraphics.pose().translate(128, 128, 150);
+        pGuiGraphics.pose().translate(77, 77, 150);
         pGuiGraphics.pose().scale(64.0F, -64.0F, 64.0F);
         pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(30));
-        pGuiGraphics.pose().mulPose(Axis.YP.rotationDegrees(45));
+        pGuiGraphics.pose().mulPose(Axis.YP.rotationDegrees(30));
         ItemStack stack = Items.NETHERITE_SWORD.getDefaultInstance();
         BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getModel(stack, Minecraft.getInstance().level, null, 0);
         Lighting.setupForFlatItems();
@@ -66,9 +57,8 @@ public class TestCanvas extends Canvas{
         Lighting.setupFor3DItems();
         pGuiGraphics.pose().popPose();
 
-        //pGuiGraphics.disableScissor();
-
         pGuiGraphics.pose().popPose();
+        pGuiGraphics.disableScissor();
     }
 
     @Override

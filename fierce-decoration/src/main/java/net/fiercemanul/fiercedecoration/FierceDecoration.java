@@ -41,7 +41,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -149,6 +148,7 @@ public class FierceDecoration {
     static {
         FDBlocks.init();
         FDItems.init();
+        //DatagenModLoader.isRunningDataGen();
         //boolean isData = Launcher.INSTANCE.environment() instanceof IEnvironment environment && ((CommonLaunchHandler) environment.findLaunchHandler(environment.getProperty(IEnvironment.Keys.LAUNCHTARGET.get()).orElse("MISSING")).get()).isData();
         for (BlockMaterial blockMaterial : BlockMaterial.BLOCK_MATERIALS) {
             if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockMaterial.getBlockItemLike());

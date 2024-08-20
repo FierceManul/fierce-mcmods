@@ -12,26 +12,17 @@ public abstract class Canvas extends AbstractWidget {
 
 
     protected FierceScreen screen;
-    protected int xEnd;
-    protected int yEnd;
 
     public Canvas(FierceScreen screen, int pX, int pY, int pWidth, int pHeight, Component pMessage) {
         super(pX, pY, pWidth, pHeight, pMessage);
         this.screen = screen;
-        xEnd = pX + width;
-        yEnd = pY + height;
     }
 
-    abstract public void makeSize(int screenWidth, int screenHeight);
+    public void makeSize(int screenWidth, int screenHeight) {
+        setX(screen.getCenterX() - width / 2);
+        setY(screen.getCenterY() - height / 2);
+    }
 
     @Override
     public void playDownSound(SoundManager pHandler) {}
-
-    public int getXEnd() {
-        return xEnd;
-    }
-
-    public int getYEnd() {
-        return yEnd;
-    }
 }

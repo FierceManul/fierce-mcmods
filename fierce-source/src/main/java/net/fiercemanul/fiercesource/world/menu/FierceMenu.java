@@ -30,11 +30,11 @@ public class FierceMenu extends AbstractContainerMenu {
     @Nullable
     private BlockPos blockPos;
 
-    public record RandomData(int i) implements FierceMenuData.Data {
+    public record RandomData(int data) implements FierceMenuData.Data {
 
         public static final StreamCodec<ByteBuf, RandomData> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.INT,
-                RandomData::i,
+                RandomData::data,
                 RandomData::new
         );
 
@@ -44,11 +44,11 @@ public class FierceMenu extends AbstractContainerMenu {
         }
     }
 
-    public record ManaData(long l) implements FierceMenuData.Data {
+    public record ManaData(long data) implements FierceMenuData.Data {
 
         public static final StreamCodec<ByteBuf, ManaData> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.VAR_LONG,
-                ManaData::l,
+                ManaData::data,
                 ManaData::new
         );
 
@@ -59,11 +59,11 @@ public class FierceMenu extends AbstractContainerMenu {
     }
 
 
-    public record FeData(int i) implements FierceMenuData.Data {
+    public record FeData(int data) implements FierceMenuData.Data {
 
         public static final StreamCodec<ByteBuf, FeData> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.INT,
-                FeData::i,
+                FeData::data,
                 FeData::new
         );
 
@@ -108,7 +108,7 @@ public class FierceMenu extends AbstractContainerMenu {
     }
 
     public void handleRemoteData(RandomData randomData) {
-        random = randomData.i;
+        random = randomData.data;
     }
 
     public void sendRandom(int random) {

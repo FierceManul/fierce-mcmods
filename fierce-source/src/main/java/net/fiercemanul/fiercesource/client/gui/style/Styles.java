@@ -7,15 +7,16 @@ public class Styles {
 
     public static final UIStyle DEFAULT = new UIStyle(
             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/background"),
-            Padding.two(26, 6),
+            Int4.two(26, 10),
             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/scrollbar_tab"),
-            new ScrollBarTabSize(2, 58, 63,9),
+            new Int4(11, 12, 12,9),
+            new Int2(17, 18),
             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/tab_off"),
-            new IntXY(20, 22),
+            new Int4(0, 0, 17, 19),
             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/tab_on"),
-            IntXY.same(22),
-            new TabMargins(-26, 54, 80, 24),
-            IntXY.same(3)
+            new Int4(0, -1, 22, 20),
+            new Int4(-24, 9, 27, 21),
+            Int2.same(1)
     );
 
     public static UIStyle chooseingUIStyle = DEFAULT;

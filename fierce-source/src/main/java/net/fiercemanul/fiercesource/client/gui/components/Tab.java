@@ -1,62 +1,65 @@
 package net.fiercemanul.fiercesource.client.gui.components;
 
 import net.fiercemanul.fiercesource.client.gui.screens.FierceScreen;
+import net.fiercemanul.fiercesource.client.gui.style.Int4;
 import net.fiercemanul.fiercesource.client.gui.style.Styles;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class Tab extends AbstractWidget {
+public abstract class Tab<T> extends AbstractWidget {
 
 
-    private final FierceScreen screen;
-    private Canvas canvas;
+    protected final FierceScreen screen;
+    protected Canvas canvas;
 
-    public Tab(int pX, int pY, int pWidth, int pHeight, Component pMessage, FierceScreen screen, Canvas canvas) {
-        super(pX, pY, pWidth, pHeight, pMessage);
+
+    public Tab(int pX, int pY, Component pMessage, FierceScreen screen, Canvas canvas) {
+        super(pX, pY, Styles.chooseingUIStyle.tabSize().i1(), Styles.chooseingUIStyle.tabSize().i2(), pMessage);
         this.screen = screen;
         this.canvas = canvas;
         this.setTooltip(Tooltip.create(pMessage));
     }
 
+    public void renderTab(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+
+    }
+
     @Override
-    protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        ResourceLocation img;
+        Int4 data;
         if (isFocused()) {
-            pGuiGraphics.pose().pushPose();
-            pGuiGraphics.pose().translate(0, 0, 10);
-            pGuiGraphics.blitSprite(
-                    Styles.chooseingUIStyle.tabOn(),
-                    getX(),
-                    getY(),
-                    Styles.chooseingUIStyle.tabOnSize().x(),
-                    Styles.chooseingUIStyle.tabOnSize().y()
-            );
-            renderIcon(pGuiGraphics, pPartialTick);
-            pGuiGraphics.pose().popPose();
+            img = Styles.chooseingUIStyle.tabUp();
+            data = Styles.chooseingUIStyle.tabUpImgPadding();
         } else {
-            if (isHovered) {
-                pGuiGraphics.pose().pushPose();
-                pGuiGraphics.pose().translate(0, 0, 20);
-            }
-            pGuiGraphics.blitSprite(
-                    Styles.chooseingUIStyle.tabOff(),
-                    getX(),
-                    getY(),
-                    Styles.chooseingUIStyle.tabOffSize().x(),
-                    Styles.chooseingUIStyle.tabOffSize().y()
-            );
-            renderIcon(pGuiGraphics, pPartialTick);
-            if (isHovered) pGuiGraphics.pose().popPose();
+            img = Styles.chooseingUIStyle.tabDown();
+            data = Styles.chooseingUIStyle.tabDownImgPadding();
         }
+        pGuiGraphics.blitSprite(
+                img,
+                getX() + data.i1(),
+                getY() + data.i2(),
+                data.i3(),
+                data.i4()
+        );
+        renderIcon(pGuiGraphics, pPartialTick);
     }
 
     abstract protected void renderIcon(GuiGraphics pGuiGraphics, float pPartialTick);
 
-    @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    abstract public void setIcon(T icon);
+
+    public void tabClicked(int button) {
+        setFocused(true);
         screen.setCanvas(canvas);
+        playDownSound(Minecraft.getInstance().getSoundManager());
     }
 
     @Override
@@ -69,4 +72,5 @@ public abstract class Tab extends AbstractWidget {
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
     }
+
 }

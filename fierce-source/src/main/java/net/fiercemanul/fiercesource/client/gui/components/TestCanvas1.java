@@ -27,14 +27,6 @@ public class TestCanvas1 extends Canvas{
     }
 
     @Override
-    public void makeSize(int screenWidth, int screenHeight) {
-        setX(screen.getCenterX() - 94);
-        setY(screen.getCenterY() - 129);
-        xEnd = screen.getCenterX() + 94;
-        yEnd = screen.getCenterY() + 129;
-    }
-
-    @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(getX(), getY(), 0);
