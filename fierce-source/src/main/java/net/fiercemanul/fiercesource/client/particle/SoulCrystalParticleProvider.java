@@ -79,9 +79,9 @@ public class SoulCrystalParticleProvider implements ParticleProvider<SimpleParti
         double stepX = direction.getStepX();
         double stepY = direction.getStepY();
         double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepX * 0.125 + stepX * RANDOM.nextDouble() * 0.125;
-        double y = stepY == 0 ? RANDOM.nextDouble() * 0.875 + 0.0625 : 0.5 + stepY * 0.1875 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepZ * 0.125 + stepZ * RANDOM.nextDouble() * 0.125;
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.625 + 0.1875 : 0.5 + stepX * 0.1875 + stepX * RANDOM.nextDouble() * 0.125;
+        double y = stepY == 0 ? RANDOM.nextDouble() * 1.125 - 0.0625 : 0.5 + stepY * 0.5 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.625 + 0.1875 : 0.5 + stepZ * 0.1875 + stepZ * RANDOM.nextDouble() * 0.125;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,
@@ -100,9 +100,9 @@ public class SoulCrystalParticleProvider implements ParticleProvider<SimpleParti
         double stepX = direction.getStepX();
         double stepY = direction.getStepY();
         double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + stepX * 0.09375 + stepX * RANDOM.nextDouble() * 0.125;
-        double y = stepY == 0 ? RANDOM.nextDouble() * 0.6875 + 0.15625 : 0.5 + stepY * 0.28125 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.4375 + 0.28125 : 0.5 + stepZ * 0.09375 + stepZ * RANDOM.nextDouble() * 0.125;
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5625 + 0.21875 : 0.5 + stepX * 0.15625 + stepX * RANDOM.nextDouble() * 0.125;
+        double y = stepY == 0 ? RANDOM.nextDouble() : 0.5 + stepY * 0.28125 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5625 + 0.21875 : 0.5 + stepZ * 0.15625 + stepZ * RANDOM.nextDouble() * 0.125;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,
@@ -121,9 +121,9 @@ public class SoulCrystalParticleProvider implements ParticleProvider<SimpleParti
         double stepX = direction.getStepX();
         double stepY = direction.getStepY();
         double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + stepX * 0.0625 + stepX * RANDOM.nextDouble() * 0.0625;
-        double y = stepY == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepY * 0.1875 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.25 + 0.375 : 0.5 + stepZ * 0.0625 + stepZ * RANDOM.nextDouble() * 0.0625;
+        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepX * 0.125 + stepX * RANDOM.nextDouble() * 0.125;
+        double y = stepY == 0 ? RANDOM.nextDouble() * 0.875 + 0.0625 : 0.5 + stepY * 0.375 + stepY * RANDOM.nextDouble() * 0.0625;
+        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepZ * 0.125 + stepZ * RANDOM.nextDouble() * 0.125;
         spawnParticle(
                 pPos.getX() + x,
                 pPos.getY() + y,

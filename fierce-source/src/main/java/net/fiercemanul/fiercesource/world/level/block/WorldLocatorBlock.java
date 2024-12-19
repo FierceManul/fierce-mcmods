@@ -13,10 +13,10 @@ public class WorldLocatorBlock extends ModelBlock {
 
 
     public static final MapCodec<WorldLocatorBlock> CODEC = simpleCodec(WorldLocatorBlock::new);
-    public static final VoxelShape SHAPE = box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
+    public static final VoxelShape SHAPE = box(4.0, 4.0, 4.0, 12.0, 12.0, 12.0);
 
     public WorldLocatorBlock(Properties pProperties) {
-        super(pProperties.strength(2.0F, 12.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_GREEN));
+        super(pProperties.strength(2.0F, 20.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
     }
 
     @Override

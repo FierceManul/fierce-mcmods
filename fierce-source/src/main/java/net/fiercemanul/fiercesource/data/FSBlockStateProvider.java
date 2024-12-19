@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -21,6 +22,10 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     protected static final ResourceLocation TEMPLATE_LARGE_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_large_soul_crystal");
     protected static final ResourceLocation TEMPLATE_MEDIUM_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_medium_soul_crystal");
     protected static final ResourceLocation TEMPLATE_SMALL_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_small_soul_crystal");
+    protected static final ResourceLocation CRYSTAL_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/crystal_base");
+    protected static final ResourceLocation TEMPLATE_LARGE_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_large_soul_crystal_with_base");
+    protected static final ResourceLocation TEMPLATE_MEDIUM_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_medium_soul_crystal_with_base");
+    protected static final ResourceLocation TEMPLATE_SMALL_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_small_soul_crystal_with_base");
     protected static final HashMap<Direction, Integer> YROT_MAP = new HashMap<>();
 
     static {
@@ -198,18 +203,108 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void largeSoulCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL).texture("all", texture);
+    protected void largeCrystal(DeferredBlock<Block> deferredBlock) {
+        largeCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    }
+
+    protected void largeCrystal(Block block, String path, ResourceLocation texture) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
         simple(block, path, model);
     }
 
-    protected void mediumSoulCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL).texture("all", texture);
+    protected void largeCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        largeCrystalWithBase(
+                deferredBlock.get(),
+                id.getPath(),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+        );
+    }
+
+    protected void largeCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
+        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
+                                  .texture("all", base)
+                                  .texture("particle", base);
+        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
+        itemModels().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL_WITH_BASE)
+                    .texture("all", texture)
+                    .texture("particle", texture)
+                    .texture("base", base);
+    }
+
+    protected void mediumCrystal(DeferredBlock<Block> deferredBlock) {
+        mediumCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    }
+
+    protected void mediumCrystal(Block block, String path, ResourceLocation texture) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
         simple(block, path, model);
     }
 
-    protected void smallSoulCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL).texture("all", texture);
+    protected void mediumCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        mediumCrystalWithBase(
+                deferredBlock.get(),
+                id.getPath(),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+        );
+    }
+
+    protected void mediumCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
+        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
+                                   .texture("all", base)
+                                   .texture("particle", base);
+        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
+        itemModels().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL_WITH_BASE)
+                    .texture("all", texture)
+                    .texture("particle", texture)
+                    .texture("base", base);
+    }
+
+    protected void smallCrystal(DeferredBlock<Block> deferredBlock) {
+        smallCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    }
+
+    protected void smallCrystal(Block block, String path, ResourceLocation texture) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
         simple(block, path, model);
+    }
+
+    protected void smallCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        smallCrystalWithBase(
+                deferredBlock.get(),
+                id.getPath(),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+        );
+    }
+
+    protected void smallCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
+        ModelFile model = models().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL)
+                                  .texture("all", texture)
+                                  .texture("particle", texture);
+        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
+                                   .texture("all", base)
+                                   .texture("particle", base);
+        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
+        itemModels().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL_WITH_BASE)
+                    .texture("all", texture)
+                    .texture("particle", texture)
+                    .texture("base", base);
     }
 }

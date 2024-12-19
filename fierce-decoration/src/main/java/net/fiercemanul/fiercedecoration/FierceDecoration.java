@@ -16,9 +16,11 @@ import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.util.Utils;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
@@ -606,8 +608,9 @@ public class FierceDecoration {
 
         @SubscribeEvent
         public static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
+            Map<ModelResourceLocation, BakedModel> models = event.getModels();
             ModelResourceLocation location = ModelResourceLocation.inventory(FDBlocks.STAR_BLOCK.getId());
-            event.getModels().put(location, new StarBlockModel(event.getModels().get(location)));
+            models.put(location, new StarBlockModel(models.get(location)));
         }
 
     }

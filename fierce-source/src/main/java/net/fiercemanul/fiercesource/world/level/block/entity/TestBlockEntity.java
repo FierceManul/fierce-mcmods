@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block.entity;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.world.menu.FierceMenu;
+import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +21,7 @@ public class TestBlockEntity extends BlockEntity {
     private int fe;
     private int random1 = RANDOM.nextInt();
     @Nullable
-    private FierceMenu synchronizer;
+    private FierceContainerMenu synchronizer;
 
     public TestBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(FierceSource.TEST_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -48,7 +48,7 @@ public class TestBlockEntity extends BlockEntity {
         }
     }
 
-    public void setSynchronizer(@Nullable FierceMenu synchronizer) {
+    public void setSynchronizer(@Nullable FierceContainerMenu synchronizer) {
         this.synchronizer = synchronizer;
     }
 }

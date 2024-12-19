@@ -39,5 +39,6 @@ public class DataGen {
         generator.addProvider(includeServer, blockTagsGen);
         generator.addProvider(includeServer, new ItemTagsGen(packOutput, event.getLookupProvider(), blockTagsGen.contentsGetter(), existingFileHelper));
         generator.addProvider(includeClient, new BlockStateGen(packOutput, existingFileHelper));
+        generator.addProvider(includeClient, new UIStyleGen(packOutput, event.getLookupProvider()));
     }
 }

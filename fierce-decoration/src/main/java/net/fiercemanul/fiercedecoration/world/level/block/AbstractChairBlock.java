@@ -2,16 +2,12 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.entity.Seat;
-import net.fiercemanul.fiercesource.world.item.WrenchAction;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingBlock;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;

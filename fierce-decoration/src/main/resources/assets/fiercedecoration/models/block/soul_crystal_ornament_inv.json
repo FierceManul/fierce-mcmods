@@ -1,24 +1,22 @@
 {
 	"parent": "minecraft:block/block",
 	"render_type": "minecraft:translucent",
-	"gui_light": "front",
 	"textures": {
-		"a": "fiercecraft:block/large_soul_crystal",
-		"b": "fiercecraft:block/small_soul_crystal",
+		"particle": "fiercedecoration:block/soul_crystal_ornament_c",
+		"crystal": "fiercedecoration:block/soul_crystal_ornament_c",
 		"base": "fiercedecoration:block/soul_crystal_ornament_a",
-		"bottom": "fiercedecoration:block/soul_crystal_ornament_b",
-		"particle": "fiercecraft:block/large_soul_crystal"
+		"bottom": "fiercedecoration:block/soul_crystal_ornament_b"
 	},
 	"elements": [
 		{
-			"from": [6, 2, 6],
+			"from": [6, 5, 6],
 			"to": [10, 14, 10],
 			"faces": {
-				"north": {"uv": [0, 4, 4, 16], "texture": "#a"},
-				"east": {"uv": [4, 4, 8, 16], "texture": "#a"},
-				"south": {"uv": [8, 4, 12, 16], "texture": "#a"},
-				"west": {"uv": [12, 4, 16, 16], "texture": "#a"},
-				"up": {"uv": [0, 0, 4, 4], "texture": "#a"}
+				"north": {"uv": [10, 2, 14, 11], "texture": "#crystal"},
+				"east": {"uv": [10, 2, 14, 11], "texture": "#crystal"},
+				"south": {"uv": [10, 2, 14, 11], "texture": "#crystal"},
+				"west": {"uv": [10, 2, 14, 11], "texture": "#crystal"},
+				"up": {"uv": [2, 2, 6, 6], "texture": "#crystal"}
 			}
 		},
 		{
@@ -26,11 +24,11 @@
 			"to": [9, 11, 9],
 			"rotation": {"angle": -45, "axis": "x", "origin": [8, 3, 8]},
 			"faces": {
-				"north": {"uv": [0, 2, 2, 8], "texture": "#b"},
-				"east": {"uv": [2, 2, 4, 8], "texture": "#b"},
-				"south": {"uv": [4, 2, 6, 8], "texture": "#b"},
-				"west": {"uv": [6, 2, 8, 8], "texture": "#b"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#b"}
+				"north": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"east": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"south": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"west": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"up": {"uv": [3, 8, 5, 10], "texture": "#crystal"}
 			}
 		},
 		{
@@ -38,11 +36,11 @@
 			"to": [9, 11, 9],
 			"rotation": {"angle": 45, "axis": "x", "origin": [8, 3, 8]},
 			"faces": {
-				"north": {"uv": [0, 2, 2, 8], "texture": "#b"},
-				"east": {"uv": [2, 2, 4, 8], "texture": "#b"},
-				"south": {"uv": [4, 2, 6, 8], "texture": "#b"},
-				"west": {"uv": [6, 2, 8, 8], "texture": "#b"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#b"}
+				"north": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"east": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"south": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"west": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"up": {"uv": [3, 8, 5, 10], "texture": "#crystal"}
 			}
 		},
 		{
@@ -50,11 +48,11 @@
 			"to": [9, 11, 9],
 			"rotation": {"angle": 45, "axis": "z", "origin": [8, 3, 8]},
 			"faces": {
-				"north": {"uv": [0, 2, 2, 8], "texture": "#b"},
-				"east": {"uv": [2, 2, 4, 8], "texture": "#b"},
-				"south": {"uv": [4, 2, 6, 8], "texture": "#b"},
-				"west": {"uv": [6, 2, 8, 8], "texture": "#b"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#b"}
+				"north": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"east": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"south": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"west": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"up": {"uv": [3, 8, 5, 10], "texture": "#crystal"}
 			}
 		},
 		{
@@ -62,11 +60,11 @@
 			"to": [9, 11, 9],
 			"rotation": {"angle": -45, "axis": "z", "origin": [8, 3, 8]},
 			"faces": {
-				"north": {"uv": [0, 2, 2, 8], "texture": "#b"},
-				"east": {"uv": [2, 2, 4, 8], "texture": "#b"},
-				"south": {"uv": [4, 2, 6, 8], "texture": "#b"},
-				"west": {"uv": [6, 2, 8, 8], "texture": "#b"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#b"}
+				"north": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"east": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"south": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"west": {"uv": [3, 10, 5, 16], "texture": "#crystal"},
+				"up": {"uv": [3, 8, 5, 10], "texture": "#crystal"}
 			}
 		},
 		{
@@ -121,5 +119,6 @@
 				"up": {"uv": [6, 10, 10, 11], "texture": "#base"}
 			}
 		}
-	]
+	],
+	"gui_light": "front"
 }

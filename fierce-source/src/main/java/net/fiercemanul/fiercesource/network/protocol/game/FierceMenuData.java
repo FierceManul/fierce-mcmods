@@ -2,7 +2,7 @@ package net.fiercemanul.fiercesource.network.protocol.game;
 
 import io.netty.buffer.ByteBuf;
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.world.menu.FierceMenu;
+import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -49,8 +49,8 @@ public record FierceMenuData(int menuId, byte menuAppIndex, int dataTypeIndex, D
         if (buf == null) return;
         Player player = context.player();
         AbstractContainerMenu menu = player.containerMenu;
-        if (menu.containerId == pack.menuId() && !player.isSpectator() && menu.stillValid(player) && menu instanceof FierceMenu fierceMenu)
-            fierceMenu.handleRemoteData(pack.menuAppIndex, pack.dataTypeIndex, buf);
+        if (menu.containerId == pack.menuId() && !player.isSpectator() && menu.stillValid(player) && menu instanceof FierceContainerMenu fierceContainerMenu)
+            fierceContainerMenu.handleRemoteData(pack.menuAppIndex, pack.dataTypeIndex, buf);
     }
 
     public interface Data {

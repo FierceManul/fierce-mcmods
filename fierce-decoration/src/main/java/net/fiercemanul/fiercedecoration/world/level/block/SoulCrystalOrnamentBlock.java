@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SoulCrystalOrnamentBlock extends ModelBlock {
@@ -21,7 +20,7 @@ public class SoulCrystalOrnamentBlock extends ModelBlock {
     public static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);
 
     public SoulCrystalOrnamentBlock(Properties pProperties) {
-        super(pProperties.strength(1.5F, 6.0F).lightLevel(value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
+        super(pProperties.strength(1.5F, 20.0F).lightLevel(value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
     }
 
     @Override

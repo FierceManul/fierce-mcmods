@@ -17,7 +17,7 @@ public final class FDItems {
     public static final DeferredItem<BlockItem> PORTABLE_WORKSTATION = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.PORTABLE_WORKSTATION);
     public static final DeferredItem<BlockItem> LAPTOP_TERMINAL = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.LAPTOP_TERMINAL);
     public static final DeferredItem<BlockItem> BOOK_AND_LAMP = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.BOOK_AND_LAMP);
-    public static final DeferredItem<BlockItem> STAR_BLOCK = FierceDecoration.ITEMS.registerItem("star_block", StarBlockItem::new);
+    public static final DeferredItem<BlockItem> STAR_BLOCK = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.STAR_BLOCK);
     public static final DeferredItem<BlockItem> ITEM_FRAME_SHELL_THIN = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.ITEM_FRAME_SHELL_THIN);
     public static final DeferredItem<BlockItem> ITEM_FRAME_SHELL_BIG = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.ITEM_FRAME_SHELL_BIG);
     public static final DeferredItem<BlockItem> SMOOTH_GLOWSTONE = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_GLOWSTONE);

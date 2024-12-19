@@ -2,24 +2,22 @@ package net.fiercemanul.fiercesource.client.gui.components;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.math.Axis;
-import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.client.gui.screens.FierceScreen;
+import net.fiercemanul.fiercesource.client.gui.screens.FierceContainerScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class TestCanvas extends Canvas{
+public class TestMainCanvas extends Canvas{
 
 
-    public TestCanvas(FierceScreen screen, int pX, int pY, Component pMessage) {
+    public TestMainCanvas(FierceContainerScreen screen, int pX, int pY, Component pMessage) {
         super(screen, pX, pY, 154, 241, pMessage);
     }
 
@@ -59,13 +57,5 @@ public class TestCanvas extends Canvas{
 
         pGuiGraphics.pose().popPose();
         pGuiGraphics.disableScissor();
-    }
-
-    @Override
-    protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {}
-
-    @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 }

@@ -123,21 +123,6 @@ public class RecipeGen extends FSRecipeProvider {
                            .unlockedBy(getHasName(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM))
                            .save(backupRecipeOutput, applyBackup(FierceSource.LARGE_MANA_CRYSTAL_BLOCK_ITEM.getId()));
 
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.POS_RECORDER_ITEM)
-                .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
-                .define('I', Items.IRON_INGOT)
-                .define('L', FierceSource.WORLD_LOCATOR_BLOCK_ITEM)
-                .define('P', Items.GLASS_PANE)
-                .define('Q', Items.QUARTZ)
-                .define('B', ItemTags.BUTTONS)
-                .define('G', Items.GOLD_INGOT)
-                .pattern("QPL")
-                .pattern("IOI")
-                .pattern("BGB")
-                .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
-                .save(backupRecipeOutput, applyBackup(FierceSource.POS_RECORDER_ITEM.getId()));
-
     }
 
 }

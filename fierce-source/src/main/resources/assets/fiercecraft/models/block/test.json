@@ -1,7 +1,0 @@
-{
-	"parent": "fiercecraft:block/template_large_soul_crystal",
-	"textures": {
-		"particle": "fiercecraft:block/test",
-		"all": "fiercecraft:block/test"
-	}
-}

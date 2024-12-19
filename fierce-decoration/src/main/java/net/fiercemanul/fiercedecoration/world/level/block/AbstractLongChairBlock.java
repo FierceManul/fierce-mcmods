@@ -2,8 +2,8 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercedecoration.world.level.block.state.properties.LongBlockType;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
+import net.fiercemanul.fiercedecoration.world.level.block.state.properties.LongBlockType;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

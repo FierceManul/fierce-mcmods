@@ -7,21 +7,16 @@
 	},
 	"elements": [
 		{
-			"from": [7, 5, 7],
-			"to": [9, 11, 9],
+			"from": [6, 2, 6],
+			"to": [10, 14, 10],
 			"faces": {
-				"north": {"uv": [0, 2, 2, 8], "texture": "#all"},
-				"east": {"uv": [2, 2, 4, 8], "texture": "#all"},
-				"south": {"uv": [4, 2, 6, 8], "texture": "#all"},
-				"west": {"uv": [6, 2, 8, 8], "texture": "#all"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#all"},
-				"down": {"uv": [2, 0, 4, 2], "texture": "#all"}
+				"north": {"uv": [10, 2, 14, 14], "texture": "#all"},
+				"east": {"uv": [10, 2, 14, 14], "texture": "#all"},
+				"south": {"uv": [10, 2, 14, 14], "texture": "#all"},
+				"west": {"uv": [10, 2, 14, 14], "texture": "#all"},
+				"up": {"uv": [2, 2, 6, 6], "texture": "#all"},
+				"down": {"uv": [2, 10, 6, 14], "texture": "#all"}
 			}
 		}
-	],
-	"display": {
-		"gui": {
-			"rotation": [30, 225, 0]
-		}
-	}
+	]
 }

@@ -29,13 +29,16 @@ public class BlockStateGen extends FSBlockStateProvider{
                 FierceSource.SMALL_SOUL_CRYSTAL_BLOCK,
                 models().getExistingFile(TEMPLATE_SMALL_SOUL_CRYSTAL)
         );
-        simpleWithModel(FierceSource.LARGE_MANA_CRYSTAL_BLOCK);
-        simpleWithModel(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK);
-        simpleWithModel(FierceSource.SMALL_MANA_CRYSTAL_BLOCK);
+
+        largeCrystal(FierceSource.LARGE_MANA_CRYSTAL_BLOCK);
+        mediumCrystal(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK);
+        smallCrystal(FierceSource.SMALL_MANA_CRYSTAL_BLOCK);
+
+        largeCrystalWithBase(FierceSource.TEST_BLOCK);
 
         itemModels().basicItem(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.get());
+        itemModels().basicItem(FierceSource.TEST_ITEM.get());
         itemModels().basicItem(FierceSource.FE_ICON.get());
         itemModels().basicItem(FierceSource.MANA_ICON.get());
-        itemModels().basicItem(FierceSource.POS_RECORDER_ITEM.get());
     }
 }

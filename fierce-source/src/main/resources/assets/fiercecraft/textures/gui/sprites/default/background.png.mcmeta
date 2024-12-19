@@ -5,8 +5,8 @@
             "width": 256,
             "height": 256,
             "border": {
-                "left": 24,
-                "right": 24,
+                "left": 27,
+                "right": 27,
                 "top": 15,
                 "bottom": 15
             }

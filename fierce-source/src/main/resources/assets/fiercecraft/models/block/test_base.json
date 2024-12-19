@@ -1,7 +1,0 @@
-{
-	"parent": "fiercecraft:block/crystal_base",
-	"textures": {
-		"particle": "fiercecraft:block/test_base",
-		"all": "fiercecraft:block/test_base"
-	}
-}

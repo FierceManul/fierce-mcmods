@@ -4,8 +4,6 @@ import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercedecoration.tags.FDItemTags;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
-import net.fiercemanul.fiercedecoration.world.level.block.CabinetTypeABlock;
-import net.fiercemanul.fiercedecoration.world.level.block.CabinetTypeBBlock;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;

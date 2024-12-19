@@ -3,17 +3,19 @@ package net.fiercemanul.fiercesource;
 import com.mojang.logging.LogUtils;
 import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
 import net.fiercemanul.fiercesource.capabilities.InfiniteManaContainer;
-import net.fiercemanul.fiercesource.client.gui.screens.FierceScreen;
+import net.fiercemanul.fiercesource.client.gui.screens.FierceContainerScreen;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
 import net.fiercemanul.fiercesource.config.Config;
+import net.fiercemanul.fiercesource.data.UIStyleLoader;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
 import net.fiercemanul.fiercesource.registries.FCRegistries;
+import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.fiercemanul.fiercesource.world.item.CreativeModeTabItem;
 import net.fiercemanul.fiercesource.world.item.CrowbarItem;
 import net.fiercemanul.fiercesource.world.level.block.*;
 import net.fiercemanul.fiercesource.world.level.block.entity.CreativeManaOutputBlockEntity;
 import net.fiercemanul.fiercesource.world.level.block.entity.TestBlockEntity;
-import net.fiercemanul.fiercesource.world.menu.FierceMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleType;
@@ -23,7 +25,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -42,10 +44,12 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -75,25 +79,26 @@ public class FierceSource
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = FCRegistries.FIERCE_CRAFT_PARTICLE_TYPE_REGISTER;
 
 
-    public static final DeferredBlock<Block> SMALL_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("small_soul_crystal", SmallSoulCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> SMALL_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("small_soul_crystal", SoulCrystalBlock.Small::new, SoulCrystalBlock.getProperties(5, MapColor.WOOL));
     public static final DeferredItem<BlockItem> SMALL_SOUL_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(SMALL_SOUL_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> MEDIUM_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("medium_soul_crystal", MediumSoulCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> MEDIUM_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("medium_soul_crystal", SoulCrystalBlock.Medium::new, SoulCrystalBlock.getProperties(10, MapColor.WOOL));
     public static final DeferredItem<BlockItem> MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(MEDIUM_SOUL_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> LARGE_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("large_soul_crystal", LargeSoulCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> LARGE_SOUL_CRYSTAL_BLOCK = BLOCKS.registerBlock("large_soul_crystal", SoulCrystalBlock.Large::new, SoulCrystalBlock.getProperties(15, MapColor.WOOL));
     public static final DeferredItem<BlockItem> LARGE_SOUL_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(LARGE_SOUL_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> SMALL_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("small_mana_crystal", SmallManaCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> SMALL_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("small_mana_crystal", ManaCrystalBlock.Small::new, SoulCrystalBlock.getProperties(5, MapColor.COLOR_LIGHT_BLUE));
     public static final DeferredItem<BlockItem> SMALL_MANA_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(SMALL_MANA_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> MEDIUM_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("medium_mana_crystal", MediumManaCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> MEDIUM_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("medium_mana_crystal", ManaCrystalBlock.Medium::new, SoulCrystalBlock.getProperties(10, MapColor.COLOR_LIGHT_BLUE));
     public static final DeferredItem<BlockItem> MEDIUM_MANA_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(MEDIUM_MANA_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> LARGE_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("large_mana_crystal", LargeManaCrystalBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> LARGE_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("large_mana_crystal", ManaCrystalBlock.Large::new, SoulCrystalBlock.getProperties(15, MapColor.COLOR_LIGHT_BLUE));
     public static final DeferredItem<BlockItem> LARGE_MANA_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(LARGE_MANA_CRYSTAL_BLOCK);
-    public static final DeferredBlock<Block> CREATIVE_MANA_BLOCK = BLOCKS.registerBlock("creative_mana_block", SimpleCapabilityBlock::new, BlockBehaviour.Properties.of().strength(2.0F, 12.0F).lightLevel(value -> 15).sound(SoundType.AMETHYST).mapColor(MapColor.COLOR_BLUE));
+    public static final DeferredBlock<Block> CREATIVE_MANA_BLOCK = BLOCKS.registerBlock("creative_mana_block", SimpleCapabilityBlock::new, BlockBehaviour.Properties.of().strength(2.0F, 1200.0F).lightLevel(
+            value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.AMETHYST).mapColor(MapColor.COLOR_BLUE));
     public static final DeferredItem<BlockItem> CREATIVE_MANA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CREATIVE_MANA_BLOCK);
-    public static final DeferredBlock<Block> CREATIVE_MANA_OUTPUT_BLOCK = BLOCKS.registerBlock("creative_mana_output", CreativeManaOutputBlock::new, BlockBehaviour.Properties.of().sound(SoundType.METAL));
+    public static final DeferredBlock<Block> CREATIVE_MANA_OUTPUT_BLOCK = BLOCKS.registerBlock("creative_mana_output", CreativeManaOutputBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredItem<BlockItem> CREATIVE_MANA_OUTPUT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CREATIVE_MANA_OUTPUT_BLOCK);
     public static final DeferredBlock<Block> WORLD_LOCATOR_BLOCK = BLOCKS.registerBlock("world_locator", WorldLocatorBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredItem<BlockItem> WORLD_LOCATOR_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(WORLD_LOCATOR_BLOCK);
-    public static final DeferredBlock<Block> TEST_BLOCK = BLOCKS.registerBlock("test", TestBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredBlock<Block> TEST_BLOCK = BLOCKS.registerBlock("test_block", TestBlock::new, SoulCrystalBlock.getProperties(15, MapColor.COLOR_BLACK));
     public static final DeferredItem<BlockItem> TEST_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(TEST_BLOCK);
 
 
@@ -106,15 +111,16 @@ public class FierceSource
 
 
     public static final DeferredItem<Item> SOUL_CRYSTAL_SHARD_ITEM = ITEMS.registerSimpleItem("soul_crystal_shard");
-    public static final DeferredItem<Item> POS_RECORDER_ITEM = ITEMS.registerSimpleItem("pos_recorder");
     public static final DeferredItem<Item> CLAW_HAMMER_ITEM = ITEMS.register("claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
     public static final DeferredItem<Item> NETHERITE_CLAW_HAMMER_ITEM = ITEMS.register("netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
     public static final DeferredItem<Item> CROWBAR_ITEM = ITEMS.register("crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
     public static final DeferredItem<Item> NETHERITE_CROWBAR_ITEM = ITEMS.register("netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
+    public static final DeferredItem<Item> TEST_ITEM = ITEMS.registerSimpleItem("test_item");
     public static final DeferredItem<Item> MANA_ICON = ITEMS.registerSimpleItem("mana_icon");
     public static final DeferredItem<Item> FE_ICON = ITEMS.registerSimpleItem("fe_icon");
 
-    public static final DeferredHolder<MenuType<?>, MenuType<FierceMenu>> FIERCE_MENU =  MENU_TYPES.register("fierce_menu", () -> IMenuTypeExtension.create(FierceMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<FierceContainerMenu>> FIERCE_MENU =  MENU_TYPES.register("fierce_menu", () -> IMenuTypeExtension.create(
+            FierceContainerMenu::new));
 
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SOUL_CRYSTAL_PARTICLE = PARTICLE_TYPES.register("soul_crystal", () -> new SimpleParticleType(false));
 
@@ -123,10 +129,13 @@ public class FierceSource
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("fiercecraft", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.fiercecraft"))
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-            .icon(() -> MANA_ICON.get().getDefaultInstance())
+            .icon(() -> LARGE_MANA_CRYSTAL_BLOCK_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (CreativeModeTabItem tabItem : TAB_ITEMS) output.accept(tabItem.getItem());
-                if (parameters.hasPermissions()) output.accept(TEST_BLOCK_ITEM);
+                if (parameters.hasPermissions()) {
+                    output.accept(TEST_BLOCK_ITEM);
+                    output.accept(TEST_ITEM);
+                }
             }).build());
 
 
@@ -140,7 +149,6 @@ public class FierceSource
         TAB_ITEMS.add(new CreativeModeTabItem(SMALL_MANA_CRYSTAL_BLOCK_ITEM, 6));
         TAB_ITEMS.add(new CreativeModeTabItem(CREATIVE_MANA_BLOCK_ITEM, 103));
         TAB_ITEMS.add(new CreativeModeTabItem(CREATIVE_MANA_OUTPUT_BLOCK_ITEM, 104));
-        TAB_ITEMS.add(new CreativeModeTabItem(POS_RECORDER_ITEM, 204));
         TAB_ITEMS.add(new CreativeModeTabItem(WORLD_LOCATOR_BLOCK_ITEM, 205));
         TAB_ITEMS.add(new CreativeModeTabItem(CLAW_HAMMER_ITEM, 305));
         TAB_ITEMS.add(new CreativeModeTabItem(NETHERITE_CLAW_HAMMER_ITEM, 306));
@@ -183,7 +191,6 @@ public class FierceSource
         PayloadRegistrar registrar = event.registrar("1");
         registrar.playBidirectional(FierceMenuData.TYPE, FierceMenuData.STREAM_CODEC, FierceMenuData.HANDLER);
     }
-
 
 
 
@@ -233,6 +240,7 @@ public class FierceSource
 
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
@@ -251,7 +259,12 @@ public class FierceSource
 
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(FIERCE_MENU.get(), FierceScreen::new);
+            event.register(FIERCE_MENU.get(), FierceContainerScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
+            event.registerReloadListener(new UIStyleLoader());
         }
     }
 }

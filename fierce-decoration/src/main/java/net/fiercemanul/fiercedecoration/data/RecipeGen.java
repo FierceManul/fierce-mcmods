@@ -215,13 +215,13 @@ public class RecipeGen extends FSRecipeProvider {
     private static void soulCrystalOrnament(RecipeOutput pRecipeOutput) {
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, FDItems.SOUL_CRYSTAL_ORNAMENT)
-                .define('#', FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
-                .define('X', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('#', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('X', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
                 .define('P', FDItems.SMOOTH_MANGROVE_PLANKS)
                 .pattern(" X ")
                 .pattern("X#X")
-                .pattern(" XP")
-                .unlockedBy(getHasName(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM))
+                .pattern(" P ")
+                .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
                 .save(pRecipeOutput);
     }
 

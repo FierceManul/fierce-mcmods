@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.world.menu;
+package net.fiercemanul.fiercesource.world.inventory;
 
 import io.netty.buffer.ByteBuf;
 import net.fiercemanul.fiercesource.FierceSource;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 
-public class FierceMenu extends AbstractContainerMenu {
+public class FierceContainerMenu extends AbstractContainerMenu {
 
 
     @Nullable
@@ -73,13 +73,13 @@ public class FierceMenu extends AbstractContainerMenu {
         }
     }
 
-    public FierceMenu(int pContainerId, Inventory playerInventory, RegistryFriendlyByteBuf extraData) {
+    public FierceContainerMenu(int pContainerId, Inventory playerInventory, RegistryFriendlyByteBuf extraData) {
         super(FierceSource.FIERCE_MENU.get(), pContainerId);
         blockEntity = null;
         if (extraData.readBoolean()) blockPos = extraData.readBlockPos();
     }
 
-    public FierceMenu(int pContainerId, Inventory playerInventory, Level level, BlockPos blockPos, @Nullable BlockEntity blockEntity) {
+    public FierceContainerMenu(int pContainerId, Inventory playerInventory, Level level, BlockPos blockPos, @Nullable BlockEntity blockEntity) {
         super(FierceSource.FIERCE_MENU.get(), pContainerId);
         player = (ServerPlayer) playerInventory.player;
         this.blockEntity = blockEntity;
