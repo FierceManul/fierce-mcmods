@@ -8,11 +8,12 @@ import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
 import net.fiercemanul.fiercedecoration.server.commands.SitCommand;
 import net.fiercemanul.fiercedecoration.world.entity.Seat;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
-import net.fiercemanul.fiercedecoration.world.level.block.*;
+import net.fiercemanul.fiercedecoration.world.level.block.CabinetBlock;
+import net.fiercemanul.fiercedecoration.world.level.block.FDBlocks;
+import net.fiercemanul.fiercedecoration.world.level.block.HalfPodzolBlock;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.resources.model.BakedModel;
@@ -26,12 +27,10 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,14 +44,13 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.registries.*;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Map;
-import java.util.function.Function;
 
 @Mod(FierceDecoration.MODID)
 public class FierceDecoration {

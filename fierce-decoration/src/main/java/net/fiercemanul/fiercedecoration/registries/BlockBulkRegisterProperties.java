@@ -16,7 +16,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.Map;
 import java.util.Objects;
 
-import static net.fiercemanul.fiercedecoration.FierceDecoration.*;
+import static net.fiercemanul.fiercedecoration.FierceDecoration.BLOCKS;
+import static net.fiercemanul.fiercedecoration.FierceDecoration.ITEMS;
 
 public class BlockBulkRegisterProperties {
 

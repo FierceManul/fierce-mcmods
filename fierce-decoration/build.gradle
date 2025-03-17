@@ -28,6 +28,19 @@ minecraft {
     }
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+sourceSets {
+    data {
+        java {
+            srcDirs = ['src/data/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources/']
+        }
+    }
+}
+
 runs {
     configureEach {
         systemProperty 'forge.logging.markers', 'REGISTRIES'
@@ -39,19 +52,20 @@ runs {
     server {}
     gameTestServer {}
     data {
+        modSource project.sourceSets.data
         arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    dataImplementation.extendsFrom implementation
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation project(":fierce-source")
+    dataImplementation sourceSets.main.output
 }
 
 tasks.withType(ProcessResources).configureEach {
