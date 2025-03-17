@@ -75,27 +75,27 @@ public abstract class GuardrailBlock extends HorizonFacingModelBlock {
     protected abstract MapCodec<? extends GuardrailBlock> codec();
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, CORNER, LOWER, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, CORNER, LOWER, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockState blockState = pContext.getLevel().getBlockState(pContext.getClickedPos());
-        BlockState belowBlockState = pContext.getLevel().getBlockState(pContext.getClickedPos().below());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
+        BlockState belowBlockState = context.getLevel().getBlockState(context.getClickedPos().below());
         BlockState targetState;
         if (blockState.is(this)) {
             targetState = blockState;
-            if (pContext.getHorizontalDirection().getClockWise().equals(blockState.getValue(FACING))) targetState = targetState.setValue(FACING, pContext.getHorizontalDirection()).setValue(CORNER, true);
-            if (pContext.getHorizontalDirection().getCounterClockWise().equals(blockState.getValue(FACING))) targetState = targetState.setValue(CORNER, true);
+            if (context.getHorizontalDirection().getClockWise().equals(blockState.getValue(FACING))) targetState = targetState.setValue(FACING, context.getHorizontalDirection()).setValue(CORNER, true);
+            if (context.getHorizontalDirection().getCounterClockWise().equals(blockState.getValue(FACING))) targetState = targetState.setValue(CORNER, true);
         } else {
-            targetState = this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection());
+            targetState = this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
         }
         if ((belowBlockState.getBlock() instanceof SlabBlock && belowBlockState.getValue(BlockStateProperties.SLAB_TYPE).equals(SlabType.BOTTOM))
                 || (belowBlockState.getBlock() instanceof GuardrailBlock && belowBlockState.getValue(LOWER))) {
             targetState = targetState.setValue(LOWER, true);
         }
-        return targetState.setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
+        return targetState.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
@@ -150,12 +150,12 @@ public abstract class GuardrailBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
-        if (pDirection.equals(Direction.DOWN)) {
-            if (pNeighborState.getBlock() instanceof SlabBlock) return pState.setValue(LOWER, pNeighborState.getValue(SlabBlock.TYPE).equals(SlabType.BOTTOM));
-            else return pState.setValue(LOWER, false);
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (direction.equals(Direction.DOWN)) {
+            if (neighborState.getBlock() instanceof SlabBlock) return state.setValue(LOWER, neighborState.getValue(SlabBlock.TYPE).equals(SlabType.BOTTOM));
+            else return state.setValue(LOWER, false);
         }
-        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override

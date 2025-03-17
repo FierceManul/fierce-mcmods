@@ -2,7 +2,7 @@ package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -34,7 +34,7 @@ public class SoulCrystalBlock {
     public static final VoxelShape LARGE_WITH_BASE_SHAPE = Shapes.or(LARGE_SHAPE, BASE_SHAPE);
 
     public static BlockBehaviour.Properties getProperties(int light, MapColor mapColor) {
-        return BlockBehaviour.Properties.of().strength(1.5F, 20.0F).lightLevel(value -> light).emissiveRendering(Utils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(mapColor).noOcclusion();
+        return BlockBehaviour.Properties.of().strength(1.5F, 20.0F).lightLevel(value -> light).emissiveRendering(FSUtils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(mapColor).noOcclusion();
     }
 
     public static final class Small extends ModelBlock {

@@ -111,8 +111,8 @@ public class HorizonAxisBlock extends WrenchDismantleBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        return WrenchAction.defaultUseOn(AXIS, pStack, pState, pLevel, pPos, pPlayer);
+        return WrenchAction.defaultUseOn(AXIS, stack, state, level, pos, player);
     }
 }

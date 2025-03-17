@@ -31,8 +31,8 @@ public class WrenchDismantleBlock extends Block {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        return WrenchAction.defaultUseOn(pStack, pState, pLevel, pPos, pPlayer);
+        return WrenchAction.defaultUseOn(stack, state, level, pos, player);
     }
 }

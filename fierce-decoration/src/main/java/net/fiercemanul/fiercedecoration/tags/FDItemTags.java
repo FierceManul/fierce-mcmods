@@ -2,9 +2,11 @@ package net.fiercemanul.fiercedecoration.tags;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public final class FDItemTags {
 
@@ -17,6 +19,7 @@ public final class FDItemTags {
     public static final TagKey<Item> SEA_LANTERN_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "sea_lanterns"));
     public static final TagKey<Item> TABLES = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "tables"));
     public static final TagKey<Item> CABINETS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cabinets"));
+    public static final TagKey<Item> WOOL_SOFA = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "wool_sofa"));
 
     private FDItemTags() {}
 }

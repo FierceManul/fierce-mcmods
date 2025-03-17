@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -20,7 +20,7 @@ public class SoulCrystalOrnamentBlock extends ModelBlock {
     public static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);
 
     public SoulCrystalOrnamentBlock(Properties pProperties) {
-        super(pProperties.strength(1.5F, 20.0F).lightLevel(value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
+        super(pProperties.strength(1.5F, 20.0F).lightLevel(value -> 15).emissiveRendering(FSUtils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
     }
 
     @Override

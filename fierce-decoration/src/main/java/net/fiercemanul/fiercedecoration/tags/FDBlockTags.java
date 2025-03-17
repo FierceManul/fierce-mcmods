@@ -21,6 +21,7 @@ public final class FDBlockTags {
     public static final TagKey<Block> TABLES = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "tables"));
     public static final TagKey<Block> CABINETS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cabinets"));
     public static final TagKey<Block> TABLE_CONNECT = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "table_connect"));
+    public static final TagKey<Block> WOOL_SOFA = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "wool_sofa"));
 
     private FDBlockTags() {}
 }

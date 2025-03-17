@@ -60,8 +60,8 @@ public class FireplaceHeartBlock extends ModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(LIT, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(LIT, WATERLOGGED);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class FireplaceHeartBlock extends ModelBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        boolean success = WrenchAction.doWrenchDismantleAction(pStack, pState, pLevel, pPos, pPlayer);
-        if (success) return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
-        else if (pStack.getItem().canPerformAction(pStack, ItemAbilities.SHOVEL_FLATTEN)) {
-            pLevel.setBlock(pPos, pState.setValue(LIT, false), 11);
-            return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
+        boolean success = WrenchAction.doWrenchDismantleAction(stack, state, level, pos, player);
+        if (success) return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        else if (stack.getItem().canPerformAction(stack, ItemAbilities.SHOVEL_FLATTEN)) {
+            level.setBlock(pos, state.setValue(LIT, false), 11);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -95,8 +95,8 @@ public class FireplaceHeartBlock extends ModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        boolean water = pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER;
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        boolean water = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
         return this.defaultBlockState().setValue(WATERLOGGED, water).setValue(LIT, !water);
     }
 

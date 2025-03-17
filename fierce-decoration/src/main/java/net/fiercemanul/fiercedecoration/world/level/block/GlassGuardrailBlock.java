@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-
+import net.minecraft.world.level.material.MapColor;
 
 
 public class GlassGuardrailBlock extends GuardrailBlock {
@@ -12,7 +12,7 @@ public class GlassGuardrailBlock extends GuardrailBlock {
     public static final MapCodec<GuardrailBlock> CODEC = simpleCodec(GlassGuardrailBlock::new);
 
     public GlassGuardrailBlock(Properties pProperties) {
-        super(pProperties.noOcclusion());
+        super(pProperties.mapColor(MapColor.NONE).noOcclusion());
     }
 
     protected MapCodec<? extends GuardrailBlock> codec() {

@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,9 +19,9 @@ public class LampInGlassBlock extends FacingBlock {
     public LampInGlassBlock(Properties pProperties) {
         super(pProperties
                       .strength(0.5F, 1.5F)
-                      .isSuffocating(Utils::getFalse)
-                      .isValidSpawn(Utils::getFalse)
-                      .isRedstoneConductor(Utils::getFalse)
+                      .isSuffocating(FSUtils::getFalse)
+                      .isValidSpawn(FSUtils::getFalse)
+                      .isRedstoneConductor(FSUtils::getFalse)
                       .sound(SoundType.GLASS)
                       .noOcclusion(),
               FacingBlock.CLICKED_DIRECTION);

@@ -40,6 +40,7 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
         if (starBlock.down) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 1.0F);
 
 
+        /*
         pPoseStack.pushPose();
         pPoseStack.translate(0.5, 1.0, 0.5);
         Vec3 off = new Vec3(3, 0.3, 2);
@@ -61,6 +62,7 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
                 0.4F
         );
         pPoseStack.popPose();
+        */
 
     }
 

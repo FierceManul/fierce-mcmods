@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.OpenType;
-import net.fiercemanul.fiercedecoration.world.level.block.state.properties.TallBlockType;
+import net.fiercemanul.fiercedecoration.world.level.block.state.properties.WindowBType;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
                                        propertiesCodec()).apply(instance, WindowTypeBBlock::new));
     protected static final EnumProperty<DoorHingeSide> HINGE = BlockStateProperties.DOOR_HINGE;
     protected static final EnumProperty<OpenType> OPEN_TYPE = FDBlockStateProperties.OPEN_TYPE;
-    protected static final EnumProperty<TallBlockType> TYPE = FDBlockStateProperties.TALL_BLOCK_TYPE;
+    protected static final EnumProperty<WindowBType> TYPE = FDBlockStateProperties.WINDOW_B_TYPE;
     protected static final VoxelShapeHelper SHAPE_HELPER = new VoxelShapeHelper().applyCube(0.0, 0.0, 5.0, 16.0, 16.0, 8.0);
     protected static final VoxelShapeHelper SHAPE_HELPER_OPEN = new VoxelShapeHelper().applyCube(0.0, 0.0, -8.0, 3.0, 16.0, 8.0);
     protected static final VoxelShapeHelper SHAPE_HELPER_OPEN_MIRROR = new VoxelShapeHelper().applyCube(13.0, 0.0, -8.0, 16.0, 16.0, 8.0);
@@ -78,7 +78,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
                         .setValue(FACING, Direction.NORTH)
                         .setValue(OPEN_TYPE, OpenType.CLOSE)
                         .setValue(HINGE, DoorHingeSide.LEFT)
-                        .setValue(TYPE, TallBlockType.SINGLE)
+                        .setValue(TYPE, WindowBType.SINGLE)
         );
     }
 
@@ -88,8 +88,8 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, OPEN_TYPE, HINGE, TYPE, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, OPEN_TYPE, HINGE, TYPE, WATERLOGGED);
     }
 
     public BlockSetType type() {
@@ -97,29 +97,30 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockPos blockpos = pContext.getClickedPos();
-        Level level = pContext.getLevel();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockPos blockpos = context.getClickedPos();
+        Level level = context.getLevel();
 
-        BlockState bottomState = level.getBlockState(blockpos.below());
-        BlockState topState = level.getBlockState(blockpos.above());
-        boolean bottom = bottomState.is(this);
-        boolean top = topState.is(this);
-        boolean snake = pContext.getPlayer() != null && pContext.getPlayer().isShiftKeyDown();
-
-        BlockState state;
+        BlockState state = null;
         //非潜行时连接下上
-        if (!snake && bottom && !top) state = bottomState.setValue(TYPE, TallBlockType.TOP);
-        else if (!snake && !bottom && top) state = topState.setValue(TYPE, TallBlockType.BOTTOM);
-        else if (!snake && bottom) {
-            if (canConnectTo(bottomState, topState) && bottomState.getValue(OPEN_TYPE).isOpen() == topState.getValue(OPEN_TYPE).isOpen())
-                state = bottomState.setValue(TYPE, TallBlockType.CENTER);
-            else state = bottomState.setValue(TYPE, TallBlockType.TOP);
+        if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown()) {
+            BlockState bottomState = level.getBlockState(blockpos.below());
+            BlockState topState = level.getBlockState(blockpos.above());
+            boolean bottom = bottomState.is(this);
+            boolean top = topState.is(this);
+            if (bottom && !top) state = bottomState.setValue(TYPE, WindowBType.getTypeForPlacement(bottomState.getValue(TYPE), null));
+            else if (!bottom && top) state = topState.setValue(TYPE, WindowBType.getTypeForPlacement(bottomState.getValue(TYPE), null));
+            else if (bottom) {
+                state = bottomState.setValue(TYPE, WindowBType.getTypeForPlacement(
+                        bottomState.getValue(TYPE),
+                        canTryConnect(bottomState, topState) && bottomState.getValue(OPEN_TYPE).isOpen() == topState.getValue(OPEN_TYPE).isOpen() ? topState.getValue(TYPE) : null
+                ));
+            }
         }
-        else {
-            Direction direction = pContext.getHorizontalDirection();
-            Direction face = pContext.getClickedFace();
-            Vec3 clickLocation = pContext.getClickLocation();
+        if (state == null) {
+            Direction direction = context.getHorizontalDirection();
+            Direction face = context.getClickedFace();
+            Vec3 clickLocation = context.getClickLocation();
             DoorHingeSide hinge = getHinge(
                     direction,
                     clickLocation.x - blockpos.getX(),
@@ -131,40 +132,58 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
                         .setValue(FACING, direction)
                         .setValue(HINGE, hinge)
                         .setValue(OPEN_TYPE, level.hasNeighborSignal(blockpos) ? OpenType.OPEN : OpenType.CLOSE)
-                        .setValue(TYPE, TallBlockType.SINGLE);
+                        .setValue(TYPE, WindowBType.SINGLE);
         }
         return state.setValue(WATERLOGGED, level.getFluidState(blockpos).getType() == Fluids.WATER);
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        BlockState newState = pState;
-        if (pFacing.getAxis().equals(Direction.Axis.Y)) {
-            TallBlockType tallBlockType = pState.getValue(TYPE);
-            if (pFacingState.is(this)
-                    && canConnectTo(pState, pFacingState)
-                    && TallBlockType.isConnectedByOther(pFacing, pFacingState.getValue(TYPE))
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        BlockState newState = state;
+        if (direction.equals(Direction.UP)) {
+            BlockState downState = level.getBlockState(pos.below());
+            WindowBType downType = downState.is(this) && canTryConnect(state, downState) && WindowBType.isValidConnectType(Direction.DOWN, downState.getValue(TYPE)) ? downState.getValue(TYPE) : WindowBType.SINGLE;
+            if (neighborState.is(this)
+                    && canTryConnect(state, neighborState)
+                    && WindowBType.isValidConnectType(Direction.UP, neighborState.getValue(TYPE))
             )
                 return super.updateShape(
-                        pState.setValue(TYPE, tallBlockType.connect(pFacing)).setValue(OPEN_TYPE, pFacingState.getValue(OPEN_TYPE)),
-                        pFacing,
-                        pFacingState,
-                        pLevel,
-                        pCurrentPos,
-                        pFacingPos
+                        state.setValue(TYPE, WindowBType.updateType(neighborState.getValue(TYPE), downType)).setValue(OPEN_TYPE, neighborState.getValue(OPEN_TYPE)),
+                        Direction.UP,
+                        neighborState,
+                        level,
+                        pos,
+                        neighborPos
                 );
-            else newState = pState.setValue(TYPE, tallBlockType.unConnect(pFacing));
+            else newState = state.setValue(TYPE, WindowBType.updateType(WindowBType.SINGLE, downType));
         }
-        boolean redstone = hasRedstoneSignal(pLevel, pCurrentPos);
-        OpenType oldOpenType = pState.getValue(OPEN_TYPE);
+        else if (direction.equals(Direction.DOWN)) {
+            BlockState upState = level.getBlockState(pos.above());
+            WindowBType upType = upState.is(this) && canTryConnect(state, upState) && WindowBType.isValidConnectType(Direction.UP, upState.getValue(TYPE)) ? upState.getValue(TYPE) : WindowBType.SINGLE;
+            if (neighborState.is(this)
+                    && canTryConnect(state, neighborState)
+                    && WindowBType.isValidConnectType(Direction.DOWN, neighborState.getValue(TYPE))
+            )
+                return super.updateShape(
+                        state.setValue(TYPE, WindowBType.updateType(upType, neighborState.getValue(TYPE))).setValue(OPEN_TYPE, neighborState.getValue(OPEN_TYPE)),
+                        Direction.DOWN,
+                        neighborState,
+                        level,
+                        pos,
+                        neighborPos
+                );
+            else newState = state.setValue(TYPE, WindowBType.updateType(upType, WindowBType.SINGLE));
+        }
+        boolean redstone = hasRedstoneSignal(level, pos);
+        OpenType oldOpenType = state.getValue(OPEN_TYPE);
         OpenType newOpenType = oldOpenType.update(redstone);
         newState = newState.setValue(OPEN_TYPE, newOpenType);
         boolean open = newOpenType.isOpen();
         if (oldOpenType.isOpen() != open) {
-            playSound(null, (Level) pLevel, pCurrentPos, open);
-            pLevel.gameEvent(null, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pCurrentPos);
+            playSound(null, (Level) level, pos, open);
+            level.gameEvent(null, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         }
-        return super.updateShape(newState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+        return super.updateShape(newState, direction, neighborState, level, pos, neighborPos);
     }
 
     private static DoorHingeSide getHinge(Direction direction, double x, double z, Direction face) {
@@ -196,7 +215,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
         return DoorHingeSide.LEFT;
     }
 
-    private static boolean canConnectTo(BlockState pState, BlockState pState2) {
+    private static boolean canTryConnect(BlockState pState, BlockState pState2) {
         return pState.getValue(FACING).equals(pState2.getValue(FACING)) && pState.getValue(HINGE).equals(pState2.getValue(HINGE));
     }
 
@@ -205,7 +224,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
         for (int i = 1; i < pLevel.getHeight(); i++) {
             BlockPos pos = pPos.above(i);
             BlockState state = pLevel.getBlockState(pos);
-            if (state.is(this) && TallBlockType.isConnectedByOther(Direction.UP, state.getValue(TYPE))) {
+            if (state.is(this) && WindowBType.isValidConnectType(Direction.UP, state.getValue(TYPE))) {
                 if (pLevel.hasNeighborSignal(pos)) return true;
             }
             else break;
@@ -213,7 +232,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
         for (int i = 1; i < pLevel.getHeight(); i++) {
             BlockPos pos = pPos.below(i);
             BlockState state = pLevel.getBlockState(pos);
-            if (state.is(this) && TallBlockType.isConnectedByOther(Direction.DOWN, state.getValue(TYPE))) {
+            if (state.is(this) && WindowBType.isValidConnectType(Direction.DOWN, state.getValue(TYPE))) {
                 if (pLevel.hasNeighborSignal(pos)) return true;
             }
             else break;
@@ -230,31 +249,42 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        if (pStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock().equals(this))
+        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock().equals(this))
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
-    protected void onExplosionHit(BlockState pState, Level pLevel, BlockPos pPos, Explosion pExplosion, BiConsumer<ItemStack, BlockPos> pDropConsumer) {
-        if (pExplosion.getBlockInteraction() == Explosion.BlockInteraction.TRIGGER_BLOCK
-                && !pLevel.isClientSide()
-                && pState.getValue(OPEN_TYPE).isPowered()
+    protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (explosion.getBlockInteraction() == Explosion.BlockInteraction.TRIGGER_BLOCK
+                && !level.isClientSide()
+                && state.getValue(OPEN_TYPE).isPowered()
                 && this.type.canOpenByWindCharge()
         ) {
-            toggle(pState, pLevel, pPos, null);
+            toggle(state, level, pos, null);
         }
-        super.onExplosionHit(pState, pLevel, pPos, pExplosion, pDropConsumer);
+        super.onExplosionHit(state, level, pos, explosion, dropConsumer);
     }
 
-    private void toggle(BlockState pState, Level pLevel, BlockPos pPos, @Nullable Entity entity) {
-        OpenType openType = pState.getValue(OPEN_TYPE).toggleByHand();
-        pLevel.setBlock(pPos, pState.setValue(OPEN_TYPE, openType), 2);
+    private void toggle(BlockState state, Level level, BlockPos pos, @Nullable Entity entity) {
+        OpenType openType = state.getValue(OPEN_TYPE).toggleByHand();
+        level.setBlock(pos, state.setValue(OPEN_TYPE, openType), 2);
+        if (entity != null) {
+            Direction direction = state.getValue(FACING);
+            DoorHingeSide doorHingeSide = state.getValue(HINGE);
+            direction = doorHingeSide == DoorHingeSide.LEFT ? direction.getClockWise() : direction.getCounterClockWise();
+            BlockPos pos1 = pos.relative(direction);
+            BlockState state1 = level.getBlockState(pos1);
+            if (state1.getBlock() instanceof WindowTypeBBlock
+                    && state1.getValue(HINGE) != doorHingeSide
+                    && state1.getValue(FACING).equals(state.getValue(FACING)))
+                level.setBlock(pos1, state1.setValue(OPEN_TYPE, openType), 2);
+        }
         boolean open = openType.isOpen();
-        playSound(entity, pLevel, pPos, open);
-        pLevel.gameEvent(entity, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pPos);
+        playSound(entity, level, pos, open);
+        level.gameEvent(entity, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
     }
 
     private void playSound(@Nullable Entity pSource, Level pLevel, BlockPos pPos, boolean pIsOpening) {
@@ -281,19 +311,7 @@ public class WindowTypeBBlock extends HorizonFacingModelBlock {
 
     @Override
     protected boolean isPathfindable(BlockState pState, PathComputationType pPathComputationType) {
-        return switch (pPathComputationType) {
-            case LAND, AIR -> pState.getValue(OPEN_TYPE).isOpen();
-            case WATER -> false;
-        };
-    }
-
-    @Override
-    protected boolean skipRendering(BlockState pState, BlockState pAdjacentState, Direction pDirection) {
-        if (pDirection.getAxis().equals(Direction.Axis.Y) && pAdjacentState.is(this))
-            return canConnectTo(pState, pAdjacentState)
-                    && TallBlockType.isConnectedByOther(pDirection, pAdjacentState.getValue(TYPE))
-                    && pState.getValue(OPEN_TYPE).isOpen() == pAdjacentState.getValue(OPEN_TYPE).isOpen();
-        return super.skipRendering(pState, pAdjacentState, pDirection);
+        return pState.getValue(OPEN_TYPE).isOpen();
     }
 
     @Override

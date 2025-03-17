@@ -35,11 +35,11 @@ public class CabinetBlock extends HorizonFacingBlock implements EntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        boolean success = WrenchAction.doDefaultWrenchAction(FACING, pStack, pState, pLevel, pPos, pPlayer);
-        if (success) return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
-        if (pStack.is(this.asItem())) return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        boolean success = WrenchAction.doDefaultWrenchAction(FACING, stack, state, level, pos, player);
+        if (success) return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        if (stack.is(this.asItem())) return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 

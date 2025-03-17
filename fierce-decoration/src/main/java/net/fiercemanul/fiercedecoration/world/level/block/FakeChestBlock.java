@@ -51,22 +51,22 @@ public class FakeChestBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, TYPE, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, TYPE, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Level level = pContext.getLevel();
-        Direction chestDirection = pContext.getHorizontalDirection().getOpposite();
-        BlockPos chestPos = pContext.getClickedPos();
-        Direction clickedFace = pContext.getClickedFace();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        Direction chestDirection = context.getHorizontalDirection().getOpposite();
+        BlockPos chestPos = context.getClickedPos();
+        Direction clickedFace = context.getClickedFace();
 
         BlockState state = this.defaultBlockState()
                                .setValue(FACING, chestDirection)
                                .setValue(WATERLOGGED, level.getFluidState(chestPos).getType() == Fluids.WATER);
 
-        if (pContext.isSecondaryUseActive()) {
+        if (context.isSecondaryUseActive()) {
             ChestType type;
             if (chestDirection.getCounterClockWise().equals(clickedFace)) type = ChestType.LEFT;
             else if (chestDirection.getClockWise().equals(clickedFace)) type = ChestType.RIGHT;
@@ -95,34 +95,34 @@ public class FakeChestBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState pState, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         BlockState state = pState;
         Direction chestDirection = pState.getValue(FACING);
 
-        if (pFacingState.is(this) && pFacingState.getValue(FACING).equals(chestDirection)) {
-            if (pFacing.equals(chestDirection.getCounterClockWise()) && pFacingState.getValue(TYPE).equals(ChestType.LEFT))
-                return super.updateShape(state.setValue(TYPE, ChestType.RIGHT), pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
-            else if (pFacing.equals(chestDirection.getClockWise()) && pFacingState.getValue(TYPE).equals(ChestType.RIGHT))
-                return super.updateShape(state.setValue(TYPE, ChestType.LEFT), pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+        if (neighborState.is(this) && neighborState.getValue(FACING).equals(chestDirection)) {
+            if (direction.equals(chestDirection.getCounterClockWise()) && neighborState.getValue(TYPE).equals(ChestType.LEFT))
+                return super.updateShape(state.setValue(TYPE, ChestType.RIGHT), direction, neighborState, level, pos, neighborPos);
+            else if (direction.equals(chestDirection.getClockWise()) && neighborState.getValue(TYPE).equals(ChestType.RIGHT))
+                return super.updateShape(state.setValue(TYPE, ChestType.LEFT), direction, neighborState, level, pos, neighborPos);
         }
 
         ChestType type = pState.getValue(TYPE);
         if (type.equals(ChestType.LEFT)) {
-            BlockState testState = pLevel.getBlockState(pCurrentPos.relative(chestDirection.getClockWise()));
+            BlockState testState = level.getBlockState(pos.relative(chestDirection.getClockWise()));
             if (!testState.is(this)
                     || !testState.getValue(FACING).equals(chestDirection)
                     || !testState.getValue(TYPE).equals(ChestType.RIGHT))
                 state = state.setValue(TYPE, ChestType.SINGLE);
         }
         else if (type.equals(ChestType.RIGHT)) {
-            BlockState testState = pLevel.getBlockState(pCurrentPos.relative(chestDirection.getCounterClockWise()));
+            BlockState testState = level.getBlockState(pos.relative(chestDirection.getCounterClockWise()));
             if (!testState.is(this)
                     || !testState.getValue(FACING).equals(chestDirection)
                     || !testState.getValue(TYPE).equals(ChestType.LEFT))
                 state = state.setValue(TYPE, ChestType.SINGLE);
         }
 
-        return super.updateShape(state, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     public static Direction getChestAABBDirection(BlockState state) {

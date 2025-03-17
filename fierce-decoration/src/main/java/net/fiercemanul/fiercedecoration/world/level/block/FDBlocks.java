@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.level.block.*;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -70,10 +70,10 @@ public final class FDBlocks {
                                                                                   .strength(0.5F)
                                                                                   .friction(0.8F)
                                                                                   .jumpFactor(0.75F)
-                                                                                  .isValidSpawn(Utils::getTrue)
-                                                                                  .isRedstoneConductor(Utils::getTrue)
-                                                                                  .isSuffocating(Utils::getTrue)
-                                                                                  .isViewBlocking(Utils::getTrue)
+                                                                                  .isValidSpawn(FSUtils::getTrue)
+                                                                                  .isRedstoneConductor(FSUtils::getTrue)
+                                                                                  .isSuffocating(FSUtils::getTrue)
+                                                                                  .isViewBlocking(FSUtils::getTrue)
                                                                                   .mapColor(MapColor.COLOR_BROWN)
                                                                                   .sound(SoundType.SLIME_BLOCK));
     public static final DeferredBlock<Block> WATERLOGGED_COBBLESTONE = FierceDecoration.BLOCKS.registerBlock(
@@ -122,6 +122,8 @@ public final class FDBlocks {
             "smooth_dark_oak_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.DARK_OAK_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_MANGROVE_PLANKS = FierceDecoration.BLOCKS.registerSimpleBlock(
             "smooth_mangrove_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.MANGROVE_PLANKS));
+    public static final DeferredBlock<Block> SMOOTH_BAMBOO_PLANKS = FierceDecoration.BLOCKS.registerSimpleBlock(
+            "smooth_bamboo_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_CHERRY_PLANKS = FierceDecoration.BLOCKS.registerSimpleBlock(
             "smooth_cherry_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_CRIMSON_PLANKS = FierceDecoration.BLOCKS.registerSimpleBlock(
@@ -349,7 +351,7 @@ public final class FDBlocks {
             "rainbow_lamp", SimpleGlowingBlock::new, BlockBehaviour.Properties.of().strength(1.5F).mapColor(MapColor.SNOW).lightLevel(value -> 10).sound(SoundType.AMETHYST));
 
 
-    public static void init() {}
+    public static void loadClass() {}
 
     private FDBlocks() {}
 }

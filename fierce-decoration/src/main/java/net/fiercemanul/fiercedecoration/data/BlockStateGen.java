@@ -1,6 +1,8 @@
 package net.fiercemanul.fiercedecoration.data;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegisterKey;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.*;
 import net.fiercemanul.fiercesource.data.FSBlockStateProvider;
@@ -38,6 +40,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         simple(FDBlocks.SMOOTH_ACACIA_PLANKS);
         simple(FDBlocks.SMOOTH_DARK_OAK_PLANKS);
         simple(FDBlocks.SMOOTH_MANGROVE_PLANKS);
+        simple(FDBlocks.SMOOTH_BAMBOO_PLANKS);
         simple(FDBlocks.SMOOTH_CHERRY_PLANKS);
         simple(FDBlocks.SMOOTH_CRIMSON_PLANKS);
         simple(FDBlocks.SMOOTH_WARPED_PLANKS);
@@ -171,19 +174,20 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .texture("all", red_sandstone_bottom);
 
 
-        DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
+        BlockBulkRegister.getDataGenWorks().forEach((deferredBlock, registerKey) -> {
             Block block = deferredBlock.get();
-            Block materialBlock = blockMaterial.getMaterialBlock();
-            BlockMaterial.ModelType modelType = blockMaterial.getModelType();
+            Block materialBlock = registerKey.getMaterialBlock();
+            BlockBulkRegisterDataProperties.TextureType textureType = registerKey.getPropertyOr(BlockBulkRegisterDataProperties.TextureType.class, BlockBulkRegisterDataProperties.TextureType.CUBE);
+            boolean isTransparent = registerKey.hasProperty(BlockBulkRegisterDataProperties.TRANSPARENT.getClass());
 
-            if (block instanceof WoodenGuardrailBlock) guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_wooden", false);
-            else if (block instanceof WoodenGuardrailTypeBBlock) guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_wooden_b", true);
+            if (block instanceof WoodenGuardrailBlock) guardrail(deferredBlock, blockTexture(registerKey), "guardrail_wooden", false);
+            else if (block instanceof WoodenGuardrailTypeBBlock) guardrail(deferredBlock, blockTexture(registerKey), "guardrail_wooden_b", true);
             else if (block instanceof StoneGuardrailBlock) {
-                switch (modelType) {
-                    case CUBE_ALL -> guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_rock", true);
-                    case CUBE_ALL_FRAMED -> guardrail(deferredBlock, blockTexture(blockMaterial), "guardrail_frame", true);
-                    case PILLAR -> pillarGuardrail(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
-                    case LOG -> pillarGuardrail(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE -> guardrail(deferredBlock, blockTexture(registerKey), "guardrail_rock", true);
+                    case CUBE_FRAMED -> guardrail(deferredBlock, blockTexture(registerKey), "guardrail_frame", true);
+                    case PILLAR -> pillarGuardrail(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
+                    case LOG -> pillarGuardrail(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE)) guardrail(
                                 deferredBlock,
@@ -193,7 +197,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else customGuardrail(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_top,
                                 false
@@ -208,7 +212,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         );
                         else customGuardrail(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_top,
                                 false
@@ -216,51 +220,40 @@ public class BlockStateGen extends FSBlockStateProvider {
                     }
                     case GRASS -> customGuardrail(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt,
                             false
                     );
                     case NYLIUM -> customGuardrail(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack,
                             false
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) guardrail(deferredBlock, quartz_block_side, "guardrail_frame", true);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) guardrail(deferredBlock, quartz_block_bottom, "guardrail_rock", true);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) guardrail(deferredBlock, snow, "guardrail_rock", true);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) guardrail(deferredBlock, magma, "guardrail_rock", true);
-                    }
+                    case QUARTZ_BLOCK -> guardrail(deferredBlock, quartz_block_side, "guardrail_frame", true);
+                    case SMOOTH_QUARTZ -> guardrail(deferredBlock, quartz_block_bottom, "guardrail_rock", true);
+                    case SNOW_BLOCK -> guardrail(deferredBlock, snow, "guardrail_rock", true);
+                    case MAGMA_BLOCK -> guardrail(deferredBlock, magma, "guardrail_rock", true);
                 }
             }
             else if (block instanceof GlassGuardrailBlock) {
-                glassGuardrail(deferredBlock, blockTexture(blockMaterial));
+                glassGuardrail(deferredBlock, blockTexture(registerKey));
             }
             else if (block instanceof PeepWindowBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> {
-                        ResourceLocation material;
-                        if (materialBlock.equals(Blocks.GLASS)) material = ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "block/glass_peep_window");
-                        else material = blockTexture(blockMaterial);
-                        peepWindow(
-                                deferredBlock,
-                                material,
-                                blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS)
-                        );
-                    }
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> peepWindow(deferredBlock, blockTexture(registerKey), isTransparent);
                     case LOG, PILLAR -> peepWindow(
                             deferredBlock,
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "top"),
                             false
                     );
                     case UP_DOWN -> peepWindowUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case SANDSTONE -> {
                         String path = deferredBlock.getId().getPath();
@@ -278,7 +271,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         else {
                             BlockModelBuilder modelSide = models()
                                     .withExistingParent(path, modLoc("block/peep_window"))
-                                    .texture("all", blockTexture(blockMaterial));
+                                    .texture("all", blockTexture(registerKey));
                             peepWindowStates(block, modelSide, sandstonePeepWindowTop, sandstonePeepWindowTop);
                             itemModels().getBuilder(path).parent(modelSide);
                         }
@@ -299,7 +292,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                         else {
                             BlockModelBuilder modelSide = models()
                                     .withExistingParent(path, modLoc("block/peep_window"))
-                                    .texture("all", blockTexture(blockMaterial));
+                                    .texture("all", blockTexture(registerKey));
                             peepWindowStates(block, modelSide, redSandstonePeepWindowTop, redSandstonePeepWindowTop);
                             itemModels().getBuilder(path).parent(modelSide);
                         }
@@ -308,10 +301,10 @@ public class BlockStateGen extends FSBlockStateProvider {
                         String path = deferredBlock.getId().getPath();
                         BlockModelBuilder modelSide = models()
                                 .withExistingParent(path, modLoc("block/peep_window"))
-                                .texture("all", blockTexture(blockMaterial, "side"));
+                                .texture("all", blockTexture(registerKey, "side"));
                         BlockModelBuilder modelTop = models()
                                 .withExistingParent(path + "_top", modLoc("block/peep_window"))
-                                .texture("all", blockTexture(blockMaterial, "top"));
+                                .texture("all", blockTexture(registerKey, "top"));
                         peepWindowStates(block, modelSide, modelTop, dirtPeepWindow);
                         itemModels().getBuilder(path).parent(modelSide);
                     }
@@ -319,370 +312,357 @@ public class BlockStateGen extends FSBlockStateProvider {
                         String path = deferredBlock.getId().getPath();
                         BlockModelBuilder modelSide = models()
                                 .withExistingParent(path, modLoc("block/peep_window"))
-                                .texture("all", blockTexture(blockMaterial, "side"));
+                                .texture("all", blockTexture(registerKey, "side"));
                         BlockModelBuilder modelTop = models()
                                 .withExistingParent(path + "_top", modLoc("block/peep_window"))
-                                .texture("all", blockTexture(blockMaterial));
+                                .texture("all", blockTexture(registerKey));
                         peepWindowStates(block, modelSide, modelTop, netherrackPeepWindow);
                         itemModels().getBuilder(path).parent(modelSide);
                     }
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) peepWindow(deferredBlock, quartz_block_side, false);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) peepWindow(deferredBlock, quartz_block_bottom, false);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) peepWindow(deferredBlock, snow, false);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) peepWindow(deferredBlock, magma, false);
-                    }
+                    case QUARTZ_BLOCK -> peepWindow(deferredBlock, quartz_block_side, false);
+                    case SMOOTH_QUARTZ -> peepWindow(deferredBlock, quartz_block_bottom, false);
+                    case SNOW_BLOCK -> peepWindow(deferredBlock, snow, false);
+                    case MAGMA_BLOCK -> peepWindow(deferredBlock, magma, false);
+                    case GLASS -> peepWindow(deferredBlock, ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "block/glass_peep_window"), isTransparent);
                 }
             }
             else if (block instanceof LampInGlassBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> lampInGlass(deferredBlock, blockTexture(blockMaterial));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> lampInGlass(deferredBlock, blockTexture(registerKey));
                     case LOG -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(registerKey), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(registerKey, "side"), top, top);
                     }
                     case FACING -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial, "front"), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        lampInGlassCustom(deferredBlock, blockTexture(registerKey, "front"), top, top);
                     }
-                    case REDSTONE_LAMP -> lampInGlass(deferredBlock, blockTexture(blockMaterial, "on"));
+                    case REDSTONE_LAMP -> lampInGlass(deferredBlock, blockTexture(registerKey, "on"));
                     case PUMPKIN_LAMP -> {
                         ResourceLocation top = ResourceLocation.withDefaultNamespace("block/pumpkin_top");
-                        lampInGlassCustom(deferredBlock, blockTexture(blockMaterial), top, top);
+                        lampInGlassCustom(deferredBlock, blockTexture(registerKey), top, top);
                     }
                 }
             }
             else if (block instanceof OneCutBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> oneCutBlock(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> oneCutBlockPillar(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> oneCutBlockPillar(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> oneCutBlock(deferredBlock, blockTexture(registerKey));
+                    case LOG -> oneCutBlockPillar(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> oneCutBlockPillar(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case UP_DOWN -> oneCutBlockUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) oneCutBlock(deferredBlock, sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) oneCutBlock(deferredBlock, sandstone_top);
                         else oneCutBlockUpDown(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) oneCutBlock(
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) oneCutBlock(
                                 deferredBlock, red_sandstone_top
                         );
                         else oneCutBlockUpDown(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> oneCutBlockUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> oneCutBlockUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) oneCutBlock(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) oneCutBlock(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) oneCutBlock(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) oneCutBlock(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> oneCutBlock(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> oneCutBlock(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> oneCutBlock(deferredBlock, snow);
+                    case MAGMA_BLOCK -> oneCutBlock(deferredBlock, magma);
                 }
             }
             else if (block instanceof ThinStairBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> thinStair(deferredBlock, blockTexture(blockMaterial));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> thinStair(deferredBlock, blockTexture(registerKey));
                     case UP_DOWN -> thinStairUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        thinStairUpDown(deferredBlock, blockTexture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        thinStairUpDown(deferredBlock, blockTexture(registerKey), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        thinStairUpDown(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        thinStairUpDown(deferredBlock, blockTexture(registerKey, "side"), top, top);
                     }
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) thinStair(
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) thinStair(
                                 deferredBlock, sandstone_top
                         );
                         else thinStairUpDown(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) thinStair(
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) thinStair(
                                 deferredBlock, red_sandstone_top
                         );
                         else thinStairUpDown(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> thinStairUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> thinStairUpDown(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) thinStair(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) thinStair(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) thinStair(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) thinStair(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> thinStair(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> thinStair(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> thinStair(deferredBlock, snow);
+                    case MAGMA_BLOCK -> thinStair(deferredBlock, magma);
                 }
             }
             else if (block instanceof DoubleCutBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> doubleCutBlock(deferredBlock, blockTexture(blockMaterial));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> doubleCutBlock(deferredBlock, blockTexture(registerKey));
                     case UP_DOWN -> doubleCutBlockCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        doubleCutBlockCustom(deferredBlock, blockTexture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        doubleCutBlockCustom(deferredBlock, blockTexture(registerKey), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        doubleCutBlockCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        doubleCutBlockCustom(deferredBlock, blockTexture(registerKey, "side"), top, top);
                     }
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) doubleCutBlock(
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) doubleCutBlock(
                                 deferredBlock, sandstone_top
                         );
                         else doubleCutBlockCustom(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) doubleCutBlock(
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) doubleCutBlock(
                                 deferredBlock, red_sandstone_top
                         );
                         else doubleCutBlockCustom(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> doubleCutBlockCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> doubleCutBlockCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) doubleCutBlock(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) doubleCutBlock(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) doubleCutBlock(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) doubleCutBlock(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> doubleCutBlock(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> doubleCutBlock(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> doubleCutBlock(deferredBlock, snow);
+                    case MAGMA_BLOCK -> doubleCutBlock(deferredBlock, magma);
                 }
             }
             else if (block instanceof TripleCutBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> tripleCut(deferredBlock, blockTexture(blockMaterial));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> tripleCut(deferredBlock, blockTexture(registerKey));
                     case UP_DOWN -> tripleCutCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case LOG -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        tripleCutCustom(deferredBlock, blockTexture(blockMaterial), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        tripleCutCustom(deferredBlock, blockTexture(registerKey), top, top);
                     }
                     case PILLAR -> {
-                        ResourceLocation top = blockTexture(blockMaterial, "top");
-                        tripleCutCustom(deferredBlock, blockTexture(blockMaterial, "side"), top, top);
+                        ResourceLocation top = blockTexture(registerKey, "top");
+                        tripleCutCustom(deferredBlock, blockTexture(registerKey, "side"), top, top);
                     }
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) tripleCut(deferredBlock, sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) tripleCut(deferredBlock, sandstone_top);
                         else tripleCutCustom(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) tripleCut(deferredBlock, red_sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) tripleCut(deferredBlock, red_sandstone_top);
                         else tripleCutCustom(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> tripleCutCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> tripleCutCustom(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) tripleCut(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) tripleCut(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) tripleCut(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) tripleCut(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> tripleCut(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> tripleCut(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> tripleCut(deferredBlock, snow);
+                    case MAGMA_BLOCK -> tripleCut(deferredBlock, magma);
                 }
             }
             else if (block instanceof Panel4PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel4px(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> panel4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> panel4px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> panel4px(deferredBlock, blockTexture(registerKey));
+                    case LOG -> panel4px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> panel4px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case UP_DOWN -> panel4px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel4px(deferredBlock, sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel4px(deferredBlock, sandstone_top);
                         else panel4px(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel4px(deferredBlock, red_sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel4px(deferredBlock, red_sandstone_top);
                         else panel4px(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> panel4px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> panel4px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) panel4px(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) panel4px(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) panel4px(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) panel4px(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> panel4px(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> panel4px(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> panel4px(deferredBlock, snow);
+                    case MAGMA_BLOCK -> panel4px(deferredBlock, magma);
                 }
             }
             else if (block instanceof Panel2PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> panel2px(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> panel2px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> panel2px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> panel2px(deferredBlock, blockTexture(registerKey));
+                    case LOG -> panel2px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> panel2px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case UP_DOWN -> panel2px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
-                            blockTexture(blockMaterial, "bottom")
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
+                            blockTexture(registerKey, "bottom")
                     );
                     case SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel2px(deferredBlock, sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_SANDSTONE)) panel2px(deferredBlock, sandstone_top);
                         else panel2px(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 sandstone_top,
                                 sandstone_bottom
                         );
                     }
                     case RED_SANDSTONE -> {
-                        if (blockMaterial.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel2px(deferredBlock, red_sandstone_top);
+                        if (registerKey.getMaterialBlock().equals(Blocks.SMOOTH_RED_SANDSTONE)) panel2px(deferredBlock, red_sandstone_top);
                         else panel2px(
                                 deferredBlock,
-                                blockTexture(blockMaterial),
+                                blockTexture(registerKey),
                                 red_sandstone_top,
                                 red_sandstone_bottom
                         );
                     }
                     case GRASS -> panel2px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial, "top"),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey, "top"),
                             dirt
                     );
                     case NYLIUM -> panel2px(
                             deferredBlock,
-                            blockTexture(blockMaterial, "side"),
-                            blockTexture(blockMaterial),
+                            blockTexture(registerKey, "side"),
+                            blockTexture(registerKey),
                             netherrack
                     );
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) panel2px(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) panel2px(deferredBlock, quartz_block_bottom);
-                        if (materialBlock.equals(Blocks.SNOW_BLOCK)) panel2px(deferredBlock, snow);
-                        if (materialBlock.equals(Blocks.MAGMA_BLOCK)) panel2px(deferredBlock, magma);
-                    }
+                    case QUARTZ_BLOCK -> panel2px(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> panel2px(deferredBlock, quartz_block_bottom);
+                    case SNOW_BLOCK -> panel2px(deferredBlock, snow);
+                    case MAGMA_BLOCK -> panel2px(deferredBlock, magma);
                 }
             }
             else if (block instanceof Pillar12PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar12px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillar12px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillar12px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillar12px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillar12px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillar12px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar12px(deferredBlock, sandstone_top, sandstone_top);
@@ -693,13 +673,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillar12px(deferredBlock, red_sandstone_top, red_sandstone_top);
                         else pillar12px(deferredBlock, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillar12px(deferredBlock, snow, snow);
+                    case MAGMA_BLOCK -> pillar12px(deferredBlock, magma, magma);
+                    case QUARTZ_BLOCK -> pillar12px(deferredBlock, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillar12px(deferredBlock, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof Pillar8PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar8px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillar8px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillar8px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillar8px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillar8px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillar8px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar8px(deferredBlock, sandstone_top, sandstone_top);
@@ -710,13 +694,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillar8px(deferredBlock, red_sandstone_top, red_sandstone_top);
                         else pillar8px(deferredBlock, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillar8px(deferredBlock, snow, snow);
+                    case MAGMA_BLOCK -> pillar8px(deferredBlock, magma, magma);
+                    case QUARTZ_BLOCK -> pillar8px(deferredBlock, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillar8px(deferredBlock, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof Pillar6PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar6px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillar6px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillar6px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillar6px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillar6px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillar6px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar6px(deferredBlock, sandstone_top, sandstone_top);
@@ -727,13 +715,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillar6px(deferredBlock, red_sandstone_top, red_sandstone_top);
                         else pillar6px(deferredBlock, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillar6px(deferredBlock, snow, snow);
+                    case MAGMA_BLOCK -> pillar6px(deferredBlock, magma, magma);
+                    case QUARTZ_BLOCK -> pillar6px(deferredBlock, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillar6px(deferredBlock, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof Pillar4PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillar4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillar4px(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillar4px(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillar4px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillar4px(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillar4px(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillar4px(deferredBlock, sandstone_top, sandstone_top);
@@ -744,13 +736,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillar4px(deferredBlock, red_sandstone_top, red_sandstone_top);
                         else pillar4px(deferredBlock, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillar4px(deferredBlock, snow, snow);
+                    case MAGMA_BLOCK -> pillar4px(deferredBlock, magma, magma);
+                    case QUARTZ_BLOCK -> pillar4px(deferredBlock, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillar4px(deferredBlock, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof PillarConnector4PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 4, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillarConnector(deferredBlock, 4, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillarConnector(deferredBlock, 4, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 4, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 4, sandstone_top, sandstone_top);
@@ -761,13 +757,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillarConnector(deferredBlock, 4, red_sandstone_top, red_sandstone_top);
                         else pillarConnector(deferredBlock, 4, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillarConnector(deferredBlock, 4, snow, snow);
+                    case MAGMA_BLOCK -> pillarConnector(deferredBlock, 4, magma, magma);
+                    case QUARTZ_BLOCK -> pillarConnector(deferredBlock, 4, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillarConnector(deferredBlock, 4, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof PillarConnector6PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 6, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillarConnector(deferredBlock, 6, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillarConnector(deferredBlock, 6, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 6, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 6, sandstone_top, sandstone_top);
@@ -778,13 +778,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillarConnector(deferredBlock, 6, red_sandstone_top, red_sandstone_top);
                         else pillarConnector(deferredBlock, 6, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillarConnector(deferredBlock, 6, snow, snow);
+                    case MAGMA_BLOCK -> pillarConnector(deferredBlock, 6, magma, magma);
+                    case QUARTZ_BLOCK -> pillarConnector(deferredBlock, 6, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillarConnector(deferredBlock, 6, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof PillarConnector8PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 8, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillarConnector(deferredBlock, 8, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillarConnector(deferredBlock, 8, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 8, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 8, sandstone_top, sandstone_top);
@@ -795,13 +799,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillarConnector(deferredBlock, 8, red_sandstone_top, red_sandstone_top);
                         else pillarConnector(deferredBlock, 8, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillarConnector(deferredBlock, 8, snow, snow);
+                    case MAGMA_BLOCK -> pillarConnector(deferredBlock, 8, magma, magma);
+                    case QUARTZ_BLOCK -> pillarConnector(deferredBlock, 8, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillarConnector(deferredBlock, 8, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof PillarConnector12PXBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                    case LOG -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> pillarConnector(deferredBlock, 12, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> pillarConnector(deferredBlock, 12, blockTexture(registerKey), blockTexture(registerKey));
+                    case LOG -> pillarConnector(deferredBlock, 12, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> pillarConnector(deferredBlock, 12, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             pillarConnector(deferredBlock, 12, sandstone_top, sandstone_top);
@@ -812,11 +820,15 @@ public class BlockStateGen extends FSBlockStateProvider {
                             pillarConnector(deferredBlock, 12, red_sandstone_top, red_sandstone_top);
                         else pillarConnector(deferredBlock, 12, red_sandstone_bottom, red_sandstone_bottom);
                     }
+                    case SNOW_BLOCK -> pillarConnector(deferredBlock, 12, snow, snow);
+                    case MAGMA_BLOCK -> pillarConnector(deferredBlock, 12, magma, magma);
+                    case QUARTZ_BLOCK -> pillarConnector(deferredBlock, 12, quartz_block_side, quartz_block_side);
+                    case SMOOTH_QUARTZ -> pillarConnector(deferredBlock, 12, quartz_block_bottom, quartz_block_bottom);
                 }
             }
             else if (block instanceof WindowTypeABlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> windowA(deferredBlock, blockTexture(blockMaterial));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> windowA(deferredBlock, blockTexture(registerKey));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             windowA(deferredBlock, sandstone_top);
@@ -827,21 +839,19 @@ public class BlockStateGen extends FSBlockStateProvider {
                             windowA(deferredBlock, red_sandstone_top);
                         else windowA(deferredBlock, red_sandstone_bottom);
                     }
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) windowA(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) windowA(deferredBlock, quartz_block_bottom);
-                    }
+                    case QUARTZ_BLOCK -> windowA(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> windowA(deferredBlock, quartz_block_bottom);
+                    case MAGMA_BLOCK -> windowA(deferredBlock, magma);
                 }
             }
             else if (block instanceof WindowTypeBBlock) windowB(deferredBlock);
             else if (block instanceof TableBlock) {
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS))
-                    tableGlass(deferredBlock, blockTexture(blockMaterial));
-                else switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> table(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> table(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> table(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
-                    case UP_DOWN -> table(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
+                if (isTransparent) tableGlass(deferredBlock, blockTexture(registerKey));
+                else switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> table(deferredBlock, blockTexture(registerKey));
+                    case LOG -> table(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> table(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
+                    case UP_DOWN -> table(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"), blockTexture(registerKey, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             table(deferredBlock, sandstone_top);
@@ -852,18 +862,17 @@ public class BlockStateGen extends FSBlockStateProvider {
                             table(deferredBlock, red_sandstone_top);
                         else table(deferredBlock, red_sandstone_side, red_sandstone_top, red_sandstone_bottom);
                     }
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) table(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) table(deferredBlock, quartz_block_bottom);
-                    }
+                    case QUARTZ_BLOCK -> table(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> table(deferredBlock, quartz_block_bottom);
+                    case MAGMA_BLOCK -> table(deferredBlock, magma);
                 }
             }
             else if (block instanceof SimpleChairBlock) {
-                switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> chair(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> chair(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> chair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
-                    case UP_DOWN -> chair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
+                switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> chair(deferredBlock, blockTexture(registerKey));
+                    case LOG -> chair(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> chair(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
+                    case UP_DOWN -> chair(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"), blockTexture(registerKey, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             chair(deferredBlock, sandstone_top);
@@ -874,19 +883,19 @@ public class BlockStateGen extends FSBlockStateProvider {
                             chair(deferredBlock, red_sandstone_top);
                         else chair(deferredBlock, red_sandstone_side, red_sandstone_top, red_sandstone_bottom);
                     }
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) chair(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) chair(deferredBlock, quartz_block_bottom);
-                    }
+                    case QUARTZ_BLOCK -> chair(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> chair(deferredBlock, quartz_block_bottom);
+                    case MAGMA_BLOCK -> chair(deferredBlock, magma);
                 }
             }
             else if (block instanceof GardenChairBlock) {
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) woodenGardenChair(deferredBlock, blockTexture(blockMaterial));
-                else switch (modelType) {
-                    case CUBE_ALL, CUBE_ALL_FRAMED -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial));
-                    case LOG -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial), blockTexture(blockMaterial, "top"));
-                    case PILLAR -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"));
-                    case UP_DOWN -> stoneGardenChair(deferredBlock, blockTexture(blockMaterial, "side"), blockTexture(blockMaterial, "top"), blockTexture(blockMaterial, "bottom"));
+                if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_AXE.getClass())) woodenGardenChair(deferredBlock, blockTexture(registerKey));
+                else switch (textureType) {
+                    case CUBE, CUBE_FRAMED -> stoneGardenChair(deferredBlock, blockTexture(registerKey));
+                    case LOG -> stoneGardenChair(deferredBlock, blockTexture(registerKey), blockTexture(registerKey, "top"));
+                    case PILLAR -> stoneGardenChair(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"));
+                    case UP_DOWN -> stoneGardenChair(deferredBlock, blockTexture(registerKey, "side"), blockTexture(registerKey, "top"), blockTexture(
+                            registerKey, "bottom"));
                     case SANDSTONE -> {
                         if (materialBlock.equals(Blocks.SMOOTH_SANDSTONE))
                             stoneGardenChair(deferredBlock, sandstone_top);
@@ -897,57 +906,56 @@ public class BlockStateGen extends FSBlockStateProvider {
                             stoneGardenChair(deferredBlock, red_sandstone_top);
                         else stoneGardenChair(deferredBlock, red_sandstone_side, red_sandstone_top, red_sandstone_bottom);
                     }
-                    case CUSTOM -> {
-                        if (materialBlock.equals(Blocks.QUARTZ_BLOCK)) stoneGardenChair(deferredBlock, quartz_block_side);
-                        if (materialBlock.equals(Blocks.SMOOTH_QUARTZ)) stoneGardenChair(deferredBlock, quartz_block_bottom);
-                    }
+                    case QUARTZ_BLOCK -> stoneGardenChair(deferredBlock, quartz_block_side);
+                    case SMOOTH_QUARTZ -> stoneGardenChair(deferredBlock, quartz_block_bottom);
+                    case MAGMA_BLOCK -> stoneGardenChair(deferredBlock, magma);
                 }
             }
-            else if (block instanceof WoolSofaBlock) woolSofa(deferredBlock, blockTexture(blockMaterial));
+            else if (block instanceof WoolSofaBlock) woolSofa(deferredBlock, blockTexture(registerKey));
             else if (block instanceof HorizonPanelBlock) {
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.GLASS)) {
+                if (isTransparent) {
                     ModelFile modelFile = models().withExistingParent(deferredBlock.getId().getPath(), modLoc("block/translucent_panel_horizon"))
-                                                  .texture("all", blockTexture(blockMaterial));
+                                                  .texture("all", blockTexture(registerKey));
                     simpleWithModel(deferredBlock, modelFile);
                 }
             }
             else if (block instanceof StairBlock stairBlock) {
-                stairsBlock(stairBlock, blockTexture(blockMaterial));
-                itemModels().stairs(deferredBlock.getId().getPath(), blockTexture(blockMaterial), blockTexture(blockMaterial), blockTexture(blockMaterial));
+                stairsBlock(stairBlock, blockTexture(registerKey));
+                itemModels().stairs(deferredBlock.getId().getPath(), blockTexture(registerKey), blockTexture(registerKey), blockTexture(registerKey));
             }
-            else if (block instanceof CabinetTypeABlock) cabinetA(deferredBlock, blockTexture(blockMaterial));
-            else if (block instanceof CabinetTypeBBlock) cabinetB(deferredBlock, blockTexture(blockMaterial));
-            else if (block instanceof CabinetTypeCBlock) cabinetC(deferredBlock, blockTexture(blockMaterial));
-            else if (block instanceof CabinetBlock) cabinetD(deferredBlock, blockTexture(blockMaterial));
+            else if (block instanceof CabinetTypeABlock) cabinetA(deferredBlock, blockTexture(registerKey));
+            else if (block instanceof CabinetTypeBBlock) cabinetB(deferredBlock, blockTexture(registerKey));
+            else if (block instanceof CabinetTypeCBlock) cabinetC(deferredBlock, blockTexture(registerKey));
+            else if (block instanceof CabinetBlock) cabinetD(deferredBlock, blockTexture(registerKey));
             else if (block instanceof SlabBlock slabBlock) {
-                slabBlock(slabBlock, blockTexture(blockMaterial), blockTexture(blockMaterial));
-                itemModels().slab(deferredBlock.getId().getPath(), blockTexture(blockMaterial), blockTexture(blockMaterial), blockTexture(blockMaterial));
+                slabBlock(slabBlock, blockTexture(registerKey), blockTexture(registerKey));
+                itemModels().slab(deferredBlock.getId().getPath(), blockTexture(registerKey), blockTexture(registerKey), blockTexture(registerKey));
             }
             else if (block instanceof FenceBlock fenceBlock) {
-                fenceBlock(fenceBlock, blockTexture(blockMaterial));
-                itemModels().fenceInventory(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
+                fenceBlock(fenceBlock, blockTexture(registerKey));
+                itemModels().fenceInventory(deferredBlock.getId().getPath(), blockTexture(registerKey));
             }
             else if (block instanceof FenceGateBlock fenceGateBlock) {
-                fenceGateBlock(fenceGateBlock, blockTexture(blockMaterial));
-                itemModels().fenceGate(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
+                fenceGateBlock(fenceGateBlock, blockTexture(registerKey));
+                itemModels().fenceGate(deferredBlock.getId().getPath(), blockTexture(registerKey));
             }
             else if (block instanceof PressurePlateBlock pressurePlateBlock) {
-                pressurePlateBlock(pressurePlateBlock, blockTexture(blockMaterial));
-                itemModels().pressurePlate(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
+                pressurePlateBlock(pressurePlateBlock, blockTexture(registerKey));
+                itemModels().pressurePlate(deferredBlock.getId().getPath(), blockTexture(registerKey));
             }
             else if (block instanceof ButtonBlock buttonBlock) {
-                buttonBlock(buttonBlock, blockTexture(blockMaterial));
-                itemModels().buttonInventory(deferredBlock.getId().getPath(), blockTexture(blockMaterial));
+                buttonBlock(buttonBlock, blockTexture(registerKey));
+                itemModels().buttonInventory(deferredBlock.getId().getPath(), blockTexture(registerKey));
             }
         });
     }
 
-    private ResourceLocation blockTexture(BlockMaterial blockMaterial) {
-        return ResourceLocation.fromNamespaceAndPath(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath());
+    private ResourceLocation blockTexture(BlockBulkRegisterKey key) {
+        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
     }
 
-    private ResourceLocation blockTexture(BlockMaterial blockMaterial, String s) {
-        return ResourceLocation.fromNamespaceAndPath(blockMaterial.getNamespace(), "block/" + blockMaterial.getPath() + "_" + s);
+    private ResourceLocation blockTexture(BlockBulkRegisterKey key, String s) {
+        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath() + "_" + s);
     }
 
     private void pillarConnector(DeferredBlock<Block> deferredBlock, int px, ResourceLocation side, ResourceLocation top) {
@@ -1919,104 +1927,107 @@ public class BlockStateGen extends FSBlockStateProvider {
     ) {
         ResourceLocation side = modLoc("block/" + path + "_side");
         ResourceLocation end = modLoc("block/" + path + "_end");
-        builder = windowBStatePart2(builder, direction, rot, path + "_single", side, end, TallBlockType.SINGLE);
-        builder = windowBStatePart2(builder, direction, rot, path + "_bottom", side, end, TallBlockType.BOTTOM);
-        builder = windowBStatePart2(builder, direction, rot, path + "_center", side, end, TallBlockType.CENTER);
-        return windowBStatePart2(builder, direction, rot, path + "_top", side, end, TallBlockType.TOP);
+        builder = windowBStatePart2(builder, direction, rot, "", path + "_single", side, end, WindowBType.SINGLE);
+        builder = windowBStatePart2(builder, direction, rot, "_bottom", path + "_bottom", side, end, WindowBType.BOTTOM);
+        builder = windowBStatePart2(builder, direction, rot, "_bottom", path + "_bottom_handle", side, end, WindowBType.BOTTOM_HANDLE);
+        builder = windowBStatePart2(builder, direction, rot, "_center", path + "_center", side, end, WindowBType.CENTER);
+        builder = windowBStatePart2(builder, direction, rot, "_center", path + "_handle", side, end, WindowBType.HANDLE);
+        return windowBStatePart2(builder, direction, rot, "_top", path + "_top", side, end, WindowBType.TOP);
     }
 
     private VariantBlockStateBuilder windowBStatePart2(
             VariantBlockStateBuilder builder,
             Direction direction,
             int rot,
+            String parentPath,
             String path,
             ResourceLocation side,
             ResourceLocation end,
-            TallBlockType type
+            WindowBType type
     ) {
         ResourceLocation frontR = modLoc("block/" + path);
-        ModelFile model = models().withExistingParent(path, modLoc("block/window_b"))
+        ModelFile model = models().withExistingParent(path, modLoc("block/window_b" + parentPath))
                                   .texture("front", frontR)
                                   .texture("side", side)
                                   .texture("end", end);
-        ModelFile model_open = models().withExistingParent(path + "_open", modLoc("block/window_b_open"))
+        ModelFile model_open = models().withExistingParent(path + "_open", modLoc("block/window_b_open" + parentPath))
                                        .texture("front", frontR)
                                        .texture("side", side)
                                        .texture("end", end);
-        ModelFile model_mirror = models().withExistingParent(path + "_mirror", modLoc("block/window_b_mirror"))
+        ModelFile model_mirror = models().withExistingParent(path + "_mirror", modLoc("block/window_b_mirror" + parentPath))
                                          .texture("front", frontR)
                                          .texture("side", side)
                                          .texture("end", end);
-        ModelFile model_open_mirror = models().withExistingParent(path + "_open_mirror", modLoc("block/window_b_open_mirror"))
+        ModelFile model_open_mirror = models().withExistingParent(path + "_open_mirror", modLoc("block/window_b_open_mirror" + parentPath))
                                               .texture("front", frontR)
                                               .texture("side", side)
                                               .texture("end", end);
 
-        ConfiguredModel.Builder<VariantBlockStateBuilder> a = builder
+        ConfiguredModel.Builder<VariantBlockStateBuilder> modelFile = builder
                 .partialState()
                 .with(BlockStateProperties.HORIZONTAL_FACING, direction)
                 .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
                 .with(FDBlockStateProperties.OPEN_TYPE, OpenType.CLOSE)
-                .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+                .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
                 .modelForState().modelFile(model);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_CLOSE)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_OPEN)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_open);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.LEFT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.OPEN)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_open);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.CLOSE)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_mirror);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_CLOSE)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_mirror);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.OPEN)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_open_mirror);
-        if (rot > 0) a = a.rotationY(rot);
-        a = a.addModel()
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        modelFile = modelFile.addModel()
              .partialState()
              .with(BlockStateProperties.HORIZONTAL_FACING, direction)
              .with(BlockStateProperties.DOOR_HINGE, DoorHingeSide.RIGHT)
              .with(FDBlockStateProperties.OPEN_TYPE, OpenType.FORCE_OPEN)
-             .with(FDBlockStateProperties.TALL_BLOCK_TYPE, type)
+             .with(FDBlockStateProperties.WINDOW_B_TYPE, type)
              .modelForState().modelFile(model_open_mirror);
-        if (rot > 0) a = a.rotationY(rot);
-        return a.addModel();
+        if (rot > 0) modelFile = modelFile.rotationY(rot);
+        return modelFile.addModel();
     }
 
     private void table(DeferredBlock<Block> deferredBlock, ResourceLocation material) {

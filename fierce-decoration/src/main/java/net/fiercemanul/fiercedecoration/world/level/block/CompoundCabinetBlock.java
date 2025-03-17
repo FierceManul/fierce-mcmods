@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.CabinetBlockEntity;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -102,7 +102,7 @@ public abstract class CompoundCabinetBlock extends CabinetBlock {
                 pState,
                 pLevel,
                 pPos,
-                Utils::getFalse
+                FSUtils::getFalse
         );
     }
 

@@ -1,11 +1,10 @@
 package net.fiercemanul.fiercedecoration;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.fiercemanul.fiercedecoration.capabilities.InfinityWaterHandler;
 import net.fiercemanul.fiercedecoration.client.renderer.blockentity.StarBlockRender;
 import net.fiercemanul.fiercedecoration.client.resources.model.StarBlockModel;
-import net.fiercemanul.fiercedecoration.data.DataGen;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
 import net.fiercemanul.fiercedecoration.server.commands.SitCommand;
 import net.fiercemanul.fiercedecoration.world.entity.Seat;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
@@ -13,14 +12,13 @@ import net.fiercemanul.fiercedecoration.world.level.block.*;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
@@ -32,9 +30,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -49,18 +45,13 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 @Mod(FierceDecoration.MODID)
@@ -77,21 +68,14 @@ public class FierceDecoration {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StarBlockEntity>> STAR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
             "star_block", () -> BlockEntityType.Builder.of(StarBlockEntity::new, FDBlocks.STAR_BLOCK.get()).build(null));
-    private static final Set<DeferredBlock<Block>> CABINETS = new HashSet<>();
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = BLOCK_ENTITIES.register(
             "cabinet", () -> {
                 ImmutableSet.Builder<Block> validBlocksBuilder = new ImmutableSet.Builder<>();
-                CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
+                BlockBulkRegister.CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
                 return new BlockEntityType<>(CabinetBlockEntity::new, validBlocksBuilder.build(), null);
             });
     public static final DeferredHolder<EntityType<?>, EntityType<Seat>> SEAT = ENTITY_TYPES.register(
             "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).eyeHeight(0.0F).noSave().clientTrackingRange(10).fireImmune().build("seat"));
-
-
-    
-    public static final LinkedList<ItemLike> BUILDING_BLOCKS = new LinkedList<>();
-    public static final LinkedList<ItemLike> COLORED_BLOCKS = new LinkedList<>();
-
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DECORATION_TAB = CREATIVE_MODE_TABS.register(
             "fiercedecoration_decoration",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.fiercedecoration.decoration"))
@@ -106,7 +90,7 @@ public class FierceDecoration {
                                  .withTabsBefore(DECORATION_TAB.getKey())
                                  .icon(() -> FDItems.SMOOTH_OAK_PLANKS.get().getDefaultInstance())
                                  .displayItems((parameters, output) -> {
-                                     for (ItemLike item : BUILDING_BLOCKS) output.accept(item);
+                                     for (ItemLike item : BlockBulkRegister.BUILDING_BLOCKS) output.accept(item);
                                  }).build()
     );
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COLORED_TAB = CREATIVE_MODE_TABS.register(
@@ -115,276 +99,14 @@ public class FierceDecoration {
                                  .withTabsBefore(BUILDING_TAB.getKey())
                                  .icon(() -> FDItems.RAINBOW_GLASS.get().getDefaultInstance())
                                  .displayItems((parameters, output) -> {
-                                     for (ItemLike item : COLORED_BLOCKS) output.accept(item);
+                                     for (ItemLike item : BlockBulkRegister.COLORED_BLOCKS) output.accept(item);
                                  }).build()
     );
 
-    private static final Map<String, WoodType> WOOD_TYPE_MAP =
-            new ImmutableMap.Builder<String, WoodType>()
-                    .put("smooth_oak_planks", WoodType.OAK)
-                    .put("smooth_spruce_planks", WoodType.SPRUCE)
-                    .put("smooth_birch_planks", WoodType.BIRCH)
-                    .put("smooth_jungle_planks", WoodType.JUNGLE)
-                    .put("smooth_acacia_planks", WoodType.ACACIA)
-                    .put("smooth_dark_oak_planks", WoodType.DARK_OAK)
-                    .put("smooth_mangrove_planks", WoodType.MANGROVE)
-                    .put("smooth_cherry_planks", WoodType.CHERRY)
-                    .put("smooth_crimson_planks", WoodType.CRIMSON)
-                    .put("smooth_warped_planks", WoodType.WARPED)
-                    .build();
-
-    private static final Map<String, BlockSetType> BLOCK_SET_TYPE_MAP =
-            new ImmutableMap.Builder<String, BlockSetType>()
-                    .put("smooth_oak_planks", BlockSetType.OAK)
-                    .put("smooth_spruce_planks", BlockSetType.SPRUCE)
-                    .put("smooth_birch_planks", BlockSetType.BIRCH)
-                    .put("smooth_jungle_planks", BlockSetType.JUNGLE)
-                    .put("smooth_acacia_planks", BlockSetType.ACACIA)
-                    .put("smooth_dark_oak_planks", BlockSetType.DARK_OAK)
-                    .put("smooth_mangrove_planks", BlockSetType.MANGROVE)
-                    .put("smooth_cherry_planks", BlockSetType.CHERRY)
-                    .put("smooth_crimson_planks", BlockSetType.CRIMSON)
-                    .put("smooth_warped_planks", BlockSetType.WARPED)
-                    .build();
-
     static {
-        FDBlocks.init();
-        FDItems.init();
-        //DatagenModLoader.isRunningDataGen();
-        //boolean isData = Launcher.INSTANCE.environment() instanceof IEnvironment environment && ((CommonLaunchHandler) environment.findLaunchHandler(environment.getProperty(IEnvironment.Keys.LAUNCHTARGET.get()).orElse("MISSING")).get()).isData();
-        for (BlockMaterial blockMaterial : BlockMaterial.BLOCK_MATERIALS) {
-            if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockMaterial.getBlockItemLike());
-            else BUILDING_BLOCKS.add(blockMaterial.getBlockItemLike());
-
-            if (blockMaterial.allowLampInGlass) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_in_glass", LampInGlassBlock::new, blockMaterial.getLampInGlassProperties());
-            if (blockMaterial.allowPillar) {
-                DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_12px", Pillar12PXBlock::new, blockMaterial.getPillarProperties());
-                DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_connector_12px", PillarConnector12PXBlock::new, blockMaterial.getTableProperties());
-                DeferredBlock<Block> block3 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_8px", Pillar8PXBlock::new, blockMaterial.getPillarProperties());
-                DeferredBlock<Block> block4 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_connector_8px", PillarConnector8PXBlock::new, blockMaterial.getTableProperties());
-                DeferredBlock<Block> block5 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_6px", Pillar6PXBlock::new, blockMaterial.getPillarProperties());
-                DeferredBlock<Block> block6 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_connector_6px", PillarConnector6PXBlock::new, blockMaterial.getTableProperties());
-                DeferredBlock<Block> block7 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_4px", Pillar4PXBlock::new, blockMaterial.getPillarProperties());
-                DeferredBlock<Block> block8 = BLOCKS.registerBlock(blockMaterial.getPath() + "_pillar_connector_4px", PillarConnector4PXBlock::new, blockMaterial.getTableProperties());
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
-                DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
-                DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
-                DeferredItem<BlockItem> blockItem5 = ITEMS.registerSimpleBlockItem(block5);
-                DeferredItem<BlockItem> blockItem6 = ITEMS.registerSimpleBlockItem(block6);
-                DeferredItem<BlockItem> blockItem7 = ITEMS.registerSimpleBlockItem(block7);
-                DeferredItem<BlockItem> blockItem8 = ITEMS.registerSimpleBlockItem(block8);
-                if (blockMaterial.isColored()) {
-                    COLORED_BLOCKS.add(blockItem);
-                    COLORED_BLOCKS.add(blockItem2);
-                    COLORED_BLOCKS.add(blockItem3);
-                    COLORED_BLOCKS.add(blockItem4);
-                    COLORED_BLOCKS.add(blockItem5);
-                    COLORED_BLOCKS.add(blockItem6);
-                    COLORED_BLOCKS.add(blockItem7);
-                    COLORED_BLOCKS.add(blockItem8);
-                }
-                else {
-                    BUILDING_BLOCKS.add(blockItem);
-                    BUILDING_BLOCKS.add(blockItem2);
-                    BUILDING_BLOCKS.add(blockItem3);
-                    BUILDING_BLOCKS.add(blockItem4);
-                    BUILDING_BLOCKS.add(blockItem5);
-                    BUILDING_BLOCKS.add(blockItem6);
-                    BUILDING_BLOCKS.add(blockItem7);
-                    BUILDING_BLOCKS.add(blockItem8);
-                }
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block5, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block6, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block7, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block8, blockMaterial);
-            }
-            if (blockMaterial.allowHorizonPanel) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_panel_horizon", HorizonPanelBlock::new, blockMaterial.getHorizonGlassPanelProperties());
-            if (blockMaterial.allowWindowA) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_window_a", WindowTypeABlock::new, blockMaterial.getDefaultBlockProperties());
-            if (blockMaterial.vanillaPlanksLike) {
-                String path = blockMaterial.getPath().replace("smooth_", "").replace("_planks", "");
-                DeferredBlock<Block> block = BLOCKS.register(
-                        path + "_window_b",
-                        () -> new WindowTypeBBlock(
-                                BLOCK_SET_TYPE_MAP.get(blockMaterial.getPath()),
-                                BlockBehaviour.Properties.of()
-                                                         .instrument(NoteBlockInstrument.HAT)
-                                                         .strength(0.3F)
-                                                         .sound(SoundType.GLASS)
-                                                         .isViewBlocking(Utils::getFalse)
-                                                         .noOcclusion()
-                        )
-                );
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
-                else BUILDING_BLOCKS.add(blockItem);
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-            }
-            if (blockMaterial.allowTable) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_table", TableBlock::new, blockMaterial.getTableProperties());
-            if (blockMaterial.vanillaPlanksLike) {
-                String path = blockMaterial.getPath().replace("smooth_", "").replace("_planks", "");
-
-                DeferredBlock<Block> block = BLOCKS.registerBlock(path + "_cabinet_a", CabinetTypeABlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block2 = BLOCKS.registerBlock(path + "_cabinet_b", CabinetTypeBBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block3 = BLOCKS.registerBlock(path + "_cabinet_c", CabinetTypeCBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block4 = BLOCKS.registerBlock(path + "_cabinet_d", CabinetBlock::new, blockMaterial.getDefaultBlockProperties());
-
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
-                DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
-                DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
-
-                CABINETS.add(block);
-                CABINETS.add(block2);
-                CABINETS.add(block3);
-                CABINETS.add(block4);
-                BUILDING_BLOCKS.add(blockItem);
-                BUILDING_BLOCKS.add(blockItem2);
-                BUILDING_BLOCKS.add(blockItem3);
-                BUILDING_BLOCKS.add(blockItem4);
-
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-            }
-            if (blockMaterial.allowChair) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_chair", SimpleChairBlock::new, blockMaterial.getDefaultBlockProperties());
-            if (blockMaterial.allowGardenChair) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_garden_chair", GardenChairBlock::new, blockMaterial.getDefaultBlockProperties());
-            if (blockMaterial.allowWoolSofa) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_sofa", WoolSofaBlock::new, blockMaterial.getDefaultBlockProperties());
-            if (blockMaterial.allowGuardrail) {
-                String id = blockMaterial.getPath() + "_guardrail";
-                DeferredBlock<Block> block = null;
-                switch (blockMaterial.getMaterialType()) {
-                    case WOOD -> {
-                        if (blockMaterial.getModelType().equals(BlockMaterial.ModelType.LOG))
-                            block = BLOCKS.registerBlock(id, WoodenGuardrailBlock::new, blockMaterial.getTableProperties());
-                        else block = BLOCKS.registerBlock(id, WoodenGuardrailTypeBBlock::new, blockMaterial.getTableProperties());
-                    }
-                    case STONE -> block = BLOCKS.registerBlock(id, StoneGuardrailBlock::new, blockMaterial.getTableProperties());
-                    case GLASS -> block = BLOCKS.registerBlock(id, GlassGuardrailBlock::new, blockMaterial.getTableProperties());
-                }
-                if (block != null) {
-                    DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                    if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
-                    else BUILDING_BLOCKS.add(blockItem);
-                    DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                }
-            }
-            if (blockMaterial.allowPeepWindow) simplerReg(
-                    blockMaterial, blockMaterial.getPath() + "_peep_window", PeepWindowBlock::new, blockMaterial.getPeepWindowProperties());
-            if (blockMaterial.allowVanillaSlab) {
-                DeferredBlock<Block> block = BLOCKS.register(blockMaterial.getPath() + "_stairs", () -> new StairBlock(blockMaterial.getMaterialBlock().defaultBlockState(), blockMaterial.getProperties()));
-                DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_slab", SlabBlock::new, blockMaterial.getProperties());
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
-                if (blockMaterial.isColored()) {
-                    COLORED_BLOCKS.add(blockItem);
-                    COLORED_BLOCKS.add(blockItem2);
-                }
-                else {
-                    BUILDING_BLOCKS.add(blockItem);
-                    BUILDING_BLOCKS.add(blockItem2);
-                }
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-            }
-            if (blockMaterial.allowCutBlock) {
-                DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_one_cut_block", OneCutBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block2 = BLOCKS.registerBlock(blockMaterial.getPath() + "_thin_stairs", ThinStairBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block3 = BLOCKS.registerBlock(blockMaterial.getPath() + "_double_cut_block", DoubleCutBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block4 = BLOCKS.registerBlock(blockMaterial.getPath() + "_triple_cut_block", TripleCutBlock::new, blockMaterial.getDefaultBlockProperties());
-                DeferredBlock<Block> block5 = BLOCKS.registerBlock(blockMaterial.getPath() + "_panel_4px", Panel4PXBlock::new, blockMaterial.getPanelProperties());
-                DeferredBlock<Block> block6 = BLOCKS.registerBlock(blockMaterial.getPath() + "_panel_2px", Panel2PXBlock::new, blockMaterial.getPanelProperties());
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
-                DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
-                DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
-                DeferredItem<BlockItem> blockItem5 = ITEMS.registerSimpleBlockItem(block5);
-                DeferredItem<BlockItem> blockItem6 = ITEMS.registerSimpleBlockItem(block6);
-                if (blockMaterial.isColored()) {
-                    COLORED_BLOCKS.add(blockItem);
-                    COLORED_BLOCKS.add(blockItem2);
-                    COLORED_BLOCKS.add(blockItem3);
-                    COLORED_BLOCKS.add(blockItem4);
-                    COLORED_BLOCKS.add(blockItem5);
-                    COLORED_BLOCKS.add(blockItem6);
-                }
-                else {
-                    BUILDING_BLOCKS.add(blockItem);
-                    BUILDING_BLOCKS.add(blockItem2);
-                    BUILDING_BLOCKS.add(blockItem3);
-                    BUILDING_BLOCKS.add(blockItem4);
-                    BUILDING_BLOCKS.add(blockItem5);
-                    BUILDING_BLOCKS.add(blockItem6);
-                }
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block5, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block6, blockMaterial);
-            }
-            if (blockMaterial.vanillaPlanksLike) {
-                DeferredBlock<Block> block = BLOCKS.registerBlock(blockMaterial.getPath() + "_fence", FenceBlock::new, blockMaterial.getProperties());
-                DeferredBlock<Block> block2 = BLOCKS.register(blockMaterial.getPath() + "_fence_gate", () ->
-                        new FenceGateBlock(WOOD_TYPE_MAP.get(blockMaterial.getPath()),
-                                           blockMaterial.getProperties()
-                                                        .forceSolidOn()));
-                DeferredBlock<Block> block3 = BLOCKS.register(blockMaterial.getPath() + "_pressure_plate", () ->
-                        new PressurePlateBlock(BLOCK_SET_TYPE_MAP.get(blockMaterial.getPath()),
-                                               blockMaterial.getProperties()
-                                                            .strength(0.5F)
-                                                            .forceSolidOn()
-                                                            .noCollission()
-                                                            .pushReaction(PushReaction.DESTROY)));
-                DeferredBlock<Block> block4 = BLOCKS.register(blockMaterial.getPath() + "_button", () ->
-                        new ButtonBlock(BLOCK_SET_TYPE_MAP.get(blockMaterial.getPath()), 30,
-                                        BlockBehaviour.Properties.of()
-                                                                 .strength(0.5F)
-                                                                 .noCollission()
-                                                                 .pushReaction(PushReaction.DESTROY)));
-                DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-                DeferredItem<BlockItem> blockItem2 = ITEMS.registerSimpleBlockItem(block2);
-                DeferredItem<BlockItem> blockItem3 = ITEMS.registerSimpleBlockItem(block3);
-                DeferredItem<BlockItem> blockItem4 = ITEMS.registerSimpleBlockItem(block4);
-                if (blockMaterial.isColored()) {
-                    COLORED_BLOCKS.add(blockItem);
-                    COLORED_BLOCKS.add(blockItem2);
-                    COLORED_BLOCKS.add(blockItem3);
-                    COLORED_BLOCKS.add(blockItem4);
-                }
-                else {
-                    BUILDING_BLOCKS.add(blockItem);
-                    BUILDING_BLOCKS.add(blockItem2);
-                    BUILDING_BLOCKS.add(blockItem3);
-                    BUILDING_BLOCKS.add(blockItem4);
-                }
-                DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block2, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block3, blockMaterial);
-                DataGen.BLOCKS_AND_MATERIALS.put(block4, blockMaterial);
-            }
-        }
-    }
-
-    private static void simplerReg(BlockMaterial blockMaterial, String path, Function<BlockBehaviour.Properties, ? extends Block> blockFunc, BlockBehaviour.Properties properties) {
-        DeferredBlock<Block> block = BLOCKS.registerBlock(path, blockFunc, properties);
-        DeferredItem<BlockItem> blockItem = ITEMS.registerSimpleBlockItem(block);
-        if (blockMaterial.isColored()) COLORED_BLOCKS.add(blockItem);
-        else BUILDING_BLOCKS.add(blockItem);
-        //if (FMLLoader.getLaunchHandler().isData())
-        DataGen.BLOCKS_AND_MATERIALS.put(block, blockMaterial);
+        FDBlocks.loadClass();
+        FDItems.loadClass();
+        BlockBulkRegister.starRegister();
     }
 
     private static void applyDecorationBlocks(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output pOutput) {
@@ -479,6 +201,8 @@ public class FierceDecoration {
         pOutput.accept(FDItems.SMOOTH_ACACIA_PLANKS);
         pOutput.accept(FDItems.SMOOTH_DARK_OAK_PLANKS);
         pOutput.accept(FDItems.SMOOTH_MANGROVE_PLANKS);
+        pOutput.accept(FDItems.SMOOTH_BAMBOO_PLANKS);
+        pOutput.accept(FDItems.SMOOTH_CHERRY_PLANKS);
         pOutput.accept(FDItems.SMOOTH_CRIMSON_PLANKS);
         pOutput.accept(FDItems.SMOOTH_WARPED_PLANKS);
         pOutput.accept(FDItems.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE);
@@ -547,8 +271,8 @@ public class FierceDecoration {
         SitCommand.register(event.getDispatcher());
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        DataGen.BLOCKS_AND_MATERIALS.clear();
+    private void commonSetup(FMLCommonSetupEvent event) {
+        BlockBulkRegister.clean();
     }
 
     private void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
@@ -557,7 +281,7 @@ public class FierceDecoration {
                 (level, pos, state, blockEntity, context) -> InfinityWaterHandler.INSTANCE,
                 FDBlocks.WATERLOGGED_COBBLESTONE.get()
         );
-        CABINETS.forEach(deferredBlock -> event.registerBlock(
+        BlockBulkRegister.CABINETS.forEach(deferredBlock -> event.registerBlock(
                 Capabilities.ItemHandler.BLOCK,
                 (level, pos, state, blockEntity, context) -> new InvWrapper(((CabinetBlock)state.getBlock()).getContainer(state, level, pos)),
                 deferredBlock.get()

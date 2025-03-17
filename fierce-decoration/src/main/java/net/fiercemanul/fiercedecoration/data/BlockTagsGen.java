@@ -1,6 +1,8 @@
 package net.fiercemanul.fiercedecoration.data;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegisterKey;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
 import net.minecraft.core.HolderLookup;
@@ -120,7 +122,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.PURPLE_LAMP.get(),
                 FDBlocks.RAINBOW_LAMP.get(),
                 FDBlocks.ROCK_PATH.get()
-        );
+        ).addTag(FDBlockTags.LAMP_IN_GLASS);
         tag(BlockTags.MINEABLE_WITH_AXE).add(
                 FDBlocks.SMOOTH_OAK_PLANKS.get(),
                 FDBlocks.SMOOTH_SPRUCE_PLANKS.get(),
@@ -129,6 +131,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.SMOOTH_ACACIA_PLANKS.get(),
                 FDBlocks.SMOOTH_DARK_OAK_PLANKS.get(),
                 FDBlocks.SMOOTH_MANGROVE_PLANKS.get(),
+                FDBlocks.SMOOTH_BAMBOO_PLANKS.get(),
                 FDBlocks.SMOOTH_CHERRY_PLANKS.get(),
                 FDBlocks.SMOOTH_CRIMSON_PLANKS.get(),
                 FDBlocks.SMOOTH_WARPED_PLANKS.get(),
@@ -161,7 +164,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.CRAFTING_PAD.get(),
                 FDBlocks.CRAFTING_DESK.get(),
                 FDBlocks.CRAFTING_BLOCK.get()
-        );
+        ).addTag(FDBlockTags.CABINETS);
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
                 FDBlocks.ROTTEN_FLESH_BLOCK.get(),
                 FDBlocks.HALF_GRASS_BLOCK.get(),
@@ -169,6 +172,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.HALF_MYCELIUM.get(),
                 FDBlocks.HALF_PATH_BLOCK.get()
         );
+        tag(BlockTags.WOOL).addTag(FDBlockTags.WOOL_SOFA);
         tag(BlockTags.DIRT).add(
                 FDBlocks.HALF_GRASS_BLOCK.get(),
                 FDBlocks.HALF_PODZOL.get(),
@@ -191,6 +195,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FDBlocks.SMOOTH_ACACIA_PLANKS.get(),
                 FDBlocks.SMOOTH_DARK_OAK_PLANKS.get(),
                 FDBlocks.SMOOTH_MANGROVE_PLANKS.get(),
+                FDBlocks.SMOOTH_BAMBOO_PLANKS.get(),
                 FDBlocks.SMOOTH_CHERRY_PLANKS.get(),
                 FDBlocks.SMOOTH_CRIMSON_PLANKS.get(),
                 FDBlocks.SMOOTH_WARPED_PLANKS.get()
@@ -251,38 +256,58 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(FDBlockTags.TABLE_CONNECT)
                 .addTag(FDBlockTags.TABLES)
                 .addTag(FDBlockTags.CABINETS);
-        DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
+        BlockBulkRegister.getDataGenWorks().forEach((deferredBlock, registerKey) -> {
             Block block = deferredBlock.get();
+            boolean isWood = registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_AXE.getClass());
             if (block instanceof StairBlock) {
                 tag(BlockTags.STAIRS).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_STAIRS).add(block);
+                if (isWood) tag(BlockTags.WOODEN_STAIRS).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof SlabBlock) {
                 tag(BlockTags.SLABS).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_SLABS).add(block);
+                if (isWood) tag(BlockTags.WOODEN_SLABS).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof FenceBlock) {
                 tag(BlockTags.FENCES).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_FENCES).add(block);
+                if (isWood) tag(BlockTags.WOODEN_FENCES).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof FenceGateBlock) {
                 tag(BlockTags.FENCE_GATES).add(block);
                 tag(Tags.Blocks.FENCE_GATES).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(Tags.Blocks.FENCE_GATES_WOODEN).add(block);
+                if (isWood) tag(Tags.Blocks.FENCE_GATES_WOODEN).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof ButtonBlock) {
                 tag(BlockTags.BUTTONS).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_BUTTONS).add(block);
+                if (isWood) tag(BlockTags.WOODEN_BUTTONS).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof PressurePlateBlock) {
                 tag(BlockTags.PRESSURE_PLATES).add(block);
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD)) tag(BlockTags.WOODEN_PRESSURE_PLATES).add(block);
+                if (isWood) tag(BlockTags.WOODEN_PRESSURE_PLATES).add(block);
+                else applyMineTag(registerKey, block);
             }
             if (block instanceof CabinetBlock) tag(FDBlockTags.CABINETS).add(block);
-            if (block instanceof TableBlock) tag(FDBlockTags.TABLES).add(block);
-            if (block instanceof GuardrailBlock) tag(FDBlockTags.GUARDRAILS_TAG).add(block);
-            if (block instanceof PeepWindowBlock) tag(FDBlockTags.PEEP_WINDOWS_TAG).add(block);
-            if (block instanceof DoubleCutBlock || block instanceof OneCutBlock || block instanceof TripleCutBlock) tag(FDBlockTags.CUT_BLOCKS_TAG).add(block);
+            if (block instanceof TableBlock) {
+                tag(FDBlockTags.TABLES).add(block);
+                applyMineTag(registerKey, block);
+            }
+            if (block instanceof GuardrailBlock) {
+                tag(FDBlockTags.GUARDRAILS_TAG).add(block);
+                applyMineTag(registerKey, block);
+            }
+            if (block instanceof PeepWindowBlock) {
+                tag(FDBlockTags.PEEP_WINDOWS_TAG).add(block);
+                applyMineTag(registerKey, block);
+            }
+            if (block instanceof WoolSofaBlock) tag(FDBlockTags.WOOL_SOFA).add(block);
+            if (block instanceof DoubleCutBlock || block instanceof OneCutBlock || block instanceof TripleCutBlock) {
+                tag(FDBlockTags.CUT_BLOCKS_TAG).add(block);
+                applyMineTag(registerKey, block);
+            }
             if (block instanceof Pillar4PXBlock
                     || block instanceof Pillar6PXBlock
                     || block instanceof Pillar8PXBlock
@@ -290,27 +315,24 @@ public class BlockTagsGen extends BlockTagsProvider {
                     || block instanceof PillarConnector4PXBlock
                     || block instanceof PillarConnector6PXBlock
                     || block instanceof PillarConnector8PXBlock
-                    || block instanceof PillarConnector12PXBlock) tag(FDBlockTags.PILLAR_TAG).add(block);
-            if (blockMaterial.isDragonImmune()) tag(BlockTags.DRAGON_IMMUNE).add(block);
-            if (blockMaterial.isDragonImmune()) tag(BlockTags.WITHER_IMMUNE).add(block);
-
-            if (block instanceof LampInGlassBlock) {
-                tag(FDBlockTags.LAMP_IN_GLASS).add(block);
-                tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+                    || block instanceof PillarConnector12PXBlock) {
+                tag(FDBlockTags.PILLAR_TAG).add(block);
+                applyMineTag(registerKey, block);
             }
-            else {
-                switch (blockMaterial.getMaterialType()) {
-                    case WOOD -> tag(BlockTags.MINEABLE_WITH_AXE).add(block);
-                    case DIRT, GRASS -> tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block);
-                    case STONE, METAL, GLASS -> tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
-                    case MOSSY -> tag(BlockTags.MINEABLE_WITH_HOE).add(block);
-                }
-                switch (blockMaterial.getToolLevel()) {
-                    case STONE -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
-                    case IRON -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
-                    case DIAMOND -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
-                }
-            }
+            if (block instanceof LampInGlassBlock) tag(FDBlockTags.LAMP_IN_GLASS).add(block);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.DRAGON_IMMUNE.getClass())) tag(BlockTags.DRAGON_IMMUNE).add(block);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.WITHER_IMMUNE.getClass())) tag(BlockTags.WITHER_IMMUNE).add(block);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.NEEDS_STONE_TOOL.getClass())) tag(BlockTags.NEEDS_STONE_TOOL).add(block);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.NEEDS_IRON_TOOL.getClass())) tag(BlockTags.NEEDS_IRON_TOOL).add(block);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.NEEDS_DIAMOND_TOOL.getClass())) tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
         });
+    }
+
+    private void applyMineTag(BlockBulkRegisterKey registerKey, Block block) {
+        if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_AXE.getClass())) tag(BlockTags.MINEABLE_WITH_AXE).add(block);
+        if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_SHOVEL.getClass())) tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block);
+        if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_PICKAXE.getClass())) tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+        if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_HOE.getClass())) tag(BlockTags.MINEABLE_WITH_HOE).add(block);
+        if (registerKey.hasProperty(BlockBulkRegisterDataProperties.WOOL.getClass())) tag(BlockTags.WOOL).add(block);
     }
 }

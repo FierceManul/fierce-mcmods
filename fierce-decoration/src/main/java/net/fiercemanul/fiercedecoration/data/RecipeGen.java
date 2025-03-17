@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercedecoration.data;
 
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
 import net.fiercemanul.fiercesource.FierceSource;
@@ -121,24 +122,21 @@ public class RecipeGen extends FSRecipeProvider {
         smoothPlanks(pRecipeOutput, FDItems.SMOOTH_ACACIA_PLANKS.get(), Items.STRIPPED_ACACIA_WOOD);
         smoothPlanks(pRecipeOutput, FDItems.SMOOTH_DARK_OAK_PLANKS.get(), Items.STRIPPED_DARK_OAK_WOOD);
         smoothPlanks(pRecipeOutput, FDItems.SMOOTH_MANGROVE_PLANKS.get(), Items.STRIPPED_MANGROVE_WOOD);
+        smoothPlanks(pRecipeOutput, FDItems.SMOOTH_BAMBOO_PLANKS.get(), Items.STRIPPED_BAMBOO_BLOCK);
+        smoothPlanks(pRecipeOutput, FDItems.SMOOTH_CHERRY_PLANKS.get(), Items.STRIPPED_CHERRY_WOOD);
         smoothPlanks(pRecipeOutput, FDItems.SMOOTH_CRIMSON_PLANKS.get(), Items.STRIPPED_CRIMSON_HYPHAE);
         smoothPlanks(pRecipeOutput, FDItems.SMOOTH_WARPED_PLANKS.get(), Items.STRIPPED_WARPED_HYPHAE);
 
-        DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
+        BlockBulkRegister.getDataGenWorks().forEach((deferredBlock, registerKey) -> {
             Block block = deferredBlock.get();
-            Block materialBlock = blockMaterial.getMaterialBlock();
+            Block materialBlock = registerKey.getMaterialBlock();
 
             if (block instanceof LampInGlassBlock) buildLampInGlass(pRecipeOutput, block, materialBlock);
             else if (block instanceof WoodenGuardrailBlock) woodenGuardrail(pRecipeOutput, block, materialBlock);
             else if (block instanceof WoodenGuardrailTypeBBlock) woodenGuardrailB(pRecipeOutput, block, materialBlock);
             else if (block instanceof StoneGuardrailBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 2);
             else if (block instanceof GlassGuardrailBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 6);
-            else if (block instanceof PeepWindowBlock) {
-                switch (blockMaterial.getMaterialType()) {
-                    case STONE, GLASS -> peepWindowWithCutter(pRecipeOutput, block, materialBlock);
-                    default -> peepWindow(pRecipeOutput, block, materialBlock);
-                }
-            }
+            else if (block instanceof PeepWindowBlock) peepWindowWithCutter(pRecipeOutput, block, materialBlock);
             else if (block instanceof OneCutBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 2);
             else if (block instanceof DoubleCutBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 4);
             else if (block instanceof TripleCutBlock) stonecutting(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, block, materialBlock, 8);
@@ -160,7 +158,7 @@ public class RecipeGen extends FSRecipeProvider {
             else if (block instanceof CabinetBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock);
             else if (block instanceof SimpleChairBlock) stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 4);
             else if (block instanceof GardenChairBlock) {
-                if (blockMaterial.getMaterialType().equals(BlockMaterial.MaterialType.WOOD))
+                if (registerKey.hasProperty(BlockBulkRegisterDataProperties.MINEABLE_WITH_AXE.getClass()))
                     stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock, 2);
                 else stonecutting(pRecipeOutput, RecipeCategory.DECORATIONS, block, materialBlock);
             }

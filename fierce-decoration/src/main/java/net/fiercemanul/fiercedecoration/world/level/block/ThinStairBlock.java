@@ -42,8 +42,8 @@ public class ThinStairBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, SHAPE, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, SHAPE, WATERLOGGED);
     }
 
     private static VoxelShape buildShape(BlockState state) {
@@ -85,19 +85,19 @@ public class ThinStairBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
-        BlockPos blockpos = placeContext.getClickedPos();
-        BlockState blockstate = defaultBlockState().setValue(WATERLOGGED, placeContext.getLevel().getFluidState(blockpos).getType() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockPos blockpos = context.getClickedPos();
+        BlockState blockstate = defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(blockpos).getType() == Fluids.WATER);
 
         Direction direction;
-        double y = placeContext.getClickLocation().y - blockpos.getY();
-        if (y < 0.5D || (placeContext.getClickedFace().equals(Direction.UP) && y == 0.5D)) {
-            direction = placeContext.getHorizontalDirection().getOpposite();
+        double y = context.getClickLocation().y - blockpos.getY();
+        if (y < 0.5D || (context.getClickedFace().equals(Direction.UP) && y == 0.5D)) {
+            direction = context.getHorizontalDirection().getOpposite();
         }
-        else direction = placeContext.getHorizontalDirection();
+        else direction = context.getHorizontalDirection();
         blockstate = blockstate.setValue(FACING, direction);
 
-        BlockState other = placeContext.getLevel().getBlockState(blockpos.relative(direction));
+        BlockState other = context.getLevel().getBlockState(blockpos.relative(direction));
         boolean flag = true;
         if (other.getBlock() instanceof ThinStairBlock) {
             Direction otherDirection = other.getValue(FACING);
@@ -114,7 +114,7 @@ public class ThinStairBlock extends HorizonFacingModelBlock {
             }
         }
         if (flag) {
-            other = placeContext.getLevel().getBlockState(blockpos.relative(direction.getOpposite()));
+            other = context.getLevel().getBlockState(blockpos.relative(direction.getOpposite()));
             if (other.getBlock() instanceof ThinStairBlock) {
                 Direction otherDirection = other.getValue(FACING);
                 ThinStairsShape otherShape = other.getValue(SHAPE);
@@ -133,38 +133,38 @@ public class ThinStairBlock extends HorizonFacingModelBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
 
-        Direction myDirection = pState.getValue(FACING);
+        Direction myDirection = state.getValue(FACING);
 
-        if (pState.getValue(SHAPE).equals(ThinStairsShape.STRAIGHT) && pNeighborState.getBlock() instanceof ThinStairBlock) {
+        if (state.getValue(SHAPE).equals(ThinStairsShape.STRAIGHT) && neighborState.getBlock() instanceof ThinStairBlock) {
 
-            Direction otherDirection = pNeighborState.getValue(FACING);
-            ThinStairsShape otherShape = pNeighborState.getValue(SHAPE);
+            Direction otherDirection = neighborState.getValue(FACING);
+            ThinStairsShape otherShape = neighborState.getValue(SHAPE);
 
-            if (pDirection.equals(myDirection)) {
+            if (direction.equals(myDirection)) {
                 if (otherDirection.equals(myDirection.getClockWise())) {
-                    return pState.setValue(SHAPE, ThinStairsShape.INNER);
+                    return state.setValue(SHAPE, ThinStairsShape.INNER);
                 }
                 else if ((otherDirection.equals(myDirection.getOpposite()) && otherShape.equals(ThinStairsShape.INNER))
                         || (otherDirection.equals(myDirection.getCounterClockWise()) && otherShape.equals(ThinStairsShape.STRAIGHT))
                         || (otherDirection.equals(myDirection) && otherShape.equals(ThinStairsShape.OUTER))) {
-                    return pState.setValue(SHAPE, ThinStairsShape.INNER).setValue(FACING, myDirection.getCounterClockWise());
+                    return state.setValue(SHAPE, ThinStairsShape.INNER).setValue(FACING, myDirection.getCounterClockWise());
                 }
             }
-            else if (pDirection.equals(myDirection.getOpposite())) {
+            else if (direction.equals(myDirection.getOpposite())) {
                 if (otherDirection.equals(myDirection.getCounterClockWise())) {
-                    return pState.setValue(SHAPE, ThinStairsShape.OUTER);
+                    return state.setValue(SHAPE, ThinStairsShape.OUTER);
                 }
                 else if ((otherDirection.equals(myDirection) && otherShape.equals(ThinStairsShape.INNER))
                         || (otherDirection.equals(myDirection.getClockWise()) && otherShape.equals(ThinStairsShape.STRAIGHT))
                         || (otherDirection.equals(myDirection.getOpposite()) && otherShape.equals(ThinStairsShape.OUTER))) {
-                    return pState.setValue(SHAPE, ThinStairsShape.OUTER).setValue(FACING, myDirection.getClockWise());
+                    return state.setValue(SHAPE, ThinStairsShape.OUTER).setValue(FACING, myDirection.getClockWise());
                 }
             }
         }
 
-        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override

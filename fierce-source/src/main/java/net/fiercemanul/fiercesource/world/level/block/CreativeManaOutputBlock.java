@@ -2,7 +2,7 @@ package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.entity.CreativeManaOutputBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,7 @@ public class CreativeManaOutputBlock extends FacingModelBlock implements EntityB
     public CreativeManaOutputBlock(Properties pProperties) {
         super(pProperties.strength(2.0F, 1200.0F)
                          .lightLevel(value -> 15)
-                         .emissiveRendering(Utils::getTrue)
+                         .emissiveRendering(FSUtils::getTrue)
                          .sound(SoundType.AMETHYST)
                          .mapColor(MapColor.COLOR_BLUE),
               FacingBlock.CLICKED_DIRECTION_OPPOSITE);

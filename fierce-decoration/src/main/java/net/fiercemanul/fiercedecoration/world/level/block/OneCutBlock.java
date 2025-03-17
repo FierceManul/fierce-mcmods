@@ -51,17 +51,17 @@ public class OneCutBlock extends FacingModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, DOUBLE, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, DOUBLE, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockState blockState = pContext.getLevel().getBlockState(pContext.getClickedPos());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
         if (blockState.is(this)) return blockState.setValue(DOUBLE, true).setValue(WATERLOGGED, false);
         else {
-            blockState = defaultBlockState().setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
-            return blockState.setValue(FACING, getPlaceDirection(pContext));
+            blockState = defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+            return blockState.setValue(FACING, getPlaceDirection(context));
         }
     }
 

@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.level.block.WrenchDismantleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,8 +25,8 @@ public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
         super(pProperties
                       .strength(0.3F, 6.0F)
                       .lightLevel(value -> 7)
-                      .isValidSpawn(Utils::getFalse)
-                      .isRedstoneConductor(Utils::getFalse)
+                      .isValidSpawn(FSUtils::getFalse)
+                      .isRedstoneConductor(FSUtils::getFalse)
                       .sound(SoundType.GLASS)
                       .noOcclusion());
     }

@@ -58,16 +58,16 @@ public class FakeHopperBlock extends ModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Direction direction = pContext.getClickedFace().getOpposite();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction direction = context.getClickedFace().getOpposite();
         return this.defaultBlockState()
                    .setValue(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)
-                   .setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
+                   .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override
@@ -94,9 +94,9 @@ public class FakeHopperBlock extends ModelBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        return WrenchAction.defaultUseOn(FACING, pStack, pState, pLevel, pPos, pPlayer);
+        return WrenchAction.defaultUseOn(FACING, stack, state, level, pos, player);
     }
 
     @Override

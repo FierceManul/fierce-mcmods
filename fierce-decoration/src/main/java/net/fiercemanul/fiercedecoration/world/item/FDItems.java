@@ -54,6 +54,7 @@ public final class FDItems {
     public static final DeferredItem<BlockItem> SMOOTH_ACACIA_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_ACACIA_PLANKS);
     public static final DeferredItem<BlockItem> SMOOTH_DARK_OAK_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_DARK_OAK_PLANKS);
     public static final DeferredItem<BlockItem> SMOOTH_MANGROVE_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_MANGROVE_PLANKS);
+    public static final DeferredItem<BlockItem> SMOOTH_BAMBOO_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_BAMBOO_PLANKS);
     public static final DeferredItem<BlockItem> SMOOTH_CHERRY_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_CHERRY_PLANKS);
     public static final DeferredItem<BlockItem> SMOOTH_CRIMSON_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_CRIMSON_PLANKS);
     public static final DeferredItem<BlockItem> SMOOTH_WARPED_PLANKS = FierceDecoration.ITEMS.registerSimpleBlockItem(FDBlocks.SMOOTH_WARPED_PLANKS);
@@ -160,7 +161,7 @@ public final class FDItems {
                 block.unwrapKey().orElseThrow().location().getPath(), () -> new FakeBlockEntityItem(block.value(), new Item.Properties()));
     }
 
-    public static void init() {}
+    public static void loadClass() {}
 
     private FDItems() {}
 }

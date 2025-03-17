@@ -69,8 +69,8 @@ public class LightTubeBlock extends FacingModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, VERTICAL, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, VERTICAL, WATERLOGGED);
     }
 
     @Override
@@ -87,12 +87,12 @@ public class LightTubeBlock extends FacingModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Direction clickFace = pContext.getClickedFace();
-        Direction horizontalDirection = pContext.getHorizontalDirection();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction clickFace = context.getClickedFace();
+        Direction horizontalDirection = context.getHorizontalDirection();
         BlockState state = defaultBlockState().setValue(FACING, clickFace);
-        if (pContext.getPlayer() != null) {
-            boolean snaking = pContext.getPlayer().isShiftKeyDown();
+        if (context.getPlayer() != null) {
+            boolean snaking = context.getPlayer().isShiftKeyDown();
             if (clickFace == Direction.DOWN || clickFace == Direction.UP) {
                 if (horizontalDirection == Direction.NORTH || horizontalDirection == Direction.SOUTH) {
                     state = state.setValue(VERTICAL, snaking);
@@ -103,7 +103,7 @@ public class LightTubeBlock extends FacingModelBlock {
                 if (snaking) state = state.setValue(VERTICAL, true);
             }
         }
-        return state.setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
+        return state.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override

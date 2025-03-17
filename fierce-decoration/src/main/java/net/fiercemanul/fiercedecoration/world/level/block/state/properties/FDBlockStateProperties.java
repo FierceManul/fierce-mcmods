@@ -23,6 +23,7 @@ public class FDBlockStateProperties {
     public static final BooleanProperty PART_H = BooleanProperty.create("part_h");
     public static final EnumProperty<LongBlockType> LONG_BLOCK_TYPE = EnumProperty.create("type", LongBlockType.class);
     public static final EnumProperty<TallBlockType> TALL_BLOCK_TYPE = EnumProperty.create("type", TallBlockType.class);
+    public static final EnumProperty<WindowBType> WINDOW_B_TYPE = EnumProperty.create("type", WindowBType.class);
     public static final EnumProperty<ComplexCabinetType> CABINET_TYPE = EnumProperty.create("type", ComplexCabinetType.class);
     public static final EnumProperty<ComplexCabinetType> CABINET_TYPE_A = EnumProperty.create("type", ComplexCabinetType.class, ComplexCabinetType.SINGLE, ComplexCabinetType.TOP, ComplexCabinetType.BOTTOM);
     public static final EnumProperty<ComplexCabinetType> CABINET_TYPE_C = EnumProperty.create("type", ComplexCabinetType.class, ComplexCabinetType.SINGLE, ComplexCabinetType.LEFT, ComplexCabinetType.RIGHT);

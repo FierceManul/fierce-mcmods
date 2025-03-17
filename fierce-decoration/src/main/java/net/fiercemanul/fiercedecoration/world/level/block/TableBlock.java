@@ -41,8 +41,8 @@ public class TableBlock extends HorizonAxisModelBlock {
         return CODEC;
     }
 
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(AXIS, LEGGED, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(AXIS, LEGGED, WATERLOGGED);
     }
 
     @Override
@@ -51,13 +51,13 @@ public class TableBlock extends HorizonAxisModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return super.getStateForPlacement(pContext).setValue(LEGGED, needLeg(pContext.getLevel(), pContext.getClickedPos()));
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return super.getStateForPlacement(context).setValue(LEGGED, needLeg(context.getLevel(), context.getClickedPos()));
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos).setValue(LEGGED, needLeg(pLevel, pCurrentPos));
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos).setValue(LEGGED, needLeg(level, pos));
     }
 
     private static boolean needLeg(LevelAccessor pLevel, BlockPos pCurrentPos) {
@@ -72,9 +72,9 @@ public class TableBlock extends HorizonAxisModelBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        return WrenchAction.defaultUseOn(LEGGED, pStack, pState, pLevel, pPos, pPlayer);
+        return WrenchAction.defaultUseOn(LEGGED, stack, state, level, pos, player);
     }
 
     @Override

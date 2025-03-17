@@ -87,8 +87,8 @@ public class DoubleCutBlock extends ModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(AXIS, PART_A, PART_B, PART_C, PART_D, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(AXIS, PART_A, PART_B, PART_C, PART_D, WATERLOGGED);
     }
 
     @Override
@@ -105,40 +105,40 @@ public class DoubleCutBlock extends ModelBlock {
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction.Axis axis;
-        BlockState blockState = pContext.getLevel().getBlockState(pContext.getClickedPos());
+        BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
 
         if (blockState.is(this)) {
             axis = blockState.getValue(AXIS);
         }
         else {
             blockState = defaultBlockState();
-            if (pContext.getPlayer() != null)
-                axis = pContext.getPlayer().isShiftKeyDown() ? Direction.Axis.Y : pContext.getHorizontalDirection().getClockWise().getAxis();
-            else axis = pContext.getHorizontalDirection().getAxis();
+            if (context.getPlayer() != null)
+                axis = context.getPlayer().isShiftKeyDown() ? Direction.Axis.Y : context.getHorizontalDirection().getClockWise().getAxis();
+            else axis = context.getHorizontalDirection().getAxis();
             blockState = blockState.setValue(AXIS, axis);
         }
 
         double a, b;
         switch (axis) {
             case X -> {
-                a = pContext.getClickLocation().z - pContext.getClickedPos().getZ();
-                b = pContext.getClickLocation().y - pContext.getClickedPos().getY();
-                if (a == 0.5) a = pContext.getClickedFace().equals(Direction.SOUTH) ? 0.6 : 0.4;
-                if (b == 0.5) b = pContext.getClickedFace().equals(Direction.UP) ? 0.6 : 0.4;
+                a = context.getClickLocation().z - context.getClickedPos().getZ();
+                b = context.getClickLocation().y - context.getClickedPos().getY();
+                if (a == 0.5) a = context.getClickedFace().equals(Direction.SOUTH) ? 0.6 : 0.4;
+                if (b == 0.5) b = context.getClickedFace().equals(Direction.UP) ? 0.6 : 0.4;
             }
             case Y -> {
-                a = pContext.getClickLocation().x - pContext.getClickedPos().getX();
-                b = pContext.getClickLocation().z - pContext.getClickedPos().getZ();
-                if (a == 0.5) a = pContext.getClickedFace().equals(Direction.EAST) ? 0.6 : 0.4;
-                if (b == 0.5) b = pContext.getClickedFace().equals(Direction.SOUTH) ? 0.6 : 0.4;
+                a = context.getClickLocation().x - context.getClickedPos().getX();
+                b = context.getClickLocation().z - context.getClickedPos().getZ();
+                if (a == 0.5) a = context.getClickedFace().equals(Direction.EAST) ? 0.6 : 0.4;
+                if (b == 0.5) b = context.getClickedFace().equals(Direction.SOUTH) ? 0.6 : 0.4;
             }
             default -> {
-                a = pContext.getClickLocation().x - pContext.getClickedPos().getX();
-                b = pContext.getClickLocation().y - pContext.getClickedPos().getY();
-                if (a == 0.5) a = pContext.getClickedFace().equals(Direction.EAST) ? 0.6 : 0.4;
-                if (b == 0.5) b = pContext.getClickedFace().equals(Direction.UP) ? 0.6 : 0.4;
+                a = context.getClickLocation().x - context.getClickedPos().getX();
+                b = context.getClickLocation().y - context.getClickedPos().getY();
+                if (a == 0.5) a = context.getClickedFace().equals(Direction.EAST) ? 0.6 : 0.4;
+                if (b == 0.5) b = context.getClickedFace().equals(Direction.UP) ? 0.6 : 0.4;
             }
         }
 
@@ -151,8 +151,8 @@ public class DoubleCutBlock extends ModelBlock {
             if (b < 0.5) blockState = blockState.setValue(PART_A, true);
         }
 
-        return blockState.setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER && !isShapeFullBlock(
-                blockState.getShape(pContext.getLevel(), pContext.getClickedPos())));
+        return blockState.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER && !isShapeFullBlock(
+                blockState.getShape(context.getLevel(), context.getClickedPos())));
     }
 
     @Override

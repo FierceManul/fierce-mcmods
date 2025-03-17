@@ -2,10 +2,10 @@ package net.fiercemanul.fiercesource.util;
 
 import net.minecraft.world.item.ItemStack;
 
-public final class Utils {
+public final class FSUtils {
 
 
-    private Utils() {}
+    private FSUtils() {}
 
     public static boolean getFalse(Object... ignored) {
         return false;

@@ -45,23 +45,23 @@ public class HeavyChainsBlock extends FacingModelBlock {
     }
 
     @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState state = this.defaultBlockState();
-        Level level = pContext.getLevel();
-        BlockPos pos = pContext.getClickedPos();
-        BlockState other = level.getBlockState(pos.relative(pContext.getClickedFace()));
-        if (!other.getBlock().equals(this)) other = level.getBlockState(pos.relative(pContext.getClickedFace().getOpposite()));
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockState other = level.getBlockState(pos.relative(context.getClickedFace()));
+        if (!other.getBlock().equals(this)) other = level.getBlockState(pos.relative(context.getClickedFace().getOpposite()));
         if (other.getBlock().equals(this)) {
             Direction direction = other.getValue(FACING);
-            if (pContext.getPlayer() != null && pContext.getPlayer().isShiftKeyDown() && !direction.getAxis().equals(pContext.getClickedFace().getAxis()))
-                state = state.setValue(FACING, pContext.getClickedFace());
+            if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown() && !direction.getAxis().equals(context.getClickedFace().getAxis()))
+                state = state.setValue(FACING, context.getClickedFace());
             else state = state.setValue(FACING, direction.getOpposite());
         }
         else {
             if (other.getBlock().equals(this)) state = state.setValue(FACING, other.getValue(FACING).getOpposite());
-            else state = state.setValue(FACING, pContext.getClickedFace());
+            else state = state.setValue(FACING, context.getClickedFace());
         }
-        return state.setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
+        return state.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override

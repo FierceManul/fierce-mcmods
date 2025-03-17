@@ -123,14 +123,14 @@ public abstract class PillarConnectorBlock extends ModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Level level = pContext.getLevel();
-        BlockPos pos = pContext.getClickedPos();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         return this.defaultBlockState()
                    .setValue(NORTH, canSupport(level, pos.north(), Direction.SOUTH))
                    .setValue(SOUTH, canSupport(level, pos.south(), Direction.NORTH))
@@ -138,7 +138,7 @@ public abstract class PillarConnectorBlock extends ModelBlock {
                    .setValue(EAST, canSupport(level, pos.east(), Direction.WEST))
                    .setValue(UP, canSupport(level, pos.above(), Direction.DOWN))
                    .setValue(DOWN, canSupport(level, pos.below(), Direction.UP))
-                   .setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
+                   .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     public static boolean canSupport(LevelReader pLevel, BlockPos pPos, Direction pDirection) {
@@ -181,14 +181,14 @@ public abstract class PillarConnectorBlock extends ModelBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         return super.updateShape(
-                pState.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(pFacing), canSupport(pLevel, pFacingPos, pFacing.getOpposite())),
-                pFacing,
-                pFacingState,
-                pLevel,
-                pCurrentPos,
-                pFacingPos
+                state.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), canSupport(level, neighborPos, direction.getOpposite())),
+                direction,
+                neighborState,
+                level,
+                pos,
+                neighborPos
         );
     }
 
@@ -204,9 +204,9 @@ public abstract class PillarConnectorBlock extends ModelBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(
-            ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        boolean success = WrenchAction.doWrenchConnectAction(pStack, pState, pLevel, pPos, pPlayer, apothem, pHitResult);
-        return success ? ItemInteractionResult.sidedSuccess(pLevel.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        boolean success = WrenchAction.doWrenchConnectAction(stack, state, level, pos, player, apothem, hitResult);
+        return success ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

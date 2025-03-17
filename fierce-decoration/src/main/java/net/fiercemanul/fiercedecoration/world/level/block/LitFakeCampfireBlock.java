@@ -50,23 +50,23 @@ public class LitFakeCampfireBlock extends FakeCampfireBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(SIGNAL_FIRE, WATERLOGGED, AXIS);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SIGNAL_FIRE, WATERLOGGED, AXIS);
     }
 
     @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockState state = super.getStateForPlacement(pContext);
-        if (state != null) return state.setValue(SIGNAL_FIRE, isSmokeSource(pContext.getLevel().getBlockState(pContext.getClickedPos().below())));
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state != null) return state.setValue(SIGNAL_FIRE, isSmokeSource(context.getLevel().getBlockState(context.getClickedPos().below())));
         else return defaultBlockState();
     }
 
     @Override
     public BlockState updateShape(
-            BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos
+            BlockState pState, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos
     ) {
-        BlockState state = super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
-        return pFacing.equals(Direction.DOWN) ? state.setValue(SIGNAL_FIRE, isSmokeSource(pFacingState)) : state;
+        BlockState state = super.updateShape(pState, direction, neighborState, level, pos, neighborPos);
+        return direction.equals(Direction.DOWN) ? state.setValue(SIGNAL_FIRE, isSmokeSource(neighborState)) : state;
     }
 
     private boolean isSmokeSource(BlockState pState) {

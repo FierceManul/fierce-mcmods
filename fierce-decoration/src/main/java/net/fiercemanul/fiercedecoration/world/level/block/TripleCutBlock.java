@@ -77,8 +77,8 @@ public class TripleCutBlock extends ModelBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(PART_A, PART_B, PART_C, PART_D, PART_E, PART_F, PART_G, PART_H, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(PART_A, PART_B, PART_C, PART_D, PART_E, PART_F, PART_G, PART_H, WATERLOGGED);
     }
 
     @Override
@@ -94,11 +94,12 @@ public class TripleCutBlock extends ModelBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        BlockState blockState = pContext.getLevel().getBlockState(pContext.getClickedPos());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
         if (!blockState.is(this)) blockState = defaultBlockState();
-        blockState = blockState.setValue(getClickedPart(pContext), true);
-        return blockState.setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER && !isShapeFullBlock(blockState.getShape(pContext.getLevel(), pContext.getClickedPos())));
+        blockState = blockState.setValue(getClickedPart(context), true);
+        return blockState.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER && !isShapeFullBlock(blockState.getShape(
+                context.getLevel(), context.getClickedPos())));
     }
 
     private BooleanProperty getClickedPart(BlockPlaceContext pContext) {

@@ -52,15 +52,15 @@ public abstract class AbstractLongChairBlock extends AbstractChairBlock {
     protected abstract ImmutableMap<Direction, ImmutableMap<LongBlockType, VoxelShape>> getCollisionShapeMap();
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, TYPE, WATERLOGGED);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, TYPE, WATERLOGGED);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Level level = pContext.getLevel();
-        Direction chairDirection = pContext.getHorizontalDirection().getOpposite();
-        BlockPos chairPos = pContext.getClickedPos();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        Direction chairDirection = context.getHorizontalDirection().getOpposite();
+        BlockPos chairPos = context.getClickedPos();
 
         BlockState state = this.defaultBlockState()
                                .setValue(FACING, chairDirection)
@@ -71,12 +71,12 @@ public abstract class AbstractLongChairBlock extends AbstractChairBlock {
 
     @Override
     public BlockState updateShape(
-            BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos
+            BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos
     ) {
         return getChairState(
-                super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos),
-                pCurrentPos,
-                pLevel
+                super.updateShape(state, direction, neighborState, level, pos, neighborPos),
+                pos,
+                level
         );
     }
 

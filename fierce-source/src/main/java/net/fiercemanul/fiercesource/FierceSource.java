@@ -9,7 +9,7 @@ import net.fiercemanul.fiercesource.config.Config;
 import net.fiercemanul.fiercesource.data.UIStyleLoader;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
 import net.fiercemanul.fiercesource.registries.FCRegistries;
-import net.fiercemanul.fiercesource.util.Utils;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.fiercemanul.fiercesource.world.item.CreativeModeTabItem;
 import net.fiercemanul.fiercesource.world.item.CrowbarItem;
@@ -49,7 +49,6 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -92,7 +91,7 @@ public class FierceSource
     public static final DeferredBlock<Block> LARGE_MANA_CRYSTAL_BLOCK = BLOCKS.registerBlock("large_mana_crystal", ManaCrystalBlock.Large::new, SoulCrystalBlock.getProperties(15, MapColor.COLOR_LIGHT_BLUE));
     public static final DeferredItem<BlockItem> LARGE_MANA_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(LARGE_MANA_CRYSTAL_BLOCK);
     public static final DeferredBlock<Block> CREATIVE_MANA_BLOCK = BLOCKS.registerBlock("creative_mana_block", SimpleCapabilityBlock::new, BlockBehaviour.Properties.of().strength(2.0F, 1200.0F).lightLevel(
-            value -> 15).emissiveRendering(Utils::getTrue).sound(SoundType.AMETHYST).mapColor(MapColor.COLOR_BLUE));
+            value -> 15).emissiveRendering(FSUtils::getTrue).sound(SoundType.AMETHYST).mapColor(MapColor.COLOR_BLUE));
     public static final DeferredItem<BlockItem> CREATIVE_MANA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CREATIVE_MANA_BLOCK);
     public static final DeferredBlock<Block> CREATIVE_MANA_OUTPUT_BLOCK = BLOCKS.registerBlock("creative_mana_output", CreativeManaOutputBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredItem<BlockItem> CREATIVE_MANA_OUTPUT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(CREATIVE_MANA_OUTPUT_BLOCK);

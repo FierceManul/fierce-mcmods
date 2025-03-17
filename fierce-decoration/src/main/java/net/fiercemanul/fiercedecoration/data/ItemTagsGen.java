@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercedecoration.data;
 
 import net.fiercemanul.fiercedecoration.FierceDecoration;
+import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercedecoration.tags.FDItemTags;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
@@ -33,13 +34,14 @@ public class ItemTagsGen extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(ItemTags.PLANKS).add(
-                FDItems.SMOOTH_DARK_OAK_PLANKS.get(),
+                FDItems.SMOOTH_OAK_PLANKS.get(),
                 FDItems.SMOOTH_SPRUCE_PLANKS.get(),
                 FDItems.SMOOTH_BIRCH_PLANKS.get(),
                 FDItems.SMOOTH_JUNGLE_PLANKS.get(),
                 FDItems.SMOOTH_ACACIA_PLANKS.get(),
                 FDItems.SMOOTH_DARK_OAK_PLANKS.get(),
                 FDItems.SMOOTH_MANGROVE_PLANKS.get(),
+                FDItems.SMOOTH_BAMBOO_PLANKS.get(),
                 FDItems.SMOOTH_CHERRY_PLANKS.get(),
                 FDItems.SMOOTH_CRIMSON_PLANKS.get(),
                 FDItems.SMOOTH_WARPED_PLANKS.get()
@@ -60,9 +62,10 @@ public class ItemTagsGen extends ItemTagsProvider {
         this.copy(FDBlockTags.SEA_LANTERN_TAG, FDItemTags.SEA_LANTERN_TAG);
         this.copy(FDBlockTags.CABINETS, FDItemTags.CABINETS);
         this.copy(FDBlockTags.TABLES, FDItemTags.TABLES);
-        DataGen.BLOCKS_AND_MATERIALS.forEach((deferredBlock, blockMaterial) -> {
+        this.copy(FDBlockTags.WOOL_SOFA, FDItemTags.WOOL_SOFA);
+        BlockBulkRegister.getDataGenWorks().forEach((deferredBlock, registerKey) -> {
             Item item = deferredBlock.asItem();
-            if (blockMaterial.isNonFlammableWood()) tag(ItemTags.NON_FLAMMABLE_WOOD).add(item);
+            if (registerKey.hasProperty(BlockBulkRegisterDataProperties.NON_FLAMMABLE_WOOD.getClass())) tag(ItemTags.NON_FLAMMABLE_WOOD).add(item);
         });
     }
 }
