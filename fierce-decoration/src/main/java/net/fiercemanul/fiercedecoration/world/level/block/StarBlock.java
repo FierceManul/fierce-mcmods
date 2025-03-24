@@ -8,12 +8,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
@@ -38,14 +39,15 @@ public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new StarBlockEntity(pPos, pState);
+        return null;
+        //return new StarBlockEntity(pPos, pState);
     }
 
     @Override
     public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
         if (pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pCurrentPos);
-            if (blockEntity instanceof StarBlockEntity starBlock) starBlock.updateFace(pNeighborPos, pDirection);
+            //if (blockEntity instanceof StarBlockEntity starBlock) starBlock.updateFace(pNeighborPos, pDirection);
         }
         return pState;
     }
@@ -62,6 +64,6 @@ public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.INVISIBLE;
+        return RenderShape.MODEL;
     }
 }

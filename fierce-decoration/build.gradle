@@ -48,7 +48,9 @@ runs {
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         modSource project.sourceSets.main
     }
-    client {}
+    client {
+        systemProperty 'mixin.debug.export', 'true'
+    }
     server {}
     gameTestServer {}
     data {
