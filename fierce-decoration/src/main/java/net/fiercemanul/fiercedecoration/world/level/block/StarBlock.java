@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import javax.annotation.Nullable;
+
 
 public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
 
@@ -37,19 +39,21 @@ public class StarBlock extends WrenchDismantleBlock implements EntityBlock {
         return CODEC;
     }
 
+    @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return null;
         //return new StarBlockEntity(pPos, pState);
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
-        if (pLevel.isClientSide()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pCurrentPos);
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (level.isClientSide()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
             //if (blockEntity instanceof StarBlockEntity starBlock) starBlock.updateFace(pNeighborPos, pDirection);
+
         }
-        return pState;
+        return state;
     }
 
     @Override

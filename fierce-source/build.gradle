@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.165'
+    id 'net.neoforged.gradle.userdev' version '7.0.170'
 }
 
 repositories {
@@ -130,7 +130,7 @@ tasks.withType(ProcessResources).configureEach {
     inputs.properties replaceProperties
 
     filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties + [project: project]
+        expand replaceProperties
     }
 }
 
@@ -143,7 +143,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = "file://${project.projectDir}/repo"
         }
     }
 }

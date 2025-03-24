@@ -14,6 +14,9 @@ description='''${mod_description}'''
 [[accessTransformers]]
 file="META-INF/accesstransformer.cfg"
 
+[[mixinConfigs]]
+config = "${mod_id}.mixins.json"
+
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
@@ -32,5 +35,3 @@ file="META-INF/accesstransformer.cfg"
     versionRange="${fiercesource_version_range}"
     ordering="AFTER"
     side="BOTH"
-[[mixinConfigs]]
-    config = "fiercedecoration.mixins.json"

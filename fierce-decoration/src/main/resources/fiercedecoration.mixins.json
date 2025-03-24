@@ -1,11 +1,13 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "net.fiercemanul.fiercedecoration",
+    "package": "net.fiercemanul.fiercedecoration.mixins",
     "compatibilityLevel": "JAVA_21",
-    "mixins": [],
+    "mixins": [
+        "PistonBaseBlockMixin"
+    ],
     "client": [
-        "world.level.block.BlockMixin"
+        "BlockMixin"
     ],
     "server": [],
     "injectors": {
