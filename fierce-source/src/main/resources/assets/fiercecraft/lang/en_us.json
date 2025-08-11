@@ -1,4 +1,6 @@
 {
+  "block.fiercecraft.soul_crystal_shard": "Soul Crystal Shard",
+  "block.fiercecraft.soul_crystal_dust": "Soul Crystal Dust",
   "block.fiercecraft.small_soul_crystal": "Small Soul Crystal",
   "block.fiercecraft.medium_soul_crystal": "Medium Soul Crystal",
   "block.fiercecraft.large_soul_crystal": "Large Soul Crystal",
@@ -7,8 +9,8 @@
   "block.fiercecraft.large_mana_crystal": "Large Mana Crystal",
   "block.fiercecraft.creative_mana_block": "Creative Mana Block",
   "block.fiercecraft.creative_mana_output": "Creative Mana Output",
+  "block.fiercecraft.hypercube": "Hypercube",
   "block.fiercecraft.world_locator": "World Locator",
-  "item.fiercecraft.soul_crystal_shard": "Soul Crystal Shard",
   "item.fiercecraft.pos_recorder": "Pos Recorder",
   "item.fiercecraft.claw_hammer": "Claw Hammer",
   "item.fiercecraft.netherite_claw_hammer": "Netherite Claw Hammer",

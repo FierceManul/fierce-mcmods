@@ -49,8 +49,8 @@ public class Seat extends VehicleEntity {
         };
     }
 
-    public Seat(EntityType<? extends Seat> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+    public Seat(EntityType<? extends Seat> entityType, Level level) {
+        super(entityType, level);
     }
 
     public Seat(Level pLevel, double pX, double pY, double pZ) {

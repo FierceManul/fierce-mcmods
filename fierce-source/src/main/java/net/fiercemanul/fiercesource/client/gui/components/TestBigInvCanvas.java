@@ -4,7 +4,6 @@ import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.client.gui.screens.FierceContainerScreen;
 import net.fiercemanul.fiercesource.client.gui.style.UIStyle;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 

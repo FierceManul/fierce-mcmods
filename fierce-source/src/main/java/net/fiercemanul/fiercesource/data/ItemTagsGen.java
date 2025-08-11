@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercesource.data;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.fiercemanul.fiercesource.tags.FSBlockTags;
 import net.fiercemanul.fiercesource.tags.FSItemTags;
 import net.minecraft.core.HolderLookup;
@@ -29,24 +30,24 @@ public class ItemTagsGen extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(
-                FierceSource.CROWBAR_ITEM.get(),
-                FierceSource.NETHERITE_CROWBAR_ITEM.get(),
-                FierceSource.CLAW_HAMMER_ITEM.get(),
-                FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get()
+                FSBlocksAndItems.CROWBAR_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CROWBAR_ITEM.get(),
+                FSBlocksAndItems.CLAW_HAMMER_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CLAW_HAMMER_ITEM.get()
         );
         tag(ItemTags.MINING_LOOT_ENCHANTABLE).add(
-                FierceSource.CROWBAR_ITEM.get(),
-                FierceSource.NETHERITE_CROWBAR_ITEM.get(),
-                FierceSource.CLAW_HAMMER_ITEM.get(),
-                FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get()
+                FSBlocksAndItems.CROWBAR_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CROWBAR_ITEM.get(),
+                FSBlocksAndItems.CLAW_HAMMER_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CLAW_HAMMER_ITEM.get()
         );
         copy(FSBlockTags.SOUL_CRYSTALS, FSItemTags.SOUL_CRYSTALS);
-        tag(FSItemTags.SOUL_CRYSTALS).add(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.get());
+        tag(FSItemTags.SOUL_CRYSTALS).add(FSBlocksAndItems.SOUL_CRYSTAL_SHARD.getItem());
         tag(FSItemTags.WRENCH_ITEM).add(
-                FierceSource.CROWBAR_ITEM.get(),
-                FierceSource.NETHERITE_CROWBAR_ITEM.get(),
-                FierceSource.CLAW_HAMMER_ITEM.get(),
-                FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get()
+                FSBlocksAndItems.CROWBAR_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CROWBAR_ITEM.get(),
+                FSBlocksAndItems.CLAW_HAMMER_ITEM.get(),
+                FSBlocksAndItems.NETHERITE_CLAW_HAMMER_ITEM.get()
         );
     }
 }

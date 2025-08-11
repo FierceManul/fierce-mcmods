@@ -1,0 +1,17 @@
+{
+	"render_type": "minecraft:translucent",
+	"elements": [
+		{
+			"from": [2, 2, 2],
+			"to": [14, 14, 14],
+			"faces": {
+				"north": {"uv": [5, 5, 10, 10], "texture": "#all", "cullface": "north"},
+				"east": {"uv": [0, 0, 5, 5], "texture": "#all", "cullface": "east"},
+				"south": {"uv": [5, 0, 10, 5], "texture": "#all", "cullface": "south"},
+				"west": {"uv": [0, 5, 5, 10], "texture": "#all", "cullface": "west"},
+				"up": {"uv": [10, 0, 15, 5], "texture": "#all", "cullface": "up"},
+				"down": {"uv": [10, 5, 15, 10], "texture": "#all", "cullface": "down"}
+			}
+		}
+	]
+}

@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.entity.CreativeManaOutputBlockEntity;
@@ -68,7 +68,7 @@ public class CreativeManaOutputBlock extends FacingModelBlock implements EntityB
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (!pLevel.isClientSide && pBlockEntityType == FierceSource.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get())
+        if (!pLevel.isClientSide && pBlockEntityType == FSBlockEntityTypes.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get())
             return (pLevel1, pPos, pState1, pBlockEntity) -> ((CreativeManaOutputBlockEntity) pBlockEntity).serverTick();
         else return null;
     }

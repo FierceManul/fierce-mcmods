@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "fiercecraft:item/claw_hammer"
+		"all": "fiercecraft:item/3d/claw_hammer"
 	},
 	"elements": [
 		{

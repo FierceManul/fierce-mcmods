@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * 有模型装饰方块,继承以修改碰撞箱.
  * 含水.
  */
+//Decorated
 public class ModelBlock extends WrenchDismantleBlock implements SimpleWaterloggedBlock {
 
     public static final MapCodec<ModelBlock> CODEC = simpleCodec(ModelBlock::new);
@@ -30,7 +31,7 @@ public class ModelBlock extends WrenchDismantleBlock implements SimpleWaterlogge
 
     public ModelBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     @Override

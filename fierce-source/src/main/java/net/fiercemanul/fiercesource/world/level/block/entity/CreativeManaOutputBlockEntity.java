@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource.world.level.block.entity;
 
-import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
 import net.fiercemanul.fiercesource.capabilities.IManaHandler;
+import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +20,7 @@ public class CreativeManaOutputBlockEntity extends BlockEntity {
     private BlockCapabilityCache<IManaHandler, @Nullable Direction> cache;
 
     public CreativeManaOutputBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get(), pPos, pBlockState);
+        super(FSBlockEntityTypes.CREATIVE_MANA_OUTPUT_BLOCK_ENTITY.get(), pPos, pBlockState);
     }
 
     @Override

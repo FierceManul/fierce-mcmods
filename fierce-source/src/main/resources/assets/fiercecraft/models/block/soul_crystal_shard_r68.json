@@ -1,0 +1,67 @@
+{
+	"parent": "fiercecraft:block/soul_crystal_shard",
+	"elements": [
+		{
+			"from": [6, 0, 6],
+			"to": [9, 3, 10],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [13, 9, 16, 12], "texture": "#all"},
+				"east": {"uv": [6, 13, 10, 16], "texture": "#all"},
+				"south": {"uv": [0, 9, 3, 12], "texture": "#all"},
+				"west": {"uv": [6, 13, 10, 16], "texture": "#all"},
+				"up": {"uv": [6, 13, 10, 16], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [6, 12, 10, 15], "rotation": 270, "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [6, 0, 10],
+			"to": [8, 2, 12],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [4, 14, 6, 16], "texture": "#all"},
+				"south": {"uv": [0, 10, 2, 12], "texture": "#all"},
+				"west": {"uv": [10, 14, 12, 16], "texture": "#all"},
+				"up": {"uv": [10, 14, 12, 16], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [10, 12, 12, 14], "rotation": 270, "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [8, 2, 5],
+			"to": [10, 4, 8],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [12, 8, 14, 10], "texture": "#all"},
+				"east": {"uv": [8, 12, 11, 14], "texture": "#all"},
+				"south": {"uv": [2, 8, 4, 10], "texture": "#all"},
+				"west": {"uv": [5, 12, 8, 14], "texture": "#all"},
+				"up": {"uv": [5, 12, 8, 14], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [5, 14, 8, 16], "rotation": 270, "texture": "#all"}
+			}
+		},
+		{
+			"from": [6, 0, 3],
+			"to": [7, 1, 6],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [15, 11, 16, 12], "texture": "#all"},
+				"east": {"uv": [10, 15, 13, 16], "texture": "#all"},
+				"west": {"uv": [3, 15, 6, 16], "texture": "#all"},
+				"up": {"uv": [3, 15, 6, 16], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [3, 12, 6, 13], "rotation": 270, "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [8, 2, 10],
+			"to": [9, 3, 13],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [3, 13, 6, 14], "texture": "#all"},
+				"south": {"uv": [2, 9, 3, 10], "texture": "#all"},
+				"west": {"uv": [10, 13, 13, 14], "texture": "#all"},
+				"up": {"uv": [10, 13, 13, 14], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [10, 14, 13, 15], "rotation": 270, "texture": "#all"}
+			}
+		}
+	]
+}

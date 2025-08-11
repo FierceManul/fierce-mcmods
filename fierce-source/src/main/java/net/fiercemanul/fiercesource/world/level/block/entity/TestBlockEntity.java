@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.world.level.block.entity;
 
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
 import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -24,7 +24,7 @@ public class TestBlockEntity extends BlockEntity {
     private FierceContainerMenu synchronizer;
 
     public TestBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(FierceSource.TEST_BLOCK_ENTITY.get(), pPos, pBlockState);
+        super(FSBlockEntityTypes.TEST_BLOCK_ENTITY.get(), pPos, pBlockState);
     }
 
     @Override

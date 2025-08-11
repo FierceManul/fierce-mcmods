@@ -1,5 +1,7 @@
 package net.fiercemanul.fiercesource.util;
 
+import net.fiercemanul.fiercesource.FierceSource;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public final class FSUtils {
@@ -17,6 +19,14 @@ public final class FSUtils {
 
     public static boolean itemHasData(ItemStack stack) {
         return !stack.getComponentsPatch().isEmpty();
+    }
+
+    public static ResourceLocation rl(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
+
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, path);
     }
 
 

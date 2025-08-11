@@ -1,20 +1,20 @@
 {
 	"parent": "minecraft:block/block",
 	"textures": {
-		"particle": "fiercecraft:block/world_locator",
-		"all": "fiercecraft:block/world_locator"
+		"particle": "fiercecraft:block/hypercube",
+		"all": "fiercecraft:block/hypercube"
 	},
 	"elements": [
 		{
-			"from": [4, 4, 4],
-			"to": [12, 12, 12],
+			"from": [3, 3, 3],
+			"to": [13, 13, 13],
 			"faces": {
-				"north": {"uv": [4, 4, 12, 12], "texture": "#all"},
-				"east": {"uv": [4, 4, 12, 12], "texture": "#all"},
-				"south": {"uv": [12, 4, 4, 12], "texture": "#all"},
-				"west": {"uv": [12, 4, 4, 12], "texture": "#all"},
-				"up": {"uv": [12, 12, 4, 4], "texture": "#all"},
-				"down": {"uv": [12, 4, 4, 12], "texture": "#all"}
+				"north": {"uv": [3, 3, 13, 13], "texture": "#all"},
+				"east": {"uv": [3, 3, 13, 13], "texture": "#all"},
+				"south": {"uv": [3, 3, 13, 13], "texture": "#all"},
+				"west": {"uv": [3, 3, 13, 13], "texture": "#all"},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#all"},
+				"down": {"uv": [3, 3, 13, 13], "texture": "#all"}
 			}
 		}
 	]

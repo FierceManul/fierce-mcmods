@@ -3,6 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -117,6 +118,6 @@ public class LightTubeBlock extends FacingModelBlock {
 
     @Override
     public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("fiercedecoration.tip.snake_vertical"));
+        pTooltip.add(Component.translatable("fiercedecoration.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
     }
 }

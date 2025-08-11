@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +10,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.ModelProvider;
+import net.neoforged.neoforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -18,15 +19,17 @@ import java.util.HashMap;
 public abstract class FSBlockStateProvider extends BlockStateProvider {
 
 
-    protected static final ResourceLocation BLACK_IRON = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/black_iron");
-    protected static final ResourceLocation TEMPLATE_LARGE_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_large_soul_crystal");
-    protected static final ResourceLocation TEMPLATE_MEDIUM_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_medium_soul_crystal");
-    protected static final ResourceLocation TEMPLATE_SMALL_SOUL_CRYSTAL = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/template_small_soul_crystal");
-    protected static final ResourceLocation CRYSTAL_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "block/crystal_base");
-    protected static final ResourceLocation TEMPLATE_LARGE_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_large_soul_crystal_with_base");
-    protected static final ResourceLocation TEMPLATE_MEDIUM_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_medium_soul_crystal_with_base");
-    protected static final ResourceLocation TEMPLATE_SMALL_SOUL_CRYSTAL_WITH_BASE = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "item/template_small_soul_crystal_with_base");
+    protected static final ResourceLocation BLACK_IRON = FSUtils.rl("block/black_iron");
+    protected static final ResourceLocation MODEL_SMALL_CRYSTAL = FSUtils.rl("block/small_soul_crystal");
+    protected static final ResourceLocation MODEL_MEDIUM_CRYSTAL = FSUtils.rl("block/medium_soul_crystal");
+    protected static final ResourceLocation MODEL_LARGE_CRYSTAL = FSUtils.rl("block/large_soul_crystal");
+    protected static final ResourceLocation MODEL_SMALL_CRYSTAL_ICON = FSUtils.rl("block/small_soul_crystal_icon");
+    protected static final ResourceLocation MODEL_MEDIUM_CRYSTAL_ICON = FSUtils.rl("block/medium_soul_crystal_icon");
+    protected static final ResourceLocation MODEL_LARGE_CRYSTAL_ICON = FSUtils.rl("block/large_soul_crystal_icon");
+    protected static final ResourceLocation MODEL_CRYSTAL_SHARD = FSUtils.rl("block/soul_crystal_shard");
+    protected static final ResourceLocation MODEL_DUST = FSUtils.rl("block/soul_crystal_dust");
     protected static final HashMap<Direction, Integer> YROT_MAP = new HashMap<>();
+    protected final ResourceLocation model_block = mcLoc("block/block");
 
     static {
         YROT_MAP.put(Direction.NORTH, 0);
@@ -35,30 +38,41 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         YROT_MAP.put(Direction.EAST, 90);
     }
 
+    protected final ExistingFileHelper exFileHelper;
+
 
     public FSBlockStateProvider(PackOutput output, String modid, ExistingFileHelper exFileHelper) {
         super(output, modid, exFileHelper);
+        this.exFileHelper = exFileHelper;
     }
 
-    protected void simple(DeferredBlock<Block> deferredBlock) {
+    protected void simple(DeferredBlock<? extends Block> deferredBlock) {
         Block block = deferredBlock.get();
         simple(block, deferredBlock.getId().getPath(), cubeAll(block));
     }
 
-    protected void simpleWithModel(DeferredBlock<Block> deferredBlock) {
+    protected void simpleWithModel(DeferredBlock<? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         simple(deferredBlock.get(), id.getPath(), model);
     }
 
-    protected void simpleWithModel(DeferredBlock<Block> deferredBlock, ModelFile model) {
+    protected void simpleWithModel(DeferredBlock<? extends Block> deferredBlock, ModelFile model) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), model);
     }
 
-    protected void simpleWithMcModel(DeferredBlock<Block> deferredBlock, String modelFile) {
+    protected void simpleWithMcModel(DeferredBlock<? extends Block> deferredBlock, String modelFile) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(mcLoc("block/" + modelFile));
         simple(deferredBlock.get(), id.getPath(), model);
+    }
+
+    protected void simple(Block block, String path, ModelFile model, ResourceLocation texture) {
+        simple(block, path, models().getBuilder(path).parent(model).texture("all", texture).texture("particle", texture));
+    }
+
+    protected void simple(Block block, String path, ResourceLocation modelRl, ResourceLocation texture) {
+        simple(block, path, models().withExistingParent(path, modelRl).texture("all", texture).texture("particle", texture));
     }
 
     protected void simple(Block block, String path, ModelFile model) {
@@ -66,7 +80,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void simpleNature(DeferredBlock<Block> deferredBlock) {
+    protected void simpleNature(DeferredBlock<? extends Block> deferredBlock) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
         ModelFile model = cubeAll(block);
@@ -91,7 +105,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 NORTH 为默认,使用同名模型,带物品模型
      */
-    protected void directionBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+    protected void directionBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         directionModel(deferredBlock.get(), id.getPath(), model, lockUV);
@@ -131,7 +145,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 NORTH 为默认,使用同名模型,带物品模型
      */
-    protected void horizontalDirectionBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+    protected void horizontalDirectionBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         horizontalDirectionModel(deferredBlock.get(), id.getPath(), model, lockUV);
@@ -163,7 +177,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 Y 为默认,带物品模型
      */
-    protected void yAxisModel(String path, Block block, ModelFile model, boolean lockUV) {
+    protected void yAxisModel(Block block, String path, ModelFile model, boolean lockUV) {
         getVariantBuilder(block)
                 .partialState()
                 .with(BlockStateProperties.AXIS, Direction.Axis.Y).modelForState()
@@ -182,7 +196,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 X 为默认,使用同名模型,带物品模型
      */
-    protected void horizontalAxisBlock(DeferredBlock<Block> deferredBlock, boolean lockUV) {
+    protected void horizontalAxisBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         horizontalAxisModel(deferredBlock.get(), id.getPath(), model, lockUV);
@@ -203,108 +217,122 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void largeCrystal(DeferredBlock<Block> deferredBlock) {
-        largeCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    protected void rotationDecoratedBlock(DeferredBlock<? extends Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        rotationDecoratedModel(
+                deferredBlock.get(),
+                id.getPath(),
+                models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath())),
+                models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath() + "_r22")),
+                models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath() + "_r45")),
+                models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath() + "_r68"))
+        );
+    }
+
+    protected void rotationDecoratedModel(Block block, String path, ModelFile model, ModelFile model22, ModelFile model45, ModelFile model68) {
+        var builder = getVariantBuilder(block);
+        for (int i = 0; i < 16; i+=4) {
+            builder.partialState()
+                   .with(BlockStateProperties.ROTATION_16, i).modelForState()
+                   .modelFile(model).rotationY(90 * i/4).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.ROTATION_16, i + 1).modelForState()
+                   .modelFile(model22).rotationY(90 * i/4).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.ROTATION_16, i + 2).modelForState()
+                   .modelFile(model45).rotationY(90 * i/4).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.ROTATION_16, i + 3).modelForState()
+                   .modelFile(model68).rotationY(90 * i/4).addModel();
+        }
+        itemModels().getBuilder(path).parent(model);
+    }
+
+
+
+    protected void largeCrystal(DeferredBlock<? extends Block> deferredBlock) {
+        simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_LARGE_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
     protected void largeCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        simple(block, path, model);
+        simple(block, path, MODEL_LARGE_CRYSTAL, texture);
     }
 
-    protected void largeCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+    protected void largeCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
-        largeCrystalWithBase(
+        largeCrystalWithIcon(
                 deferredBlock.get(),
                 id.getPath(),
                 ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_icon")
         );
     }
 
-    protected void largeCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
-                                  .texture("all", base)
-                                  .texture("particle", base);
-        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
-        itemModels().withExistingParent(path, TEMPLATE_LARGE_SOUL_CRYSTAL_WITH_BASE)
-                    .texture("all", texture)
-                    .texture("particle", texture)
-                    .texture("base", base);
+    protected void largeCrystalWithIcon(Block block, String path, ResourceLocation texture, ResourceLocation icon) {
+        crystalWithIcon(block, path, texture, MODEL_LARGE_CRYSTAL, icon, MODEL_LARGE_CRYSTAL_ICON);
     }
 
-    protected void mediumCrystal(DeferredBlock<Block> deferredBlock) {
-        mediumCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    protected void mediumCrystal(DeferredBlock<? extends Block> deferredBlock) {
+        simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_MEDIUM_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
     protected void mediumCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        simple(block, path, model);
+        simple(block, path, MODEL_MEDIUM_CRYSTAL, texture);
     }
 
-    protected void mediumCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+    protected void mediumCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
-        mediumCrystalWithBase(
+        mediumCrystalWithIcon(
                 deferredBlock.get(),
                 id.getPath(),
                 ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_icon")
         );
     }
 
-    protected void mediumCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
-                                   .texture("all", base)
-                                   .texture("particle", base);
-        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
-        itemModels().withExistingParent(path, TEMPLATE_MEDIUM_SOUL_CRYSTAL_WITH_BASE)
-                    .texture("all", texture)
-                    .texture("particle", texture)
-                    .texture("base", base);
+    protected void mediumCrystalWithIcon(Block block, String path, ResourceLocation texture, ResourceLocation icon) {
+        crystalWithIcon(block, path, texture, MODEL_MEDIUM_CRYSTAL, icon, MODEL_MEDIUM_CRYSTAL_ICON);
     }
 
-    protected void smallCrystal(DeferredBlock<Block> deferredBlock) {
-        smallCrystal(deferredBlock.get(), deferredBlock.getId().getPath(), blockTexture(deferredBlock.get()));
+    protected void smallCrystal(DeferredBlock<? extends Block> deferredBlock) {
+        simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_SMALL_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
     protected void smallCrystal(Block block, String path, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        simple(block, path, model);
+        simple(block, path, MODEL_SMALL_CRYSTAL, texture);
     }
 
-    protected void smallCrystalWithBase(DeferredBlock<Block> deferredBlock) {
+    protected void smallCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
-        smallCrystalWithBase(
+        smallCrystalWithIcon(
                 deferredBlock.get(),
                 id.getPath(),
                 ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath()),
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_base")
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + id.getPath() + "_icon")
         );
     }
 
-    protected void smallCrystalWithBase(Block block, String path, ResourceLocation texture, ResourceLocation base) {
-        ModelFile model = models().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL)
-                                  .texture("all", texture)
-                                  .texture("particle", texture);
-        ModelFile model2 = models().withExistingParent(path + "_base", CRYSTAL_BASE)
-                                   .texture("all", base)
-                                   .texture("particle", base);
-        getMultipartBuilder(block).part().modelFile(model).addModel().end().part().modelFile(model2).addModel().end();
-        itemModels().withExistingParent(path, TEMPLATE_SMALL_SOUL_CRYSTAL_WITH_BASE)
-                    .texture("all", texture)
-                    .texture("particle", texture)
-                    .texture("base", base);
+    protected void smallCrystalWithIcon(Block block, String path, ResourceLocation texture, ResourceLocation icon) {
+        crystalWithIcon(block, path, texture, MODEL_SMALL_CRYSTAL, icon, MODEL_SMALL_CRYSTAL_ICON);
+    }
+
+    protected void crystalWithIcon(
+            Block block, String path, ResourceLocation texture, ResourceLocation model, ResourceLocation icon, ResourceLocation iconModel
+    ) {
+        var topModel = models()
+                .withExistingParent(path, model_block)
+                .texture("particle", texture)
+                .customLoader(CompositeModelBuilder::begin)
+                .child("part_a",
+                       models().nested()
+                               .parent(models().getExistingFile(model))
+                               .texture("all", texture))
+                .child("part_b",
+                       models().nested()
+                               .parent(models().getExistingFile(iconModel))
+                               .texture("icon", icon)
+                ).end();
+        getVariantBuilder(block).partialState().modelForState().modelFile(topModel).addModel();
+        itemModels().getBuilder(path).parent(topModel);
     }
 }

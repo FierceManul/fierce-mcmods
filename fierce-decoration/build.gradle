@@ -1,30 +1,6 @@
-plugins {
-    id 'java-library'
-    id 'eclipse'
-    id 'idea'
-    id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.170'
-}
-
-repositories {
-    mavenLocal()
-}
-
-java{
-    toolchain.languageVersion = JavaLanguageVersion.of(javaLanguageVersion)
-    withSourcesJar()
-}
-
-version = mod_version
-group = mod_group_id
-
-base {
-    archivesName = mod_archivesName
-}
+evaluationDependsOn(':fierce-source')
 
 minecraft.accessTransformers.file project.file('src/main/resources/META-INF/accesstransformer.cfg')
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 sourceSets {
     data {
@@ -32,82 +8,23 @@ sourceSets {
             srcDirs = ['src/data/java']
         }
         resources {
-            srcDirs = ['src/main/resources/']
+            srcDirs = [
+                    'src/main/resources/',
+                    'src/data/resources/'
+            ]
         }
-    }
-}
-
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        modSource project.sourceSets.main
-    }
-    client {
-        systemProperty 'mixin.debug.export', 'true'
-    }
-    server {}
-    gameTestServer {}
-    data {
-        modSource project.sourceSets.data
-        arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
 configurations {
-    runtimeClasspath.extendsFrom localRuntime
     dataImplementation.extendsFrom implementation
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
     implementation project(":fierce-source")
     dataImplementation sourceSets.main.output
 }
 
-tasks.withType(ProcessResources).configureEach {
-    var replaceProperties = [
-            minecraft_version         : minecraft_version,
-            minecraft_version_range   : minecraft_version_range,
-            neo_version               : neo_version,
-            neo_version_range         : neo_version_range,
-            loader_version_range      : loader_version_range,
-            fiercesource_version_range: fiercesource_version_range,
-            mod_id                    : mod_id,
-            mod_name                  : mod_name,
-            mod_license               : mod_license,
-            mod_version               : mod_version,
-            mod_authors               : mod_authors,
-            mod_description           : mod_description,
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties
-    }
-}
-
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url = "file://${project.projectDir}/repo"
-        }
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+runs {
+    data.modSource sourceSets.data
 }

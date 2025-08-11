@@ -3,8 +3,8 @@ package net.fiercemanul.fiercedecoration.data;
 import net.fiercemanul.fiercedecoration.registries.BlockBulkRegister;
 import net.fiercemanul.fiercedecoration.world.item.FDItems;
 import net.fiercemanul.fiercedecoration.world.level.block.*;
-import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
+import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -64,9 +64,9 @@ public class RecipeGen extends FSRecipeProvider {
         rainbow(pRecipeOutput, FDItems.RAINBOW_WOOL, Items.RED_WOOL, Items.GREEN_WOOL, Items.BLUE_WOOL);
         rainbow(pRecipeOutput, FDItems.RAINBOW_TERRACOTTA, Items.RED_TERRACOTTA, Items.GREEN_TERRACOTTA, Items.BLUE_TERRACOTTA);
         rainbow(pRecipeOutput, FDItems.RAINBOW_CONCRETE, Items.RED_CONCRETE, Items.GREEN_CONCRETE, Items.BLUE_CONCRETE);
-        rainbow(pRecipeOutput, FDItems.RAINBOW_GLASS, FDItems.RED_SEA_LANTERN, FDItems.GREEN_SEA_LANTERN, FDItems.BLUE_SEA_LANTERN);
-        rainbow(pRecipeOutput, FDItems.RAINBOW_SEA_LANTERN, FDItems.REINFORCED_RED_SEA_LANTERN, FDItems.REINFORCED_GREEN_SEA_LANTERN, FDItems.REINFORCED_BLUE_SEA_LANTERN);
-        rainbow(pRecipeOutput, FDItems.RAINBOW_REINFORCED_SEA_LANTERN, Items.RED_STAINED_GLASS, Items.GREEN_STAINED_GLASS, Items.BLUE_STAINED_GLASS);
+        rainbow(pRecipeOutput, FDItems.RAINBOW_SEA_LANTERN, FDItems.RED_SEA_LANTERN, FDItems.GREEN_SEA_LANTERN, FDItems.BLUE_SEA_LANTERN);
+        rainbow(pRecipeOutput, FDItems.RAINBOW_REINFORCED_SEA_LANTERN, FDItems.REINFORCED_RED_SEA_LANTERN, FDItems.REINFORCED_GREEN_SEA_LANTERN, FDItems.REINFORCED_BLUE_SEA_LANTERN);
+        rainbow(pRecipeOutput, FDItems.RAINBOW_GLASS, Items.RED_STAINED_GLASS, Items.GREEN_STAINED_GLASS, Items.BLUE_STAINED_GLASS);
         doubleBlock(pRecipeOutput, FDItems.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE, Items.OAK_PLANKS, Items.LIGHT_GRAY_CONCRETE);
         doubleBlock(pRecipeOutput, FDItems.SPRUCE_PLANKS_AND_GRAY_CONCRETE, Items.SPRUCE_PLANKS, Items.GRAY_CONCRETE);
         doubleBlock(pRecipeOutput, FDItems.OAK_PLANKS_AND_SPRUCE_PLANKS, Items.OAK_PLANKS, Items.SPRUCE_PLANKS);
@@ -213,13 +213,13 @@ public class RecipeGen extends FSRecipeProvider {
     private static void soulCrystalOrnament(RecipeOutput pRecipeOutput) {
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, FDItems.SOUL_CRYSTAL_ORNAMENT)
-                .define('#', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
-                .define('X', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
+                .define('#', FSBlocksAndItems.SMALL_SOUL_CRYSTAL)
+                .define('X', FSBlocksAndItems.SOUL_CRYSTAL_SHARD)
                 .define('P', FDItems.SMOOTH_MANGROVE_PLANKS)
                 .pattern(" X ")
                 .pattern("X#X")
                 .pattern(" P ")
-                .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
+                .unlockedBy(getHasName(FSBlocksAndItems.SMALL_SOUL_CRYSTAL), has(FSBlocksAndItems.SMALL_SOUL_CRYSTAL))
                 .save(pRecipeOutput);
     }
 
@@ -254,12 +254,12 @@ public class RecipeGen extends FSRecipeProvider {
     private static void starBlock(RecipeOutput pRecipeOutput) {
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, FDItems.STAR_BLOCK.get(), 8)
-                .define('#', Items.TINTED_GLASS)
+                .define('#', Items.GLASS)
                 .define('X', Items.ENDER_EYE)
                 .pattern("###")
                 .pattern("#X#")
                 .pattern("###")
-                .unlockedBy(getHasName(Items.TINTED_GLASS), has(Items.TINTED_GLASS))
+                .unlockedBy(getHasName(Items.ENDER_EYE), has(Items.ENDER_EYE))
                 .save(pRecipeOutput);
     }
 
@@ -516,26 +516,26 @@ public class RecipeGen extends FSRecipeProvider {
     private static void rainbow(RecipeOutput pRecipeOutput, ItemLike rainbowBlock, ItemLike r, ItemLike g, ItemLike b) {
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, rainbowBlock, 3)
-                .define('#', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
+                .define('#', FSBlocksAndItems.SOUL_CRYSTAL_SHARD)
                 .define('r', r)
                 .define('g', g)
                 .define('b', b)
                 .pattern(" r ")
                 .pattern(" # ")
                 .pattern("g b")
-                .unlockedBy(getHasName(FierceSource.SOUL_CRYSTAL_SHARD_ITEM), has(FierceSource.SOUL_CRYSTAL_SHARD_ITEM))
+                .unlockedBy(getHasName(FSBlocksAndItems.SOUL_CRYSTAL_SHARD), has(FSBlocksAndItems.SOUL_CRYSTAL_SHARD))
                 .save(pRecipeOutput);
     }
 
     private static void colorLamp(RecipeOutput pRecipeOutput, ItemLike lamp, ItemLike dye) {
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.DECORATIONS, lamp)
-                .define('#', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
+                .define('#', FSBlocksAndItems.SOUL_CRYSTAL_SHARD)
                 .define('d', dye)
                 .pattern(" # ")
                 .pattern("#d#")
                 .pattern(" # ")
-                .unlockedBy(getHasName(FierceSource.SOUL_CRYSTAL_SHARD_ITEM), has(FierceSource.SOUL_CRYSTAL_SHARD_ITEM))
+                .unlockedBy(getHasName(FSBlocksAndItems.SOUL_CRYSTAL_SHARD), has(FSBlocksAndItems.SOUL_CRYSTAL_SHARD))
                 .save(pRecipeOutput);
     }
 

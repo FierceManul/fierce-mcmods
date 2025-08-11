@@ -24,7 +24,7 @@ public class DataGen {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> pRegistries = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         boolean includeServer = event.includeServer();
         boolean includeClient = event.includeClient();
 
@@ -35,15 +35,16 @@ public class DataGen {
                         new LootTableProvider.SubProviderEntry(BlockLootGen::new, LootContextParamSets.BLOCK),
                         new LootTableProvider.SubProviderEntry(ChestLootGen::new, LootContextParamSets.CHEST)
                 ),
-                pRegistries
+                lookupProvider
         ));
-        generator.addProvider(includeServer, new RecipeGen(packOutput, pRegistries));
+        generator.addProvider(includeServer, new RecipeGen(packOutput, lookupProvider));
         BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, event.getLookupProvider(), existingFileHelper);
         generator.addProvider(includeServer, blockTagsGen);
         generator.addProvider(includeServer, new ItemTagsGen(packOutput, event.getLookupProvider(), blockTagsGen.contentsGetter(), existingFileHelper));
         generator.addProvider(includeServer, new DataMapGen(packOutput, event.getLookupProvider()));
         generator.addProvider(includeClient, new BlockStateGen(packOutput, existingFileHelper));
-        generator.addProvider(includeClient, new LangGan(packOutput));
+        generator.addProvider(includeClient, new LangGanENUS(packOutput));
+        generator.addProvider(includeClient, new LangGanZHCN(existingFileHelper, packOutput));
 
     }
 }

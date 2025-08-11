@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
+import net.fiercemanul.fiercesource.registries.ItemBlockGroup;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -15,6 +16,10 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class FSRecipeProvider extends RecipeProvider {
 
+
+    protected ResourceLocation applyBackup(ItemBlockGroup<?, ?> group) {
+        return applyBackup(group.getSecond().getId());
+    }
 
     protected static ResourceLocation applyBackup(ResourceLocation location) {
         return ResourceLocation.fromNamespaceAndPath(location.getNamespace(), location.getPath() + "_backup");

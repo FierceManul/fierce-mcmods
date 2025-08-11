@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "fiercecraft:item/crowbar"
+		"all": "fiercecraft:item/3d/crowbar"
 	},
 	"elements": [
 		{

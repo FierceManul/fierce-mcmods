@@ -3,8 +3,6 @@ package net.fiercemanul.fiercesource.client.gui.components;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.Objects;
-
 public class SizeItemIcon implements Icon {
 
 

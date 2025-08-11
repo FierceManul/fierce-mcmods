@@ -4,6 +4,8 @@ import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import static net.fiercemanul.fiercesource.registries.FSBlocksAndItems.*;
+
 public class BlockStateGen extends FSBlockStateProvider{
 
 
@@ -13,32 +15,35 @@ public class BlockStateGen extends FSBlockStateProvider{
 
     @Override
     protected void registerStatesAndModels() {
-        simple(FierceSource.CREATIVE_MANA_BLOCK);
-        directionBlock(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK, false);
-        simpleWithModel(FierceSource.WORLD_LOCATOR_BLOCK);
+        simple(CREATIVE_MANA_BLOCK.getFirst());
+        directionBlock(CREATIVE_MANA_OUTPUT.getFirst(), false);
+        simpleWithModel(HYPERCUBE.getFirst());
+        simpleWithModel(WORLD_LOCATOR.getFirst());
 
         simpleWithModel(
-                FierceSource.LARGE_SOUL_CRYSTAL_BLOCK,
-                models().getExistingFile(TEMPLATE_LARGE_SOUL_CRYSTAL)
+                SMALL_SOUL_CRYSTAL.getFirst(),
+                models().getExistingFile(MODEL_SMALL_CRYSTAL)
         );
         simpleWithModel(
-                FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK,
-                models().getExistingFile(TEMPLATE_MEDIUM_SOUL_CRYSTAL)
+                MEDIUM_SOUL_CRYSTAL.getFirst(),
+                models().getExistingFile(MODEL_MEDIUM_CRYSTAL)
         );
         simpleWithModel(
-                FierceSource.SMALL_SOUL_CRYSTAL_BLOCK,
-                models().getExistingFile(TEMPLATE_SMALL_SOUL_CRYSTAL)
+                LARGE_SOUL_CRYSTAL.getFirst(),
+                models().getExistingFile(MODEL_LARGE_CRYSTAL)
         );
 
-        largeCrystal(FierceSource.LARGE_MANA_CRYSTAL_BLOCK);
-        mediumCrystal(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK);
-        smallCrystal(FierceSource.SMALL_MANA_CRYSTAL_BLOCK);
+        smallCrystal(SMALL_MANA_CRYSTAL.getFirst());
+        mediumCrystal(MEDIUM_MANA_CRYSTAL.getFirst());
+        largeCrystal(LARGE_MANA_CRYSTAL.getFirst());
 
-        largeCrystalWithBase(FierceSource.TEST_BLOCK);
+        largeCrystalWithIcon(TEST_BLOCK.getFirst());
 
-        itemModels().basicItem(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.get());
-        itemModels().basicItem(FierceSource.TEST_ITEM.get());
-        itemModels().basicItem(FierceSource.FE_ICON.get());
-        itemModels().basicItem(FierceSource.MANA_ICON.get());
+        rotationDecoratedBlock(SOUL_CRYSTAL_SHARD.getFirst());
+        simpleWithModel(SOUL_CRYSTAL_DUST.getFirst());
+
+        itemModels().basicItem(TEST_ITEM.get());
+        itemModels().basicItem(FE_ICON.get());
+        itemModels().basicItem(MANA_ICON.get());
     }
 }

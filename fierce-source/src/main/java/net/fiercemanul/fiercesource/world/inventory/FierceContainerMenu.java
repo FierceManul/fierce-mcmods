@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource.world.inventory;
 
 import io.netty.buffer.ByteBuf;
-import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
+import net.fiercemanul.fiercesource.registries.FSMenuTypes;
 import net.fiercemanul.fiercesource.world.level.block.entity.TestBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -74,13 +74,13 @@ public class FierceContainerMenu extends AbstractContainerMenu {
     }
 
     public FierceContainerMenu(int pContainerId, Inventory playerInventory, RegistryFriendlyByteBuf extraData) {
-        super(FierceSource.FIERCE_MENU.get(), pContainerId);
+        super(FSMenuTypes.FIERCE_MENU.get(), pContainerId);
         blockEntity = null;
         if (extraData.readBoolean()) blockPos = extraData.readBlockPos();
     }
 
     public FierceContainerMenu(int pContainerId, Inventory playerInventory, Level level, BlockPos blockPos, @Nullable BlockEntity blockEntity) {
-        super(FierceSource.FIERCE_MENU.get(), pContainerId);
+        super(FSMenuTypes.FIERCE_MENU.get(), pContainerId);
         player = (ServerPlayer) playerInventory.player;
         this.blockEntity = blockEntity;
         if (blockEntity instanceof TestBlockEntity testBlock) testBlock.setSynchronizer(this);

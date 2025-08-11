@@ -1,0 +1,67 @@
+{
+	"parent": "fiercecraft:block/soul_crystal_shard",
+	"elements": [
+		{
+			"from": [6, 0, 7],
+			"to": [10, 3, 10],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [6, 13, 10, 16], "texture": "#all"},
+				"east": {"uv": [0, 9, 3, 12], "texture": "#all"},
+				"south": {"uv": [6, 13, 10, 16], "texture": "#all"},
+				"west": {"uv": [13, 9, 16, 12], "texture": "#all"},
+				"up": {"uv": [6, 13, 10, 16], "texture": "#all"},
+				"down": {"uv": [6, 12, 10, 15], "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [10, 0, 8],
+			"to": [12, 2, 10],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [4, 14, 6, 16], "texture": "#all"},
+				"east": {"uv": [0, 10, 2, 12], "texture": "#all"},
+				"south": {"uv": [10, 14, 12, 16], "texture": "#all"},
+				"up": {"uv": [10, 14, 12, 16], "texture": "#all"},
+				"down": {"uv": [10, 12, 12, 14], "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [5, 2, 6],
+			"to": [8, 4, 8],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [8, 12, 11, 14], "texture": "#all"},
+				"east": {"uv": [2, 8, 4, 10], "texture": "#all"},
+				"south": {"uv": [5, 12, 8, 14], "texture": "#all"},
+				"west": {"uv": [12, 8, 14, 10], "texture": "#all"},
+				"up": {"uv": [5, 12, 8, 14], "texture": "#all"},
+				"down": {"uv": [5, 14, 8, 16], "texture": "#all"}
+			}
+		},
+		{
+			"from": [3, 0, 9],
+			"to": [6, 1, 10],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [10, 15, 13, 16], "texture": "#all"},
+				"south": {"uv": [3, 15, 6, 16], "texture": "#all"},
+				"west": {"uv": [15, 11, 16, 12], "texture": "#all"},
+				"up": {"uv": [3, 15, 6, 16], "texture": "#all"},
+				"down": {"uv": [3, 12, 6, 13], "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [10, 2, 7],
+			"to": [13, 3, 8],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [3, 13, 6, 14], "texture": "#all"},
+				"east": {"uv": [2, 9, 3, 10], "texture": "#all"},
+				"south": {"uv": [10, 13, 13, 14], "texture": "#all"},
+				"up": {"uv": [10, 13, 13, 14], "texture": "#all"},
+				"down": {"uv": [10, 14, 13, 15], "texture": "#all"}
+			}
+		}
+	]
+}

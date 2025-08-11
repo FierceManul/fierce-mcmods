@@ -13,7 +13,7 @@ import net.fiercemanul.fiercedecoration.world.level.block.FDBlocks;
 import net.fiercemanul.fiercedecoration.world.level.block.HalfPodzolBlock;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSCreativeModeTabs;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.resources.model.BakedModel;
@@ -60,24 +60,19 @@ public class FierceDecoration {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, MODID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
-    //public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, MODID);
-
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StarBlockEntity>> STAR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
             "star_block", () -> BlockEntityType.Builder.of(StarBlockEntity::new, FDBlocks.STAR_BLOCK.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = BLOCK_ENTITIES.register(
-            "cabinet", () -> {
-                ImmutableSet.Builder<Block> validBlocksBuilder = new ImmutableSet.Builder<>();
-                BlockBulkRegister.CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
-                return new BlockEntityType<>(CabinetBlockEntity::new, validBlocksBuilder.build(), null);
-            });
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, MODID);
     public static final DeferredHolder<EntityType<?>, EntityType<Seat>> SEAT = ENTITY_TYPES.register(
-            "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).eyeHeight(0.0F).noSave().clientTrackingRange(10).fireImmune().build("seat"));
+            "seat", () -> EntityType.Builder.<Seat>of(Seat::new, MobCategory.MISC).sized(0.6F, 0.6F).eyeHeight(0.0F).noSave()
+                                            .clientTrackingRange(10).fireImmune().build("seat")
+    );
+    /*public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, MODID);*/
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DECORATION_TAB = CREATIVE_MODE_TABS.register(
             "fiercedecoration_decoration",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.fiercedecoration.decoration"))
-                                 .withTabsBefore(FierceSource.MAIN_TAB.getKey())
+                                 .withTabsBefore(FSCreativeModeTabs.MAIN_TAB.getKey())
                                  .icon(() -> FDItems.SOUL_CRYSTAL_ORNAMENT.get().getDefaultInstance())
                                  .displayItems(FierceDecoration::applyDecorationBlocks)
                                  .build()
@@ -100,12 +95,6 @@ public class FierceDecoration {
                                      for (ItemLike item : BlockBulkRegister.COLORED_BLOCKS) output.accept(item);
                                  }).build()
     );
-
-    static {
-        FDBlocks.loadClass();
-        FDItems.loadClass();
-        BlockBulkRegister.starRegister();
-    }
 
     private static void applyDecorationBlocks(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output pOutput) {
         pOutput.accept(FDItems.SOUL_CRYSTAL_ORNAMENT);
@@ -251,6 +240,20 @@ public class FierceDecoration {
         pOutput.accept(FDItems.TEXTURE_LODESTONE_TOP);
     }
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = BLOCK_ENTITIES.register(
+            "cabinet", () -> {
+                ImmutableSet.Builder<Block> validBlocksBuilder = new ImmutableSet.Builder<>();
+                BlockBulkRegister.CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
+                return new BlockEntityType<>(CabinetBlockEntity::new, validBlocksBuilder.build(), null);
+            }
+    );
+
+    static {
+        FDBlocks.loadClass();
+        FDItems.loadClass();
+        BlockBulkRegister.starRegister();
+    }
+
     public FierceDecoration(IEventBus modEventBus, ModContainer modContainer) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
@@ -281,9 +284,14 @@ public class FierceDecoration {
         );
         BlockBulkRegister.CABINETS.forEach(deferredBlock -> event.registerBlock(
                 Capabilities.ItemHandler.BLOCK,
-                (level, pos, state, blockEntity, context) -> new InvWrapper(((CabinetBlock)state.getBlock()).getContainer(state, level, pos)),
+                (level, pos, state, blockEntity, context) -> new InvWrapper(((CabinetBlock) state.getBlock()).getContainer(state, level, pos)),
                 deferredBlock.get()
         ));
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, context) -> InfinityWaterHandler.INSTANCE,
+                FDItems.WATERLOGGED_COBBLESTONE.get()
+        );
     }
 
     private void blockPlacedEvent(BlockEvent.EntityPlaceEvent event) {
@@ -308,8 +316,8 @@ public class FierceDecoration {
         public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
             event.register(
                     (pState, pLevel, pPos, pTintIndex) -> pLevel != null && pPos != null
-                    ? BiomeColors.getAverageGrassColor(pLevel, pPos)
-                    : GrassColor.getDefaultColor(),
+                            ? BiomeColors.getAverageGrassColor(pLevel, pPos)
+                            : GrassColor.getDefaultColor(),
                     FDBlocks.HALF_GRASS_BLOCK.get()
             );
         }
@@ -317,7 +325,8 @@ public class FierceDecoration {
         @SubscribeEvent
         public static void registerColorHandlers(RegisterColorHandlersEvent.Item event) {
             event.register(
-                    (pStack, pTintIndex) -> event.getBlockColors().getColor(((BlockItem)pStack.getItem()).getBlock().defaultBlockState(), null, null, pTintIndex),
+                    (pStack, pTintIndex) -> event.getBlockColors()
+                                                 .getColor(((BlockItem) pStack.getItem()).getBlock().defaultBlockState(), null, null, pTintIndex),
                     FDItems.HALF_GRASS_BLOCK
             );
         }
@@ -331,9 +340,17 @@ public class FierceDecoration {
         @SubscribeEvent
         public static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
             Map<ModelResourceLocation, BakedModel> models = event.getModels();
-            ModelResourceLocation location = ModelResourceLocation.inventory(FDBlocks.STAR_BLOCK.getId());
-            models.put(location, new StarBlockModel(models.get(location)));
+            models.put(
+                    new ModelResourceLocation(FDBlocks.STAR_BLOCK.getId(), ""),
+                    new StarBlockModel(models.get(ModelResourceLocation.vanilla("glass", "")))
+            );
+            models.put(
+                    ModelResourceLocation.inventory(FDBlocks.STAR_BLOCK.getId()),
+                    new StarBlockModel(models.get(ModelResourceLocation.vanilla("glass", ModelResourceLocation.INVENTORY_VARIANT)))
+            );
         }
 
     }
+
+
 }

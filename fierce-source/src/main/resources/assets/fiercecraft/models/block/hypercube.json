@@ -1,0 +1,26 @@
+{
+	"loader": "neoforge:composite",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "fiercecraft:block/hypercube"
+	},
+	"children": {
+		"part_a": {
+			"parent": "fiercecraft:block/hypercube_a",
+			"textures": {
+				"out": "fiercecraft:block/hypercube",
+				"in": "fiercecraft:block/hypercube_in"
+			}
+		},
+		"part_b": {
+			"parent": "fiercecraft:block/hypercube_b",
+			"textures": {
+				"all": "fiercecraft:block/hypercube_win"
+			}
+		}
+	},
+	"item_render_order": [
+		"part_a",
+		"part_b"
+	]
+}

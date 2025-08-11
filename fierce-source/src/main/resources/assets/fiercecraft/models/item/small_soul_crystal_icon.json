@@ -1,0 +1,33 @@
+{
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:translucent",
+	"textures": {
+		"particle": "fiercecraft:block/small_soul_crystal",
+		"all": "fiercecraft:block/small_soul_crystal",
+		"icon": "fiercecraft:item/mana_icon"
+	},
+	"elements": [
+		{
+			"from": [6, 2, 6],
+			"to": [10, 14, 10],
+			"faces": {
+				"north": {"uv": [10, 2, 14, 14], "tintindex": 0, "texture": "#all"},
+				"east": {"uv": [10, 2, 14, 14], "tintindex": 0, "texture": "#all"},
+				"south": {"uv": [10, 2, 14, 14], "tintindex": 0, "texture": "#all"},
+				"west": {"uv": [10, 2, 14, 14], "tintindex": 0, "texture": "#all"},
+				"up": {"uv": [2, 2, 6, 6], "tintindex": 0, "texture": "#all"},
+				"down": {"uv": [2, 10, 6, 14], "tintindex": 0, "texture": "#all"}
+			}
+		},
+		{
+			"from": [5.99, 2.99, 5.99],
+			"to": [10.01, 7.01, 10.01],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "tintindex": 1, "texture": "#icon"},
+				"east": {"uv": [0, 0, 16, 16], "tintindex": 1, "texture": "#icon"},
+				"south": {"uv": [0, 0, 16, 16], "tintindex": 1, "texture": "#icon"},
+				"west": {"uv": [0, 0, 16, 16], "tintindex": 1, "texture": "#icon"}
+			}
+		}
+	]
+}

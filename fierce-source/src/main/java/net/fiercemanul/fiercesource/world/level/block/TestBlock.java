@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
 import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.fiercemanul.fiercesource.world.level.block.entity.TestBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ public class TestBlock extends ModelBlock implements EntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SoulCrystalBlock.LARGE_WITH_BASE_SHAPE;
+        return SoulCrystalBlock.LARGE_SHAPE;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class TestBlock extends ModelBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (!pLevel.isClientSide && pBlockEntityType == FierceSource.TEST_BLOCK_ENTITY.get())
+        if (!pLevel.isClientSide && pBlockEntityType == FSBlockEntityTypes.TEST_BLOCK_ENTITY.get())
             return (pLevel1, pPos, pState1, pBlockEntity) -> ((TestBlockEntity) pBlockEntity).serverTick(pLevel1, pPos, pState1);
         else return null;
     }

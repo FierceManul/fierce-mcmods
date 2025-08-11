@@ -1030,7 +1030,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_4px"))
                 .texture("side", side).texture("end", top);
-        yAxisModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(deferredBlock.get(), path, modelFile, false);
     }
 
     private void pillar6px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -1038,7 +1038,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_6px"))
                 .texture("side", side).texture("end", top);
-        yAxisModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(deferredBlock.get(), path, modelFile, false);
     }
 
     private void pillar8px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -1046,7 +1046,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_8px"))
                 .texture("side", side).texture("end", top);
-        yAxisModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(deferredBlock.get(), path, modelFile, false);
     }
     
     private void pillar12px(DeferredBlock<Block> deferredBlock, ResourceLocation side, ResourceLocation top) {
@@ -1054,7 +1054,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_12px"))
                 .texture("side", side).texture("end", top);
-        yAxisModel(path, deferredBlock.get(), modelFile, false);
+        yAxisModel(deferredBlock.get(), path, modelFile, false);
     }
 
     private void soulCrystalOrnament() {

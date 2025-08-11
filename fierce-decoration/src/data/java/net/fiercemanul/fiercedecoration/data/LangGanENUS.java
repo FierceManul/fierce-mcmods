@@ -4,15 +4,14 @@ import net.fiercemanul.fiercedecoration.FierceDecoration;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class LangGan extends LanguageProvider {
+public class LangGanENUS extends LanguageProvider {
 
-    public LangGan(PackOutput output) {
+    public LangGanENUS(PackOutput output) {
         super(output, FierceDecoration.MODID, "en_us");
     }
 
     @Override
     protected void addTranslations() {
-        //FierceDecoration.BLOCKS.getEntries().forEach(blockRegistryObject -> add(blockRegistryObject.get(), blockRegistryObject.getId().getPath().replace('_', ' ')));
         FierceDecoration.ITEMS.getEntries().forEach(itemRegistryObject -> add(itemRegistryObject.get(), nameFormat(itemRegistryObject.getId().getPath())));
         add("itemGroup.fiercedecoration.decoration", "Fierce Decoration");
         add("itemGroup.fiercedecoration.building", "Fierce Building");
@@ -21,7 +20,7 @@ public class LangGan extends LanguageProvider {
         add("fiercedecoration.tip.snake_vertical", "Snake place to vertical");
         add("fiercedecoration.tip.snake_horizontal", "Snake place to horizontal");
         add("fiercedecoration.tip.guardrail", "Stack place make corner");
-        add("fiercedecoration.tip.water_cobble", "Give the machine infinite water without lag frame rate");
+        add("fiercedecoration.tip.water_cobble", "Given the infinite water without lag frame rate");
         add("fiercedecoration.tip.no_more_be", "No more BlockEntity");
         add("fiercedecoration.container.cabinet", "Cabinet");
     }

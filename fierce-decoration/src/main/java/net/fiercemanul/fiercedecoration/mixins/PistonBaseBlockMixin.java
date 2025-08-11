@@ -4,7 +4,6 @@ import net.fiercemanul.fiercedecoration.world.level.block.FDBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,12 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 @Mixin(PistonBaseBlock.class)
-public abstract class PistonBaseBlockMixin extends DirectionalBlock {
-
-
-    protected PistonBaseBlockMixin(Properties properties) {
-        super(properties);
-    }
+public abstract class PistonBaseBlockMixin {
 
 
     @Inject(method = "isPushable", at = @At(value = "RETURN", ordinal = 10), cancellable = true)

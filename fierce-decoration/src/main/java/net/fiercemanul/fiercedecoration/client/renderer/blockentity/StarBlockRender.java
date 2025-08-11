@@ -3,15 +3,14 @@ package net.fiercemanul.fiercedecoration.client.renderer.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fiercemanul.fiercedecoration.FierceDecoration;
+import net.fiercemanul.fiercedecoration.world.level.block.entity.ClientStarBlockEntity;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.StarBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -22,23 +21,24 @@ import org.joml.Vector3f;
 public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
 
 
-    private final static RenderType LINE_IN = RenderType.itemEntityTranslucentCull(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "textures/entity/mana_transmit_in.png"));
-    private final static RenderType LINE_OUT = RenderType.itemEntityTranslucentCull(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "textures/entity/mana_transmit_out.png"));
+    private final static RenderType LINE_IN = RenderType.itemEntityTranslucentCull(
+            ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "textures/entity/mana_transmit_in.png"));
+    private final static RenderType LINE_OUT = RenderType.itemEntityTranslucentCull(
+            ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "textures/entity/mana_transmit_out.png"));
 
     public StarBlockRender(BlockEntityRendererProvider.Context context) {}
 
     @Override
-    public void render(StarBlockEntity starBlock, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        Matrix4f matrix4f = pPoseStack.last().pose();
-        VertexConsumer consumer = pBufferSource.getBuffer(RenderType.endGateway());
-        if (starBlock.needUpdate) starBlock.updateAllFace();
-        if (starBlock.north) renderFace(matrix4f, consumer, 0.0F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-        if (starBlock.south) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F);
-        if (starBlock.west) renderFace(matrix4f, consumer, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 0.0F);
-        if (starBlock.east) renderFace(matrix4f, consumer, 1.0F, 1.0F, 1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.0F);
-        if (starBlock.up) renderFace(matrix4f, consumer, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 0.0F, 0.0F);
-        if (starBlock.down) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 1.0F);
-
+    public void render(StarBlockEntity starBlock, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        if (!(starBlock instanceof ClientStarBlockEntity starBlockEntity)) return;
+        Matrix4f matrix4f = poseStack.last().pose();
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.END_GATEWAY);
+        if (starBlockEntity.north) renderFace(matrix4f, consumer, 0.0F, 1.0F, 1.0F, 0.0F, 0.015625F, 0.015625F, 0.015625F, 0.015625F);
+        if (starBlockEntity.south) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.0F, 1.0F, 0.984375F, 0.984375F, 0.984375F, 0.984375F);
+        if (starBlockEntity.west) renderFace(matrix4f, consumer, 0.015625F, 0.015625F, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 0.0F);
+        if (starBlockEntity.east) renderFace(matrix4f, consumer, 0.984375F, 0.984375F, 1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.0F);
+        if (starBlockEntity.up) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.984375F, 0.984375F, 1.0F, 1.0F, 0.0F, 0.0F);
+        if (starBlockEntity.down) renderFace(matrix4f, consumer, 0.0F, 1.0F, 0.015625F, 0.015625F, 0.0F, 0.0F, 1.0F, 1.0F);
 
         /*
         pPoseStack.pushPose();
@@ -66,18 +66,25 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
 
     }
 
-    private void renderFace(Matrix4f matrix4f, VertexConsumer consumer, float v1, float v2, float v3, float v4, float v5, float v6, float v7, float v8) {
-        consumer.addVertex(matrix4f, v1, v3, v5);
-        consumer.addVertex(matrix4f, v2, v3, v6);
-        consumer.addVertex(matrix4f, v2, v4, v7);
-        consumer.addVertex(matrix4f, v1, v4, v8);
+    private void renderFace(Matrix4f matrix4f, VertexConsumer consumer, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4) {
+        consumer.addVertex(matrix4f, x1, y1, z1);
+        consumer.addVertex(matrix4f, x2, y1, z2);
+        consumer.addVertex(matrix4f, x2, y2, z3);
+        consumer.addVertex(matrix4f, x1, y2, z4);
     }
 
-    private void face(PoseStack.Pose pose, VertexConsumer consumer, Vector3f px, Vector3f pX, Vector3f pY, Vector3f py, float cR, float cG, float cB, float cA, float uv) {
-        consumer.addVertex(pose, px.x, px.y, px.z).setColor(cR, cG, cB, cA).setUv(0,0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(pose, 0.0F, 1.0F, 0.0F);
-        consumer.addVertex(pose, pX.x, pX.y, pX.z).setColor(cR, cG, cB, cA).setUv(1,0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(pose, 0.0F, 1.0F, 0.0F);
-        consumer.addVertex(pose, pY.x, pY.y, pY.z).setColor(cR, cG, cB, cA).setUv(1,uv).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(pose, 0.0F, 1.0F, 0.0F);
-        consumer.addVertex(pose, py.x, py.y, py.z).setColor(cR, cG, cB, cA).setUv(0,uv).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(pose, 0.0F, 1.0F, 0.0F);
+    private void face(
+            PoseStack.Pose pose, VertexConsumer consumer, Vector3f px, Vector3f pX, Vector3f pY, Vector3f py, float cR, float cG, float cB, float cA,
+            float uv
+    ) {
+        consumer.addVertex(pose, px.x, px.y, px.z).setColor(cR, cG, cB, cA).setUv(0, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(
+                pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, pX.x, pX.y, pX.z).setColor(cR, cG, cB, cA).setUv(1, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(
+                pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, pY.x, pY.y, pY.z).setColor(cR, cG, cB, cA).setUv(1, uv).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(
+                pose, 0.0F, 1.0F, 0.0F);
+        consumer.addVertex(pose, py.x, py.y, py.z).setColor(cR, cG, cB, cA).setUv(0, uv).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(
+                pose, 0.0F, 1.0F, 0.0F);
     }
 
     private void renderManaLine(double halfWidth, Vec3 vector, PoseStack.Pose pose, VertexConsumer consumer, float alpha) {
@@ -93,7 +100,7 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
         Vector3f pxy = rotPos(-halfWidth, -halfWidth, 0, sinX, cosX, sinY, cosY).toVector3f();
         Vector3f pXy = rotPos(halfWidth, -halfWidth, 0, sinX, cosX, sinY, cosY).toVector3f();
         Vector3f pxY = rotPos(-halfWidth, halfWidth, 0, sinX, cosX, sinY, cosY).toVector3f();
-        Vector3f pXY = rotPos(halfWidth,  halfWidth, 0, sinX, cosX, sinY, cosY).toVector3f();
+        Vector3f pXY = rotPos(halfWidth, halfWidth, 0, sinX, cosX, sinY, cosY).toVector3f();
 
         Vector3f offset = vector.toVector3f();
         Vector3f pxy2 = new Vector3f(pxy).add(offset);
@@ -118,18 +125,4 @@ public class StarBlockRender implements BlockEntityRenderer<StarBlockEntity> {
         );
     }
 
-    public int getViewDistance() {
-        return 128;
-    }
-
-    @Override
-    public boolean shouldRenderOffScreen(StarBlockEntity pBlockEntity) {
-        return true;
-    }
-
-    @Override
-    public AABB getRenderBoundingBox(StarBlockEntity blockEntity) {
-        BlockPos pos = blockEntity.getBlockPos();
-        return new AABB(pos.getX() - 1, pos.getY() - 1, pos.getZ() - 1, pos.getX() + 2, pos.getY() + 2, pos.getZ() + 2);
-    }
 }

@@ -1,14 +1,22 @@
 package net.fiercemanul.fiercedecoration.capabilities;
 
+import net.fiercemanul.fiercedecoration.world.item.FDItems;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
-public class InfinityWaterHandler implements IFluidHandler {
+public abstract class InfinityWaterHandler implements IFluidHandler, IFluidHandlerItem {
 
 
     private static final FluidStack water = new FluidStack(Fluids.WATER, Integer.MAX_VALUE);
-    public static final InfinityWaterHandler INSTANCE = new InfinityWaterHandler();
+    public static final InfinityWaterHandler INSTANCE = new InfinityWaterHandler() {
+        @Override
+        public ItemStack getContainer() {
+            return FDItems.WATERLOGGED_COBBLESTONE.toStack();
+        }
+    };
 
     private InfinityWaterHandler() {}
 

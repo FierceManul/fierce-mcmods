@@ -2,8 +2,8 @@ package net.fiercemanul.fiercesource.client.gui.screens;
 
 import net.fiercemanul.fiercesource.client.TipLevel;
 import net.fiercemanul.fiercesource.client.gui.components.*;
-import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
 import net.fiercemanul.fiercesource.client.gui.style.UIStyle;
+import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
 import net.fiercemanul.fiercesource.world.inventory.FierceContainerMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

@@ -46,13 +46,13 @@ public final class FDBlocks {
     public static final DeferredBlock<Block> HALF_GRASS_BLOCK = FierceDecoration.BLOCKS.registerBlock(
             "half_grass_block", HalfGrassBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.GRASS).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> HALF_PODZOL = FierceDecoration.BLOCKS.registerBlock(
-            "half_podzol_block", HalfPodzolBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.PODZOL).sound(SoundType.GRAVEL));
+            "half_podzol", HalfPodzolBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.PODZOL).sound(SoundType.GRAVEL));
     public static final DeferredBlock<Block> HALF_MYCELIUM = FierceDecoration.BLOCKS.registerBlock(
-            "half_mycelium_block", HalfMyceliumBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.COLOR_PURPLE).sound(SoundType.GRASS));
+            "half_mycelium", HalfMyceliumBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.COLOR_PURPLE).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> HALF_DIRT = FierceDecoration.BLOCKS.registerBlock(
-            "half_dirt_block", HalfDirtBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.DIRT).sound(SoundType.GRAVEL));
+            "half_dirt", HalfDirtBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.DIRT).sound(SoundType.GRAVEL));
     public static final DeferredBlock<Block> HALF_PATH_BLOCK = FierceDecoration.BLOCKS.registerBlock(
-            "half_path_block", HalfPathBlock::new, BlockBehaviour.Properties.of().strength(0.65F).mapColor(MapColor.DIRT).sound(SoundType.GRASS));
+            "half_dirt_path", HalfPathBlock::new, BlockBehaviour.Properties.of().strength(0.65F).mapColor(MapColor.DIRT).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> FIREWOOD = FierceDecoration.BLOCKS.registerBlock(
             "firewood", Firewood::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> FIREPLACE_HEART = FierceDecoration.BLOCKS.registerBlock(
@@ -232,7 +232,7 @@ public final class FDBlocks {
     public static final DeferredBlock<Block> FAKE_NETHERITE_BLOCK = FierceDecoration.BLOCKS.registerBlock(
             "fake_netherite_block", WrenchDismantleBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> FAKE_BEDROCK = FierceDecoration.BLOCKS.registerBlock(
-            "fake_bedrock_block", WrenchDismantleBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+            "fake_bedrock", WrenchDismantleBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> TEXTURE_CHISELED_BOOKSHELF = FierceDecoration.BLOCKS.registerBlock(
             "texture_chiseled_bookshelf", WrenchDismantleBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
     public static final DeferredBlock<Block> TEXTURE_CHISELED_BOOKSHELF_TOP = FierceDecoration.BLOCKS.registerBlock(

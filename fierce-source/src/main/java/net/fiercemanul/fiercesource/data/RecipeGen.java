@@ -1,19 +1,19 @@
 package net.fiercemanul.fiercesource.data;
 
-import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 
 import java.util.concurrent.CompletableFuture;
+
+import static net.fiercemanul.fiercesource.registries.FSBlocksAndItems.*;
+import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
+import static net.minecraft.data.recipes.ShapelessRecipeBuilder.shapeless;
 
 public class RecipeGen extends FSRecipeProvider {
 
@@ -25,7 +25,7 @@ public class RecipeGen extends FSRecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.CROWBAR_ITEM)
+        shaped(RecipeCategory.TOOLS, CROWBAR_ITEM)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
                 .pattern(".. ")
@@ -34,9 +34,9 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(pRecipeOutput);
 
-        netheriteSmithing(pRecipeOutput, FierceSource.CROWBAR_ITEM.get(), RecipeCategory.TOOLS, FierceSource.NETHERITE_CROWBAR_ITEM.get());
+        netheriteSmithing(pRecipeOutput, CROWBAR_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CROWBAR_ITEM.get());
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.CLAW_HAMMER_ITEM)
+        shaped(RecipeCategory.TOOLS, CLAW_HAMMER_ITEM)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
                 .define('I', Items.STICK)
@@ -46,82 +46,90 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(pRecipeOutput);
 
-        netheriteSmithing(pRecipeOutput, FierceSource.CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, FierceSource.NETHERITE_CLAW_HAMMER_ITEM.get());
+        netheriteSmithing(pRecipeOutput, CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CLAW_HAMMER_ITEM.get());
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FierceSource.WORLD_LOCATOR_BLOCK_ITEM)
-                .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
-                .define('I', Items.IRON_INGOT)
-                .define('E', Items.ENDER_EYE)
-                .define('R', Items.RED_DYE)
-                .define('G', Items.GREEN_DYE)
-                .define('B', Items.BLUE_DYE)
-                .pattern("REG")
-                .pattern("IOI")
-                .pattern("EBE")
-                .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
-                .save(pRecipeOutput);
 
 
         RecipeOutput backupRecipeOutput = pRecipeOutput.withConditions(new NotCondition(new ModLoadedCondition("fiercecraft")));
+        
+        shaped(RecipeCategory.MISC, HYPERCUBE)
+                .define('#', Items.ENDER_CHEST)
+                .define('X', SMALL_SOUL_CRYSTAL)
+                .define('O', Items.ENDER_EYE)
+                .pattern("OXO")
+                .pattern("X#X")
+                .pattern("OXO")
+                .unlockedBy(getHasName(Items.ENDER_CHEST), has(Items.ENDER_CHEST))
+                .save(backupRecipeOutput, applyBackup(HYPERCUBE));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
+        shaped(RecipeCategory.TOOLS, WORLD_LOCATOR)
+                .define('#', HYPERCUBE)
+                .define('X', Items.ENDER_EYE)
+                .define('I', Items.CHAIN)
+                .pattern("IXI")
+                .pattern("X#X")
+                .pattern("IXI")
+                .unlockedBy(getHasName(HYPERCUBE), has(HYPERCUBE))
+                .save(backupRecipeOutput, applyBackup(WORLD_LOCATOR));
+
+        shapeless(RecipeCategory.MISC, SOUL_CRYSTAL_SHARD)
                 .requires(Items.AMETHYST_SHARD)
                 .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
-                .save(backupRecipeOutput, applyBackup(FierceSource.SOUL_CRYSTAL_SHARD_ITEM.getId()));
+                .save(backupRecipeOutput, applyBackup(SOUL_CRYSTAL_SHARD));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+        shaped(RecipeCategory.MISC, SMALL_SOUL_CRYSTAL)
                 .define('X', Items.GLOWSTONE_DUST)
-                .define('O', FierceSource.SOUL_CRYSTAL_SHARD_ITEM)
+                .define('O', SOUL_CRYSTAL_SHARD)
                 .pattern(" O ")
                 .pattern("OXO")
                 .pattern(" O ")
                 .unlockedBy(getHasName(Items.GLOWSTONE_DUST), has(Items.GLOWSTONE_DUST))
-                .unlockedBy(getHasName(FierceSource.SOUL_CRYSTAL_SHARD_ITEM), has(FierceSource.SOUL_CRYSTAL_SHARD_ITEM))
-                .save(backupRecipeOutput, applyBackup(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+                .unlockedBy(getHasName(SOUL_CRYSTAL_SHARD), has(SOUL_CRYSTAL_SHARD))
+                .save(backupRecipeOutput, applyBackup(SMALL_SOUL_CRYSTAL));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
+        shaped(RecipeCategory.MISC, MEDIUM_SOUL_CRYSTAL)
                 .define('X', Items.GHAST_TEAR)
-                .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('O', SMALL_SOUL_CRYSTAL)
                 .pattern(" O ")
                 .pattern("OXO")
                 .pattern(" O ")
                 .unlockedBy(getHasName(Items.GHAST_TEAR), has(Items.GHAST_TEAR))
-                .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
-                .save(backupRecipeOutput, applyBackup(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+                .unlockedBy(getHasName(SMALL_SOUL_CRYSTAL), has(SMALL_SOUL_CRYSTAL))
+                .save(backupRecipeOutput, applyBackup(MEDIUM_SOUL_CRYSTAL));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
+        shaped(RecipeCategory.MISC, LARGE_SOUL_CRYSTAL)
                 .define('X', Items.NETHER_STAR)
-                .define('O', FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
+                .define('O', MEDIUM_SOUL_CRYSTAL)
                 .pattern(" O ")
                 .pattern("OXO")
                 .pattern(" O ")
                 .unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
-                .unlockedBy(getHasName(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM))
-                .save(backupRecipeOutput, applyBackup(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM.getId()));
+                .unlockedBy(getHasName(MEDIUM_SOUL_CRYSTAL), has(MEDIUM_SOUL_CRYSTAL))
+                .save(backupRecipeOutput, applyBackup(LARGE_SOUL_CRYSTAL));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.SMALL_MANA_CRYSTAL_BLOCK_ITEM)
-                           .define('X', Tags.Items.CHESTS)
-                           .define('O', FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM)
-                           .pattern("X")
-                           .pattern("O")
-                           .unlockedBy(getHasName(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK_ITEM))
-                           .save(backupRecipeOutput, applyBackup(FierceSource.SMALL_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+        shaped(RecipeCategory.MISC, SMALL_MANA_CRYSTAL)
+                .define('X', Tags.Items.CHESTS)
+                .define('O', SMALL_SOUL_CRYSTAL)
+                .pattern("X")
+                .pattern("O")
+                .unlockedBy(getHasName(SMALL_SOUL_CRYSTAL), has(SMALL_SOUL_CRYSTAL))
+                .save(backupRecipeOutput, applyBackup(SMALL_MANA_CRYSTAL));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK_ITEM)
-                           .define('X', Tags.Items.CHESTS)
-                           .define('O', FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM)
-                           .pattern("X")
-                           .pattern("O")
-                           .unlockedBy(getHasName(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK_ITEM))
-                           .save(backupRecipeOutput, applyBackup(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+        shaped(RecipeCategory.MISC, MEDIUM_MANA_CRYSTAL)
+                .define('X', Tags.Items.CHESTS)
+                .define('O', MEDIUM_SOUL_CRYSTAL)
+                .pattern("X")
+                .pattern("O")
+                .unlockedBy(getHasName(MEDIUM_SOUL_CRYSTAL), has(MEDIUM_SOUL_CRYSTAL))
+                .save(backupRecipeOutput, applyBackup(MEDIUM_MANA_CRYSTAL));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FierceSource.LARGE_MANA_CRYSTAL_BLOCK_ITEM)
-                           .define('X', Tags.Items.CHESTS)
-                           .define('O', FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM)
-                           .pattern("X")
-                           .pattern("O")
-                           .unlockedBy(getHasName(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM), has(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK_ITEM))
-                           .save(backupRecipeOutput, applyBackup(FierceSource.LARGE_MANA_CRYSTAL_BLOCK_ITEM.getId()));
+        shaped(RecipeCategory.MISC, LARGE_MANA_CRYSTAL)
+                .define('X', Tags.Items.CHESTS)
+                .define('O', LARGE_SOUL_CRYSTAL)
+                .pattern("X")
+                .pattern("O")
+                .unlockedBy(getHasName(LARGE_SOUL_CRYSTAL), has(LARGE_SOUL_CRYSTAL))
+                .save(backupRecipeOutput, applyBackup(LARGE_MANA_CRYSTAL));
 
     }
 

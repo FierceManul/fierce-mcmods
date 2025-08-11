@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
-import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceKey;
@@ -22,15 +22,18 @@ public class BlockLootGen extends BlockLootSubProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
-        dropSelf(FierceSource.LARGE_SOUL_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.MEDIUM_SOUL_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.SMALL_SOUL_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.LARGE_MANA_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.MEDIUM_MANA_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.SMALL_MANA_CRYSTAL_BLOCK.get());
-        dropSelf(FierceSource.CREATIVE_MANA_BLOCK.get());
-        dropSelf(FierceSource.CREATIVE_MANA_OUTPUT_BLOCK.get());
-        dropSelf(FierceSource.WORLD_LOCATOR_BLOCK.get());
+        dropSelf(FSBlocksAndItems.LARGE_SOUL_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.MEDIUM_SOUL_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.SMALL_SOUL_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.LARGE_MANA_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.MEDIUM_MANA_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.SMALL_MANA_CRYSTAL.getBlock());
+        dropSelf(FSBlocksAndItems.CREATIVE_MANA_BLOCK.getBlock());
+        dropSelf(FSBlocksAndItems.CREATIVE_MANA_OUTPUT.getBlock());
+        dropSelf(FSBlocksAndItems.WORLD_LOCATOR.getBlock());
+
+        dropSelf(FSBlocksAndItems.SOUL_CRYSTAL_SHARD.getBlock());
+        dropSelf(FSBlocksAndItems.SOUL_CRYSTAL_DUST.getBlock());
 
         this.map.forEach((key, builder) -> {
             if (builder != null) pGenerator.accept(key, builder);
