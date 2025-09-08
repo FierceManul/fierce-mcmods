@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.capabilities;
+package net.fiercemanul.fiercesource.world.level.capabilities;
 
 /**
  * 魔能能力,与电力相同的行为.

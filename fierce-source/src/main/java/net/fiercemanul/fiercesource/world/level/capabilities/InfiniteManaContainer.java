@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.capabilities;
+package net.fiercemanul.fiercesource.world.level.capabilities;
 
 public class InfiniteManaContainer implements IManaHandler {
 

@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.client;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.client.gui.screens.FierceContainerScreen;
+import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
 import net.fiercemanul.fiercesource.data.UIStyleLoader;
 import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
@@ -53,7 +53,7 @@ public final class ClientRegisterEvents {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(FSMenuTypes.FIERCE_MENU.get(), FierceContainerScreen::new);
+        event.register(FSMenuTypes.FIERCE_MEDIA_MENU.get(), FierceMediaScreen::new);
     }
 
     @SubscribeEvent

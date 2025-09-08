@@ -44,13 +44,13 @@ public class UIStyles {
             )
     );
 
-    public static UIStyle chooseingUIStyle = DEFAULT;
+    public static UIStyle style = DEFAULT;
 
     private static Map<ResourceLocation, UIStyle> styles = new HashMap<>();
 
 
-    public static void setStyle(String name) {
-        chooseingUIStyle = styles.getOrDefault(name, DEFAULT);
+    public static void setStyle(ResourceLocation rl) {
+        style = styles.getOrDefault(rl, DEFAULT);
     }
 
     public static void setStyles(Map<ResourceLocation, UIStyle> styles) {

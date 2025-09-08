@@ -1,32 +1,49 @@
 package net.fiercemanul.fiercesource.client.gui.components;
 
-import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.client.gui.screens.FierceContainerScreen;
+import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
 import net.fiercemanul.fiercesource.client.gui.style.UIStyle;
+import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
 
-public class TestMinCanvas extends Canvas{
+public class TestMinCanvas extends Canvas {
 
 
-    private final ResourceLocation inventory_slots = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/inventory_slots");
-    private final ResourceLocation container_slots = ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/container_slots");
+    public static final MutableComponent TITLE = Component.literal("I,O十O,I");
 
-    public TestMinCanvas(FierceContainerScreen screen, int pX, int pY, Component pMessage) {
-        super(screen, pX, pY, 154, 143, pMessage);
+    public TestMinCanvas(FierceMediaScreen screen, int pX, int pY, Component pMessage) {
+        super(
+                screen,
+                pX, pY,
+                UIStyles.style.invSlotsWidth,
+                UIStyles.style.threeRowContainerCanvasHeight,
+                pMessage
+        );
     }
 
     @Override
-    protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(getX(), getY(), 0);
+    public void init() {
+        super.init();
+        UIStyles.style.buildInvSlots(slotsPos, 0, 74);
+    }
 
-        guiGraphics.drawString(screen.getFont(), "I,O十O,I", 1, 2, 4210752, false);
-        guiGraphics.blitSprite(container_slots, 0, 11, UIStyle.INVENTORY_SLOTS_WIDTH, 52);
-        guiGraphics.drawString(screen.getFont(), "I,O十O,I", 1, 65, 4210752, false);
-        guiGraphics.blitSprite(inventory_slots, 0, 74, UIStyle.INVENTORY_SLOTS_WIDTH, UIStyle.INVENTORY_SLOTS_HEIGHT);
+    @Override
+    protected void renderCanvas(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        UIStyles.style.render3RowContainerCanvas(guiGraphics, screen.getFont(), TITLE);
+    }
 
-        guiGraphics.pose().popPose();
+    @Override
+    public int findSlot(double mouseX, double mouseY) {
+        if (FSUtils.inArea(
+                0,
+                UIStyles.style.invSlotsWidth,
+                74,
+                UIStyles.style.threeRowContainerCanvasHeight,
+                mouseX,
+                mouseY
+        )) return UIStyles.style.findInvSlot(mouseX, mouseY - 74);
+        return super.findSlot(mouseX, mouseY);
     }
 }

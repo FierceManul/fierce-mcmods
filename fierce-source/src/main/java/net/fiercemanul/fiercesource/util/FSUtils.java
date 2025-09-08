@@ -29,6 +29,10 @@ public final class FSUtils {
         return ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, path);
     }
 
+    public static boolean inArea(double xS, double xE, double yS, double yE, double pX, double pY) {
+        return pX >= xS && pX < xE && pY >= yS && pY < yE;
+    }
+
 
     //datagen:
     //net.neoforged.fml.loading.FMLLoader.getLaunchHandler().isData()

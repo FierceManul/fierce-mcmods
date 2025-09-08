@@ -1,12 +1,12 @@
 package net.fiercemanul.fiercesource;
 
 import com.mojang.logging.LogUtils;
-import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
-import net.fiercemanul.fiercesource.capabilities.InfiniteManaContainer;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
 import net.fiercemanul.fiercesource.registries.FCRegistries;
 import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.fiercemanul.fiercesource.world.item.CrowbarItem;
+import net.fiercemanul.fiercesource.world.level.capabilities.FSCapabilities;
+import net.fiercemanul.fiercesource.world.level.capabilities.InfiniteManaContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,6 +47,7 @@ public class FierceSource {
         NeoForge.EVENT_BUS.register(this);
 
         // Register the commonSetup method for modloading
+        modEventBus.addListener(FCRegistries::registerRegistries);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerCapabilitiesEvent);
         modEventBus.addListener(this::registerPayloadHandlersEvent);

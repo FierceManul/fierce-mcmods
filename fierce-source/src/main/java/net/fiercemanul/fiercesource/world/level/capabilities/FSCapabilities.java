@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.capabilities;
+package net.fiercemanul.fiercesource.world.level.capabilities;
 
 import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.core.Direction;

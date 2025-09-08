@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.capabilities;
+package net.fiercemanul.fiercesource.world.level.capabilities;
 
 import net.minecraft.core.Direction;
 import org.jetbrains.annotations.Nullable;

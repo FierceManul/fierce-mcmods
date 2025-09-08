@@ -4,18 +4,18 @@ license="${mod_license}"
 issueTrackerURL="https://github.com/FierceManul/fierce-mcmods/issues"
 
 [[mods]]
-modId="${mod_id}"
-version="${mod_version}"
-displayName="${mod_name}"
-logoFile="icon.png"
-authors="${mod_authors}"
-description='''${mod_description}'''
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    logoFile="icon.png"
+    authors="${mod_authors}"
+    description='''${mod_description}'''
 
 [[accessTransformers]]
-file="META-INF/accesstransformer.cfg"
+    file="META-INF/accesstransformer.cfg"
 
 [[mixins]]
-config = "${mod_id}.mixins.json"
+    config = "${mod_id}.mixins.json"
 
 [[dependencies.${mod_id}]]
     modId="neoforge"

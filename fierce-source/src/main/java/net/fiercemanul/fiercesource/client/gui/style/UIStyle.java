@@ -2,17 +2,20 @@ package net.fiercemanul.fiercesource.client.gui.style;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fiercemanul.fiercesource.util.FSUtils;
+import net.fiercemanul.fiercesource.util.TwoInt;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.ChestMenu;
 
 /**
  * 都是精灵图
  */
-public record UIStyle(
-        BackgroundData backgroundData,
-        ScrollbarData scrollbarData,
-        TabsArea tabsArea,
-        TabData tabData
-) {
+public class UIStyle {
+
 
     public static final Codec<UIStyle> CODEC = RecordCodecBuilder.create(uiStyleInstance -> uiStyleInstance.group(
             BackgroundData.CODEC.fieldOf("background_data").forGetter(UIStyle::backgroundData),
@@ -20,11 +23,123 @@ public record UIStyle(
             TabsArea.CODEC.fieldOf("tabs_area").forGetter(UIStyle::tabsArea),
             TabData.CODEC.fieldOf("tab_data").forGetter(UIStyle::tabData)
     ).apply(uiStyleInstance, UIStyle::new));
+    public static final MutableComponent INV_TITLE = Component.translatable("container.inventory");
 
-    public static final int INVENTORY_SLOTS_WIDTH = 154;
-    public static final int INVENTORY_SLOTS_HEIGHT = 69;
+    public final ResourceLocation container = FSUtils.rl("default/container_slots");
+    public final ResourceLocation inventory = FSUtils.rl("default/inventory_slots");
+    public final int invTextureWidth = 154;
+    public final int invTextureHeight = 139;
+    public final int invSlotsWidth = 154;
+    public final int invSlotsHeight = 69;
+    public final int craftSlotsWidth = 88;
+    public final int craftSlotsHeight = 52;
+    public final int threeRowContainerCanvasHeight = 143;
+    public final BackgroundData backgroundData;
+    public final ScrollbarData scrollbarData;
+    public final TabsArea tabsArea;
+    public final TabData tabData;
+
+    /**
+     *
+     */
+    public UIStyle(
+            BackgroundData backgroundData,
+            ScrollbarData scrollbarData,
+            TabsArea tabsArea,
+            TabData tabData
+    ) {
+        this.backgroundData = backgroundData;
+        this.scrollbarData = scrollbarData;
+        this.tabsArea = tabsArea;
+        this.tabData = tabData;
+    }
+
+    public void renderInventory(GuiGraphics guiGraphics, int x, int y) {
+        guiGraphics.blitSprite(
+                inventory,
+                invTextureWidth,
+                invTextureHeight,
+                0, 0,
+                x, y,
+                invSlotsWidth,
+                invSlotsHeight
+        );
+    }
+
+    public int slotPos(double d) {
+        return (int) ((d - 0.5) / 17);
+    }
+
+    /**
+     * 使用相对位置。
+     */
+    public TwoInt slotPos(double mouseX, double mouseY, int maxX, int maxY) {
+        return new TwoInt(Math.min(slotPos(mouseX), maxX), Math.min(slotPos(mouseY), maxY));
+    }
+
+    /**
+     * 使用相对位置。
+     */
+    public int findInvSlot(double mouseX, double mouseY) {
+        int x = slotPos(mouseX);
+        int y = slotPos(mouseY);
+        return Math.min(x, 8) + (y >= 3 ? 0 : y + 1) * 9;
+    }
+
+    public void buildInvSlots(TwoInt[] slotsPos, int x, int y) {
+        x++; y++;
+        for (int i = 0; i < 9; i++) slotsPos[i] = new TwoInt(x + i * 17, y + 51);
+        for (int i = 0; i < 3; i++) for (int j = 0; j < 9; j++) slotsPos[9 + i * 9 + j] = new TwoInt(x + j * 17, y + i * 17);
+    }
+
+    public void render3RowContainer(GuiGraphics guiGraphics, int x, int y) {
+        guiGraphics.blitSprite(container, x, y, invSlotsWidth, 52);
+    }
+
+    public void render6RowContainer(GuiGraphics guiGraphics, int x, int y) {
+        guiGraphics.blitSprite(container, x, y, invSlotsWidth, 103);
+    }
+
+    public void renderContainer(GuiGraphics guiGraphics, int x, int y, int w, int h) {
+        guiGraphics.blitSprite(container, x, y, w, h);
+    }
+
+    public void render3RowContainerCanvas(GuiGraphics guiGraphics, Font font, Component title) {
+        guiGraphics.drawString(font, title, 1, 2, 4210752, false);
+        render3RowContainer(guiGraphics, 0, 11);
+        guiGraphics.drawString(font, INV_TITLE, 1, 65, 4210752, false);
+        renderInventory(guiGraphics, 0, 74);
+    }
+
+    public void renderCrafting(GuiGraphics guiGraphics, int x, int y) {
+        guiGraphics.blitSprite(
+                inventory,
+                invTextureWidth, invTextureHeight,
+                0, invSlotsHeight,
+                x, y,
+                craftSlotsWidth, craftSlotsHeight
+        );
+    }
+
+    public BackgroundData backgroundData() {
+        return backgroundData;
+    }
+
+    public ScrollbarData scrollbarData() {
+        return scrollbarData;
+    }
+
+    public TabsArea tabsArea() {
+        return tabsArea;
+    }
+
+    public TabData tabData() {
+        return tabData;
+    }
+
 
     public record Size(int width, int height) {
+
 
         public static final Codec<Size> CODEC = RecordCodecBuilder.create(sizeInstance -> sizeInstance.group(
                 Codec.INT.fieldOf("width").forGetter(Size::width),
@@ -38,6 +153,7 @@ public record UIStyle(
 
     public record Offset(int x, int y) {
 
+
         public static final Codec<Offset> CODEC = RecordCodecBuilder.create(offsetInstance -> offsetInstance.group(
                 Codec.INT.fieldOf("x").forGetter(Offset::x),
                 Codec.INT.fieldOf("y").forGetter(Offset::y)
@@ -49,6 +165,7 @@ public record UIStyle(
     }
 
     public record Padding(int left, int top, int right, int bottom) {
+
 
         public static final Codec<Padding> CODEC = RecordCodecBuilder.create(paddingInstance -> paddingInstance.group(
                 Codec.INT.fieldOf("left").forGetter(Padding::left),
@@ -74,6 +191,8 @@ public record UIStyle(
             ResourceLocation onImg,
             Padding imgPadding
     ) {
+
+
         public static final Codec<ImgButtonData> CODEC = RecordCodecBuilder.create(imgButtonDataInstance -> imgButtonDataInstance.group(
                 Size.CODEC.fieldOf("size").forGetter(ImgButtonData::size),
                 ResourceLocation.CODEC.fieldOf("off_img").forGetter(ImgButtonData::offImg),
@@ -92,6 +211,8 @@ public record UIStyle(
             ResourceLocation onPressImg,
             Padding imgPadding
     ) {
+
+
         public static final Codec<RefineImgButtonData> CODEC = RecordCodecBuilder.create(refineImgButtonDataInstance -> refineImgButtonDataInstance.group(
                 Size.CODEC.fieldOf("size").forGetter(RefineImgButtonData::size),
                 ResourceLocation.CODEC.fieldOf("off_img").forGetter(RefineImgButtonData::offImg),
@@ -111,6 +232,8 @@ public record UIStyle(
             ResourceLocation img,
             Padding imgPadding
     ) {
+
+
         public static final Codec<BackgroundData> CODEC = RecordCodecBuilder.create(backgroundDataInstance -> backgroundDataInstance.group(
                 ResourceLocation.CODEC.fieldOf("img").forGetter(BackgroundData::img),
                 Padding.CODEC.fieldOf("img_padding").forGetter(BackgroundData::imgPadding)
@@ -119,9 +242,10 @@ public record UIStyle(
 
     /**
      * 滚动条
+     *
      * @param leftOffset 滚动条左对画布右
-     * @param topOffset 滚动条的顶对画布顶
-     * @param weight 滚动条宽度
+     * @param topOffset  滚动条的顶对画布顶
+     * @param weight     滚动条宽度
      */
     public record ScrollbarData(
             ResourceLocation img,
@@ -130,6 +254,8 @@ public record UIStyle(
             int bottomMargin,
             int weight
     ) {
+
+
         public static final Codec<ScrollbarData> CODEC = RecordCodecBuilder.create(scrollBarDataInstance -> scrollBarDataInstance.group(
                 ResourceLocation.CODEC.fieldOf("img").forGetter(ScrollbarData::img),
                 Codec.INT.fieldOf("left_offset").forGetter(ScrollbarData::leftOffset),
@@ -141,8 +267,9 @@ public record UIStyle(
 
     /**
      * 画布标签集可用区域，不是实际区域
-     * @param leftOffset 区域左相对画布左
-     * @param topOffset 区域又相对画布左
+     *
+     * @param leftOffset   区域左相对画布左
+     * @param topOffset    区域又相对画布左
      * @param bottomOffset 区域底相对画布底
      */
     public record TabsArea(
@@ -150,6 +277,8 @@ public record UIStyle(
             int topOffset,
             int bottomOffset
     ) {
+
+
         public static final Codec<TabsArea> CODEC = RecordCodecBuilder.create(tabsAreaInstance -> tabsAreaInstance.group(
                 Codec.INT.fieldOf("left_offset").forGetter(TabsArea::leftOffset),
                 Codec.INT.fieldOf("top_offset").forGetter(TabsArea::topOffset),
@@ -168,6 +297,8 @@ public record UIStyle(
             ImgButtonData pageDownImgButtonData,
             int pageButtonMargin
     ) {
+
+
         public static final Codec<TabData> CODEC = RecordCodecBuilder.create(tabDataInstance -> tabDataInstance.group(
                 ImgButtonData.CODEC.fieldOf("tab_img_button_data").forGetter(TabData::tabImgButtonData),
                 Offset.CODEC.fieldOf("icon_offset").forGetter(TabData::iconOffset),

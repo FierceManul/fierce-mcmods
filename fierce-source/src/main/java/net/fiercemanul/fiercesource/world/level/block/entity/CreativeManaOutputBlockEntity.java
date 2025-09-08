@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource.world.level.block.entity;
 
-import net.fiercemanul.fiercesource.capabilities.FSCapabilities;
-import net.fiercemanul.fiercesource.capabilities.IManaHandler;
 import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
+import net.fiercemanul.fiercesource.world.level.capabilities.FSCapabilities;
+import net.fiercemanul.fiercesource.world.level.capabilities.IManaHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

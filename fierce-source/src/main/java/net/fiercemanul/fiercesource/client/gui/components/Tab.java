@@ -22,19 +22,19 @@ public class Tab extends StyleButton {
     }
 
     public void init(int x, int y) {
-        super.init(UIStyles.chooseingUIStyle.tabData().tabImgButtonData(), x, y);
+        super.init(UIStyles.style.tabData().tabImgButtonData(), x, y);
     }
 
     @Override
     public void setX(int x) {
         super.setX(x);
-        iconX = getX() + UIStyles.chooseingUIStyle.tabData().iconOffset().x();
+        iconX = getX() + UIStyles.style.tabData().iconOffset().x();
     }
 
     @Override
     public void setY(int y) {
         super.setY(y);
-        iconY = getY() + UIStyles.chooseingUIStyle.tabData().iconOffset().y();
+        iconY = getY() + UIStyles.style.tabData().iconOffset().y();
     }
 
     @Override
