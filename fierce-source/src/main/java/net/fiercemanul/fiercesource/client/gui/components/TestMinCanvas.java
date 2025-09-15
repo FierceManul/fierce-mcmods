@@ -1,7 +1,6 @@
 package net.fiercemanul.fiercesource.client.gui.components;
 
 import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
-import net.fiercemanul.fiercesource.client.gui.style.UIStyle;
 import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,13 +13,7 @@ public class TestMinCanvas extends Canvas {
     public static final MutableComponent TITLE = Component.literal("I,O十O,I");
 
     public TestMinCanvas(FierceMediaScreen screen, int pX, int pY, Component pMessage) {
-        super(
-                screen,
-                pX, pY,
-                UIStyles.style.invSlotsWidth,
-                UIStyles.style.threeRowContainerCanvasHeight,
-                pMessage
-        );
+        super(screen, pX, pY, pMessage);
     }
 
     @Override

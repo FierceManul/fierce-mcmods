@@ -21,7 +21,9 @@ public class TestMainCanvas extends Canvas {
 
 
     public TestMainCanvas(FierceMediaScreen screen, int x, int y, Component component) {
-        super(screen, x, y, 154, 241, component);
+        super(screen, x, y, component);
+        width = 154;
+        height = 241;
     }
 
     @Override

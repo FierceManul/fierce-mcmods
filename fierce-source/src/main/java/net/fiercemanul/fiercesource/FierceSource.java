@@ -4,14 +4,9 @@ import com.mojang.logging.LogUtils;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
 import net.fiercemanul.fiercesource.registries.FCRegistries;
 import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
-import net.fiercemanul.fiercesource.world.item.CrowbarItem;
 import net.fiercemanul.fiercesource.world.level.capabilities.FSCapabilities;
 import net.fiercemanul.fiercesource.world.level.capabilities.InfiniteManaContainer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Tiers;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,7 +15,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -91,30 +85,6 @@ public class FierceSource {
         //
         //TODO:冒险维度预留
         //
-        if (player.getMainHandItem().getItem() instanceof CrowbarItem crowbarItem) {
-            float destroySpeed = breakSpeedEvent.getState().getDestroySpeed(player.level(), breakSpeedEvent.getPosition().orElse(BlockPos.ZERO));
-            float newSpeed = 1.0F;
-            if (destroySpeed > 0) {
-                boolean is_netherite = crowbarItem.getTier().equals(Tiers.NETHERITE);
-                if (is_netherite || destroySpeed <= 10.0F) newSpeed = (is_netherite ? 8.0F : 4.0F) * destroySpeed;
-            }
-            else if (destroySpeed < 0) newSpeed = 0.0F;
-
-            if (newSpeed > 0) {
-                //TODO: 以下为原版复制,注意版本更新.
-                if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) newSpeed *= switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
-                    case 0 -> 0.3F;
-                    case 1 -> 0.09F;
-                    case 2 -> 0.0027F;
-                    default -> 8.1E-4F;
-                };
-                if (player.isEyeInFluidType(NeoForgeMod.WATER_TYPE.value()))
-                    newSpeed *= (float) player.getAttribute(Attributes.SUBMERGED_MINING_SPEED).getValue();
-                if (!player.onGround()) newSpeed /= 5.0F;
-            }
-
-            breakSpeedEvent.setNewSpeed(newSpeed);
-        }
     }
 
 

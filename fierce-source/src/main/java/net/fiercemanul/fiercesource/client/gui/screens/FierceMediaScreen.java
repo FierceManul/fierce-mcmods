@@ -54,7 +54,7 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
 
         LinkedHashSet<Tab> tabs = new LinkedHashSet<>();
         tabs.add(new Tab(choseCanvas, new ItemIcon(Items.NETHERITE_SWORD.getDefaultInstance()), Component.literal("MainTest")));
-        tabs.add(new Tab(new TestContainerCanvas(this, 0, 0, title), new ItemIcon(Items.CHEST.getDefaultInstance()), Component.literal("BigInvTest")));
+        tabs.add(new Tab(new TestBigContainerCanvas(this, 0, 0, title), new ItemIcon(Items.CHEST.getDefaultInstance()), Component.literal("BigInvTest")));
         tabs.add(new Tab(new TestMinCanvas(this, 0, 0, title), new ItemIcon(Items.ENDER_CHEST.getDefaultInstance()), Component.literal("MinTest")));
         tabs.add(new Tab(new TestAutoSizeCanvas(this, 0, 0, title), new ItemIcon(Items.SLIME_BLOCK.getDefaultInstance()), Component.literal("AutoSizeTest")));
         for (int i = 0; i < 12; i++) tabs.add(new Tab(choseCanvas, new ItemIcon(Items.STONE.getDefaultInstance()), Component.literal("Test " + (i + 5))));

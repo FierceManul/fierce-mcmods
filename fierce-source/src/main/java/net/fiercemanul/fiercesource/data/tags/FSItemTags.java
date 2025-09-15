@@ -1,4 +1,4 @@
-package net.fiercemanul.fiercesource.tags;
+package net.fiercemanul.fiercesource.data.tags;
 
 import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.resources.ResourceLocation;

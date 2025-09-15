@@ -1,67 +1,30 @@
 package net.fiercemanul.fiercesource.world.item;
 
+import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 
-public class CrowbarItem extends TieredItem {
+public class CrowbarItem extends DiggerItem {
 
 
-    public CrowbarItem(Tier pTier, Item.Properties pProperties) {
-        super(
-                pTier,
-                pProperties.attributes(
-                        ItemAttributeModifiers.builder().add(
-                                Attributes.ATTACK_DAMAGE,
-                                new AttributeModifier(
-                                        BASE_ATTACK_DAMAGE_ID,
-                                        1 + pTier.getAttackDamageBonus(),
-                                        AttributeModifier.Operation.ADD_VALUE
-                                ),
-                                EquipmentSlotGroup.MAINHAND
-                        ).build())
-        );
-    }
-
-    @Override
-    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        pStack.hurtAndBreak(2, pAttacker, EquipmentSlot.MAINHAND);
-        return true;
-    }
-
-    @Override
-    public float getDestroySpeed(ItemStack pStack, BlockState pState) {
-        //看event，这里备用。
-        return 4.0F;
-    }
-
-    @Override
-    public boolean isCorrectToolForDrops(ItemStack pStack, BlockState pState) {
-        return true;
-    }
-
-    @Override
-    public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
-        if (!pLevel.isClientSide && pState.getDestroySpeed(pLevel, pPos) != 0.0F) {
-            pStack.hurtAndBreak(1, pEntityLiving, EquipmentSlot.MAINHAND);
-        }
-        return true;
+    public CrowbarItem(Tier tier, Item.Properties properties, float attackDamage, float attackSpeed) {
+        super(tier, FSBlockTags.MINEABLE_WITH_CROWBAR, properties.attributes(DiggerItem.createAttributes(tier, attackDamage, attackSpeed)));
     }
 
     @Override
     public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
         return true;
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
+        return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(itemAbility);
     }
 }

@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercesource.client.gui.components;
 
 import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
+import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
@@ -10,7 +11,7 @@ public class TestAutoSizeCanvas extends Canvas {
 
 
     public TestAutoSizeCanvas(FierceMediaScreen screen, int pX, int pY, Component pMessage) {
-        super(screen, pX, pY, MIN_WIDTH, MIN_HEIGHT, pMessage);
+        super(screen, pX, pY, pMessage);
     }
 
     @Override
@@ -25,8 +26,8 @@ public class TestAutoSizeCanvas extends Canvas {
 
     @Override
     public void init() {
-        width = Math.max((int) (screen.width * MAX_WIDTH_PERCENTAGE), MIN_WIDTH);
-        height = Math.max(screen.height - 16, MIN_HEIGHT);
+        width = Math.max((int) (screen.width * UIStyles.style.maxCanvasWidthPercentage), UIStyles.style.simpleContainerCanvasWidth);
+        height = Math.max(screen.height - 16, UIStyles.style.threeRowContainerCanvasHeight);
         super.init();
     }
 }

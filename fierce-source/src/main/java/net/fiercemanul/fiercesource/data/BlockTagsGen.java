@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource.data;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
 import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
-import net.fiercemanul.fiercesource.tags.FSBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -37,6 +37,10 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FSBlocksAndItems.LARGE_MANA_CRYSTAL.getBlock(),
                 FSBlocksAndItems.MEDIUM_MANA_CRYSTAL.getBlock(),
                 FSBlocksAndItems.SMALL_MANA_CRYSTAL.getBlock()
+        );
+        tag(FSBlockTags.MINEABLE_WITH_CROWBAR).addTags(
+                BlockTags.MINEABLE_WITH_PICKAXE,
+                BlockTags.MINEABLE_WITH_AXE
         );
     }
 }

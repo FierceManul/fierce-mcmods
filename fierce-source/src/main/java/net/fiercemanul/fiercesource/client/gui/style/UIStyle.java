@@ -9,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.ChestMenu;
 
 /**
  * 都是精灵图
@@ -33,7 +32,10 @@ public class UIStyle {
     public final int invSlotsHeight = 69;
     public final int craftSlotsWidth = 88;
     public final int craftSlotsHeight = 52;
+    public final int simpleContainerCanvasWidth = invSlotsWidth;
     public final int threeRowContainerCanvasHeight = 143;
+    public final double maxCanvasWidthPercentage = 0.4;
+    public final double maxCanvasHeightPercentage = 1.0;
     public final BackgroundData backgroundData;
     public final ScrollbarData scrollbarData;
     public final TabsArea tabsArea;

@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercesource.client.gui.components;
 
 import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
+import net.fiercemanul.fiercesource.client.gui.style.UIStyles;
 import net.fiercemanul.fiercesource.client.level.menu.ClientFierceMediaMenu;
 import net.fiercemanul.fiercesource.util.TwoInt;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,16 +18,12 @@ import java.util.Arrays;
 public abstract class Canvas extends AbstractWidget {
 
 
-    protected static final int MIN_WIDTH = 154;
-    protected static final int MIN_HEIGHT = 143;
-    //画布宽度不要超过屏幕的0.4
-    protected static final double MAX_WIDTH_PERCENTAGE = 0.4;
     protected final TwoInt[] slotsPos;
     protected FierceMediaScreen screen;
     protected boolean scrollBarEnable = false;
 
-    public Canvas(FierceMediaScreen screen, int pX, int pY, int pWidth, int pHeight, Component pMessage) {
-        super(pX, pY, pWidth, pHeight, pMessage);
+    public Canvas(FierceMediaScreen screen, int pX, int pY, Component pMessage) {
+        super(pX, pY, UIStyles.style.simpleContainerCanvasWidth, UIStyles.style.threeRowContainerCanvasHeight, pMessage);
         this.screen = screen;
         slotsPos = new TwoInt[screen.getMenu().playerInv.getContainerSize()];
         Arrays.fill(slotsPos, ClientFierceMediaMenu.DEFAULT_SLOT_POS);

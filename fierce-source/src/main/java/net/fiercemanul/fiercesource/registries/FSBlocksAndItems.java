@@ -46,13 +46,13 @@ public class FSBlocksAndItems {
             HYPERCUBE = simple("hypercube", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).mapColor(MapColor.COLOR_BLACK));
 
     public static final DeferredItem<Item>
-            CLAW_HAMMER_ITEM = ITEM.register("claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
+            CLAW_HAMMER_ITEM = ITEM.register("claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
     public static final DeferredItem<Item>
-            NETHERITE_CLAW_HAMMER_ITEM = ITEM.register("netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
+            NETHERITE_CLAW_HAMMER_ITEM = ITEM.register("netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
     public static final DeferredItem<Item>
-            CROWBAR_ITEM = ITEM.register("crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties()));
+            CROWBAR_ITEM = ITEM.register("crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
     public static final DeferredItem<Item>
-            NETHERITE_CROWBAR_ITEM = ITEM.register("netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant()));
+            NETHERITE_CROWBAR_ITEM = ITEM.register("netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
     public static final DeferredItem<Item>
             TEST_ITEM = ITEM.registerSimpleItem("test_item");
     public static final DeferredItem<Item>
