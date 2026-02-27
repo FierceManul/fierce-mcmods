@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercedecoration.mixins;
 
-import net.fiercemanul.fiercedecoration.world.level.block.FDBlocks;
+import net.fiercemanul.fiercedecoration.data.FDBlocks;
 import net.fiercemanul.fiercedecoration.world.level.block.entity.ClientStarBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

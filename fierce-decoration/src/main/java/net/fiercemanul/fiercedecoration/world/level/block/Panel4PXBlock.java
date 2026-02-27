@@ -3,14 +3,14 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class Panel4PXBlock extends FacingModelBlock {
+public class Panel4PXBlock extends FacingDecorBlock {
 
 
     public static final MapCodec<? extends Panel4PXBlock> CODEC = simpleCodec(Panel4PXBlock::new);

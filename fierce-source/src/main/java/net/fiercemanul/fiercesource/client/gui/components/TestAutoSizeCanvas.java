@@ -25,9 +25,9 @@ public class TestAutoSizeCanvas extends Canvas {
     }
 
     @Override
-    public void init() {
+    public void autoSize() {
         width = Math.max((int) (screen.width * UIStyles.style.maxCanvasWidthPercentage), UIStyles.style.simpleContainerCanvasWidth);
         height = Math.max(screen.height - 16, UIStyles.style.threeRowContainerCanvasHeight);
-        super.init();
+        init();
     }
 }

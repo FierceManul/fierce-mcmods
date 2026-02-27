@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercedecoration.mixins;
 
-import net.fiercemanul.fiercedecoration.world.level.block.FDBlocks;
+import net.fiercemanul.fiercedecoration.data.FDBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

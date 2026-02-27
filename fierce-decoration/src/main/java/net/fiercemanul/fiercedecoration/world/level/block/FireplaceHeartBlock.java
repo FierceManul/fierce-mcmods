@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
 import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +35,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbilities;
 
-public class FireplaceHeartBlock extends ModelBlock {
+public class FireplaceHeartBlock extends DecorBlock {
 
 
     public static final MapCodec<? extends FireplaceHeartBlock> CODEC = simpleCodec(FireplaceHeartBlock::new);

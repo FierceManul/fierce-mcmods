@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.AxisModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.AxisDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 
-public class Pillar8PXBlock extends AxisModelBlock {
+public class Pillar8PXBlock extends AxisDecorBlock {
 
 
     public static final MapCodec<Pillar8PXBlock> CODEC = simpleCodec(Pillar8PXBlock::new);

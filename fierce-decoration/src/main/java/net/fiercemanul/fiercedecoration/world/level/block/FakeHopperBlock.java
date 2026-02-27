@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -30,7 +30,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class FakeHopperBlock extends ModelBlock {
+public class FakeHopperBlock extends DecorBlock {
 
 
     public static final MapCodec<FakeHopperBlock> CODEC = simpleCodec(FakeHopperBlock::new);

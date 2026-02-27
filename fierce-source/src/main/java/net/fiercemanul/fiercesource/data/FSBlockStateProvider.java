@@ -13,6 +13,7 @@ import net.neoforged.neoforge.client.model.generators.ModelProvider;
 import net.neoforged.neoforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.HashMap;
 
@@ -46,22 +47,28 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         this.exFileHelper = exFileHelper;
     }
 
-    protected void simple(DeferredBlock<? extends Block> deferredBlock) {
+    protected void simple(DeferredHolder<Block, ? extends Block> deferredBlock) {
         Block block = deferredBlock.get();
         simple(block, deferredBlock.getId().getPath(), cubeAll(block));
     }
 
-    protected void simpleWithModel(DeferredBlock<? extends Block> deferredBlock) {
+    protected void simpleWithModel(DeferredHolder<Block, ? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         simple(deferredBlock.get(), id.getPath(), model);
     }
 
-    protected void simpleWithModel(DeferredBlock<? extends Block> deferredBlock, ModelFile model) {
+    protected void simpleWithModelNoInv(DeferredHolder<Block, ? extends Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
+        getVariantBuilder(deferredBlock.get()).partialState().setModels(new ConfiguredModel(model));
+    }
+
+    protected void simpleWithModel(DeferredHolder<Block, ? extends Block> deferredBlock, ModelFile model) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), model);
     }
 
-    protected void simpleWithMcModel(DeferredBlock<? extends Block> deferredBlock, String modelFile) {
+    protected void simpleWithMcModel(DeferredHolder<Block, ? extends Block> deferredBlock, String modelFile) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(mcLoc("block/" + modelFile));
         simple(deferredBlock.get(), id.getPath(), model);
@@ -80,7 +87,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void simpleNature(DeferredBlock<? extends Block> deferredBlock) {
+    protected void simpleNature(DeferredHolder<Block, ? extends Block> deferredBlock) {
         Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
         ModelFile model = cubeAll(block);
@@ -105,9 +112,15 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 NORTH 为默认,使用同名模型,带物品模型
      */
-    protected void directionBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
+    protected void directionBlock(DeferredHolder<Block, ? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
+        directionModel(deferredBlock.get(), id.getPath(), model, lockUV);
+    }
+
+    protected void directionBlock(DeferredHolder<Block, ? extends Block> deferredBlock, String modelName, boolean lockUV) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + modelName));
         directionModel(deferredBlock.get(), id.getPath(), model, lockUV);
     }
 
@@ -145,9 +158,15 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 NORTH 为默认,使用同名模型,带物品模型
      */
-    protected void horizontalDirectionBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
+    protected void horizontalDirectionBlock(DeferredHolder<Block, ? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
+        horizontalDirectionModel(deferredBlock.get(), id.getPath(), model, lockUV);
+    }
+
+    protected void horizontalDirectionBlock(DeferredHolder<Block, ? extends Block> deferredBlock, String modelName, boolean lockUV) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + modelName));
         horizontalDirectionModel(deferredBlock.get(), id.getPath(), model, lockUV);
     }
 
@@ -196,7 +215,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     /**
      * 以 X 为默认,使用同名模型,带物品模型
      */
-    protected void horizontalAxisBlock(DeferredBlock<? extends Block> deferredBlock, boolean lockUV) {
+    protected void horizontalAxisBlock(DeferredHolder<Block, ? extends Block> deferredBlock, boolean lockUV) {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
         horizontalAxisModel(deferredBlock.get(), id.getPath(), model, lockUV);
@@ -217,7 +236,14 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    protected void rotationDecoratedBlock(DeferredBlock<? extends Block> deferredBlock) {
+    protected void decoratedItem(DeferredHolder<Block, ? extends Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
+        getVariantBuilder(deferredBlock.get()).partialState().setModels(new ConfiguredModel(model));
+        itemModels().basicItem(id);
+    }
+
+    protected void rotationDecoratedItem(DeferredHolder<Block, ? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         rotationDecoratedModel(
                 deferredBlock.get(),
@@ -227,6 +253,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
                 models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath() + "_r45")),
                 models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath() + "_r68"))
         );
+        itemModels().basicItem(id);
     }
 
     protected void rotationDecoratedModel(Block block, String path, ModelFile model, ModelFile model22, ModelFile model45, ModelFile model68) {
@@ -245,12 +272,11 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
                    .with(BlockStateProperties.ROTATION_16, i + 3).modelForState()
                    .modelFile(model68).rotationY(90 * i/4).addModel();
         }
-        itemModels().getBuilder(path).parent(model);
     }
 
 
 
-    protected void largeCrystal(DeferredBlock<? extends Block> deferredBlock) {
+    protected void largeCrystal(DeferredHolder<Block, ? extends Block> deferredBlock) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_LARGE_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
@@ -258,7 +284,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         simple(block, path, MODEL_LARGE_CRYSTAL, texture);
     }
 
-    protected void largeCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
+    protected void largeCrystalWithIcon(DeferredHolder<Block, ? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         largeCrystalWithIcon(
                 deferredBlock.get(),
@@ -272,7 +298,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         crystalWithIcon(block, path, texture, MODEL_LARGE_CRYSTAL, icon, MODEL_LARGE_CRYSTAL_ICON);
     }
 
-    protected void mediumCrystal(DeferredBlock<? extends Block> deferredBlock) {
+    protected void mediumCrystal(DeferredHolder<Block, ? extends Block> deferredBlock) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_MEDIUM_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
@@ -280,7 +306,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         simple(block, path, MODEL_MEDIUM_CRYSTAL, texture);
     }
 
-    protected void mediumCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
+    protected void mediumCrystalWithIcon(DeferredHolder<Block, ? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         mediumCrystalWithIcon(
                 deferredBlock.get(),
@@ -294,7 +320,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         crystalWithIcon(block, path, texture, MODEL_MEDIUM_CRYSTAL, icon, MODEL_MEDIUM_CRYSTAL_ICON);
     }
 
-    protected void smallCrystal(DeferredBlock<? extends Block> deferredBlock) {
+    protected void smallCrystal(DeferredHolder<Block, ? extends Block> deferredBlock) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_SMALL_CRYSTAL, blockTexture(deferredBlock.get()));
     }
 
@@ -302,7 +328,7 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         simple(block, path, MODEL_SMALL_CRYSTAL, texture);
     }
 
-    protected void smallCrystalWithIcon(DeferredBlock<? extends Block> deferredBlock) {
+    protected void smallCrystalWithIcon(DeferredHolder<Block, ? extends Block> deferredBlock) {
         ResourceLocation id = deferredBlock.getId();
         smallCrystalWithIcon(
                 deferredBlock.get(),

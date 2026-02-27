@@ -1,9 +1,10 @@
 package net.fiercemanul.fiercesource.data;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.data.registries.FSBlocks;
+import net.fiercemanul.fiercesource.data.registries.FSItems;
 import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
 import net.fiercemanul.fiercesource.data.tags.FSItemTags;
-import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -31,10 +32,10 @@ public class ItemTagsGen extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         Item[] crowbarItem = new Item[] {
-                FSBlocksAndItems.CROWBAR_ITEM.get(),
-                FSBlocksAndItems.NETHERITE_CROWBAR_ITEM.get(),
-                FSBlocksAndItems.CLAW_HAMMER_ITEM.get(),
-                FSBlocksAndItems.NETHERITE_CLAW_HAMMER_ITEM.get()
+                FSItems.CROWBAR_ITEM.get(),
+                FSItems.NETHERITE_CROWBAR_ITEM.get(),
+                FSItems.CLAW_HAMMER_ITEM.get(),
+                FSItems.NETHERITE_CLAW_HAMMER_ITEM.get()
         };
 
         tag(ItemTags.PICKAXES).add(crowbarItem);
@@ -42,6 +43,8 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(FSItemTags.WRENCH_ITEM).add(crowbarItem);
 
         copy(FSBlockTags.SOUL_CRYSTALS, FSItemTags.SOUL_CRYSTALS);
-        tag(FSItemTags.SOUL_CRYSTALS).add(FSBlocksAndItems.SOUL_CRYSTAL_SHARD.getItem());
+        copy(FSBlockTags.HAO_STONES, FSItemTags.HAO_STONES);
+        copy(FSBlockTags.DEEP_STONES, FSItemTags.DEEP_STONES);
+        tag(FSItemTags.SOUL_CRYSTALS).add(FSBlocks.SOUL_CRYSTAL_SHARD.getItem());
     }
 }

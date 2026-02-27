@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 
-public class FakeChestBlock extends HorizonFacingModelBlock {
+public class FakeChestBlock extends HorizonFacingDecorBlock {
 
 
     public static final MapCodec<FakeChestBlock> CODEC = simpleCodec(FakeChestBlock::new);

@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.inventory.CustomCraftingMenu;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class CraftingPadBlock extends FacingModelBlock {
+public class CraftingPadBlock extends FacingDecorBlock {
 
 
 

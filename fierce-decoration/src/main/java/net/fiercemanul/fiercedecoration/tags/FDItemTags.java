@@ -5,19 +5,29 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public final class FDItemTags {
 
 
-    public static final TagKey<Item> LAMP_IN_GLASS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "lamp_in_glass"));
-    public static final TagKey<Item> GUARDRAILS_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "guardrails"));
-    public static final TagKey<Item> PEEP_WINDOWS_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "peep_windows"));
-    public static final TagKey<Item> CUT_BLOCKS_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cut_blocks"));
-    public static final TagKey<Item> PILLAR_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "pillars"));
-    public static final TagKey<Item> SEA_LANTERN_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "sea_lanterns"));
-    public static final TagKey<Item> TABLES = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "tables"));
-    public static final TagKey<Item> CABINETS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cabinets"));
-    public static final TagKey<Item> WOOL_SOFA = ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "wool_sofa"));
+    public static final TagKey<Item> GLASS_LAMPS = create("glass_lamps");
+    public static final TagKey<Item> GUARDRAILS = create("guardrails");
+    public static final TagKey<Item> CROSS_HOLES = create("cross_holes");
+    public static final TagKey<Item> CUT_BLOCKS = create("cut_blocks");
+    public static final TagKey<Item> PILLARS = create("pillars");
+    public static final TagKey<Item> SEA_LANTERNS = createCommunity("sea_lanterns");
+    public static final TagKey<Item> REINFORCED_SEA_LANTERNS = create("reinforced_sea_lanterns");
+    public static final TagKey<Item> TABLES = createCommunity("tables");
+    public static final TagKey<Item> CABINETS = createCommunity("cabinets");
+    public static final TagKey<Item> WOOL_SOFAS = create("wool_sofas");
+
+    private static TagKey<Item> create(String name) {
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, name));
+    }
+
+    private static TagKey<Item> createCommunity(String name) {
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
+    }
 
     private FDItemTags() {}
 }

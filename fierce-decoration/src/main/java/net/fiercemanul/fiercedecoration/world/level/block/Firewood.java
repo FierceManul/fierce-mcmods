@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.HorizonAxisBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonAxisModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonAxisDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class Firewood extends HorizonAxisModelBlock {
+public class Firewood extends HorizonAxisDecorBlock {
 
 
     public static final MapCodec<? extends Firewood> CODEC = simpleCodec(Firewood::new);

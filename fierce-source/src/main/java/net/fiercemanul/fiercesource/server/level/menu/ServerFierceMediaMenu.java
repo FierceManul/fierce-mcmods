@@ -18,7 +18,7 @@ public class ServerFierceMediaMenu extends FierceMediaMenu {
 
     private final ServerPlayer player;
     private final ServerLevel level;
-    private final List<ServerMenuApp> menuApps = new ArrayList<>();
+    private final ArrayList<ServerMenuApp> menuApps = new ArrayList<>();
 
 
     public ServerFierceMediaMenu(
@@ -32,11 +32,13 @@ public class ServerFierceMediaMenu extends FierceMediaMenu {
             menuApps.add(menuAppsBuilder.get(i).build(this, player, playerInv));
             if (i >= Byte.MAX_VALUE - 1) break;
         }
+        addHardSlots(menuApps.getFirst());
+        addFakeSlots(menuApps.getFirst());
     }
 
     public void posMenuAppData(ServerMenuApp menuApp, AppData data) {
         if (menuApps.contains(menuApp)) PacketDistributor.sendToPlayer(player, new FierceMenuData(containerId, (byte) menuApps.indexOf(menuApp), data));
-        else menuApp.cleanSelf();
+        else menuApp.setRemove();
     }
 
     @Override

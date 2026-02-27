@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.google.common.collect.ImmutableMap;
+import net.fiercemanul.fiercedecoration.data.FDBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

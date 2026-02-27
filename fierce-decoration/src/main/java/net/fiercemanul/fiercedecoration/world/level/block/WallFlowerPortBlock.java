@@ -3,14 +3,14 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class WallFlowerPortBlock extends HorizonFacingModelBlock {
+public class WallFlowerPortBlock extends HorizonFacingDecorBlock {
 
 
     public static final MapCodec<WallFlowerPortBlock> CODEC = simpleCodec(WallFlowerPortBlock::new);

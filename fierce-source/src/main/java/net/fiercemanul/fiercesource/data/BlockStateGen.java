@@ -1,12 +1,14 @@
 package net.fiercemanul.fiercesource.data;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.data.registries.FSBlocks;
+import net.fiercemanul.fiercesource.data.registries.FSItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import static net.fiercemanul.fiercesource.registries.FSBlocksAndItems.*;
+import static net.fiercemanul.fiercesource.data.registries.FSBlocks.*;
 
-public class BlockStateGen extends FSBlockStateProvider{
+public class BlockStateGen extends FSBlockStateProvider {
 
 
     public BlockStateGen(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -15,35 +17,42 @@ public class BlockStateGen extends FSBlockStateProvider{
 
     @Override
     protected void registerStatesAndModels() {
-        simple(CREATIVE_MANA_BLOCK.getFirst());
-        directionBlock(CREATIVE_MANA_OUTPUT.getFirst(), false);
-        simpleWithModel(HYPERCUBE.getFirst());
-        simpleWithModel(WORLD_LOCATOR.getFirst());
+        simple(CREATIVE_MANA_BLOCK.deferredBlock());
+        directionBlock(CREATIVE_MANA_OUTPUT.deferredBlock(), false);
+        simpleWithModel(HYPERCUBE.deferredBlock());
+        simpleWithModel(WORLD_LOCATOR.deferredBlock());
 
         simpleWithModel(
-                SMALL_SOUL_CRYSTAL.getFirst(),
+                SMALL_SOUL_CRYSTAL.deferredBlock(),
                 models().getExistingFile(MODEL_SMALL_CRYSTAL)
         );
         simpleWithModel(
-                MEDIUM_SOUL_CRYSTAL.getFirst(),
+                MEDIUM_SOUL_CRYSTAL.deferredBlock(),
                 models().getExistingFile(MODEL_MEDIUM_CRYSTAL)
         );
         simpleWithModel(
-                LARGE_SOUL_CRYSTAL.getFirst(),
+                LARGE_SOUL_CRYSTAL.deferredBlock(),
                 models().getExistingFile(MODEL_LARGE_CRYSTAL)
         );
 
-        smallCrystal(SMALL_MANA_CRYSTAL.getFirst());
-        mediumCrystal(MEDIUM_MANA_CRYSTAL.getFirst());
-        largeCrystal(LARGE_MANA_CRYSTAL.getFirst());
+        smallCrystal(SMALL_MANA_CRYSTAL.deferredBlock());
+        mediumCrystal(MEDIUM_MANA_CRYSTAL.deferredBlock());
+        largeCrystal(LARGE_MANA_CRYSTAL.deferredBlock());
 
-        largeCrystalWithIcon(TEST_BLOCK.getFirst());
+        largeCrystalWithIcon(TEST_BLOCK.deferredBlock());
 
-        rotationDecoratedBlock(SOUL_CRYSTAL_SHARD.getFirst());
-        simpleWithModel(SOUL_CRYSTAL_DUST.getFirst());
+        rotationDecoratedItem(SOUL_CRYSTAL_SHARD.deferredBlock());
+        decoratedItem(SOUL_CRYSTAL_DUST.deferredBlock());
 
-        itemModels().basicItem(TEST_ITEM.get());
-        itemModels().basicItem(FE_ICON.get());
-        itemModels().basicItem(MANA_ICON.get());
+        simpleNature(HAO_STONE.deferredBlock());
+        simple(POLISHED_HAO_STONE.deferredBlock());
+        simple(SMOOTH_HAO_STONE.deferredBlock());
+        simple(DEEP_STONE.deferredBlock());
+        simple(POLISHED_DEEP_STONE.deferredBlock());
+        simple(SMOOTH_DEEP_STONE.deferredBlock());
+
+        itemModels().basicItem(FSItems.TEST_ITEM.get());
+        itemModels().basicItem(FSItems.FE_ICON.get());
+        itemModels().basicItem(FSItems.MANA_ICON.get());
     }
 }

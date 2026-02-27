@@ -2,12 +2,14 @@ package net.fiercemanul.fiercesource.client;
 
 import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
+import net.fiercemanul.fiercesource.client.level.menu.ClientFierceMediaMenu;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
 import net.fiercemanul.fiercesource.data.UIStyleLoader;
-import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
-import net.fiercemanul.fiercesource.registries.FSMenuTypes;
-import net.fiercemanul.fiercesource.registries.FSParticleTypes;
+import net.fiercemanul.fiercesource.data.registries.FSBlocks;
+import net.fiercemanul.fiercesource.data.registries.FSMenuTypes;
+import net.fiercemanul.fiercesource.data.registries.FSParticleTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.inventory.MenuType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,7 +27,6 @@ public final class ClientRegisterEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
         FierceSource.LOGGER.info("HELLO FROM CLIENT SETUP");
         FierceSource.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
@@ -34,7 +35,7 @@ public final class ClientRegisterEvents {
     public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
         event.register(
                 (state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFA0FFFF : 0xFFFF00FF,
-                FSBlocksAndItems.TEST_BLOCK.getBlock()
+                FSBlocks.TEST_BLOCK.getBlock()
         );
     }
 
@@ -42,7 +43,7 @@ public final class ClientRegisterEvents {
     public static void registerColorHandlers(RegisterColorHandlersEvent.Item event) {
         event.register(
                 (stack, tintIndex) -> tintIndex == 0 ? 0xFFA0FFFF : 0xFF00FFFF,
-                FSBlocksAndItems.TEST_BLOCK.getItem()
+                FSBlocks.TEST_BLOCK.getItem()
         );
     }
 
@@ -53,7 +54,8 @@ public final class ClientRegisterEvents {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(FSMenuTypes.FIERCE_MEDIA_MENU.get(), FierceMediaScreen::new);
+        //noinspection unchecked
+        event.register((MenuType<ClientFierceMediaMenu>) FSMenuTypes.FIERCE_MEDIA_MENU.get(), FierceMediaScreen::new);
     }
 
     @SubscribeEvent

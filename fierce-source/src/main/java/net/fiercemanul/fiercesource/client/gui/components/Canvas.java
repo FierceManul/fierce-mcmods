@@ -25,8 +25,18 @@ public abstract class Canvas extends AbstractWidget {
     public Canvas(FierceMediaScreen screen, int pX, int pY, Component pMessage) {
         super(pX, pY, UIStyles.style.simpleContainerCanvasWidth, UIStyles.style.threeRowContainerCanvasHeight, pMessage);
         this.screen = screen;
-        slotsPos = new TwoInt[screen.getMenu().playerInv.getContainerSize()];
+        slotsPos = new TwoInt[screen.getMenu().invSize];
         Arrays.fill(slotsPos, ClientFierceMediaMenu.DEFAULT_SLOT_POS);
+    }
+
+    public void autoSize() {
+        init();
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        init();
     }
 
     public void init() {

@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
 import net.fiercemanul.fiercesource.util.FSUtils;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SoulCrystalOrnamentBlock extends ModelBlock {
+public class SoulCrystalOrnamentBlock extends DecorBlock {
 
     public static final MapCodec<SoulCrystalOrnamentBlock> CODEC = simpleCodec(SoulCrystalOrnamentBlock::new);
     public static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);

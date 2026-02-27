@@ -1,0 +1,54 @@
+{
+    "parent": "minecraft:block/block",
+    "loader": "neoforge:composite",
+    "textures": {
+        "particle": "fiercedecoration:block/reinforced_white_sea_lantern"
+    },
+    "children": {
+        "part_a": {
+            "parent": "minecraft:block/block",
+            "textures": {
+                "all": "fiercedecoration:block/reinforced_white_sea_lantern"
+            },
+            "elements": [
+                {
+                    "from": [ 0, 0, 0 ],
+                    "to": [ 16, 16, 16 ],
+                    "faces": {
+                        "down":  { "texture": "#all", "cullface": "down", "tintindex": 0 },
+                        "up":    { "texture": "#all", "cullface": "up", "tintindex": 0 },
+                        "north": { "texture": "#all", "cullface": "north", "tintindex": 0 },
+                        "south": { "texture": "#all", "cullface": "south", "tintindex": 0 },
+                        "west":  { "texture": "#all", "cullface": "west", "tintindex": 0 },
+                        "east":  { "texture": "#all", "cullface": "east", "tintindex": 0 }
+                    }
+                }
+            ]
+        },
+        "part_b": {
+            "parent": "minecraft:block/block",
+            "render_type": "minecraft:cutout_mipped",
+            "textures": {
+                "overlay": "fiercedecoration:block/reinforced_sea_lantern_overlay"
+            },
+            "elements": [
+                {
+                    "from": [ 0, 0, 0 ],
+                    "to": [ 16, 16, 16 ],
+                    "faces": {
+                        "down":  { "texture": "#overlay", "cullface": "down" },
+                        "up":    { "texture": "#overlay", "cullface": "up" },
+                        "north": { "texture": "#overlay", "cullface": "north" },
+                        "south": { "texture": "#overlay", "cullface": "south" },
+                        "west":  { "texture": "#overlay", "cullface": "west" },
+                        "east":  { "texture": "#overlay", "cullface": "east" }
+                    }
+                }
+            ]
+        }
+    },
+    "item_render_order": [
+        "part_a",
+        "part_b"
+    ]
+}

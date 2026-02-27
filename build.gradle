@@ -1,13 +1,16 @@
 plugins {
-    id 'net.neoforged.gradle.userdev' version '7.0.170' apply false
+    id 'net.neoforged.moddev' version '2.0.107' apply false
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
 }
 
 subprojects {
     apply plugin: 'java-library'
-    apply plugin: 'eclipse'
     apply plugin: 'idea'
     apply plugin: 'maven-publish'
-    apply plugin: 'net.neoforged.gradle.userdev'
+    apply plugin: 'net.neoforged.moddev'
 
     version = mod_version
     group = mod_group_id
@@ -16,56 +19,65 @@ subprojects {
         mavenLocal()
     }
 
+    base {
+        archivesName = mod_archivesName
+    }
+
     java{
         toolchain.languageVersion = JavaLanguageVersion.of(javaLanguageVersion)
         withSourcesJar()
     }
 
-    base {
-        archivesName = mod_archivesName
+    neoForge {
+        version = neo_version
+        validateAccessTransformers = true
+        runs {
+            configureEach {
+                systemProperty 'forge.logging.markers', 'REGISTRIES'
+                systemProperty 'forge.logging.console.level', 'debug'
+                systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+            }
+            client {
+                client()
+                gameDirectory = project.file("${rootProject.rootDir}/runs/client")
+            }
+            clientWithMods {
+                client()
+                gameDirectory = project.file("${rootProject.rootDir}/runs/clientWithMods")
+            }
+            server {
+                server()
+                gameDirectory = project.file("${rootProject.rootDir}/runs/server")
+            }
+            serverWithMods {
+                server()
+                gameDirectory = project.file("${rootProject.rootDir}/runs/serverWithMods")
+            }
+            gameTestServer {
+                type = "gameTestServer"
+                gameDirectory = project.file("${rootProject.rootDir}/runs/gameTestServer")
+            }
+            data {
+                data()
+                gameDirectory = project.file("${rootProject.rootDir}/runs/data")
+                programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            }
+        }
+        mods {
+            "${mod_id}" {
+                sourceSet(sourceSets.main)
+            }
+        }
     }
 
     configurations {
         runtimeClasspath.extendsFrom localRuntime
     }
 
-    sourceSets.main.resources { srcDir 'src/generated/resources' }
-
     dependencies {
-        implementation "net.neoforged:neoforge:${neo_version}"
     }
 
-    runs {
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            systemProperty 'forge.logging.console.level', 'debug'
-            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-            modSource sourceSets.main
-        }
-        client {
-            workingDirectory file("${rootProject.rootDir}/runs/client")
-        }
-        clientWithMods {
-            run 'client'
-            workingDirectory file("${rootProject.rootDir}/runs/clientWithMods")
-        }
-        server {
-            workingDirectory file("${rootProject.rootDir}/runs/server")
-        }
-        serverWithMods {
-            run 'server'
-            workingDirectory file("${rootProject.rootDir}/runs/serverWithMods")
-        }
-        gameTestServer {
-            workingDirectory file("${rootProject.rootDir}/runs/gameTestServer")
-        }
-        data {
-            workingDirectory file("${rootProject.rootDir}/runs/data")
-            arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-    }
-
-    tasks.withType(ProcessResources).configureEach {
+    var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
         var replaceProperties = [
                 minecraft_version         : minecraft_version,
                 minecraft_version_range   : minecraft_version_range,
@@ -81,10 +93,20 @@ subprojects {
                 fiercesource_version_range: fiercesource_version_range,
         ]
         inputs.properties replaceProperties
+        expand replaceProperties
+        from "src/main/templates"
+        into "build/generated/sources/modMetadata"
+    }
 
-        filesMatching(['META-INF/neoforge.mods.toml']) {
-            expand replaceProperties
-        }
+    sourceSets.main.resources {
+        srcDir 'src/generated/resources'
+        srcDir generateModMetadata
+    }
+
+    neoForge.ideSyncTask generateModMetadata
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
     }
 
     publishing {
@@ -98,10 +120,6 @@ subprojects {
                 url = "file://${project.projectDir}/repo"
             }
         }
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = 'UTF-8'
     }
 
     idea {

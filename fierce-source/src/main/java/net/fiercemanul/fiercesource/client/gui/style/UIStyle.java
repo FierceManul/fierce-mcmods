@@ -107,9 +107,9 @@ public class UIStyle {
     }
 
     public void render3RowContainerCanvas(GuiGraphics guiGraphics, Font font, Component title) {
-        guiGraphics.drawString(font, title, 1, 2, 4210752, false);
+        guiGraphics.drawString(font, title, 2, 2, 4210752, false);
         render3RowContainer(guiGraphics, 0, 11);
-        guiGraphics.drawString(font, INV_TITLE, 1, 65, 4210752, false);
+        guiGraphics.drawString(font, INV_TITLE, 2, 65, 4210752, false);
         renderInventory(guiGraphics, 0, 74);
     }
 

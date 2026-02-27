@@ -1,13 +1,9 @@
 package net.fiercemanul.fiercesource.world.level.menu;
 
-import net.fiercemanul.fiercesource.client.level.app.ClientMenuApp;
 import net.fiercemanul.fiercesource.client.level.menu.ClientFierceMediaMenu;
-import net.fiercemanul.fiercesource.registries.FSMenuTypes;
-import net.fiercemanul.fiercesource.server.level.app.ServerApp;
 import net.fiercemanul.fiercesource.server.level.app.ServerMenuApp;
 import net.fiercemanul.fiercesource.server.level.menu.ServerFierceMediaMenu;
 import net.fiercemanul.fiercesource.world.level.app.MenuApp;
-import net.fiercemanul.fiercesource.world.level.app.MenuAppType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -28,29 +24,36 @@ import java.util.List;
 public abstract class FierceMediaMenu extends AbstractContainerMenu {
 
 
-    public static final MenuType<ClientFierceMediaMenu> MENU_TYPE = IMenuTypeExtension.create(FierceMediaMenu::clientMenu);
-    public static ClientFierceMediaMenu clientMenu(int containerId, Inventory inv, @Nullable RegistryFriendlyByteBuf data) {
-        if (data != null) {
-            int c = data.readByte();
-            if (c > 0) {
-                List<ClientMenuApp.Builder> menuAppsBuilder = new ArrayList<>();
-                for (int i = 0; i < c; i++) menuAppsBuilder.add(MenuAppType.decodeApp(data));
-                return new ClientFierceMediaMenu(containerId, inv.player, inv, menuAppsBuilder);
-            }
-        }
-        return new ClientFierceMediaMenu(containerId, inv.player, inv, List.of());
+    public static final MenuType<FierceMediaMenu> MENU_TYPE = IMenuTypeExtension.create(FierceMediaMenu::clientMenu);
+    public static FierceMediaMenu clientMenu(int containerId, Inventory inv, @Nullable RegistryFriendlyByteBuf data) {
+        return ClientFierceMediaMenu.decode(containerId, inv, data);
     }
+    public static final int FAKE_SLOT_SIZE = 64;
 
     public final Inventory playerInv;
+    public final int invSize;
+    protected int hardSlotsSize;
     public int random;
 
     public FierceMediaMenu(int containerId, Inventory playerInv) {
-        super(FSMenuTypes.FIERCE_MEDIA_MENU.get(), containerId);
+        super(MENU_TYPE, containerId);
         this.playerInv = playerInv;
-        for (int i = 0; i < playerInv.getContainerSize(); i++) addSlot(new Slot(playerInv, i, 0, 0));
+        this.invSize = playerInv.getContainerSize();
+        for (int i = 0; i < invSize; i++) addSlot(new Slot(playerInv, i, 0, 0));
     }
 
     public abstract List<? extends MenuApp> getMenuApps();
+
+    protected void addHardSlots(MenuApp app) {
+        Slot[] hardSlots = app.buildHardSlots();
+        for (Slot hardSlot : hardSlots) addSlot(hardSlot);
+        hardSlotsSize = slots.size();
+    }
+
+    protected void addFakeSlots(MenuApp app) {
+        Slot[] fakeSlots = app.getFakeSlots();
+        for (Slot fakeSlot : fakeSlots) addSlot(fakeSlot);
+    }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
@@ -66,24 +69,29 @@ public abstract class FierceMediaMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        getMenuApps().forEach(MenuApp::cleanSelf);
+        getMenuApps().forEach(MenuApp::setRemove);
     }
 
     public void handleRemoteData(byte menuAppIndex, Object data) {
         getMenuApps().get(menuAppIndex).handleData(data);
     }
 
+    public int getHardSlotsSize() {
+        return hardSlotsSize;
+    }
+
+
     public static class Provider implements MenuProvider {
 
 
         private final ServerLevel level;
-        private final ServerApp[] apps;
+        private final ArrayList<ServerMenuApp.Builder> menuApps;
         @Nullable
         private ServerFierceMediaMenu menu;
 
-        public Provider(ServerLevel level, ServerApp[] apps) {
+        public Provider(ServerLevel level, ArrayList<ServerMenuApp.Builder> menuApps) {
             this.level = level;
-            this.apps = apps;
+            this.menuApps = menuApps;
         }
 
         @Override
@@ -93,8 +101,7 @@ public abstract class FierceMediaMenu extends AbstractContainerMenu {
 
         @Override
         public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-            List<ServerMenuApp.Builder> menuApps = new ArrayList<>();
-            for (ServerApp app : apps) menuApps.addAll(app.getMenuAppConstructors());
+
             // item apps
             menu = new ServerFierceMediaMenu(containerId, (ServerPlayer) player, playerInventory, level, menuApps);
             return menu;
@@ -105,4 +112,6 @@ public abstract class FierceMediaMenu extends AbstractContainerMenu {
         }
 
     }
+
+
 }

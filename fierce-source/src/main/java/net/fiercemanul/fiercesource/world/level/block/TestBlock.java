@@ -1,7 +1,9 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
+import net.fiercemanul.fiercesource.data.registries.FSBlockEntityTypes;
+import net.fiercemanul.fiercesource.server.level.app.ServerApp;
+import net.fiercemanul.fiercesource.server.level.app.ServerMenuApp;
 import net.fiercemanul.fiercesource.world.level.block.entity.TestBlockEntity;
 import net.fiercemanul.fiercesource.world.level.menu.FierceMediaMenu;
 import net.minecraft.core.BlockPos;
@@ -21,9 +23,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 
-public class TestBlock extends ModelBlock implements EntityBlock {
+public class TestBlock extends DecorBlock implements EntityBlock {
 
 
     public static final MapCodec<TestBlock> CODEC = simpleCodec(TestBlock::new);
@@ -65,8 +68,11 @@ public class TestBlock extends ModelBlock implements EntityBlock {
     @Nullable
     @Override
     protected FierceMediaMenu.Provider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        if (level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof TestBlockEntity testBlockEntity)
-            return new FierceMediaMenu.Provider(serverLevel, testBlockEntity.getServerApp());
+        if (level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof TestBlockEntity testBlockEntity) {
+            ArrayList<ServerMenuApp.Builder> menuApps = new ArrayList<>();
+            for (ServerApp app : testBlockEntity.getServerApp()) menuApps.addAll(app.getMenuAppConstructors());
+            return new FierceMediaMenu.Provider(serverLevel, menuApps);
+        }
         return null;
     }
 

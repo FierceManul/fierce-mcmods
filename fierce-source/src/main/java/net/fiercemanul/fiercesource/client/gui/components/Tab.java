@@ -38,9 +38,9 @@ public class Tab extends StyleButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-        icon.renderIcon(pGuiGraphics, pPartialTick, iconX, iconY);
+    public void renderWidget(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float partialTick) {
+        if (isFocused()) guiGraphics.blitSprite(buttonData.onImg(), imgX, imgY, imgW, imgH);
+        icon.renderIcon(guiGraphics, partialTick, iconX, iconY);
     }
 
     @Override

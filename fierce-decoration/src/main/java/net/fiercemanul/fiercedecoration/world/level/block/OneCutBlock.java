@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 
-public class OneCutBlock extends FacingModelBlock {
+public class OneCutBlock extends FacingDecorBlock {
 
 
     public static final MapCodec<OneCutBlock> CODEC = simpleCodec(OneCutBlock::new);

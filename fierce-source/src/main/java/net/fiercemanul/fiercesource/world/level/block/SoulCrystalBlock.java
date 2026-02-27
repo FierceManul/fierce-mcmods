@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class SoulCrystalBlock extends ModelBlock {
+public class SoulCrystalBlock extends DecorBlock {
 
 
     public static final VoxelShape SMALL_SHAPE = Block.box(6.0, 2.0, 6.0, 10.0, 14.0, 10.0);

@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 
-public class NeoForgeBlock extends HorizonFacingModelBlock {
+public class NeoForgeBlock extends HorizonFacingDecorBlock {
 
 
     public static final MapCodec<NeoForgeBlock> CODEC = simpleCodec(NeoForgeBlock::new);

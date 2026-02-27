@@ -1,9 +1,9 @@
 package net.fiercemanul.fiercesource;
 
 import com.mojang.logging.LogUtils;
+import net.fiercemanul.fiercesource.data.registries.FCRegistries;
+import net.fiercemanul.fiercesource.data.registries.FSBlocks;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
-import net.fiercemanul.fiercesource.registries.FCRegistries;
-import net.fiercemanul.fiercesource.registries.FSBlocksAndItems;
 import net.fiercemanul.fiercesource.world.level.capabilities.FSCapabilities;
 import net.fiercemanul.fiercesource.world.level.capabilities.InfiniteManaContainer;
 import net.minecraft.world.entity.player.Player;
@@ -55,7 +55,7 @@ public class FierceSource {
         event.registerBlock(
                 FSCapabilities.BLOCK_MANA_CAP,
                 (level, pos, state, blockEntity, context) -> InfiniteManaContainer.INSTANCE,
-                FSBlocksAndItems.CREATIVE_MANA_BLOCK.getBlock()
+                FSBlocks.CREATIVE_MANA_BLOCK.getBlock()
         );
     }
 

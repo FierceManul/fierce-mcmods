@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class ThinStairBlock extends HorizonFacingModelBlock {
+public class ThinStairBlock extends HorizonFacingDecorBlock {
 
 
     public static final MapCodec<ThinStairBlock> CODEC = simpleCodec(ThinStairBlock::new);

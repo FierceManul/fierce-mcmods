@@ -4,7 +4,8 @@ import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
 import net.fiercemanul.fiercesource.world.level.block.AxisBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonAxisModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonAxisDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -24,7 +25,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class TableBlock extends HorizonAxisModelBlock {
+public class TableBlock extends DecorBlock {
 
 
     public static final MapCodec<TableBlock> CODEC = simpleCodec(TableBlock::new);
@@ -33,8 +34,8 @@ public class TableBlock extends HorizonAxisModelBlock {
     public static final VoxelShape SHAPE_LEGGED = Shapes.or(SHAPE_TOP, Block.box(6.0, 0.0, 6.0, 10.0, 14.0, 10.0));
 
     public TableBlock(Properties pProperties) {
-        super(pProperties, AxisBlock.CLOCK_WISE_AXIS);
-        this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.X).setValue(LEGGED, true).setValue(WATERLOGGED, false));
+        super(pProperties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEGGED, true).setValue(WATERLOGGED, false));
     }
 
     protected MapCodec<? extends TableBlock> codec() {
@@ -42,7 +43,7 @@ public class TableBlock extends HorizonAxisModelBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS, LEGGED, WATERLOGGED);
+        builder.add(LEGGED, WATERLOGGED);
     }
 
     @Override

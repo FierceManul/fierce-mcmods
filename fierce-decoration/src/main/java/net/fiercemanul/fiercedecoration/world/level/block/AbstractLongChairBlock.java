@@ -26,7 +26,7 @@ public abstract class AbstractLongChairBlock extends AbstractChairBlock {
 
 
     protected static final EnumProperty<LongBlockType> TYPE = FDBlockStateProperties.LONG_BLOCK_TYPE;
-    protected static final VoxelShape SHAPE_DEFAULT_BASE = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
+    protected static final VoxelShape SHAPE_DEFAULT_BASE = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 13.0);
 
     protected static ImmutableMap<Direction, ImmutableMap<LongBlockType, VoxelShape>> buildShapes(VoxelShape base, VoxelShapeHelper back, VoxelShapeHelper left, VoxelShapeHelper right) {
         ImmutableMap.Builder<Direction, ImmutableMap<LongBlockType, VoxelShape>> builder = ImmutableMap.builder();

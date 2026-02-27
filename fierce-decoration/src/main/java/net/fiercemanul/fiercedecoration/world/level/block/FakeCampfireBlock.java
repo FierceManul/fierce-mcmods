@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.world.level.block.HorizonAxisModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonAxisDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class FakeCampfireBlock extends HorizonAxisModelBlock {
+public class FakeCampfireBlock extends HorizonAxisDecorBlock {
 
 
     public static final MapCodec<FakeCampfireBlock> CODEC = simpleCodec(FakeCampfireBlock::new);
@@ -24,7 +24,7 @@ public class FakeCampfireBlock extends HorizonAxisModelBlock {
     }
 
     @Override
-    protected MapCodec<? extends HorizonAxisModelBlock> codec() {
+    protected MapCodec<? extends HorizonAxisDecorBlock> codec() {
         return CODEC;
     }
 

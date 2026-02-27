@@ -1,29 +1,37 @@
 package net.fiercemanul.fiercesource.data;
 
+import net.fiercemanul.fiercesource.data.registries.FSBlocks;
+import net.fiercemanul.fiercesource.data.registries.FSItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 
 import java.util.concurrent.CompletableFuture;
 
-import static net.fiercemanul.fiercesource.registries.FSBlocksAndItems.*;
+import static net.fiercemanul.fiercesource.data.registries.FSBlocks.*;
+import static net.fiercemanul.fiercesource.data.registries.FSItems.*;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
 import static net.minecraft.data.recipes.ShapelessRecipeBuilder.shapeless;
 
 public class RecipeGen extends FSRecipeProvider {
 
 
-    public RecipeGen(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
-        super(packOutput, pRegistries);
+    public RecipeGen(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+        super(packOutput, registries);
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput pRecipeOutput) {
+    protected void buildRecipes(RecipeOutput recipeOutput) {
 
         shaped(RecipeCategory.TOOLS, CROWBAR_ITEM)
                 .define('.', Items.IRON_NUGGET)
@@ -32,9 +40,9 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" X ")
                 .pattern(" X ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                .save(pRecipeOutput);
+                .save(recipeOutput);
 
-        netheriteSmithing(pRecipeOutput, CROWBAR_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CROWBAR_ITEM.get());
+        netheriteSmithing(recipeOutput, CROWBAR_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CROWBAR_ITEM.get());
 
         shaped(RecipeCategory.TOOLS, CLAW_HAMMER_ITEM)
                 .define('.', Items.IRON_NUGGET)
@@ -44,13 +52,15 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" I ")
                 .pattern(" I ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                .save(pRecipeOutput);
+                .save(recipeOutput);
 
-        netheriteSmithing(pRecipeOutput, CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CLAW_HAMMER_ITEM.get());
+        netheriteSmithing(recipeOutput, CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, NETHERITE_CLAW_HAMMER_ITEM.get());
+        stone(recipeOutput, HAO_STONE, POLISHED_HAO_STONE, SMOOTH_HAO_STONE);
+        stone(recipeOutput, DEEP_STONE, POLISHED_DEEP_STONE, SMOOTH_DEEP_STONE);
 
 
 
-        RecipeOutput backupRecipeOutput = pRecipeOutput.withConditions(new NotCondition(new ModLoadedCondition("fiercecraft")));
+        RecipeOutput backupRecipeOutput = recipeOutput.withConditions(new NotCondition(new ModLoadedCondition("fiercecraft")));
         
         shaped(RecipeCategory.MISC, HYPERCUBE)
                 .define('#', Items.ENDER_CHEST)
@@ -131,6 +141,19 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(LARGE_SOUL_CRYSTAL), has(LARGE_SOUL_CRYSTAL))
                 .save(backupRecipeOutput, applyBackup(LARGE_MANA_CRYSTAL));
 
+    }
+
+    private void stone(RecipeOutput recipeOutput, ItemLike stone, ItemLike polished, ItemLike smooth) {
+        shaped(RecipeCategory.BUILDING_BLOCKS, polished, 4)
+                .define('#', stone)
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy(getHasName(stone), has(stone))
+                .save(recipeOutput);
+        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, polished, stone);
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(stone), RecipeCategory.BUILDING_BLOCKS, smooth, 0.1F, 200)
+                                  .unlockedBy(getHasName(stone), has(stone))
+                                  .save(recipeOutput);
     }
 
 }

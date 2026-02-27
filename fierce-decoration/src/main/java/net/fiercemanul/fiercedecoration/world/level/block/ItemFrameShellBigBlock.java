@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 
-public class ItemFrameShellBigBlock extends FacingModelBlock {
+public class ItemFrameShellBigBlock extends FacingDecorBlock {
 
 
     public static final MapCodec<ItemFrameShellBigBlock> CODEC = simpleCodec(ItemFrameShellBigBlock::new);

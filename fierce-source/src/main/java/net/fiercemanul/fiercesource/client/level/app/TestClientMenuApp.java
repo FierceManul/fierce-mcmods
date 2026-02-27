@@ -2,6 +2,7 @@ package net.fiercemanul.fiercesource.client.level.app;
 
 import net.fiercemanul.fiercesource.client.level.menu.ClientFierceMediaMenu;
 import net.fiercemanul.fiercesource.world.level.app.DataType.IntData;
+import net.fiercemanul.fiercesource.world.level.app.TestMenuApp;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamDecoder;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,7 +11,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class TestClientMenuApp implements ClientMenuApp {
+public class TestClientMenuApp extends TestMenuApp implements ClientMenuApp {
 
 
     public static final StreamDecoder<RegistryFriendlyByteBuf, ClientMenuApp.Builder> DECODER =
@@ -38,7 +39,12 @@ public class TestClientMenuApp implements ClientMenuApp {
     }
 
     @Override
-    public void cleanSelf() {
+    public void setRemove() {
 
+    }
+
+    @Override
+    public boolean isRemoved() {
+        return false;
     }
 }

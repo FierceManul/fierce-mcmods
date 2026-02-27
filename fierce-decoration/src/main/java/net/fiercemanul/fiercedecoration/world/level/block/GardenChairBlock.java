@@ -15,8 +15,8 @@ public class GardenChairBlock extends AbstractLongChairBlock {
 
     protected static final VoxelShapeHelper SHAPE_LEFT = new VoxelShapeHelper().applyCube(0.0, 8.0, 0.0, 2.0, 13.0, 12.0);
     protected static final VoxelShapeHelper SHAPE_RIGHT = new VoxelShapeHelper().applyCube(14.0, 8.0, 0.0, 16.0, 13.0, 12.0);
-    protected static final VoxelShapeHelper SHAPE_BACK = new VoxelShapeHelper().applyCube(0.0, 8.0, 10.0, 16.0, 19.0, 16.0);
-    protected static final VoxelShapeHelper COLLISION_SHAPE_BACK = new VoxelShapeHelper().applyCube(0.0, 8.0, 12.0, 16.0, 19.0, 16.0);
+    protected static final VoxelShapeHelper SHAPE_BACK = new VoxelShapeHelper().applyCube(0.0, 8.0, 10.0, 16.0, 16.0, 16.0);
+    protected static final VoxelShapeHelper COLLISION_SHAPE_BACK = new VoxelShapeHelper().applyCube(0.0, 8.0, 12.0, 16.0, 16.0, 16.0);
     protected static final ImmutableMap<Direction, ImmutableMap<LongBlockType, VoxelShape>> SHAPE_MAP = buildShapes(SHAPE_DEFAULT_BASE, SHAPE_BACK, SHAPE_LEFT, SHAPE_RIGHT);;
     protected static final ImmutableMap<Direction, ImmutableMap<LongBlockType, VoxelShape>> COLLISION_SHAPE_MAP = buildShapes(SHAPE_DEFAULT_BASE, COLLISION_SHAPE_BACK, SHAPE_LEFT, SHAPE_RIGHT);
     protected static final Vec3 SIT_POS_NORTH = new Vec3(0.5, 0.5625, 0.4375);

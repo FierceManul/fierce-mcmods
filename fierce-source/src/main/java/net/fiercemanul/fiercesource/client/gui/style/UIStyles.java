@@ -12,19 +12,19 @@ public class UIStyles {
     public static final UIStyle DEFAULT = new UIStyle(
             new UIStyle.BackgroundData(
                     ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/background"),
-                    UIStyle.Padding.two(28, 9)
+                    UIStyle.Padding.two(26, 9)
             ),
             new UIStyle.ScrollbarData(
                     ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/scrollbar_tab"),
-                    9, 11, 30, 14
+                    8, 11, 30, 14
             ),
-            new UIStyle.TabsArea(-25, 7, -7),
+            new UIStyle.TabsArea(-24, 2, -2),
             new UIStyle.TabData(
                     new UIStyle.ImgButtonData(
                             UIStyle.Size.same(18),
                             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/tab_off"),
                             ResourceLocation.fromNamespaceAndPath(FierceSource.FC_MODID, "default/tab_on"),
-                            UIStyle.Padding.same(1)
+                            UIStyle.Padding.same(0)
                     ),
                     UIStyle.Offset.same(1),
                     -1,

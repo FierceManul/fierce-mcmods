@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class FoxCarrotSheaf extends ModelBlock {
+public class FoxCarrotSheaf extends DecorBlock {
 
 
     public static final MapCodec<FoxCarrotSheaf> CODEC = simpleCodec(FoxCarrotSheaf::new);

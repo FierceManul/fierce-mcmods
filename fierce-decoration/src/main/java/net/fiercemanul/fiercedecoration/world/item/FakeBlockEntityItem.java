@@ -19,8 +19,8 @@ public class FakeBlockEntityItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTootipComponents, TooltipFlag pTooltipFlag) {
-        pTootipComponents.add(Component.translatable("fiercedecoration.tip.no_more_be").withStyle(ChatFormatting.DARK_PURPLE));
-        super.appendHoverText(pStack, pContext, pTootipComponents, pTooltipFlag);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("fiercedecoration.tip.no_more_be").withStyle(ChatFormatting.DARK_PURPLE));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

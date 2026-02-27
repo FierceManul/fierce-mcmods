@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.entity.Seat;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public abstract class AbstractChairBlock extends HorizonFacingModelBlock {
+public abstract class AbstractChairBlock extends HorizonFacingDecorBlock {
 
 
     protected static final Vec3 SIT_POS_DEFAULT = new Vec3(0.5, 0.5625, 0.5);

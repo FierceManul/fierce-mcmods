@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.app;
 
 import net.fiercemanul.fiercesource.client.level.app.ClientMenuApp;
-import net.fiercemanul.fiercesource.registries.FCRegistries;
+import net.fiercemanul.fiercesource.data.registries.FCRegistries;
 import net.fiercemanul.fiercesource.server.level.app.ServerMenuApp;
 import net.minecraft.Util;
 import net.minecraft.network.RegistryFriendlyByteBuf;

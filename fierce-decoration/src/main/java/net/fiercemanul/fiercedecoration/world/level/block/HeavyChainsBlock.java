@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 
 
-public class HeavyChainsBlock extends FacingModelBlock {
+public class HeavyChainsBlock extends FacingDecorBlock {
 
 
     public static final MapCodec<HeavyChainsBlock> CODEC = simpleCodec(HeavyChainsBlock::new);

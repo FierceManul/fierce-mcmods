@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercedecoration.world.item.FDItems;
+import net.fiercemanul.fiercedecoration.data.FDItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;

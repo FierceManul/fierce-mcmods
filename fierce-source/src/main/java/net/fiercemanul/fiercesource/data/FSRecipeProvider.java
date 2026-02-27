@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
-import net.fiercemanul.fiercesource.registries.ItemBlockGroup;
+import net.fiercemanul.fiercesource.data.registries.ItemBlockGroup;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -18,7 +18,7 @@ public abstract class FSRecipeProvider extends RecipeProvider {
 
 
     protected ResourceLocation applyBackup(ItemBlockGroup<?, ?> group) {
-        return applyBackup(group.getSecond().getId());
+        return applyBackup(group.deferredItem().getId());
     }
 
     protected static ResourceLocation applyBackup(ResourceLocation location) {
@@ -49,14 +49,14 @@ public abstract class FSRecipeProvider extends RecipeProvider {
                               .save(pRecipeOutput, BuiltInRegistries.ITEM.getKey(pResult.asItem()).getNamespace() + ":" + getConversionRecipeName(pResult, pIngredient));
     }
 
-    protected static void stonecutting(RecipeOutput pRecipeOutput, RecipeCategory pCategory, ItemLike pResult, ItemLike pMaterial) {
-        stonecutting(pRecipeOutput, pCategory, pResult, pMaterial, 1);
+    protected static void stonecutting(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
+        stonecutting(recipeOutput, category, result, material, 1);
     }
 
-    protected static void stonecutting(RecipeOutput pRecipeOutput, RecipeCategory pCategory, ItemLike pResult, ItemLike pMaterial, int pResultCount) {
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(pMaterial), pCategory, pResult, pResultCount)
-                               .unlockedBy(getHasName(pMaterial), has(pMaterial))
-                               .save(pRecipeOutput, BuiltInRegistries.ITEM.getKey(pResult.asItem()).getNamespace() + ":stonecutting/" + getConversionRecipeName(pResult, pMaterial));
+    protected static void stonecutting(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material, int resultCount) {
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount)
+                               .unlockedBy(getHasName(material), has(material))
+                               .save(recipeOutput, BuiltInRegistries.ITEM.getKey(result.asItem()).getNamespace() + ":stonecutting/" + getConversionRecipeName(result, material));
     }
 
     public FSRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {

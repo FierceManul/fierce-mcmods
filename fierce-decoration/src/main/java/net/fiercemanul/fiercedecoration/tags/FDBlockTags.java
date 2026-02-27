@@ -9,19 +9,28 @@ import net.minecraft.world.level.block.Block;
 public final class FDBlockTags {
 
 
-    public static final TagKey<Block> LAMP_IN_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "lamp_in_glass"));
-    public static final TagKey<Block> GUARDRAILS_TAG = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "guardrails"));
-    public static final TagKey<Block> PEEP_WINDOWS_TAG = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "peep_windows"));
-    public static final TagKey<Block> CUT_BLOCKS_TAG = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cut_blocks"));
-    public static final TagKey<Block> PILLAR_TAG = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "pillars"));
-    public static final TagKey<Block> PILLAR_FORCE_CONNECT_UP = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "pillar_force_connect_up"));
-    public static final TagKey<Block> PILLAR_FORCE_CONNECT_DOWN = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "pillar_force_connect_down"));
-    public static final TagKey<Block> PILLAR_FORCE_CONNECT_SIDE = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "pillar_force_connect_side"));
-    public static final TagKey<Block> SEA_LANTERN_TAG = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "sea_lanterns"));
-    public static final TagKey<Block> TABLES = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "tables"));
-    public static final TagKey<Block> CABINETS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "cabinets"));
-    public static final TagKey<Block> TABLE_CONNECT = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "table_connect"));
-    public static final TagKey<Block> WOOL_SOFA = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, "wool_sofa"));
+    public static final TagKey<Block> GLASS_LAMPS = create("glass_lamps");
+    public static final TagKey<Block> GUARDRAILS = create("guardrails");
+    public static final TagKey<Block> CROSS_HOLES = create("cross_holes");
+    public static final TagKey<Block> CUT_BLOCKS = create("cut_blocks");
+    public static final TagKey<Block> PILLARS = create("pillars");
+    public static final TagKey<Block> PILLAR_FORCE_CONNECT_UP = create("pillar_force_connect_up");
+    public static final TagKey<Block> PILLAR_FORCE_CONNECT_DOWN = create("pillar_force_connect_down");
+    public static final TagKey<Block> PILLAR_FORCE_CONNECT_SIDE = create("pillar_force_connect_side");
+    public static final TagKey<Block> SEA_LANTERNS = createCommunity("sea_lanterns");
+    public static final TagKey<Block> REINFORCED_SEA_LANTERNS = create("reinforced_sea_lanterns");
+    public static final TagKey<Block> TABLES = createCommunity("tables");
+    public static final TagKey<Block> CABINETS = createCommunity("cabinets");
+    public static final TagKey<Block> TABLE_CONNECT = create("table_connect");
+    public static final TagKey<Block> WOOL_SOFAS = create("wool_sofas");
+
+    private static TagKey<Block> create(String name) {
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceDecoration.MODID, name));
+    }
+
+    private static TagKey<Block> createCommunity(String name) {
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
+    }
 
     private FDBlockTags() {}
 }

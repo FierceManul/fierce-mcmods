@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.tags.FDBlockTags;
 import net.fiercemanul.fiercesource.world.item.WrenchAction;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public abstract class PillarConnectorBlock extends ModelBlock {
+public abstract class PillarConnectorBlock extends DecorBlock {
 
 
     private static final Direction[] DIRECTIONS = Direction.values();

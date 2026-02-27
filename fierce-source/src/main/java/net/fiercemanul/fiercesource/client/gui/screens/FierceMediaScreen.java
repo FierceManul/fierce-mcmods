@@ -1,5 +1,7 @@
 package net.fiercemanul.fiercesource.client.gui.screens;
 
+import com.google.common.collect.Sets;
+import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.client.TipLevel;
 import net.fiercemanul.fiercesource.client.gui.components.*;
 import net.fiercemanul.fiercesource.client.gui.style.UIStyle;
@@ -26,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeMap;
 
 @OnlyIn(Dist.CLIENT)
 public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMediaMenu> {
@@ -57,7 +61,7 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
         tabs.add(new Tab(new TestBigContainerCanvas(this, 0, 0, title), new ItemIcon(Items.CHEST.getDefaultInstance()), Component.literal("BigInvTest")));
         tabs.add(new Tab(new TestMinCanvas(this, 0, 0, title), new ItemIcon(Items.ENDER_CHEST.getDefaultInstance()), Component.literal("MinTest")));
         tabs.add(new Tab(new TestAutoSizeCanvas(this, 0, 0, title), new ItemIcon(Items.SLIME_BLOCK.getDefaultInstance()), Component.literal("AutoSizeTest")));
-        for (int i = 0; i < 12; i++) tabs.add(new Tab(choseCanvas, new ItemIcon(Items.STONE.getDefaultInstance()), Component.literal("Test " + (i + 5))));
+        for (int i = 0; i < 12; i++) tabs.add(new Tab(choseCanvas, new ItemIcon(Items.BLACK_STAINED_GLASS_PANE.getDefaultInstance()), Component.literal("Test " + (i + 5))));
         this.tabs = tabs.toArray(new Tab[]{});
         choseTab = tabs.getFirst();
         choseTab.setFocused(true);
@@ -78,7 +82,7 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
     }
 
     private void canvasChanged() {
-        choseCanvas.init();
+        choseCanvas.autoSize();
         leftPos = choseCanvas.getX();
         topPos = choseCanvas.getY();
         menu.rebuildSlots(choseCanvas.getSlotsPos());
@@ -141,28 +145,39 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        //TODO:重写super.render以更好定制
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
 
         if (tabGroups.length > 1) {
-            tabPageUpButton.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-            tabPageDownButton.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+            tabPageUpButton.render(guiGraphics, mouseX, mouseY, partialTick);
+            tabPageDownButton.render(guiGraphics, mouseX, mouseY, partialTick);
         }
-        for (Tab tab : tabGroups[tabPageIndex]) tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        Tab[] group = tabGroups[tabPageIndex];
+        Tab starTab = group[0];
+        Tab endTab = group[group.length - 1];
+        guiGraphics.blitSprite(UIStyles.style.tabData().tabImgButtonData().offImg(), starTab.getX(), starTab.getY(), endTab.getRight() - starTab.getX(), endTab.getBottom() - starTab.getY());
+        for (Tab tab : tabGroups[tabPageIndex]) tab.render(guiGraphics, mouseX, mouseY, partialTick);
+
+
+
+
 
 
         //debug mouse pos
-        pGuiGraphics.fill(
-                (int) mouseX,
-                (int) mouseY,
-                (int) (mouseX + 1),
-                (int) (mouseY + 1),
+        guiGraphics.fill(
+                (int) this.mouseX,
+                (int) this.mouseY,
+                (int) (this.mouseX + 1),
+                (int) (this.mouseY + 1),
                 FastColor.ARGB32.color(128, 255, 255, 255)
         );
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+
+        //TODO: 点击锁功能，锁定后无法操作大部分点击逻辑，直到服务端返回操作成功。一般由按钮触发，比如需要验证的提交，快速合成按钮等服务端耗时操作。
 
         if (choseCanvas.isHovered()) {
             if (choseCanvas.mouseClicked(mouseX, mouseY, mouseButton)) return true;
@@ -196,6 +211,27 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
     }
 
     @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        // 收集并处理重定向槽
+        Set<Slot> redirectSlots = Sets.newHashSet();
+        TreeMap<Integer, Integer> redirectSlotCount = new TreeMap<>();
+        quickCraftSlots.forEach(slot -> {
+            if (slot instanceof RedirectSlot redirectSlot) {
+                redirectSlots.add(slot);
+                int redirectIndex = redirectSlot.redirectIndex();
+                int count = redirectSlotCount.getOrDefault(redirectIndex, 0);
+                if (count < redirectSlot.maxRedirectIndex()) redirectSlotCount.put(redirectIndex, count + 1);
+            }
+        });
+        // 移除所有重定向槽位并重新添加对应的槽
+        redirectSlots.forEach(quickCraftSlots::remove);
+        redirectSlotCount.forEach((index, count) -> {
+            for (int i = 0; i < count; i++) quickCraftSlots.add(menu.slots.get(index + i));
+        });
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (inTabArea(mouseX, mouseY) || tabPageUpButton.canMouseHover(mouseX, mouseY) || tabPageDownButton.canMouseHover(mouseX, mouseY)) {
             int i = (int) scrollY; //利用去小数特性过滤可能出现的小于1的值，不能用floor和ceil替换。
@@ -214,7 +250,23 @@ public class FierceMediaScreen extends AbstractContainerScreen<ClientFierceMedia
     }
 
     @Override
-    public void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
+    public void slotClicked(@Nullable Slot slot, int slotId, int mouseButton, ClickType type) {
+        FierceSource.LOGGER.info("slotClicked {} {} {}", slotId, mouseButton, type);
+        if (slot != null && slot.index >= menu.getHardSlotsSize()) {
+            FierceSource.LOGGER.info("fakeSlot");
+            // 处理单独的重定向槽
+            if (!quickCraftSlots.contains(slot) && slot instanceof RedirectSlot redirectSlot) slot = menu.getSlot(redirectSlot.redirectIndex());
+        }
+
+
+        //但是Slot里响应是不知道标抓物的。
+        //quickMoveStack是不走slot的，需要设计如何跟服务端通气。
+        //记得，app可以热切换，所以只有玩家库存slot是恒定的。那就势必双端都做槽重建。
+        //同步玩家的焦点app
+        //动态容器的槽不同步，由容器自己同步，将部分影响实槽和抓取物品的动作同步。
+
+        //TODO:screen纹理。
+
         super.slotClicked(slot, slotId, mouseButton, type);
     }
 

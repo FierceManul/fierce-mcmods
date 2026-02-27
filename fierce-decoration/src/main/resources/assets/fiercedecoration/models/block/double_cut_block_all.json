@@ -1,7 +1,0 @@
-{
-	"parent": "fiercedecoration:block/double_cut_block",
-	"textures": {
-		"side": "#all",
-		"bottom": "#all"
-	}
-}

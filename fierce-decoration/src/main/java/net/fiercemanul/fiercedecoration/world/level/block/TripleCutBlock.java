@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class TripleCutBlock extends ModelBlock {
+public class TripleCutBlock extends DecorBlock {
 
 
     public static final MapCodec<TripleCutBlock> CODEC = simpleCodec(TripleCutBlock::new);

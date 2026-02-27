@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.world.level.app.DataType;
 
-import net.fiercemanul.fiercesource.registries.FCRegistries;
+import net.fiercemanul.fiercesource.data.registries.FCRegistries;
 import net.minecraft.Util;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

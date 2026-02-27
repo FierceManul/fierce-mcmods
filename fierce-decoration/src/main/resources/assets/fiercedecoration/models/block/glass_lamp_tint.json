@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:block/block",
+    "elements": [
+        {
+            "from": [3, 3, 3],
+            "to": [13, 13, 13],
+            "faces": {
+                "north": {"uv": [0, 0, 16, 16], "texture": "#lamp_side", "tintindex": 0},
+                "east": {"uv": [0, 0, 16, 16], "texture": "#lamp_side", "tintindex": 0},
+                "south": {"uv": [0, 0, 16, 16], "texture": "#lamp_side", "tintindex": 0},
+                "west": {"uv": [0, 0, 16, 16], "texture": "#lamp_side", "tintindex": 0},
+                "up": {"uv": [0, 0, 16, 16], "texture": "#lamp_top", "tintindex": 0},
+                "down": {"uv": [0, 0, 16, 16], "texture": "#lamp_bottom", "tintindex": 0}
+            }
+        }
+    ]
+}

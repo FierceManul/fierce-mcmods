@@ -3,7 +3,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercedecoration.world.level.block.state.properties.FDBlockStateProperties;
-import net.fiercemanul.fiercesource.world.level.block.ModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.DecorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
-public class DoubleCutBlock extends ModelBlock {
+public class DoubleCutBlock extends DecorBlock {
 
 
     public static final MapCodec<DoubleCutBlock> CODEC = simpleCodec(DoubleCutBlock::new);
@@ -262,9 +262,9 @@ public class DoubleCutBlock extends ModelBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTootipComponents, TooltipFlag pTooltipFlag) {
-        pTootipComponents.add(Component.translatable("fiercedecoration.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(pStack, pContext, pTootipComponents, pTooltipFlag);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("fiercedecoration.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override

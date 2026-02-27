@@ -9,7 +9,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class WorldLocatorBlock extends ModelBlock {
+public class WorldLocatorBlock extends DecorBlock {
 
 
     public static final MapCodec<WorldLocatorBlock> CODEC = simpleCodec(WorldLocatorBlock::new);

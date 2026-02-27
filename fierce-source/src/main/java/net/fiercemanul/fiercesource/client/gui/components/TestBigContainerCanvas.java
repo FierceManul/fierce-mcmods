@@ -16,8 +16,7 @@ public class TestBigContainerCanvas extends Canvas {
     }
 
     @Override
-    public void init() {
-
+    public void autoSize() {
         double spaceX = screen.width * UIStyles.style.maxCanvasWidthPercentage;
         double spaceY = screen.height * UIStyles.style.maxCanvasHeightPercentage;
         spaceY -= UIStyles.style.invSlotsHeight + UIStyles.style.craftSlotsHeight + 11;
@@ -26,6 +25,17 @@ public class TestBigContainerCanvas extends Canvas {
         width = column * 17 + 1;
         containerHeight = row * 17 + 1;
         height = containerHeight + UIStyles.style.invSlotsHeight + UIStyles.style.craftSlotsHeight + 11;
+        init();
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+
+        super.setSize(width, height);
+    }
+
+    @Override
+    public void init() {
 
         playerInvX = width / 2 - 77;
         playerInvY = height - UIStyles.style.invSlotsHeight;
@@ -36,7 +46,7 @@ public class TestBigContainerCanvas extends Canvas {
 
     @Override
     protected void renderCanvas(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.drawString(screen.getFont(), "TestBigContainerCanvas", 1, 2, 4210752, false);
+        guiGraphics.drawString(screen.getFont(), "TestBigContainerCanvas", 2, 2, 4210752, false);
         UIStyles.style.renderContainer(guiGraphics, 0, 11, width, containerHeight);
         UIStyles.style.renderCrafting(guiGraphics, 37, height - 121);
         UIStyles.style.renderInventory(guiGraphics, playerInvX, playerInvY);

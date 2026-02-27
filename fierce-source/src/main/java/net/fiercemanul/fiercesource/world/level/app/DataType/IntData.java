@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.app.DataType;
 
 import io.netty.buffer.ByteBuf;
-import net.fiercemanul.fiercesource.registries.AppDataTypes;
+import net.fiercemanul.fiercesource.data.registries.AppDataTypes;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.registries.FSBlockEntityTypes;
+import net.fiercemanul.fiercesource.data.registries.FSBlockEntityTypes;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.entity.CreativeManaOutputBlockEntity;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class CreativeManaOutputBlock extends FacingModelBlock implements EntityBlock {
+public class CreativeManaOutputBlock extends FacingDecorBlock implements EntityBlock {
 
 
     public static final MapCodec<CreativeManaOutputBlock> CODEC = simpleCodec(CreativeManaOutputBlock::new);

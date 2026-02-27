@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.FacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.FacingDecorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +25,7 @@ import java.util.List;
 
 
 
-public class LightTubeBlock extends FacingModelBlock {
+public class LightTubeBlock extends FacingDecorBlock {
 
 
     public static final MapCodec<LightTubeBlock> CODEC = simpleCodec(LightTubeBlock::new);

@@ -2,7 +2,7 @@ package net.fiercemanul.fiercedecoration.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingModelBlock;
+import net.fiercemanul.fiercesource.world.level.block.HorizonFacingDecorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +31,7 @@ import java.util.List;
 
 
 
-public abstract class GuardrailBlock extends HorizonFacingModelBlock {
+public abstract class GuardrailBlock extends HorizonFacingDecorBlock {
 
 
     public static final BooleanProperty CORNER = BooleanProperty.create("corner");

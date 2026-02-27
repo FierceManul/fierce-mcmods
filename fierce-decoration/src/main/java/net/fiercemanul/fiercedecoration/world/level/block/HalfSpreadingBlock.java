@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercedecoration.world.level.block;
 
+import net.fiercemanul.fiercedecoration.data.FDBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
