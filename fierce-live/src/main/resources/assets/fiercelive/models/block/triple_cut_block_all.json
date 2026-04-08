@@ -1,0 +1,7 @@
+{
+	"parent": "fiercelive:block/triple_cut_block",
+	"textures": {
+		"side": "#all",
+		"bottom": "#all"
+	}
+}

@@ -1,8 +1,8 @@
 package net.fiercemanul.fiercesource;
 
 import com.mojang.logging.LogUtils;
+import net.fiercemanul.fiercesource.data.FSBlocks;
 import net.fiercemanul.fiercesource.data.registries.FCRegistries;
-import net.fiercemanul.fiercesource.data.registries.FSBlocks;
 import net.fiercemanul.fiercesource.network.protocol.game.FierceMenuData;
 import net.fiercemanul.fiercesource.world.level.capabilities.FSCapabilities;
 import net.fiercemanul.fiercesource.world.level.capabilities.InfiniteManaContainer;

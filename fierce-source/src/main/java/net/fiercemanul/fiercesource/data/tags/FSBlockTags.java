@@ -10,5 +10,4 @@ public class FSBlockTags {
     public static final TagKey<Block> SOUL_CRYSTALS = BlockTags.create(FSUtils.rl("soul_crystals"));
     public static final TagKey<Block> HAO_STONES = BlockTags.create(FSUtils.rl("hao_stones"));
     public static final TagKey<Block> DEEP_STONES = BlockTags.create(FSUtils.rl("deep_stones"));
-    public static final TagKey<Block> MINEABLE_WITH_CROWBAR = BlockTags.create(FSUtils.rl("mineable/crowbar"));
 }

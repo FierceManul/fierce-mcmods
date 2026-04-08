@@ -1,5 +1,0 @@
-evaluationDependsOn(':fierce-source')
-
-dependencies {
-    implementation project(":fierce-source")
-}

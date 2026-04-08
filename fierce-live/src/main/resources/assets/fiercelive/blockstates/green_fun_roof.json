@@ -1,0 +1,47 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fiercelive:block/green_fun_roof_a"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "fiercelive:block/green_fun_roof_b",
+          "weight": 3
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_b",
+          "y": 90,
+          "weight": 3
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_b",
+          "y": 180,
+          "weight": 3
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_b",
+          "y": 270,
+          "weight": 3
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_c"
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_c",
+          "y": 90
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_c",
+          "y": 180
+        },
+        {
+          "model": "fiercelive:block/green_fun_roof_c",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+	"parent": "fiercelive:block/table",
+	"textures": {
+		"top": "#all",
+		"side": "#all",
+		"bottom": "#all",
+        "particle": "#all"
+	}
+}

@@ -1,8 +1,0 @@
-{
-	"parent": "fiercedecoration:block/wall_flower_pot",
-	"textures": {
-		"plant_a": "minecraft:block/blue_orchid",
-		"plant_b": "minecraft:block/allium",
-		"plant_c": "minecraft:block/white_tulip"
-	}
-}

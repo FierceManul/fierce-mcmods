@@ -1,0 +1,15 @@
+package net.fiercemanul.fiercesource.data;
+
+import net.fiercemanul.fiercesource.data.registries.FCRegistries;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+
+public class FSParticleTypes {
+
+
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType>
+            SOUL_CRYSTAL_PARTICLE = FCRegistries.PARTICLE_TYPES.register("soul_crystal", () -> new SimpleParticleType(false));
+
+    public static void init() {}
+}

@@ -1,13 +1,9 @@
 package net.fiercemanul.fiercesource.data.tags;
 
-import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.util.FSUtils;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 
 public class FSItemTags {
 
@@ -16,4 +12,5 @@ public class FSItemTags {
     public static final TagKey<Item> HAO_STONES = ItemTags.create(FSUtils.rl("hao_stones"));
     public static final TagKey<Item> DEEP_STONES = ItemTags.create(FSUtils.rl("deep_stones"));
     public static final TagKey<Item> SOUL_CRYSTALS = ItemTags.create(FSUtils.rl("soul_crystals"));
+
 }

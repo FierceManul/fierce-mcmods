@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = 'fierce-mcmods'
-include 'fierce-source', 'fierce-decoration'
+include 'fierce-source', 'fierce-live'

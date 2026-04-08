@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "lit=false": {
+            "model": "fiercelive:block/fireplace_heart"
+        },
+        "lit=true": {
+            "model": "fiercelive:block/fireplace_heart_lit"
+        }
+    }
+}

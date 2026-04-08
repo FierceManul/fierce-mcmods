@@ -1,0 +1,119 @@
+package net.fiercemanul.fiercelive.world.level.block;
+
+import com.mojang.serialization.MapCodec;
+import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
+import net.fiercemanul.fiercesource.world.level.block.FacingWaterloggedBlock;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.List;
+
+
+
+public class LightTubeBlock extends FacingWaterloggedBlock {
+
+
+    public static final MapCodec<LightTubeBlock> CODEC = simpleCodec(LightTubeBlock::new);
+
+    public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
+
+    private static final VoxelShapeHelper SHAPE_H_HELPER = new VoxelShapeHelper()
+            .applyCube(0.0D, 7.0D, 15.0D, 16.0D, 9.0D, 16.0D)
+            .applyCube(1.0D, 7.0D, 14.0D, 15.0D, 9.0D, 16.0D);
+    protected static final VoxelShape SHAPE_NORTH_H = SHAPE_H_HELPER.north();
+    protected static final VoxelShape SHAPE_SOUTH_H = SHAPE_H_HELPER.south();
+    protected static final VoxelShape SHAPE_WEST_H = SHAPE_H_HELPER.west();
+    protected static final VoxelShape SHAPE_EAST_H = SHAPE_H_HELPER.east();
+    protected static final VoxelShape SHAPE_UP_H = SHAPE_H_HELPER.up();
+    protected static final VoxelShape SHAPE_DOWN_H = SHAPE_H_HELPER.down();
+    private static final VoxelShapeHelper SHAPE_V_HELPER = new VoxelShapeHelper()
+            .applyCube(7.0D, 0.0D, 15.0D, 9.0D, 16.0D, 16.0D)
+            .applyCube(7.0D, 1.0D, 14.0D, 9.0D, 15.0D, 16.0D);
+    protected static final VoxelShape SHAPE_NORTH_V = SHAPE_V_HELPER.north();
+    protected static final VoxelShape SHAPE_SOUTH_V = SHAPE_V_HELPER.south();
+    protected static final VoxelShape SHAPE_WEST_V = SHAPE_V_HELPER.west();
+    protected static final VoxelShape SHAPE_EAST_V = SHAPE_V_HELPER.east();
+    protected static final VoxelShape SHAPE_UP_V = SHAPE_V_HELPER.up();
+    protected static final VoxelShape SHAPE_DOWN_V = SHAPE_V_HELPER.down();
+
+
+    public LightTubeBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(VERTICAL, false)
+                .setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends LightTubeBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, VERTICAL, WATERLOGGED);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        boolean vertical = pState.getValue(VERTICAL);
+        return switch (pState.getValue(FACING)) {
+            case DOWN -> vertical ? SHAPE_DOWN_V : SHAPE_DOWN_H;
+            case UP -> vertical ? SHAPE_UP_V : SHAPE_UP_H;
+            case NORTH -> vertical ? SHAPE_NORTH_V : SHAPE_NORTH_H;
+            case SOUTH -> vertical ? SHAPE_SOUTH_V : SHAPE_SOUTH_H;
+            case WEST -> vertical ? SHAPE_WEST_V : SHAPE_WEST_H;
+            case EAST -> vertical ? SHAPE_EAST_V : SHAPE_EAST_H;
+        };
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction clickFace = context.getClickedFace();
+        Direction horizontalDirection = context.getHorizontalDirection();
+        BlockState state = defaultBlockState().setValue(FACING, clickFace);
+        if (context.getPlayer() != null) {
+            boolean snaking = context.getPlayer().isShiftKeyDown();
+            if (clickFace == Direction.DOWN || clickFace == Direction.UP) {
+                if (horizontalDirection == Direction.NORTH || horizontalDirection == Direction.SOUTH) {
+                    state = state.setValue(VERTICAL, snaking);
+                } else {
+                    state = state.setValue(VERTICAL, !snaking);
+                }
+            } else {
+                if (snaking) state = state.setValue(VERTICAL, true);
+            }
+        }
+        return state.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
+    public BlockState rotate(BlockState pState, Rotation rotation) {
+        BlockState state = pState.setValue(FACING, rotation.rotate(pState.getValue(FACING)));
+        if (state.getValue(FACING) == pState.getValue(FACING).getClockWise() || state.getValue(FACING) == pState.getValue(FACING).getCounterClockWise()) {
+            state = state.setValue(VERTICAL, !state.getValue(VERTICAL));
+        }
+        return state;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
+        pTooltip.add(Component.translatable("fiercelive.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
+    }
+}

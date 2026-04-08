@@ -1,6 +1,0 @@
-{
-	"parent": "fiercecraft:item/claw_hammer",
-	"textures": {
-		"all": "fiercecraft:item/3d/netherite_claw_hammer"
-	}
-}

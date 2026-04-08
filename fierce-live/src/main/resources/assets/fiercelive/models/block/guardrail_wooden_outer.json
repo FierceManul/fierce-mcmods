@@ -1,0 +1,51 @@
+{
+    "parent": "minecraft:block/cube_all",
+	"elements": [
+		{
+			"from": [0, 14, 1],
+			"to": [4, 16, 4],
+			"faces": {
+				"north": {"uv": [12, 0, 16, 2], "texture": "#all"},
+				"east": {"uv": [12, 0, 15, 2], "texture": "#all"},
+				"south": {"uv": [0, 0, 4, 2], "texture": "#all"},
+				"west": {"uv": [1, 0, 4, 2], "texture": "#all", "cullface": "west"},
+				"up": {"uv": [0, 1, 4, 4], "texture": "#all", "cullface": "up"},
+				"down": {"uv": [0, 12, 4, 15], "texture": "#all"}
+			}
+		},
+		{
+			"from": [1, 14, 0],
+			"to": [4, 16, 1],
+			"faces": {
+				"north": {"uv": [12, 0, 15, 2], "texture": "#all", "cullface": "north"},
+				"east": {"uv": [15, 0, 16, 2], "texture": "#all"},
+				"west": {"uv": [0, 0, 1, 2], "texture": "#all"},
+				"up": {"uv": [1, 0, 4, 1], "texture": "#all", "cullface": "up"},
+				"down": {"uv": [1, 15, 4, 16], "texture": "#all"}
+			}
+		},
+		{
+			"from": [0, 7, 2],
+			"to": [3, 9, 3],
+			"faces": {
+				"north": {"uv": [13, 7, 16, 9], "texture": "#all"},
+				"east": {"uv": [13, 7, 14, 9], "texture": "#all"},
+				"south": {"uv": [0, 7, 3, 9], "texture": "#all"},
+				"west": {"uv": [2, 7, 3, 9], "texture": "#all", "cullface": "west"},
+				"up": {"uv": [0, 2, 3, 3], "texture": "#all"},
+				"down": {"uv": [0, 13, 3, 14], "texture": "#all"}
+			}
+		},
+		{
+			"from": [2, 7, 0],
+			"to": [3, 9, 2],
+			"faces": {
+				"north": {"uv": [13, 7, 14, 9], "texture": "#all", "cullface": "north"},
+				"east": {"uv": [14, 7, 16, 9], "texture": "#all"},
+				"west": {"uv": [0, 7, 2, 9], "texture": "#all"},
+				"up": {"uv": [2, 0, 3, 2], "texture": "#all"},
+				"down": {"uv": [2, 14, 3, 16], "texture": "#all"}
+			}
+		}
+	]
+}

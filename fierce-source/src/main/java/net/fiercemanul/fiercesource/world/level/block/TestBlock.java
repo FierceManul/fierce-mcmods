@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.data.registries.FSBlockEntityTypes;
+import net.fiercemanul.fiercesource.data.FSBlockEntityTypes;
 import net.fiercemanul.fiercesource.server.level.app.ServerApp;
 import net.fiercemanul.fiercesource.server.level.app.ServerMenuApp;
 import net.fiercemanul.fiercesource.world.level.block.entity.TestBlockEntity;
@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 
-public class TestBlock extends DecorBlock implements EntityBlock {
+public class TestBlock extends WaterloggedBlock implements EntityBlock {
 
 
     public static final MapCodec<TestBlock> CODEC = simpleCodec(TestBlock::new);

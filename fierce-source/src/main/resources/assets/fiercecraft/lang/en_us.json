@@ -19,9 +19,5 @@
     "block.fiercecraft.world_locator": "World Locator",
     "item.fiercecraft.miji": "Manual",
     "item.fiercecraft.pos_recorder": "Pos Recorder",
-    "item.fiercecraft.claw_hammer": "Claw Hammer",
-    "item.fiercecraft.netherite_claw_hammer": "Netherite Claw Hammer",
-    "item.fiercecraft.crowbar": "Crowbar",
-    "item.fiercecraft.netherite_crowbar": "Netherite Crowbar",
     "itemGroup.fiercecraft": "Fierce Craft"
 }

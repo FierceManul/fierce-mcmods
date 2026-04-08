@@ -1,6 +1,0 @@
-{
-  "parent": "fiercedecoration:block/custom_glass",
-  "textures": {
-    "all": "fiercedecoration:block/rainbow_glass"
-  }
-}

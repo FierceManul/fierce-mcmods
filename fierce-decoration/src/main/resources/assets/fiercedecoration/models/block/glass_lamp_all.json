@@ -1,9 +1,0 @@
-{
-	"parent": "fiercedecoration:block/glass_lamp",
-	"textures": {
-        "particle": "#all",
-        "lamp_side": "#all",
-        "lamp_top": "#all",
-        "lamp_bottom": "#all"
-	}
-}

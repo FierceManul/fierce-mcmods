@@ -1,0 +1,18 @@
+{
+	"parent": "fiercelive:block/double_cut_block",
+	"textures": {
+		"particle": "#all"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [8, 16, 8],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 16], "texture": "#all", "cullface": "north"},
+				"west": {"uv": [8, 0, 16, 16], "texture": "#all", "cullface": "west"},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#all", "cullface": "up"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#all", "cullface": "down"}
+			}
+		}
+	]
+}

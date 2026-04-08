@@ -69,8 +69,8 @@ issueTrackerURL="https://github.com/FierceManul/fierce-mcmods/issues" #optional
     ordering="NONE"
     side="BOTH"
 
-[[mixins]]
-    config = "${mod_id}.mixins.json"
+#[[mixins]]
+#    config = "${mod_id}.mixins.json"
 
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares

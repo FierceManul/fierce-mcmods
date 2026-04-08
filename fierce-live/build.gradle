@@ -1,0 +1,7 @@
+evaluationDependsOn(':fierce-source')
+
+dependencies {
+    implementation project(":fierce-source")
+}
+
+neoForge.runs.data.programArguments.addAll '--existing-mod', 'fiercesource'

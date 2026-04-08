@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercesource.world.item.WrenchAction;
+import net.fiercemanul.fiercesource.world.item.WrenchUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -33,6 +33,6 @@ public class WrenchDismantleBlock extends Block {
     protected ItemInteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
-        return WrenchAction.defaultUseOn(stack, state, level, pos, player);
+        return WrenchUtils.interact(stack, state, level, pos, player);
     }
 }

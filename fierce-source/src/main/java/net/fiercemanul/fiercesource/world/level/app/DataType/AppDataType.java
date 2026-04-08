@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 public record AppDataType<T extends AppData>(ResourceLocation rl, StreamCodec<? super RegistryFriendlyByteBuf, T> dataCodec) {
 
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, AppDataType<?>> STREAM_CODEC = StreamCodec.recursive(codec -> ByteBufCodecs.registry(FCRegistries.APP_DATA_TYPE_KEY));
+    public static final StreamCodec<RegistryFriendlyByteBuf, AppDataType<?>> STREAM_CODEC = StreamCodec.recursive(codec -> ByteBufCodecs.registry(FCRegistries.APP_DATA_TYPE_KEYS));
 
     public static AppData decodeData(RegistryFriendlyByteBuf buffer) {
         return STREAM_CODEC.decode(buffer).dataCodec().decode(buffer);

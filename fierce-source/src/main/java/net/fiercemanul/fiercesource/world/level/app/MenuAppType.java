@@ -20,7 +20,7 @@ public record MenuAppType<T extends ServerMenuApp>(
 ) {
 
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, MenuAppType<?>> STREAM_CODEC = StreamCodec.recursive(codec -> ByteBufCodecs.registry(FCRegistries.MENU_APP_TYPE_KEY));
+    public static final StreamCodec<RegistryFriendlyByteBuf, MenuAppType<?>> STREAM_CODEC = StreamCodec.recursive(codec -> ByteBufCodecs.registry(FCRegistries.MENU_APP_TYPE_KEYS));
 
     public static ClientMenuApp.Builder decodeApp(RegistryFriendlyByteBuf buffer) {
         return STREAM_CODEC.decode(buffer).decoder.get().decode(buffer);

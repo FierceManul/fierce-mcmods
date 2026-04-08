@@ -1,0 +1,6 @@
+{
+    "parent": "fiercelive:block/green_fun_roof_b",
+    "textures": {
+        "all": "minecraft:block/flowering_azalea_leaves"
+    }
+}

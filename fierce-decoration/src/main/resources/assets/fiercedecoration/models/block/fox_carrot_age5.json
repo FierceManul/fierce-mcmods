@@ -1,6 +1,0 @@
-{
-    "parent": "fiercedecoration:block/custom_crop",
-    "textures": {
-        "crop": "fiercedecoration:block/fox_carrot_age5"
-    }
-}

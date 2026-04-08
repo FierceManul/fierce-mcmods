@@ -1,0 +1,8 @@
+{
+	"parent": "fiercelive:block/chair",
+	"textures": {
+		"top": "#all",
+		"side": "#all",
+		"bottom": "#all"
+	}
+}

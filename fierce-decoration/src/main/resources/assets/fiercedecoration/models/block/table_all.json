@@ -1,8 +1,0 @@
-{
-	"parent": "fiercedecoration:block/table",
-	"textures": {
-		"top": "#all",
-		"side": "#all",
-		"bottom": "#all"
-	}
-}

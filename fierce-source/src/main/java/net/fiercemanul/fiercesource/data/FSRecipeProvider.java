@@ -25,20 +25,20 @@ public abstract class FSRecipeProvider extends RecipeProvider {
         return ResourceLocation.fromNamespaceAndPath(location.getNamespace(), location.getPath() + "_backup");
     }
 
-    protected static void netheriteSmithing(RecipeOutput pRecipeOutput, Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {
+    protected static void netheriteSmithing(RecipeOutput recipeOutput, Item ingredientItem, RecipeCategory category, Item resultItem) {
         SmithingTransformRecipeBuilder.smithing(
                                               Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                                              Ingredient.of(pIngredientItem),
+                                              Ingredient.of(ingredientItem),
                                               Ingredient.of(Items.NETHERITE_INGOT),
-                                              pCategory,
-                                              pResultItem
+                                              category,
+                                              resultItem
                                       )
                                       .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                                      .save(pRecipeOutput, BuiltInRegistries.ITEM.getKey(pResultItem) + "_smithing");
+                                      .save(recipeOutput, BuiltInRegistries.ITEM.getKey(resultItem) + "_smithing");
     }
 
-    protected static void oneToOne(RecipeOutput pRecipeOutput, RecipeCategory pCategory, ItemLike pResult, ItemLike pIngredient, @Nullable String pGroup) {
-        oneToOne(pRecipeOutput, pCategory, pResult, pIngredient, pGroup, 1);
+    protected static void oneToOne(RecipeOutput pRecipeOutput, RecipeCategory category, ItemLike pResult, ItemLike pIngredient, @Nullable String pGroup) {
+        oneToOne(pRecipeOutput, category, pResult, pIngredient, pGroup, 1);
     }
 
     protected static void oneToOne(RecipeOutput pRecipeOutput, RecipeCategory pCategory, ItemLike pResult, ItemLike pIngredient, @Nullable String pGroup, int pResultCount) {

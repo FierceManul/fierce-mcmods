@@ -1,0 +1,9 @@
+{
+    "parent": "fiercelive:block/guardrail_rock_outer_lower",
+    "textures": {
+        "particle": "#all",
+        "side": "#all",
+        "top": "#all",
+        "bottom": "#all"
+    }
+}

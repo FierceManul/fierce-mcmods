@@ -1,0 +1,6 @@
+{
+	"parent": "fiercelive:item/crowbar",
+	"textures": {
+		"all": "fiercelive:item/3d/netherite_crowbar"
+	}
+}

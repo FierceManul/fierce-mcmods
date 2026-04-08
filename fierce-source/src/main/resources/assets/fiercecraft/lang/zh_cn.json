@@ -19,9 +19,5 @@
     "block.fiercecraft.world_locator": "世界定位器",
     "item.fiercecraft.miji": "秘笈",
     "item.fiercecraft.pos_recorder": "记位器",
-    "item.fiercecraft.claw_hammer": "羊角锤",
-    "item.fiercecraft.netherite_claw_hammer": "下界合金羊角锤",
-    "item.fiercecraft.crowbar": "物理学圣剑",
-    "item.fiercecraft.netherite_crowbar": "下界合金撬棒",
     "itemGroup.fiercecraft": "狂野工艺"
 }

@@ -1,0 +1,41 @@
+package net.fiercemanul.fiercelive.world.level.block;
+
+import com.mojang.serialization.MapCodec;
+import net.fiercemanul.fiercesource.world.level.block.WaterloggedBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+public class FoxCarrotSheaf extends WaterloggedBlock {
+
+
+    public static final MapCodec<FoxCarrotSheaf> CODEC = simpleCodec(FoxCarrotSheaf::new);
+    protected static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
+
+    public FoxCarrotSheaf(Properties pProperties) {
+        super(pProperties);
+    }
+
+    protected MapCodec<? extends FoxCarrotSheaf> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return SHAPE;
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState pState, PathComputationType pType) {
+        return false;
+    }
+
+    @Override
+    protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getFluidState().isEmpty();
+    }
+}

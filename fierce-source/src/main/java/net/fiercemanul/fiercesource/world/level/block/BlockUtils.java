@@ -1,13 +1,17 @@
 package net.fiercemanul.fiercesource.world.level.block;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public final class BlockUtils {
@@ -15,8 +19,23 @@ public final class BlockUtils {
 
     private BlockUtils() {}
 
-    public static boolean hasCollision(BlockGetter pLevel, BlockPos pPos) {
-        return !pLevel.getBlockState(pPos).getCollisionShape(pLevel, pPos).isEmpty();
+    public static <T> ImmutableMap<BlockState, T> forEachStates(Block block, Function<BlockState, T> getter) {
+        return block.getStateDefinition().getPossibleStates().stream().collect(ImmutableMap.toImmutableMap(Function.identity(), getter));
+    }
+
+    public static <E extends Enum<E>, T> ImmutableMap<BlockState, ImmutableMap<E, T>> forEachStatesWith(Block block, Class<E> enumType, BiFunction<BlockState, E, T> getter) {
+        return block.getStateDefinition().getPossibleStates().stream().collect(ImmutableMap.toImmutableMap(
+                Function.identity(),
+                state -> {
+                    ImmutableMap.Builder<E, T> builder = ImmutableMap.builder();
+                    for (E e : enumType.getEnumConstants()) builder.put(e, getter.apply(state, e));
+                    return builder.build();
+                }
+        ));
+    }
+
+    public static boolean hasCollision(BlockGetter level, BlockPos pos) {
+        return !level.getBlockState(pos).getCollisionShape(level, pos).isEmpty();
     }
 
     public static Direction getInteractionDirection(float apothem, Vec3 hitRelativePos, Direction clickDirection) {
@@ -39,7 +58,7 @@ public final class BlockUtils {
         else return defaultProperty;
     }
 
-    public static ToIntFunction<BlockState> litBlockEmission(int plightValue) {
-        return state -> state.getValue(BlockStateProperties.LIT) ? plightValue : 0;
+    public static ToIntFunction<BlockState> litBlockEmission(int lightValue) {
+        return state -> state.getValue(BlockStateProperties.LIT) ? lightValue : 0;
     }
 }
