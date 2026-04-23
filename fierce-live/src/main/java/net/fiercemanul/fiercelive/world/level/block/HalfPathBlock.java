@@ -45,7 +45,7 @@ public class HalfPathBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockState blockstate = pContext.getLevel().getBlockState(pContext.getClickedPos());
-        if (blockstate.is(this)) return Blocks.DIRT_PATH.getStateForPlacement(pContext);
+        if (blockstate.is(this)) return Blocks.DIRT_PATH.defaultBlockState();
         return this.defaultBlockState().setValue(WATERLOGGED, pContext.getLevel().getFluidState(pContext.getClickedPos()).getType() == Fluids.WATER);
     }
 

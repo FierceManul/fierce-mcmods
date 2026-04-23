@@ -2,6 +2,7 @@ package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
+import net.fiercemanul.fiercelive.world.level.block.IronLadderBlock;
 import net.fiercemanul.fiercelive.world.level.block.state.properties.FLBlockStateProperties;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
@@ -54,6 +55,7 @@ public class BlockLootGen extends BlockLootSubProvider {
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
         //TODO:搞不懂麻酱的 孤立survivesExplosion，似乎完全没用。
         ROWS.put(FLBlocks.FOX_CARROTS, b -> {});
+        ROWS.put(FLBlocks.IRON_LADDER, b -> ironLadder(FLBlocks.IRON_LADDER));
 
         FLRegister.BLOCKS.getEntries().forEach(deferredBlock -> {
             if (ROWS.containsKey(deferredBlock)) ROWS.get(deferredBlock).accept(this);
@@ -135,6 +137,21 @@ public class BlockLootGen extends BlockLootSubProvider {
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
                                 .apply(LimitCount.limitCount(IntRange.range(1, 5)))
                 )
+        ));
+    }
+
+    public void ironLadder(DeferredBlock<? extends IronLadderBlock> deferredBlock) {
+        var block = deferredBlock.get();
+        add(block, LootTable.lootTable().withPool(
+                LootPool.lootPool().add(applyExplosionDecay(
+                        block,
+                        LootItem.lootTableItem(block.frameBlock).when(stateCondition(block, FLBlockStateProperties.FRAMED, true))
+                ))
+        ).withPool(
+                LootPool.lootPool().add(applyExplosionCondition(
+                        block,
+                        LootItem.lootTableItem(block)
+                ))
         ));
     }
 

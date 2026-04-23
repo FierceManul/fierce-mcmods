@@ -1,8 +1,5 @@
 {
-	"parent": "fiercelive:block/thin_stair",
-	"textures": {
-		"particle": "#side"
-	},
+	"parent": "minecraft:block/stairs",
 	"elements": [
 		{
 			"from": [0, 0, 0],

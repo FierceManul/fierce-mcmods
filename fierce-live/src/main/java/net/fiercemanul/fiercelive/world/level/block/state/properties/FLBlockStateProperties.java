@@ -27,5 +27,6 @@ public class FLBlockStateProperties {
     public static final EnumProperty<ComplexCabinetType> CABINET_TYPE_A = EnumProperty.create("type", ComplexCabinetType.class, ComplexCabinetType.SINGLE, ComplexCabinetType.TOP, ComplexCabinetType.BOTTOM);
     public static final EnumProperty<ComplexCabinetType> CABINET_TYPE_C = EnumProperty.create("type", ComplexCabinetType.class, ComplexCabinetType.SINGLE, ComplexCabinetType.LEFT, ComplexCabinetType.RIGHT);
     public static final EnumProperty<OpenType> OPEN_TYPE = EnumProperty.create("open_type", OpenType.class);
+    public static final BooleanProperty FRAMED = BooleanProperty.create("framed");
 
 }

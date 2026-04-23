@@ -1,10 +1,9 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
+import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.FLItems;
-import net.fiercemanul.fiercelive.data.registries.BlockBulkRegister;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
-import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.fiercemanul.fiercesource.data.FSBlocks;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
@@ -16,7 +15,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -30,6 +28,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 import static net.fiercemanul.fiercelive.data.FLBlocks.*;
+import static net.minecraft.data.recipes.RecipeCategory.BUILDING_BLOCKS;
+import static net.minecraft.data.recipes.RecipeCategory.DECORATIONS;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
 
 public class RecipeGen extends FSRecipeProvider {
@@ -46,10 +46,10 @@ public class RecipeGen extends FSRecipeProvider {
         pC(recipeOutput);
         bookAndLamp(recipeOutput);
         //starBlock(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, ITEM_FRAME_SHELL_THIN, Items.GLASS, 2);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, ITEM_FRAME_SHELL_BIG, Items.GLASS);
-        polished(recipeOutput, RecipeCategory.DECORATIONS, GLOWSTONE_LAMP, Items.GLOWSTONE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, GLOWSTONE_LAMP, Items.GLOWSTONE);
+        stonecutting(recipeOutput, DECORATIONS, ITEM_FRAME_SHELL_THIN, Items.GLASS, 2);
+        stonecutting(recipeOutput, DECORATIONS, ITEM_FRAME_SHELL_BIG, Items.GLASS);
+        polished(recipeOutput, DECORATIONS, GLOWSTONE_LAMP, Items.GLOWSTONE);
+        stonecutting(recipeOutput, DECORATIONS, GLOWSTONE_LAMP, Items.GLOWSTONE);
         reinforcedLamp(recipeOutput, REINFORCED_GLOWSTONE_LAMP, GLOWSTONE_LAMP);
         reinforcedLamp(recipeOutput, REINFORCED_SEA_LANTERN, Items.SEA_LANTERN);
         lightTube(recipeOutput);
@@ -61,17 +61,24 @@ public class RecipeGen extends FSRecipeProvider {
         neoForge(recipeOutput);
         meatBlock(recipeOutput);
         foxCarrot(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, HALF_GRASS_BLOCK, Items.GRASS_BLOCK, 2);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, HALF_DIRT_PATH, Items.DIRT_PATH, 2);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, HALF_PODZOL, Items.PODZOL, 2);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, HALF_DIRT, Items.DIRT, 2);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, HALF_MYCELIUM, Items.MYCELIUM, 2);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FIREWOOD, Items.OAK_LOG, 2);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, ROCK_PATH, Items.STONE, 16);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, SPIRAL_STONE, Items.STONE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.DEEPSLATE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.COBBLED_DEEPSLATE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.POLISHED_DEEPSLATE);
+        ironScaffolding(recipeOutput);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_GRASS_BLOCK, Items.GRASS_BLOCK, 2);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_DIRT_PATH, Items.DIRT_PATH, 2);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_PODZOL, Items.PODZOL, 2);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_DIRT, Items.DIRT, 2);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_MYCELIUM, Items.MYCELIUM, 2);
+        stonecutting(recipeOutput, DECORATIONS, FIREWOOD, Items.OAK_LOG, 2);
+        stonecutting(recipeOutput, DECORATIONS, ROCK_PATH, Items.STONE, 16);
+        stonecutting(recipeOutput, DECORATIONS, IRON_GUARDRAIL, Items.IRON_BARS);
+        stonecutting(recipeOutput, DECORATIONS, IRON_FRAME, Items.IRON_BARS);
+        stonecutting(recipeOutput, DECORATIONS, IRON_CORRIDOR, Items.IRON_BARS);
+        corridorSlab(recipeOutput, IRON_CORRIDOR_SLAB, IRON_CORRIDOR);
+        stonecutting(recipeOutput, DECORATIONS, IRON_CORRIDOR_STAIRS, IRON_CORRIDOR, 2);
+        stonecutting(recipeOutput, DECORATIONS, IRON_LADDER, Items.IRON_BARS);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_STONE, Items.STONE);
+        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.COBBLED_DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.POLISHED_DEEPSLATE);
         wallFlowerPot(recipeOutput, A_WALL_FLOWER_POT, Items.AZURE_BLUET, Items.DANDELION, Items.POPPY);
         wallFlowerPot(recipeOutput, B_WALL_FLOWER_POT, Items.LILY_OF_THE_VALLEY, Items.CORNFLOWER, Items.OXEYE_DAISY);
         wallFlowerPot(recipeOutput, C_WALL_FLOWER_POT, Items.RED_TULIP, Items.PINK_TULIP, Items.ORANGE_TULIP);
@@ -119,13 +126,13 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     public void buildStair(RecipeOutput recipeOutput, ItemLike stair, BlockMaterial material) {
-        slab(recipeOutput, RecipeCategory.BUILDING_BLOCKS, stair, material.getBlock());
-        if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, stair, material.getBlock());
+        stairBuilder(stair, Ingredient.of(material)).unlockedBy(getHasName(material), has(material)).save(recipeOutput);
+        if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) stonecutting(recipeOutput, BUILDING_BLOCKS, stair, material.getBlock());
     }
 
     public void buildSlab(RecipeOutput recipeOutput, ItemLike slab, BlockMaterial material) {
-        slab(recipeOutput, RecipeCategory.BUILDING_BLOCKS, slab, material.getBlock());
-        if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, slab, material.getBlock(), 2);
+        slab(recipeOutput, BUILDING_BLOCKS, slab, material.getBlock());
+        if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) stonecutting(recipeOutput, BUILDING_BLOCKS, slab, material.getBlock(), 2);
     }
 
     public void buildFence(RecipeOutput recipeOutput, ItemLike fence, BlockMaterial material) {
@@ -148,28 +155,28 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     public void buildWall(RecipeOutput recipeOutput, ItemLike wall, BlockMaterial material) {
-        wall(recipeOutput, RecipeCategory.BUILDING_BLOCKS, wall, material.getBlock());
+        wall(recipeOutput, BUILDING_BLOCKS, wall, material.getBlock());
         cutOneToOne(recipeOutput, wall, material);
     }
 
     public void cutOneToOne(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, result, material);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, result, material);
     }
 
     public void cutOneToTwo(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, result, material, 2);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, result, material, 2);
     }
 
     public void cutD(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, result, material);
+        stonecutting(recipeOutput, DECORATIONS, result, material);
     }
 
     public void cutD(RecipeOutput recipeOutput, ItemLike result, ItemLike material, int count) {
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, result, material, count);
+        stonecutting(recipeOutput, DECORATIONS, result, material, count);
     }
 
     public void cut(RecipeOutput recipeOutput, ItemLike result, ItemLike material, int count) {
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, result, material, count);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, result, material, count);
     }
 
     public void cut(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material, int count) {
@@ -178,7 +185,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     public void glassWindow(RecipeOutput recipeOutput, ItemLike result, ItemLike item) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result, 4)
+                .shaped(DECORATIONS, result, 4)
                 .define('X', item)
                 .define('Y', Items.GLASS)
                 .pattern(" X ")
@@ -190,7 +197,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     public void woolSofa(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result, 5)
+                .shaped(DECORATIONS, result, 5)
                 .define('#', material)
                 .pattern("# #")
                 .pattern("###")
@@ -200,7 +207,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     public void buildGlassLamp(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result)
+                .shaped(DECORATIONS, result)
                 .define('X', Items.GLASS)
                 .define('Y', material)
                 .pattern("X")
@@ -209,21 +216,21 @@ public class RecipeGen extends FSRecipeProvider {
                 .save(recipeOutput);
     }
 
-    public void colorSeaLantern(RecipeOutput recipeOutput, ItemLike result, ItemLike dye) {
+    public void colorDyed(RecipeOutput recipeOutput, ItemLike result, ItemLike material, ItemLike dye) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result, 8)
-                .define('X', Items.SEA_LANTERN)
+                .shaped(DECORATIONS, result, 8)
+                .define('X', material)
                 .define('D', dye)
                 .pattern("XXX")
                 .pattern("XDX")
                 .pattern("XXX")
-                .unlockedBy(getHasName(Blocks.SEA_LANTERN), has(Blocks.SEA_LANTERN))
+                .unlockedBy(getHasName(material), has(material))
                 .save(recipeOutput);
     }
 
     public void reinforcedLamp(RecipeOutput recipeOutput, ItemLike result, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result)
+                .shaped(DECORATIONS, result)
                 .define('#', ItemTags.PLANKS)
                 .define('X', Items.IRON_INGOT)
                 .define('O', material)
@@ -236,7 +243,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private void soulCrystalOrnament(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, SOUL_CRYSTAL_ORNAMENT)
+                .shaped(DECORATIONS, SOUL_CRYSTAL_ORNAMENT)
                 .define('#', FSBlocks.SMALL_SOUL_CRYSTAL)
                 .define('X', FSBlocks.SOUL_CRYSTAL_SHARD)
                 .define('P', SMOOTH_MANGROVE_PLANKS)
@@ -249,7 +256,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private void pC(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, PORTABLE_WORKSTATION.get())
+                .shaped(DECORATIONS, PORTABLE_WORKSTATION.get())
                 .define('A', Items.IRON_NUGGET)
                 .define('B', Items.GLASS_PANE)
                 .define('C', Items.GLOWSTONE_DUST)
@@ -259,13 +266,13 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("ADA")
                 .unlockedBy("has_quartz", has(Items.QUARTZ))
                 .save(recipeOutput);
-        oneToOne(recipeOutput, RecipeCategory.DECORATIONS, LAPTOP_TERMINAL.get(), PORTABLE_WORKSTATION.get(), "");
-        oneToOne(recipeOutput, RecipeCategory.DECORATIONS, PORTABLE_WORKSTATION.get(), LAPTOP_TERMINAL.get(), "");
+        oneToOne(recipeOutput, DECORATIONS, LAPTOP_TERMINAL.get(), PORTABLE_WORKSTATION.get(), "");
+        oneToOne(recipeOutput, DECORATIONS, PORTABLE_WORKSTATION.get(), LAPTOP_TERMINAL.get(), "");
     }
 
     private void bookAndLamp(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, BOOK_AND_LAMP.get())
+                .shaped(DECORATIONS, BOOK_AND_LAMP.get())
                 .define('B', Items.BOOK)
                 .define('C', Items.COPPER_INGOT)
                 .define('D', Items.GLOWSTONE_DUST)
@@ -290,7 +297,7 @@ public class RecipeGen extends FSRecipeProvider {
     private void lightTube(RecipeOutput recipeOutput) {
         ItemLike smooth_glowstone = GLOWSTONE_LAMP;
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, LIGHT_TUBE.get(), 32)
+                .shaped(DECORATIONS, LIGHT_TUBE.get(), 32)
                 .define('#', smooth_glowstone)
                 .define('X', Items.IRON_INGOT)
                 .pattern("X")
@@ -303,7 +310,7 @@ public class RecipeGen extends FSRecipeProvider {
     private void lightPlate(RecipeOutput recipeOutput) {
         ItemLike smooth_glowstone = GLOWSTONE_LAMP;
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, LIGHT_PLATE.get(), 16)
+                .shaped(DECORATIONS, LIGHT_PLATE.get(), 16)
                 .define('#', smooth_glowstone)
                 .define('X', Items.IRON_INGOT)
                 .pattern("X#X")
@@ -313,7 +320,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private void greenFunRoof(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, GREEN_FUN_ROOF.get(), 8)
+                .shaped(DECORATIONS, GREEN_FUN_ROOF.get(), 8)
                 .define('#', Items.AZALEA_LEAVES)
                 .define('X', Items.OAK_LOG)
                 .pattern("###")
@@ -324,7 +331,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private void fireplaceHeart(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, FIREPLACE_HEART.get(), 1)
+                .shaped(DECORATIONS, FIREPLACE_HEART.get(), 1)
                 .define('#', Items.IRON_INGOT)
                 .define('X', Items.IRON_BARS)
                 .define('C', ItemTags.COALS)
@@ -335,32 +342,43 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private void foxCarrot(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FOX_CARROT_SHEAF)
+        ShapedRecipeBuilder.shaped(DECORATIONS, FOX_CARROT_SHEAF)
                            .define('#', FLItems.FOX_CARROT)
                            .pattern("##")
                            .pattern("##")
                            .unlockedBy(getHasName(FLItems.FOX_CARROT), has(FLItems.FOX_CARROT))
                            .save(recipeOutput);
-        oneToOne(recipeOutput, RecipeCategory.DECORATIONS, FLItems.FOX_CARROT, FOX_CARROT_SHEAF, "", 4);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FOX_CARROT_BASKET)
+        oneToOne(recipeOutput, DECORATIONS, FLItems.FOX_CARROT, FOX_CARROT_SHEAF, "", 4);
+        ShapedRecipeBuilder.shaped(DECORATIONS, FOX_CARROT_BASKET)
                            .define('#', FOX_CARROT_SHEAF)
                            .pattern("###")
                            .pattern("# #")
                            .pattern("###")
                            .unlockedBy(getHasName(FOX_CARROT_SHEAF), has(FOX_CARROT_SHEAF))
                            .save(recipeOutput);
-        oneToOne(recipeOutput, RecipeCategory.DECORATIONS, FOX_CARROT_SHEAF, FOX_CARROT_BASKET, "", 8);
+        oneToOne(recipeOutput, DECORATIONS, FOX_CARROT_SHEAF, FOX_CARROT_BASKET, "", 8);
+    }
+
+    private void ironScaffolding(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(DECORATIONS, IRON_SCAFFOLDING, 6)
+                           .define('~', Items.IRON_INGOT)
+                           .define('I', Items.IRON_BARS)
+                           .pattern("I~I")
+                           .pattern("I I")
+                           .pattern("I I")
+                           .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                           .save(recipeOutput);
     }
 
     private void craftingBlock(RecipeOutput recipeOutput) {
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, CRAFTING_BLOCK, Items.CRAFTING_TABLE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, CRAFTING_DESK, Items.CRAFTING_TABLE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, CRAFTING_PAD, Items.CRAFTING_TABLE, 16);
+        stonecutting(recipeOutput, DECORATIONS, CRAFTING_BLOCK, Items.CRAFTING_TABLE);
+        stonecutting(recipeOutput, DECORATIONS, CRAFTING_DESK, Items.CRAFTING_TABLE);
+        stonecutting(recipeOutput, DECORATIONS, CRAFTING_PAD, Items.CRAFTING_TABLE, 16);
     }
 
     private void meatBlock(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, MEAT_BLOCK.get())
+                .shaped(DECORATIONS, MEAT_BLOCK.get())
                 .define('#', Tags.Items.FOODS_RAW_MEAT)
                 .pattern("###")
                 .pattern("###")
@@ -368,7 +386,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy("has_raw_meat", has(Tags.Items.FOODS_RAW_MEAT))
                 .save(recipeOutput);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, ROTTEN_FLESH_BLOCK.get())
+                .shaped(DECORATIONS, ROTTEN_FLESH_BLOCK.get())
                 .define('#', Items.ROTTEN_FLESH)
                 .pattern("###")
                 .pattern("###")
@@ -391,7 +409,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void waterloggedCobblestone(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, WATERLOGGED_COBBLESTONE.get())
+                .shaped(DECORATIONS, WATERLOGGED_COBBLESTONE.get())
                 .define('#', Items.MOSSY_COBBLESTONE_SLAB)
                 .define('X', Items.WATER_BUCKET)
                 .pattern("X#")
@@ -402,7 +420,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void wallFlowerPot(RecipeOutput recipeOutput, ItemLike result, Item flowerA, Item flowerB, Item flowerC) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, result)
+                .shaped(DECORATIONS, result)
                 .define('a', flowerA)
                 .define('b', flowerB)
                 .define('c', flowerC)
@@ -415,7 +433,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void heavyChains(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, HEAVY_CHAINS)
+                .shaped(DECORATIONS, HEAVY_CHAINS)
                 .define('#', Items.CHAIN)
                 .pattern("#")
                 .pattern("#")
@@ -426,7 +444,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void neoForge(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, NEO_FORGE)
+                .shaped(DECORATIONS, NEO_FORGE)
                 .define('#', Items.IRON_INGOT)
                 .define('a', Items.ORANGE_WOOL)
                 .define('b', Items.WHITE_WOOL)
@@ -439,16 +457,16 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void fakeBlocks(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, FAKE_HOPPER, 10)
+                .shaped(DECORATIONS, FAKE_HOPPER, 10)
                 .define('#', Items.IRON_INGOT)
                 .pattern("# #")
                 .pattern("# #")
                 .pattern(" # ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_FURNACE, Items.FURNACE, 8);
+        stonecutting(recipeOutput, DECORATIONS, FAKE_FURNACE, Items.FURNACE, 8);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, LIT_FAKE_FURNACE)
+                .shaped(DECORATIONS, LIT_FAKE_FURNACE)
                 .define('a', FAKE_FURNACE)
                 .define('b', Items.GLOWSTONE_DUST)
                 .pattern("a")
@@ -456,7 +474,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(FAKE_FURNACE), has(FAKE_FURNACE))
                 .save(recipeOutput);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, FAKE_BLAST_FURNACE, 5)
+                .shaped(DECORATIONS, FAKE_BLAST_FURNACE, 5)
                 .define('#', Blocks.SMOOTH_STONE)
                 .define('X', FAKE_FURNACE)
                 .define('I', Items.IRON_INGOT)
@@ -466,7 +484,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy("has_smooth_stone", has(Blocks.SMOOTH_STONE))
                 .save(recipeOutput);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, LIT_FAKE_BLAST_FURNACE)
+                .shaped(DECORATIONS, LIT_FAKE_BLAST_FURNACE)
                 .define('a', FAKE_BLAST_FURNACE)
                 .define('b', Items.GLOWSTONE_DUST)
                 .pattern("a")
@@ -474,7 +492,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(FAKE_BLAST_FURNACE), has(FAKE_BLAST_FURNACE))
                 .save(recipeOutput);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, FAKE_SMOKER, 8)
+                .shaped(DECORATIONS, FAKE_SMOKER, 8)
                 .define('#', ItemTags.LOGS)
                 .define('X', FAKE_FURNACE)
                 .pattern(" # ")
@@ -483,15 +501,15 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy("has_furnace", has(Blocks.FURNACE))
                 .save(recipeOutput);
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, LIT_FAKE_SMOKER)
+                .shaped(DECORATIONS, LIT_FAKE_SMOKER)
                 .define('a', FAKE_SMOKER)
                 .define('b', Items.GLOWSTONE_DUST)
                 .pattern("a")
                 .pattern("b")
                 .unlockedBy(getHasName(FAKE_SMOKER), has(FAKE_SMOKER))
                 .save(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_BARREL, Items.BARREL, 8);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FAKE_CAMPFIRE, 8)
+        stonecutting(recipeOutput, DECORATIONS, FAKE_BARREL, Items.BARREL, 8);
+        ShapedRecipeBuilder.shaped(DECORATIONS, FAKE_CAMPFIRE, 8)
                            .define('L', ItemTags.LOGS)
                            .define('S', Items.STICK)
                            .pattern(" S ")
@@ -500,12 +518,12 @@ public class RecipeGen extends FSRecipeProvider {
                            .unlockedBy("has_stick", has(Items.STICK))
                            .unlockedBy("has_coal", has(ItemTags.COALS))
                            .save(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, LIT_FAKE_CAMPFIRE, Items.CAMPFIRE, 8);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, LIT_FAKE_SOUL_CAMPFIRE, Items.SOUL_CAMPFIRE, 8);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_CHEST, Items.CHEST, 8);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_CHISELED_BOOKSHELF, Items.CHISELED_BOOKSHELF, 8);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_LECTERN, Items.LECTERN, 16);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, FAKE_BEEHIVE, Items.BEEHIVE, 16);
+        stonecutting(recipeOutput, DECORATIONS, LIT_FAKE_CAMPFIRE, Items.CAMPFIRE, 8);
+        stonecutting(recipeOutput, DECORATIONS, LIT_FAKE_SOUL_CAMPFIRE, Items.SOUL_CAMPFIRE, 8);
+        stonecutting(recipeOutput, DECORATIONS, FAKE_CHEST, Items.CHEST, 8);
+        stonecutting(recipeOutput, DECORATIONS, FAKE_CHISELED_BOOKSHELF, Items.CHISELED_BOOKSHELF, 8);
+        stonecutting(recipeOutput, DECORATIONS, FAKE_LECTERN, Items.LECTERN, 16);
+        stonecutting(recipeOutput, DECORATIONS, FAKE_BEEHIVE, Items.BEEHIVE, 16);
         fakeBlocks(recipeOutput, FAKE_IRON_BLOCK, Items.GRAY_DYE);
         fakeBlocks(recipeOutput, FAKE_GOLD_BLOCK, Items.YELLOW_DYE);
         fakeBlocks(recipeOutput, FAKE_DIAMOND_BLOCK, Items.LIGHT_BLUE_DYE);
@@ -514,7 +532,7 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private static void fakeBlocks(RecipeOutput recipeOutput, ItemLike fakeBlock, Item dye) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, fakeBlock, 8)
+        ShapedRecipeBuilder.shaped(BUILDING_BLOCKS, fakeBlock, 8)
                            .define('S', Items.STONE)
                            .define('D', dye)
                            .pattern("SSS")
@@ -525,24 +543,24 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private static void textureBlocks(RecipeOutput recipeOutput) {
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_CHISELED_BOOKSHELF, FAKE_CHISELED_BOOKSHELF);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_CHISELED_BOOKSHELF_TOP, FAKE_CHISELED_BOOKSHELF);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_CHISELED_BOOKSHELF_SIDE, FAKE_CHISELED_BOOKSHELF);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_LOOM, Items.LOOM);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_BEEHIVE_TOP, FAKE_BEEHIVE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_SMITHING_TABLE_BOTTOM, Items.SMITHING_TABLE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_COMPOSTER_BOTTOM, Items.COMPOSTER);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_BEE_NEST_TOP, TEXTURE_BEEHIVE_TOP);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_CHISELED_BOOKSHELF, FAKE_CHISELED_BOOKSHELF);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_CHISELED_BOOKSHELF_TOP, FAKE_CHISELED_BOOKSHELF);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_CHISELED_BOOKSHELF_SIDE, FAKE_CHISELED_BOOKSHELF);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_LOOM, Items.LOOM);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_BEEHIVE_TOP, FAKE_BEEHIVE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_SMITHING_TABLE_BOTTOM, Items.SMITHING_TABLE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_COMPOSTER_BOTTOM, Items.COMPOSTER);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_BEE_NEST_TOP, TEXTURE_BEEHIVE_TOP);
 
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_FURNACE, FAKE_FURNACE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_FURNACE_TOP, FAKE_FURNACE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_BLAST_FURNACE, FAKE_BLAST_FURNACE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_BLAST_FURNACE_TOP, FAKE_BLAST_FURNACE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_SMOKER, FAKE_SMOKER);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_SMITHING_TABLE_TOP, Items.SMITHING_TABLE);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_LODESTONE, Items.CHISELED_STONE_BRICKS);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_LODESTONE_SIDE, Items.CHISELED_STONE_BRICKS);
-        stonecutting(recipeOutput, RecipeCategory.DECORATIONS, TEXTURE_LODESTONE_TOP, Items.CHISELED_STONE_BRICKS);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_FURNACE, FAKE_FURNACE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_FURNACE_TOP, FAKE_FURNACE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_BLAST_FURNACE, FAKE_BLAST_FURNACE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_BLAST_FURNACE_TOP, FAKE_BLAST_FURNACE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_SMOKER, FAKE_SMOKER);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_SMITHING_TABLE_TOP, Items.SMITHING_TABLE);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_LODESTONE, Items.CHISELED_STONE_BRICKS);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_LODESTONE_SIDE, Items.CHISELED_STONE_BRICKS);
+        stonecutting(recipeOutput, DECORATIONS, TEXTURE_LODESTONE_TOP, Items.CHISELED_STONE_BRICKS);
     }
 
     private static void rainbowDye(RecipeOutput recipeOutput) {
@@ -561,7 +579,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void rainbow(RecipeOutput recipeOutput, ItemLike rainbowBlock, TagKey<Item> Block) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, rainbowBlock, 8)
+                .shaped(DECORATIONS, rainbowBlock, 8)
                 .define('#', Block)
                 .define('D', FLItems.RAINBOW_DYE)
                 .pattern("###")
@@ -573,7 +591,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void rainbow(RecipeOutput recipeOutput, ItemLike rainbowBlock, Item Block) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, rainbowBlock, 8)
+                .shaped(DECORATIONS, rainbowBlock, 8)
                 .define('#', Block)
                 .define('D', FLItems.RAINBOW_DYE)
                 .pattern("###")
@@ -585,7 +603,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void colorLamp(RecipeOutput recipeOutput, ItemLike lamp, ItemLike dye) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, lamp)
+                .shaped(DECORATIONS, lamp)
                 .define('#', Items.AMETHYST_SHARD)
                 .define('d', dye)
                 .pattern(" # ")
@@ -607,7 +625,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void doubleBlock(RecipeOutput recipeOutput, ItemLike doubleBlock, ItemLike up, ItemLike down) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, doubleBlock, 2)
+                .shaped(DECORATIONS, doubleBlock, 2)
                 .define('u', up)
                 .define('d', down)
                 .pattern("u")
@@ -617,12 +635,12 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private void smoothPlanks(RecipeOutput recipeOutput, ItemLike smoothPlanks, ItemLike wood) {
-        cut(recipeOutput, RecipeCategory.BUILDING_BLOCKS, smoothPlanks, wood);
+        cut(recipeOutput, BUILDING_BLOCKS, smoothPlanks, wood);
     }
 
     public void woodenGuardrail(RecipeOutput recipeOutput, ItemLike woodenGuardrail, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, woodenGuardrail, 4)
+                .shaped(DECORATIONS, woodenGuardrail, 4)
                 .define('X', material)
                 .define('#', Items.STICK)
                 .pattern("#X#")
@@ -634,7 +652,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     public void woodenGuardrailB(RecipeOutput recipeOutput, ItemLike woodenGuardrail, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.DECORATIONS, woodenGuardrail, 4)
+                .shaped(DECORATIONS, woodenGuardrail, 4)
                 .define('X', material)
                 .define('#', Items.STICK)
                 .pattern("X#X")
@@ -645,7 +663,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     public void pillar12px(RecipeOutput recipeOutput, ItemLike pillar, ItemLike material) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.BUILDING_BLOCKS, pillar, 5)
+                .shaped(BUILDING_BLOCKS, pillar, 5)
                 .define('#', material)
                 .pattern("#")
                 .pattern("#")
@@ -653,7 +671,12 @@ public class RecipeGen extends FSRecipeProvider {
                 .group("pillar")
                 .unlockedBy(getHasName(material), has(material))
                 .save(recipeOutput);
-        stonecutting(recipeOutput, RecipeCategory.BUILDING_BLOCKS, pillar, material);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, pillar, material);
+    }
+
+    public void corridorSlab(RecipeOutput recipeOutput, ItemLike slab, ItemLike corridor) {
+        slab(recipeOutput, DECORATIONS, slab, corridor);
+        stonecutting(recipeOutput, DECORATIONS, slab, corridor, 2);
     }
 
     private static void crowbar(RecipeOutput recipeOutput) {

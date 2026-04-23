@@ -1,0 +1,6 @@
+{
+	"parent": "fiercelive:block/tint_iron_ladder_frame",
+	"textures": {
+		"all": "fiercelive:block/iron_frame"
+	}
+}

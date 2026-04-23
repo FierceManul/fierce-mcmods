@@ -1,12 +1,9 @@
 package net.fiercemanul.fiercelive.data.tags;
 
 import net.fiercemanul.fiercelive.FierceLive;
-import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public final class FLBlockTags {
@@ -29,6 +26,7 @@ public final class FLBlockTags {
     public static final TagKey<Block> TABLE_CONNECT = create("table_connect");
     public static final TagKey<Block> WOOL_SOFAS = create("wool_sofas");
     public static final TagKey<Block> COLOR_LAMPS = create("color_lamps");
+    public static final TagKey<Block> FRAMES = create("frames");
 
     private static TagKey<Block> create(String name) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

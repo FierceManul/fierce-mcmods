@@ -4,8 +4,10 @@ import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.gathers.*;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.world.level.block.*;
+import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -28,11 +30,13 @@ import java.util.*;
 
 import static net.fiercemanul.fiercelive.data.registries.FLRegister.BLOCKS;
 import static net.fiercemanul.fiercelive.data.registries.FLRegister.ITEMS;
+import static net.minecraft.data.recipes.RecipeCategory.BUILDING_BLOCKS;
 
 public final class BlockBulkRegister {
 
 
     private static final int[] TINT_COLORS = new int[DyeColor.values().length];
+    private static final int[] TINT_COLORS_LIGHT = new int[DyeColor.values().length];
     private static final int[] TINT_COLOR_LIGHT_LEVELS = new int[DyeColor.values().length];
     private static final Item[] DYES = new Item[DyeColor.values().length];
     public static final Set<DeferredBlock<Block>> CABINETS = new HashSet<>();
@@ -48,24 +52,15 @@ public final class BlockBulkRegister {
     public static boolean fired = false;
 
     static {
-        //取色来源：染色玻璃
-        TINT_COLORS[DyeColor.WHITE.getId()] = 0xFFFFFF;
-        TINT_COLORS[DyeColor.ORANGE.getId()] = makeTintColor(216, 127, 51);
-        TINT_COLORS[DyeColor.MAGENTA.getId()] = makeTintColor(178, 76, 216);
-        TINT_COLORS[DyeColor.LIGHT_BLUE.getId()] = makeTintColor(102, 153, 216);
-        TINT_COLORS[DyeColor.YELLOW.getId()] = makeTintColor(229, 229, 51);
-        TINT_COLORS[DyeColor.LIME.getId()] = makeTintColor(127, 204, 25);
-        TINT_COLORS[DyeColor.PINK.getId()] = makeTintColor(242, 127, 165);
-        TINT_COLORS[DyeColor.GRAY.getId()] = makeTintColor(76, 76, 76);
-        TINT_COLORS[DyeColor.LIGHT_GRAY.getId()] = makeTintColor(153, 153, 153);
-        TINT_COLORS[DyeColor.CYAN.getId()] = makeTintColor(76, 127, 153);
-        TINT_COLORS[DyeColor.PURPLE.getId()] = makeTintColor(127, 63, 178);
-        TINT_COLORS[DyeColor.BLUE.getId()] = makeTintColor(51, 76, 178);
-        TINT_COLORS[DyeColor.BROWN.getId()] = makeTintColor(102, 76, 51);
-        TINT_COLORS[DyeColor.GREEN.getId()] = makeTintColor(102, 127, 51);
-        TINT_COLORS[DyeColor.RED.getId()] = makeTintColor(153, 51, 51);
-        TINT_COLORS[DyeColor.BLACK.getId()] = makeTintColor(25, 25, 25);
-        for (DyeColor color : DyeColor.values()) TINT_COLOR_LIGHT_LEVELS[color.getId()] = makeBlockLight(TINT_COLORS[color.getId()]);
+        for (DyeColor color : DyeColor.values()) {
+            int colored = FastColor.ARGB32.color(
+                    FastColor.ARGB32.red(color.getTextColor()) / 2 + 128,
+                    FastColor.ARGB32.green(color.getTextColor()) / 2 + 128,
+                    FastColor.ARGB32.blue(color.getTextColor()) / 2 + 128
+            );
+            TINT_COLORS_LIGHT[color.getId()] = colored;
+            TINT_COLOR_LIGHT_LEVELS[color.getId()] = makeBlockLight(colored);
+        }
         DYES[DyeColor.WHITE.getId()] = Items.WHITE_DYE;
         DYES[DyeColor.ORANGE.getId()] = Items.ORANGE_DYE;
         DYES[DyeColor.MAGENTA.getId()] = Items.MAGENTA_DYE;
@@ -82,13 +77,45 @@ public final class BlockBulkRegister {
         DYES[DyeColor.GREEN.getId()] = Items.GREEN_DYE;
         DYES[DyeColor.RED.getId()] = Items.RED_DYE;
         DYES[DyeColor.BLACK.getId()] = Items.BLACK_DYE;
+
+        /* 输出颜色argb值
+        for (DyeColor color : DyeColor.values()) {
+            FierceSource.LOGGER.info(
+                    "Color {} textureDiffuseColor {} {} {} {}",
+                    color.getName(),
+                    FastColor.ARGB32.alpha(color.getTextureDiffuseColor()),
+                    FastColor.ARGB32.red(color.getTextureDiffuseColor()),
+                    FastColor.ARGB32.green(color.getTextureDiffuseColor()),
+                    FastColor.ARGB32.blue(color.getTextureDiffuseColor())
+            );
+            FierceSource.LOGGER.info(
+                    "Color {} mapColor {} {} {} {}",
+                    color.getName(),
+                    FastColor.ARGB32.alpha(color.getMapColor().col),
+                    FastColor.ARGB32.red(color.getMapColor().col),
+                    FastColor.ARGB32.green(color.getMapColor().col),
+                    FastColor.ARGB32.blue(color.getMapColor().col)
+            );
+            FierceSource.LOGGER.info(
+                    "Color {} fireworkColor {} {} {} {}",
+                    color.getName(),
+                    FastColor.ARGB32.alpha(color.getFireworkColor()),
+                    FastColor.ARGB32.red(color.getFireworkColor()),
+                    FastColor.ARGB32.green(color.getFireworkColor()),
+                    FastColor.ARGB32.blue(color.getFireworkColor())
+            );
+            FierceSource.LOGGER.info(
+                    "Color {} textColor {} {} {} {}",
+                    color.getName(),
+                    FastColor.ARGB32.alpha(color.getTextColor()),
+                    FastColor.ARGB32.red(color.getTextColor()),
+                    FastColor.ARGB32.green(color.getTextColor()),
+                    FastColor.ARGB32.blue(color.getTextColor())
+            );
+        }*/
     }
 
     private BlockBulkRegister() {}
-
-    public static int makeTintColor(int r, int g, int b) {
-        return FastColor.ARGB32.color(255, r / 2 + 128, g / 2 + 128, b / 2 + 128);
-    }
 
     public static BlockMaterial registerBlockMaterial(BlockMaterial blockMaterial) {
         if (fired) return blockMaterial;
@@ -131,6 +158,7 @@ public final class BlockBulkRegister {
             cabinet(material, itemList, genData);
             lamps(material, itemList, genData);
         });
+        frames(genData);
     }
 
     public static boolean isSimpleCubeBlock(BlockMaterial material) {
@@ -513,14 +541,31 @@ public final class BlockBulkRegister {
                 && material.hasAnyTags(BlockMaterialTag.MODEL_CUBE, BlockMaterialTag.MODEL_PILLAR, BlockMaterialTag.MODEL_LOG, BlockMaterialTag.MODEL_UP_DOWN_SIDE)
                 && material.hasAnyTags(BlockMaterialTag.TEXTURE_SIMPLE, BlockMaterialTag.TEXTURE_FRAMED, BlockMaterialTag.TEXTURE_SMOOTH, BlockMaterialTag.TEXTURE_PILLAR, BlockMaterialTag.TEXTURE_UP_DOWN)
         ) {
-            DeferredBlock<Block> guardrail = BLOCKS.register(material.getPath() + "_guardrail", () -> new StoneGuardrailBlock(material.getProperties().mapColor(material.mapColorHolder().side())));
-            itemTab.add(ITEMS.registerSimpleBlockItem(guardrail));
-            if (genData) {
-                basicData(material, guardrail);
-                BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.GUARDRAILS, guardrail));
-                BlockStateGen.ROWS.put(guardrail, g -> g.stoneGuardrail(guardrail, material));
-                RecipeGen.ROWS.add((g, o) -> g.cutD(o, guardrail, material, 4));
-                LangGanZHCN.ROWS.put(guardrail, material.getPath() + "护栏");
+            if (material.getPath().contains("concrete")) {
+                DeferredBlock<Block> guardrail = BLOCKS.register(material.getPath() + "_guardrail", () -> new ConcreteGuardrailBlock(
+                        material.getProperties().mapColor(material.mapColorHolder().top()))
+                );
+                itemTab.add(ITEMS.registerSimpleBlockItem(guardrail));
+                if (genData) {
+                    basicData(material, guardrail);
+                    BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.GUARDRAILS, guardrail));
+                    BlockStateGen.ROWS.put(guardrail, g -> g.concreteGuardrail(guardrail, material));
+                    RecipeGen.ROWS.add((g, o) -> g.cutD(o, guardrail, material, 4));
+                    LangGanZHCN.ROWS.put(guardrail, material.getPath() + "护栏");
+                }
+            }
+            else  {
+                DeferredBlock<Block> guardrail = BLOCKS.register(material.getPath() + "_guardrail", () -> new StoneGuardrailBlock(
+                        material.getProperties().mapColor(material.mapColorHolder().side()))
+                );
+                itemTab.add(ITEMS.registerSimpleBlockItem(guardrail));
+                if (genData) {
+                    basicData(material, guardrail);
+                    BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.GUARDRAILS, guardrail));
+                    BlockStateGen.ROWS.put(guardrail, g -> g.stoneGuardrail(guardrail, material));
+                    RecipeGen.ROWS.add((g, o) -> g.cutD(o, guardrail, material, 4));
+                    LangGanZHCN.ROWS.put(guardrail, material.getPath() + "护栏");
+                }
             }
         }
     }
@@ -691,7 +736,7 @@ public final class BlockBulkRegister {
             COLOR_REINFORCED_SEA_LANTERN[color.getId()] = reinforcedLamp;
 
             if (color != DyeColor.WHITE) {
-                int tintColor = TINT_COLORS[color.getId()];
+                int tintColor = TINT_COLORS_LIGHT[color.getId()];
                 BLOCK_TINT_MAP.put(colorSeaLamp, tintColor);
                 BLOCK_TINT_MAP.put(glassLamp, tintColor);
                 BLOCK_TINT_MAP.put(reinforcedLamp, tintColor);
@@ -713,12 +758,89 @@ public final class BlockBulkRegister {
                 BlockStateGen.ROWS.put(reinforcedLamp, g -> g.tintReinforcedSeaLantern(reinforcedLamp));
                 BlockLootGen.ROWS.put(colorSeaLamp, b -> b.seaLantern(colorSeaLamp));
                 BlockLootGen.ROWS.put(glassLamp, b -> b.glassLamp(glassLamp, colorSeaLamp));
-                RecipeGen.ROWS.add((g, o) -> g.colorSeaLantern(o, colorSeaLamp, DYES[color.getId()]));
+                RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, colorSeaLamp, Items.SEA_LANTERN, DYES[color.getId()]));
                 RecipeGen.ROWS.add((g, o) -> g.buildGlassLamp(o, glassLamp, colorSeaLamp));
                 RecipeGen.ROWS.add((g, o) -> g.reinforcedLamp(o, reinforcedLamp, colorSeaLamp));
                 LangGanZHCN.ROWS.put(colorSeaLamp, colorSeaLamp.getId().getPath());
                 LangGanZHCN.ROWS.put(glassLamp, colorSeaLamp.getId().getPath() + "玻璃灯");
                 LangGanZHCN.ROWS.put(reinforcedLamp, color.name().toLowerCase() + "强化" + material.getPath());
+            }
+        }
+    }
+
+    private static void frames(boolean genData) {
+        for (DyeColor color : DyeColor.values()) {
+            DeferredBlock<Block> frame = BLOCKS.registerBlock(
+                    color.getName() + "_iron_frame",
+                    IronFrameBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(color).noCollission()
+            );
+            COLORED_BLOCKS.add(ITEMS.registerSimpleBlockItem(frame));
+            DeferredBlock<Block> corridor = BLOCKS.registerBlock(
+                    color.getName() + "_iron_corridor",
+                    IronCorridorBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(color).isValidSpawn(Blocks::never)
+            );
+            COLORED_BLOCKS.add(ITEMS.registerSimpleBlockItem(corridor));
+            DeferredBlock<Block> slab = BLOCKS.registerBlock(
+                    color.getName() + "_iron_corridor_slab",
+                    IronCorridorSlabBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(color).isValidSpawn(Blocks::never)
+            );
+            COLORED_BLOCKS.add(ITEMS.registerSimpleBlockItem(slab));
+            DeferredBlock<Block> stair = BLOCKS.registerBlock(
+                    color.getName() + "_iron_corridor_stairs",
+                    IronCorridorStairBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(color).isValidSpawn(Blocks::never)
+            );
+            COLORED_BLOCKS.add(ITEMS.registerSimpleBlockItem(stair));
+            DeferredBlock<IronLadderBlock> ladder = BLOCKS.register(
+                    color.getName() + "_iron_ladder",
+                    () -> new IronLadderBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS), frame.get())
+            );
+            COLORED_BLOCKS.add(ITEMS.registerSimpleBlockItem(ladder));
+            if (color != DyeColor.WHITE) {
+                BLOCK_TINT_MAP.put(frame, color.getMapColor().col);
+                BLOCK_TINT_MAP.put(corridor, color.getMapColor().col);
+                BLOCK_TINT_MAP.put(slab, color.getMapColor().col);
+                BLOCK_TINT_MAP.put(stair, color.getMapColor().col);
+                BLOCK_TINT_MAP.put(ladder, color.getMapColor().col);
+            }
+            if (genData) {
+                Item dye = DYES[color.getId()];
+                BlockTagsGen.ROWS.add(g -> {
+                    g.tag(BlockTags.MINEABLE_WITH_PICKAXE, frame);
+                    g.tag(BlockTags.MINEABLE_WITH_PICKAXE, corridor);
+                    g.tag(BlockTags.MINEABLE_WITH_PICKAXE, slab);
+                    g.tag(BlockTags.MINEABLE_WITH_PICKAXE, stair);
+                    g.tag(BlockTags.MINEABLE_WITH_PICKAXE, ladder);
+                    g.tag(BlockTags.NEEDS_STONE_TOOL, frame);
+                    g.tag(BlockTags.NEEDS_STONE_TOOL, corridor);
+                    g.tag(BlockTags.NEEDS_STONE_TOOL, slab);
+                    g.tag(BlockTags.NEEDS_STONE_TOOL, stair);
+                    g.tag(BlockTags.NEEDS_STONE_TOOL, ladder);
+                    g.tag(BlockTags.CLIMBABLE, frame);
+                    g.tag(BlockTags.CLIMBABLE, corridor);
+                    g.tag(BlockTags.CLIMBABLE, ladder);
+                    g.tag(FLBlockTags.FRAMES, frame);
+                    g.tag(FLBlockTags.FRAMES, corridor);
+                });
+                BlockStateGen.ROWS.put(frame, g -> g.tintIronFrame(frame));
+                BlockStateGen.ROWS.put(corridor, g -> g.tintIronCorridor(corridor));
+                BlockStateGen.ROWS.put(slab, g -> g.tintIronCorridorSlab(slab));
+                BlockStateGen.ROWS.put(stair, g -> g.tintIronCorridorStairs(stair));
+                BlockStateGen.ROWS.put(ladder, g -> g.tintIronLadder(ladder));
+                RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, frame, FLBlocks.IRON_FRAME, dye));
+                RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, corridor, FLBlocks.IRON_CORRIDOR, dye));
+                RecipeGen.ROWS.add((g, o) -> g.corridorSlab(o, slab, corridor));
+                RecipeGen.ROWS.add((g, o) -> g.cutD(o, stair, corridor, 2));
+                RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, ladder, FLBlocks.IRON_LADDER, dye));
+                BlockLootGen.ROWS.put(ladder, g -> g.ironLadder(ladder));
+                LangGanZHCN.ROWS.put(frame, color.name().toLowerCase() + "铁框架");
+                LangGanZHCN.ROWS.put(corridor, color.name().toLowerCase() + "铁廊架");
+                LangGanZHCN.ROWS.put(slab, color.name().toLowerCase() + "铁廊架台阶");
+                LangGanZHCN.ROWS.put(stair, color.name().toLowerCase() + "铁廊架楼梯");
+                LangGanZHCN.ROWS.put(ladder, color.name().toLowerCase() + "铁梯");
             }
         }
     }

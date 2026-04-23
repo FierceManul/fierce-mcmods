@@ -1,0 +1,9 @@
+{
+  "parent": "fiercelive:block/tint_iron_corridor_slab_top",
+  "textures": {
+    "particle": "fiercelive:block/iron_corridor",
+    "side": "fiercelive:block/iron_frame_slab",
+    "bottom": "fiercelive:block/iron_frame",
+    "floor": "fiercelive:block/iron_corridor"
+  }
+}

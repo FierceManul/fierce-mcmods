@@ -5,7 +5,6 @@ import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
-import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -60,6 +59,13 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.D_WALL_FLOWER_POT.get(),
                 FLBlocks.E_WALL_FLOWER_POT.get(),
                 FLBlocks.F_WALL_FLOWER_POT.get(),
+                FLBlocks.IRON_GUARDRAIL.get(),
+                FLBlocks.IRON_FRAME.get(),
+                FLBlocks.IRON_CORRIDOR.get(),
+                FLBlocks.IRON_CORRIDOR_SLAB.get(),
+                FLBlocks.IRON_CORRIDOR_STAIRS.get(),
+                FLBlocks.IRON_LADDER.get(),
+                FLBlocks.IRON_SCAFFOLDING.get(),
                 FLBlocks.HEAVY_CHAINS.get(),
                 FLBlocks.RAINBOW_CONCRETE.get(),
                 FLBlocks.RAINBOW_TERRACOTTA.get(),
@@ -158,6 +164,15 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.HALF_MYCELIUM.get(),
                 FLBlocks.HALF_DIRT_PATH.get()
         );
+        tag(BlockTags.NEEDS_STONE_TOOL).add(
+                FLBlocks.IRON_GUARDRAIL.get(),
+                FLBlocks.IRON_FRAME.get(),
+                FLBlocks.IRON_CORRIDOR.get(),
+                FLBlocks.IRON_CORRIDOR_SLAB.get(),
+                FLBlocks.IRON_CORRIDOR_STAIRS.get(),
+                FLBlocks.IRON_LADDER.get(),
+                FLBlocks.IRON_SCAFFOLDING.get()
+        );
         tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get()).addTag(FLBlockTags.WOOL_SOFAS);
         tag(BlockTags.DIRT).add(
                 FLBlocks.HALF_GRASS_BLOCK.get(),
@@ -244,6 +259,16 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.RAINBOW_TERRACOTTA.get()
         );
         tag(Tags.Blocks.DYED).addTag(FLBlockTags.RAINBOW_DYED);
+        tag(BlockTags.CLIMBABLE).add(
+                FLBlocks.IRON_FRAME.get(),
+                FLBlocks.IRON_CORRIDOR.get(),
+                FLBlocks.IRON_LADDER.get(),
+                FLBlocks.IRON_SCAFFOLDING.get()
+        );
+        tag(FLBlockTags.FRAMES).add(
+                FLBlocks.IRON_FRAME.get(),
+                FLBlocks.IRON_CORRIDOR.get()
+        );
 
         ROWS.forEach(row -> row.accept(this));
 

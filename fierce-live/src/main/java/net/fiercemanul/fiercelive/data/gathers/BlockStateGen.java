@@ -97,6 +97,13 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(HALF_PODZOL, gen -> {});
         ROWS.put(HALF_MYCELIUM, gen -> {});
         ROWS.put(GREEN_FUN_ROOF, gen -> {});
+        ROWS.put(IRON_GUARDRAIL, BlockStateGen::ironGuardrail);
+        ROWS.put(IRON_FRAME, gen -> simpleWithModel(IRON_FRAME));
+        ROWS.put(IRON_CORRIDOR, gen -> simpleWithModel(IRON_CORRIDOR));
+        ROWS.put(IRON_CORRIDOR_SLAB, gen -> {});
+        ROWS.put(IRON_CORRIDOR_STAIRS, gen -> ironCorridorStairs());
+        ROWS.put(IRON_LADDER, gen -> ironLadder(IRON_LADDER));
+        ROWS.put(IRON_SCAFFOLDING, gen -> {});
 
         ROWS.put(RAINBOW_GLASS, gen -> gen.simpleWithModel(RAINBOW_GLASS));
 
@@ -621,6 +628,10 @@ public class BlockStateGen extends FSBlockStateProvider {
         }
     }
 
+    public void concreteGuardrail(DeferredBlock<Block> deferredBlock, BlockMaterial material) {
+        guardrail(deferredBlock, getSimpleCubeMaterialResource(material), "guardrail_concrete");
+    }
+
     public void guardrail(DeferredBlock<Block> deferredBlock, ResourceLocation texture, String modelName) {
         String path = deferredBlock.getId().getPath();
         BlockModelBuilder model = models().getBuilder(path)
@@ -788,6 +799,22 @@ public class BlockStateGen extends FSBlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
+    public void ironGuardrail() {
+        String path = IRON_GUARDRAIL.getId().getPath();
+        ModelFile model = models().getExistingFile(modLoc("block/guardrail_iron"));
+        guardrailStates(
+                IRON_GUARDRAIL.get(),
+                model,
+                models().getExistingFile(modLoc("block/guardrail_iron_lower")),
+                models().getExistingFile(modLoc("block/guardrail_iron_inner")),
+                models().getExistingFile(modLoc("block/guardrail_iron_inner_lower")),
+                models().getExistingFile(modLoc("block/guardrail_iron_outer")),
+                models().getExistingFile(modLoc("block/guardrail_iron_outer_lower")),
+                false
+        );
+        itemModels().getBuilder(path).parent(model);
+    }
+
     private void guardrailStates(
             Block block,
             ModelFile model,
@@ -797,6 +824,19 @@ public class BlockStateGen extends FSBlockStateProvider {
             ModelFile outer,
             ModelFile outerLower
     ) {
+        guardrailStates(block, model, lower, inner, innerLower, outer, outerLower, true);
+    }
+
+    private void guardrailStates(
+            Block block,
+            ModelFile model,
+            ModelFile lower,
+            ModelFile inner,
+            ModelFile innerLower,
+            ModelFile outer,
+            ModelFile outerLower,
+            boolean uvlock
+    ) {
         getVariantBuilder(block).forAllStatesExcept(state -> {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             Half half = state.getValue(BlockStateProperties.HALF);
@@ -805,7 +845,7 @@ public class BlockStateGen extends FSBlockStateProvider {
             if (shape == StairsShape.INNER_LEFT) yRot += 270;
             else if (shape == StairsShape.OUTER_RIGHT) yRot += 90;
             yRot %= 360;
-            boolean uvlock = yRot != 0;
+            boolean uvlockFlag = uvlock && yRot != 0;
             return ConfiguredModel.builder()
                                   .modelFile(
                                           half == Half.TOP
@@ -820,7 +860,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                                           }
                                   )
                                   .rotationY(yRot)
-                                  .uvLock(uvlock)
+                                  .uvLock(uvlockFlag)
                                   .build();
         }, BlockStateProperties.WATERLOGGED);
     }
@@ -1975,6 +2015,94 @@ public class BlockStateGen extends FSBlockStateProvider {
                                  .texture("all", getSimpleCubeMaterialResource(material));
             directionModel(deferredBlock.get(), path, model, true);
         }
+    }
+
+    public void tintIronFrame(DeferredBlock<? extends Block> deferredBlock) {
+        simple(deferredBlock.get(), deferredBlock.getId().getPath(), models().getExistingFile(modLoc("block/tint_iron_frame")));
+    }
+
+    public void tintIronCorridor(DeferredBlock<? extends Block> deferredBlock) {
+        simple(deferredBlock.get(), deferredBlock.getId().getPath(), models().getExistingFile(modLoc("block/tint_iron_corridor")));
+    }
+
+    public void tintIronCorridorSlab(DeferredBlock<? extends Block> deferredBlock) {
+        var bottom = models().getExistingFile(modLoc("block/tint_iron_corridor_slab_bottom"));
+        getVariantBuilder(deferredBlock.get())
+                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(bottom))
+                .partialState().with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/tint_iron_corridor_slab_top"))))
+                .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/tint_iron_corridor_slab_double"))));
+        itemModels().getBuilder(deferredBlock.getId().getPath()).parent(bottom);
+    }
+
+    public void ironCorridorStairs() {
+        var straight = models().getExistingFile(modLoc("block/iron_corridor_stair"));
+        ironCorridorStairStates(
+                IRON_CORRIDOR_STAIRS.get(),
+                straight,
+                models().getExistingFile(modLoc("block/iron_corridor_stair_inner")),
+                models().getExistingFile(modLoc("block/iron_corridor_stair_outer"))
+        );
+        itemModels().getBuilder(IRON_CORRIDOR_STAIRS.getId().getPath()).parent(straight);
+    }
+
+    public void tintIronCorridorStairs(DeferredBlock<? extends Block> deferredBlock) {
+        var straight = models().getExistingFile(modLoc("block/tint_iron_corridor_stair"));
+        ironCorridorStairStates(
+                deferredBlock.get(),
+                straight,
+                models().getExistingFile(modLoc("block/tint_iron_corridor_stair_inner")),
+                models().getExistingFile(modLoc("block/tint_iron_corridor_stair_outer"))
+        );
+        itemModels().getBuilder(deferredBlock.getId().getPath()).parent(straight);
+    }
+
+    private void ironCorridorStairStates(Block block, ModelFile straight, ModelFile inner, ModelFile outer) {
+        getVariantBuilder(block).forAllStatesExcept(state -> {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            StairsShape shape = state.getValue(BlockStateProperties.STAIRS_SHAPE);
+            int yRot = (int) facing.getClockWise().toYRot();
+            if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) yRot += 270;
+            yRot %= 360;
+            return ConfiguredModel.builder()
+                                  .modelFile(shape == StairsShape.STRAIGHT ? straight : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? inner : outer)
+                                  .rotationY(yRot).build();
+        }, StairBlock.WATERLOGGED);
+    }
+
+    public void ironLadder(DeferredBlock<? extends Block> deferredBlock) {
+        ironLadderStates(
+                deferredBlock.get(),
+                models().getExistingFile(modLoc("block/iron_ladder_frame")),
+                models().getExistingFile(modLoc("block/iron_ladder"))
+        );
+        itemModels().getBuilder(deferredBlock.getId().getPath())
+                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                    .texture("layer0", modLoc("block/iron_ladder"));
+    }
+
+    public void tintIronLadder(DeferredBlock<? extends Block> deferredBlock) {
+        ironLadderStates(
+                deferredBlock.get(),
+                models().getExistingFile(modLoc("block/tint_iron_ladder_frame")),
+                models().getExistingFile(modLoc("block/tint_iron_ladder"))
+        );
+        itemModels().getBuilder(deferredBlock.getId().getPath())
+                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                    .texture("layer0", modLoc("block/white_iron_ladder"));
+    }
+
+    private void ironLadderStates(Block block, ModelFile frame, ModelFile ladder) {
+        getMultipartBuilder(block)
+                .part().modelFile(frame).addModel()
+                .condition(FLBlockStateProperties.FRAMED, true).end()
+                .part().modelFile(ladder).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).end()
+                .part().modelFile(ladder).rotationY(90).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST).end()
+                .part().modelFile(ladder).rotationY(180).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH).end()
+                .part().modelFile(ladder).rotationY(270).addModel()
+                .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST).end();
     }
 
     public void stair(DeferredBlock<StairBlock> stair, BlockMaterial material) {

@@ -101,6 +101,13 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.CRAFTING_BLOCK, "工作快");
         ROWS.put(FLBlocks.CRAFTING_DESK, "工作桌");
         ROWS.put(FLBlocks.CRAFTING_PAD, "工作板");
+        ROWS.put(FLBlocks.IRON_GUARDRAIL, "铁护栏");
+        ROWS.put(FLBlocks.IRON_FRAME, "铁框架");
+        ROWS.put(FLBlocks.IRON_CORRIDOR, "铁廊架");
+        ROWS.put(FLBlocks.IRON_CORRIDOR_SLAB, "铁廊架台阶");
+        ROWS.put(FLBlocks.IRON_CORRIDOR_STAIRS, "铁廊架楼梯");
+        ROWS.put(FLBlocks.IRON_LADDER, "铁梯");
+        ROWS.put(FLBlocks.IRON_SCAFFOLDING, "铁脚手架");
         ROWS.put(FLBlocks.FOX_CARROTS, "狐萝卜");
         ROWS.put(FLBlocks.FOX_CARROT_SHEAF, "狐萝卜捆");
         ROWS.put(FLBlocks.FOX_CARROT_BASKET, "狐萝卜篮");

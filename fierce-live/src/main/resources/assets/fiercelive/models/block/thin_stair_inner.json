@@ -1,8 +1,5 @@
 {
 	"parent": "fiercelive:block/thin_stair",
-	"textures": {
-		"particle": "#all"
-	},
 	"elements": [
 		{
 			"from": [0, 0, 0],

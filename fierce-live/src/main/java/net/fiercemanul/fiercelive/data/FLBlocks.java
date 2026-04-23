@@ -100,6 +100,20 @@ public final class FLBlocks {
             "e_wall_flower_pot", WallFlowerPortBlock::new, BlockBehaviour.Properties.of().strength(0.5F));
     public static final DeferredBlock<Block> F_WALL_FLOWER_POT = regBlock(
             "f_wall_flower_pot", WallFlowerPortBlock::new, BlockBehaviour.Properties.of().strength(0.5F));
+    public static final DeferredBlock<Block> IRON_GUARDRAIL = regBlock(
+            "iron_guardrail", IronGuardrailBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS));
+    public static final DeferredBlock<Block> IRON_FRAME = regBlock(
+            "iron_frame", IronFrameBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(MapColor.METAL).noCollission());
+    public static final DeferredBlock<Block> IRON_CORRIDOR = regBlock(
+            "iron_corridor", IronCorridorBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(MapColor.METAL).isValidSpawn(Blocks::never));
+    public static final DeferredBlock<Block> IRON_CORRIDOR_SLAB = regBlock(
+            "iron_corridor_slab", IronCorridorSlabBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(MapColor.METAL).isValidSpawn(Blocks::never));
+    public static final DeferredBlock<Block> IRON_CORRIDOR_STAIRS = regBlock(
+            "iron_corridor_stairs", IronCorridorStairBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(MapColor.METAL).isValidSpawn(Blocks::never));
+    public static final DeferredBlock<IronLadderBlock> IRON_LADDER = reg(
+            "iron_ladder", () -> new IronLadderBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS), IRON_FRAME.get()));
+    public static final DeferredBlock<Block> IRON_SCAFFOLDING = FLRegister.BLOCKS.registerBlock(
+            "iron_scaffolding", IronScaffoldingBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.METAL).isValidSpawn(Blocks::never).pushReaction(PushReaction.DESTROY).isRedstoneConductor(FSUtils::getFalse));
     public static final DeferredBlock<Block> SMOOTH_OAK_PLANKS = regSimpleBlock(
             "smooth_oak_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_SPRUCE_PLANKS = regSimpleBlock(

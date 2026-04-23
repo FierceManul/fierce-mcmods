@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -67,15 +68,16 @@ public abstract class GuardrailBlock extends FLStairBlock {
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         state = state.setValue(HALF, isSlabLike(level.getBlockState(currentPos.below()), level, currentPos) ? Half.BOTTOM : Half.TOP);
-        return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        return super.updateShape(state.setValue(SHAPE, getStairsShape(state, level, currentPos)), facing, facingState, level, currentPos, facingPos);
     }
 
     protected boolean isSlabLike(BlockState state, BlockGetter level, BlockPos pos) {
         if (SLAB_LIKE_CACHE.containsKey(state)) return SLAB_LIKE_CACHE.get(state);
+        Block block = state.getBlock();
         boolean slabLike = (
-                state.getBlock() instanceof SlabBlock && state.getValue(BlockStateProperties.SLAB_TYPE) == SlabType.BOTTOM
+                block instanceof SlabBlock && state.getValue(BlockStateProperties.SLAB_TYPE) == SlabType.BOTTOM
         ) || (
-                state.getBlock() instanceof OneCutBlock
+                block instanceof OneCutBlock
                         && state.getValue(BlockStateProperties.FACING) == Direction.DOWN
                         && !state.getValue(FLBlockStateProperties.DOUBLE)
         );

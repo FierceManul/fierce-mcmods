@@ -1,0 +1,82 @@
+{
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"slab": "fiercelive:block/white_iron_frame_slab",
+		"stair": "fiercelive:block/white_iron_frame_stair",
+		"particle": "fiercelive:block/white_iron_corridor",
+		"top": "fiercelive:block/white_iron_corridor"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 8],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#slab", "tintindex": 0, "cullface": "north"},
+				"east": {"uv": [8, 0, 16, 8], "texture": "#stair", "tintindex": 0, "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#slab", "tintindex": 0},
+				"west": {"uv": [0, 0, 8, 8], "texture": "#slab", "tintindex": 0, "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 8], "texture": "#top", "tintindex": 0},
+				"down": {"uv": [0, 8, 16, 16], "texture": "#slab", "tintindex": 0, "cullface": "down"}
+			}
+		},
+		{
+			"from": [0.01, 7, 0.01],
+			"to": [15.99, 0.01, 8],
+			"faces": {
+				"north": {"uv": [0, 16, 16, 9], "texture": "#slab", "tintindex": 0},
+				"east": {"uv": [8, 16, 16, 9], "texture": "#stair", "tintindex": 0},
+				"south": {"uv": [0, 16, 16, 9], "texture": "#slab", "tintindex": 0},
+				"west": {"uv": [0, 16, 8, 9], "texture": "#slab", "tintindex": 0},
+				"up": {"uv": [0, 16, 16, 8], "texture": "#slab", "tintindex": 0, "cullface": "down"},
+				"down": {"uv": [0, 8, 16, 0], "texture": "#top", "tintindex": 0}
+			}
+		},
+		{
+			"from": [0, 0, 8],
+			"to": [8, 8, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 8, 8], "texture": "#stair", "tintindex": 0},
+				"south": {"uv": [0, 0, 8, 8], "texture": "#stair", "tintindex": 0, "cullface": "south"},
+				"west": {"uv": [8, 0, 16, 8], "texture": "#slab", "tintindex": 0, "cullface": "west"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#top", "tintindex": 0},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#stair", "tintindex": 0, "cullface": "down"}
+			}
+		},
+		{
+			"from": [0.01, 7, 8],
+			"to": [8, 0.01, 15.99],
+			"faces": {
+				"east": {"uv": [0, 16, 8, 9], "texture": "#stair", "tintindex": 0},
+				"south": {"uv": [0, 16, 8, 9], "texture": "#stair", "tintindex": 0},
+				"west": {"uv": [8, 16, 16, 9], "texture": "#slab", "tintindex": 0},
+				"up": {"uv": [0, 8, 8, 0], "texture": "#stair", "tintindex": 0, "cullface": "down"},
+				"down": {"uv": [0, 16, 8, 8], "texture": "#top", "tintindex": 0}
+			}
+		},
+		{
+			"from": [8, 8, 8],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#stair", "tintindex": 0},
+				"east": {"uv": [0, 0, 8, 8], "texture": "#stair", "tintindex": 0, "cullface": "east"},
+				"south": {"uv": [8, 0, 16, 8], "texture": "#stair", "tintindex": 0, "cullface": "south"},
+				"west": {"uv": [8, 0, 16, 8], "texture": "#stair", "tintindex": 0},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#top", "tintindex": 0, "cullface": "up"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#stair", "tintindex": 0}
+			}
+		},
+		{
+			"from": [8, 15, 8],
+			"to": [15.99, 8, 15.99],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 1], "texture": "#stair", "tintindex": 0},
+				"east": {"uv": [0, 8, 8, 1], "texture": "#stair", "tintindex": 0},
+				"south": {"uv": [8, 8, 16, 1], "texture": "#stair", "tintindex": 0},
+				"west": {"uv": [8, 8, 16, 1], "texture": "#stair", "tintindex": 0},
+				"up": {"uv": [8, 8, 16, 0], "texture": "#stair", "tintindex": 0},
+				"down": {"uv": [8, 16, 16, 8], "texture": "#top", "tintindex": 0}
+			}
+		}
+	]
+}

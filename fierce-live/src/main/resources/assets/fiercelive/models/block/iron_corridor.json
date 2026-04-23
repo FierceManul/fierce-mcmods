@@ -1,0 +1,7 @@
+{
+  "parent": "fiercelive:block/tint_iron_corridor",
+  "textures": {
+    "all": "fiercelive:block/iron_frame",
+    "floor": "fiercelive:block/iron_corridor"
+  }
+}

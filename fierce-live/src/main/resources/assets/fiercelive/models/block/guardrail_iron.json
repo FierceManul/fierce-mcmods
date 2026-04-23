@@ -1,0 +1,49 @@
+{
+	"parent": "minecraft:block/cube_all",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"all": "block/iron_bars"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 2],
+			"faces": {
+				"east": {"uv": [7, 0, 9, 16], "texture": "#all", "cullface": "east"},
+				"west": {"uv": [7, 0, 9, 16], "texture": "#all", "cullface": "west"},
+				"up": {"uv": [7, 0, 9, 16], "rotation": 90, "texture": "#all", "cullface": "up"},
+				"down": {"uv": [7, 0, 9, 16], "rotation": 90, "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 0.01, 2],
+			"to": [16, 15.99, 0],
+			"faces": {
+				"up": {"uv": [7, 0, 9, 16], "rotation": 90, "texture": "#all", "cullface": "up"},
+				"down": {"uv": [7, 0, 9, 16], "rotation": 90, "texture": "#all", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0.01, 0, 2],
+			"to": [15.99, 16, 0],
+			"faces": {
+				"east": {"uv": [7, 0, 9, 16], "texture": "#all", "cullface": "east"},
+				"west": {"uv": [7, 0, 9, 16], "texture": "#all", "cullface": "west"}
+			}
+		},
+		{
+			"from": [0, 0, 1],
+			"to": [16, 16, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#all"}
+			}
+		}
+	],
+	"display": {
+		"fixed": {
+			"translation": [0, 0, 3],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

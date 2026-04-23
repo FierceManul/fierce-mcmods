@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "particle": "fiercelive:block/white_iron_corridor",
+    "side": "fiercelive:block/white_iron_frame_slab",
+    "bottom": "fiercelive:block/white_iron_frame",
+    "floor": "fiercelive:block/white_iron_corridor"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#side", "tintindex": 0, "cullface": "north"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#side", "tintindex": 0, "cullface": "east"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#side", "tintindex": 0, "cullface": "south"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#side", "tintindex": 0, "cullface": "west"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#floor", "tintindex": 0, "cullface": "up"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#bottom", "tintindex": 0, "cullface": "down"}
+      }
+    },
+    {
+      "from": [15.99, 15, 15.99],
+      "to": [0.01, 0.01, 0.01],
+      "faces": {
+        "north": {"uv": [0, 16, 16, 1], "texture": "#side", "tintindex": 0},
+        "east": {"uv": [0, 16, 16, 1], "texture": "#side", "tintindex": 0},
+        "south": {"uv": [0, 16, 16, 1], "texture": "#side", "tintindex": 0},
+        "west": {"uv": [0, 16, 16, 1], "texture": "#side", "tintindex": 0},
+        "up": {"uv": [16, 0, 0, 16], "texture": "#bottom", "tintindex": 0, "cullface": "down"},
+        "down": {"uv": [16, 0, 0, 16], "texture": "#floor", "tintindex": 0}
+      }
+    },
+    {
+      "from": [0, 7, 0],
+      "to": [16, 8, 16],
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "texture": "#floor", "tintindex": 0},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#floor", "tintindex": 0}
+      }
+    }
+  ]
+}

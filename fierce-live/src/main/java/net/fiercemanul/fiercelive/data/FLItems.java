@@ -4,6 +4,7 @@ import net.fiercemanul.fiercelive.world.item.CrowbarItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ScaffoldingBlockItem;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -12,6 +13,8 @@ import static net.fiercemanul.fiercelive.data.registries.FLRegister.ITEMS;
 public final class FLItems {
 
 
+    public static final DeferredItem<ScaffoldingBlockItem> IRON_SCAFFOLDING = ITEMS.register(
+            "iron_scaffolding", () -> new ScaffoldingBlockItem(FLBlocks.IRON_SCAFFOLDING.get(), new Item.Properties()));
     public static final DeferredItem<Item> FOX_CARROT = ITEMS.registerSimpleItem(
             "fox_carrot", new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.3F).build()));
     public static final DeferredItem<Item> FOX_CARROT_SEED = ITEMS.register(

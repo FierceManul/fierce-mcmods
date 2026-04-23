@@ -1,0 +1,6 @@
+{
+  "parent": "fiercelive:block/cube_double_layer",
+  "textures": {
+    "all": "block/stone"
+  }
+}
