@@ -1,6 +1,7 @@
 {
 	"parent": "minecraft:block/cube_all",
 	"render_type": "minecraft:cutout_mipped",
+	"ambientocclusion": false,
 	"textures": {
 		"all": "fiercelive:block/white_iron_frame"
 	},

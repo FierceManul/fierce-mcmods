@@ -1,6 +1,7 @@
 {
 	"parent": "minecraft:block/stairs",
 	"render_type": "minecraft:cutout_mipped",
+	"ambientocclusion": false,
 	"textures": {
 		"slab": "fiercelive:block/white_iron_frame_slab",
 		"stair": "fiercelive:block/white_iron_frame_stair",
