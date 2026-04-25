@@ -12,6 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -79,8 +80,10 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(ItemTags.TERRACOTTA).add(FLBlocks.RAINBOW_TERRACOTTA.asItem());
         tag(Tags.Items.CONCRETES).add(FLBlocks.RAINBOW_CONCRETE.asItem());
         tag(Tags.Items.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.asItem());
+        tag(Tags.Items.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.asItem());
         tag(FLItemTags.RAINBOW_DYES).add(FLItems.RAINBOW_DYE.get());
         tag(Tags.Items.DYES).addTag(FLItemTags.RAINBOW_DYES);
+        tag(Tags.Items.DYED).addTag(FLItemTags.RAINBOW_DYED);
         tag(Tags.Items.DYED_RED).add(FLBlocks.RED_LAMP.asItem());
         tag(Tags.Items.DYED_GREEN).add(FLBlocks.GREEN_LAMP.asItem());
         tag(Tags.Items.DYED_BLUE).add(FLBlocks.BLUE_LAMP.asItem());

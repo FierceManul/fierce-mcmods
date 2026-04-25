@@ -233,6 +233,7 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(Tags.Blocks.CONCRETES).add(FLBlocks.RAINBOW_CONCRETE.get());
         tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get());
         tag(Tags.Blocks.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.get());
+        tag(Tags.Blocks.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.get());
         tag(BlockTags.IMPERMEABLE).add(FLBlocks.RAINBOW_GLASS.get());
         tag(Tags.Blocks.DYED_RED).add(FLBlocks.RED_LAMP.get());
         tag(Tags.Blocks.DYED_GREEN).add(FLBlocks.GREEN_LAMP.get());
@@ -252,6 +253,7 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(FLBlockTags.RAINBOW_DYED).add(
                 FLBlocks.RAINBOW_CONCRETE.get(),
                 FLBlocks.RAINBOW_GLASS.get(),
+                FLBlocks.RAINBOW_GLASS_PANE.get(),
                 FLBlocks.RAINBOW_LAMP.get(),
                 FLBlocks.RAINBOW_SEA_LANTERN.get(),
                 FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get(),

@@ -152,7 +152,8 @@ public final class FLBlocks {
             "rainbow_concrete", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE));
     public static final DeferredBlock<Block> RAINBOW_GLASS = reg(
             "rainbow_glass", () -> new StainedGlassBlock(DyeColor.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_STAINED_GLASS)));
-    //TODO:彩虹玻璃板
+    public static final DeferredBlock<StainedGlassPaneBlock> RAINBOW_GLASS_PANE = reg(
+            "rainbow_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_STAINED_GLASS_PANE)));
     public static final DeferredBlock<Block> OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE = regSimpleBlock(
             "oak_planks_and_light_gray_concrete", BlockBehaviour.Properties.of().strength(2.0F, 3.0F).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> SPRUCE_PLANKS_AND_GRAY_CONCRETE = regSimpleBlock(

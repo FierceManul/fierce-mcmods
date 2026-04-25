@@ -107,6 +107,10 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(IRON_SCAFFOLDING, gen -> {});
 
         ROWS.put(RAINBOW_GLASS, gen -> gen.simpleWithModel(RAINBOW_GLASS));
+        ROWS.put(RAINBOW_GLASS_PANE, gen -> {
+                     gen.paneBlockWithRenderType(RAINBOW_GLASS_PANE.get(), modLoc("block/rainbow_glass"), modLoc("block/rainbow_glass_pane_top"), "translucent");
+                     gen.itemGenerated(RAINBOW_GLASS_PANE.getId().getPath(), modLoc("block/rainbow_glass")).renderType("translucent");
+        });
 
         ROWS.put(A_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(A_WALL_FLOWER_POT, "wall_flower_pot_a", false));
         ROWS.put(B_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(B_WALL_FLOWER_POT, "wall_flower_pot_b", false));
@@ -2082,9 +2086,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                 models().getExistingFile(modLoc("block/iron_ladder_frame")),
                 models().getExistingFile(modLoc("block/iron_ladder"))
         );
-        itemModels().getBuilder(deferredBlock.getId().getPath())
-                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                    .texture("layer0", modLoc("block/iron_ladder"));
+        itemGenerated(deferredBlock.getId().getPath(), modLoc("block/iron_ladder"));
     }
 
     public void tintIronLadder(DeferredBlock<? extends Block> deferredBlock) {

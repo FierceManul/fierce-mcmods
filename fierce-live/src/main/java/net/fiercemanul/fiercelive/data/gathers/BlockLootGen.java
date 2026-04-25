@@ -53,7 +53,6 @@ public class BlockLootGen extends BlockLootSubProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
-        //TODO:搞不懂麻酱的 孤立survivesExplosion，似乎完全没用。
         ROWS.put(FLBlocks.FOX_CARROTS, b -> {});
         ROWS.put(FLBlocks.IRON_LADDER, b -> ironLadder(FLBlocks.IRON_LADDER));
 

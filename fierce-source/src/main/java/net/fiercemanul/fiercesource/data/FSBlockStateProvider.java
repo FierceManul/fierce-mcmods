@@ -6,10 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.ModelProvider;
+import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -331,7 +328,9 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         }
     }
 
-
+    protected ItemModelBuilder itemGenerated(String path, ResourceLocation texture) {
+        return itemModels().getBuilder(path).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", texture);
+    }
 
     protected void largeCrystal(DeferredHolder<Block, ? extends Block> deferredBlock) {
         simple(deferredBlock.get(), deferredBlock.getId().getPath(), MODEL_LARGE_CRYSTAL, blockTexture(deferredBlock.get()));

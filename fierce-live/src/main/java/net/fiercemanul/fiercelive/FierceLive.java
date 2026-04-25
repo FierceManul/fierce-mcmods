@@ -151,6 +151,7 @@ public class FierceLive {
         output.accept(FLBlocks.RAINBOW_WOOL);
         output.accept(FLBlocks.RAINBOW_TERRACOTTA);
         output.accept(FLBlocks.RAINBOW_CONCRETE);
+        output.accept(FLBlocks.RAINBOW_GLASS_PANE);
         output.accept(FLBlocks.RAINBOW_GLASS);
         output.accept(FLBlocks.RAINBOW_SEA_LANTERN);
         output.accept(FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN);

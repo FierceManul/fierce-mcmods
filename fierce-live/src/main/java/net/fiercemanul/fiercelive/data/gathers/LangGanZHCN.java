@@ -86,7 +86,7 @@ public class LangGanZHCN extends LanguageProvider {
         add("fiercelive.tip.snake_horizontal", "潜行时水平摆放");
         add("fiercelive.tip.no_more_be", "非方块实体");
         add("fiercelive.container.cabinet", "柜子");
-        add("fml.menu.mods.info.description.fiercelive", "自然成野趣，都使俗情忘。");
+        add("fml.menu.mods.info.description.fiercelive", "摸鱼摸鱼摸鱼摸");
     }
 
     private void applySimple() {

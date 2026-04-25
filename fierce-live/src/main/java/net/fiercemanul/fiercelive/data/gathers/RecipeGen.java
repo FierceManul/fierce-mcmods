@@ -95,6 +95,8 @@ public class RecipeGen extends FSRecipeProvider {
         rainbow(recipeOutput, RAINBOW_SEA_LANTERN, Items.SEA_LANTERN);
         rainbow(recipeOutput, RAINBOW_REINFORCED_SEA_LANTERN, FLItemTags.REINFORCED_SEA_LANTERNS);
         rainbow(recipeOutput, RAINBOW_GLASS, Tags.Items.GLASS_BLOCKS);
+        stainedGlassPaneFromStainedGlass(recipeOutput, RAINBOW_GLASS_PANE, RAINBOW_GLASS);
+        stainedGlassPaneFromGlassPaneAndDye(recipeOutput, RAINBOW_GLASS_PANE, FLItems.RAINBOW_DYE);
         doubleBlock(recipeOutput, OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE, Items.OAK_PLANKS, Items.LIGHT_GRAY_CONCRETE);
         doubleBlock(recipeOutput, SPRUCE_PLANKS_AND_GRAY_CONCRETE, Items.SPRUCE_PLANKS, Items.GRAY_CONCRETE);
         doubleBlock(recipeOutput, OAK_PLANKS_AND_SPRUCE_PLANKS, Items.OAK_PLANKS, Items.SPRUCE_PLANKS);
