@@ -73,6 +73,11 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.CLAW_HAMMER_ITEM.get(), "羊角锤");
         add(FLItems.NETHERITE_CLAW_HAMMER_ITEM.get(), "下界合金羊角锤");
         add(FLItems.RAINBOW_DYE.get(), "彩虹染料");
+        add(FLItems.FROSTED_BREAD.get(), "糖霜面包");
+        add(FLItems.CARAMEL.get(), "焦糖");
+        add(FLItems.SWEET_BERRY_COOKIE.get(), "甜浆果曲奇");
+        add(FLItems.GLOW_BERRY_COOKIE.get(), "发光浆果曲奇");
+        add(FLItems.CARAMEL_COOKIE.get(), "焦糖曲奇");
 
         add("item_group.fiercelive.decoration", "绿野栖居-趣物");
         add("item_group.fiercelive.building", "疏野闲章-建筑");

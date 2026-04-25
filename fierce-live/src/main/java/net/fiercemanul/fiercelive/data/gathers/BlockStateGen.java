@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
@@ -167,6 +168,12 @@ public class BlockStateGen extends FSBlockStateProvider {
             if (ROWS.containsKey(deferredBlock)) ROWS.get(deferredBlock).accept(this);
             else simple(deferredBlock);
         });
+
+        itemModels().basicItem(FLItems.FROSTED_BREAD.get());
+        itemModels().basicItem(FLItems.SWEET_BERRY_COOKIE.get());
+        itemModels().basicItem(FLItems.GLOW_BERRY_COOKIE.get());
+        itemModels().basicItem(FLItems.CARAMEL_COOKIE.get());
+        itemModels().basicItem(FLItems.CARAMEL.get());
 
     }
 

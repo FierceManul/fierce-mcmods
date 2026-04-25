@@ -24,7 +24,11 @@ public class DataMapGen extends DataMapProvider {
     protected void gather() {
         builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(FLItems.FOX_CARROT_SEED, new Compostable(0.3F), false)
-                .add(FLItems.FOX_CARROT, new Compostable(0.65F), false);
+                .add(FLItems.FOX_CARROT, new Compostable(0.65F), false)
+                .add(FLItems.FROSTED_BREAD, new Compostable(0.85F), false)
+                .add(FLItems.SWEET_BERRY_COOKIE, new Compostable(0.85F), false)
+                .add(FLItems.GLOW_BERRY_COOKIE, new Compostable(0.85F), false)
+                .add(FLItems.CARAMEL_COOKIE, new Compostable(0.85F), false);
         builder(NeoForgeDataMaps.FURNACE_FUELS)
                 .add(FLBlocks.CRAFTING_DESK.getId(), new FurnaceFuel(300), false)
                 .add(FLBlocks.CRAFTING_BLOCK.getId(), new FurnaceFuel(300), false)

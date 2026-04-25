@@ -200,8 +200,13 @@ public class FierceLive {
         output.accept(FLItems.CLAW_HAMMER_ITEM);
         output.accept(FLItems.NETHERITE_CLAW_HAMMER_ITEM);
         output.accept(FLItems.FOX_CARROT);
-        output.accept(FLItems.RAINBOW_DYE);
+        output.accept(FLItems.FROSTED_BREAD);
+        output.accept(FLItems.SWEET_BERRY_COOKIE);
+        output.accept(FLItems.GLOW_BERRY_COOKIE);
+        output.accept(FLItems.CARAMEL_COOKIE);
+        output.accept(FLItems.CARAMEL);
         output.accept(FLItems.FOX_CARROT_SEED);
+        output.accept(FLItems.RAINBOW_DYE);
     }
 
     static {

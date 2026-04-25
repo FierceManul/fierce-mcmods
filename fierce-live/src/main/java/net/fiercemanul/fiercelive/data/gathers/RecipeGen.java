@@ -18,6 +18,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmithingRecipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -119,6 +122,7 @@ public class RecipeGen extends FSRecipeProvider {
         smoothPlanks(recipeOutput, SMOOTH_WARPED_PLANKS, Items.WARPED_PLANKS);
 
         crowbar(recipeOutput);
+        food(recipeOutput);
 
 
         ROWS.forEach(consumer -> consumer.accept(this, recipeOutput));
@@ -699,6 +703,32 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CLAW_HAMMER_ITEM.get());
+    }
+
+    private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, cookie, 8)
+                           .define('#', Items.WHEAT)
+                           .define('X', material)
+                           .pattern("#X#")
+                           .unlockedBy(getHasName(material), has(material))
+                           .save(recipeOutput);
+    }
+
+    private static void food(RecipeOutput recipeOutput) {
+        shaped(RecipeCategory.FOOD, FLItems.FROSTED_BREAD)
+                .define('Y', Items.SUGAR)
+                .define('X', Items.BREAD)
+                .pattern("Y")
+                .pattern("X")
+                .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
+                .save(recipeOutput);
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.SUGAR), RecipeCategory.FOOD, FLItems.CARAMEL, 0.35F, 200)
+                                  .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
+                                  .save(recipeOutput);
+        simpleCookingRecipe(recipeOutput, "smoking", RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, 100, Items.SUGAR, FLItems.CARAMEL, 0.35F);
+        cookie(recipeOutput, FLItems.SWEET_BERRY_COOKIE, Items.SWEET_BERRIES);
+        cookie(recipeOutput, FLItems.GLOW_BERRY_COOKIE, Items.GLOW_BERRIES);
+        cookie(recipeOutput, FLItems.CARAMEL_COOKIE, FLItems.CARAMEL);
     }
 
 }

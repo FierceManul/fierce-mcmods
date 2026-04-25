@@ -2,6 +2,7 @@ package net.fiercemanul.fiercelive.data;
 
 import net.fiercemanul.fiercelive.world.item.CrowbarItem;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ScaffoldingBlockItem;
@@ -29,6 +30,16 @@ public final class FLItems {
             "netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
     public static final DeferredItem<Item> RAINBOW_DYE = ITEMS.registerSimpleItem(
             "rainbow_dye", new Item.Properties());
+    public static final DeferredItem<Item> CARAMEL = ITEMS.registerSimpleItem(
+            "caramel", new Item.Properties());
+    public static final DeferredItem<Item> FROSTED_BREAD = ITEMS.registerSimpleItem(
+            "frosted_bread", new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.6F).build()));
+    public static final DeferredItem<Item> SWEET_BERRY_COOKIE = ITEMS.registerSimpleItem(
+            "sweet_berry_cookie", new Item.Properties().food(Foods.COOKIE));
+    public static final DeferredItem<Item> GLOW_BERRY_COOKIE = ITEMS.registerSimpleItem(
+            "glow_berry_cookie", new Item.Properties().food(Foods.COOKIE));
+    public static final DeferredItem<Item> CARAMEL_COOKIE = ITEMS.registerSimpleItem(
+            "caramel_cookie", new Item.Properties().food(Foods.COOKIE));
 
     public static void init() {}
 
