@@ -8,7 +8,10 @@ import net.fiercemanul.fiercesource.data.FSBlocks;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -701,16 +704,6 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CROWBAR.get());
-        shaped(RecipeCategory.TOOLS, FLItems.CLAW_HAMMER)
-                .define('.', Items.IRON_NUGGET)
-                .define('X', Items.IRON_INGOT)
-                .define('I', Items.STICK)
-                .pattern("XX.")
-                .pattern(" I ")
-                .pattern(" I ")
-                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                .save(recipeOutput);
-        netheriteSmithing(recipeOutput, FLItems.CLAW_HAMMER.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CLAW_HAMMER.get());
         shaped(RecipeCategory.TOOLS, FLItems.PUFFERFISH_ROD)
                 .define('X', Items.PUFFERFISH)
                 .define('I', Items.STICK)

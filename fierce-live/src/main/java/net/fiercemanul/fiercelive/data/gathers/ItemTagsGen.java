@@ -102,9 +102,7 @@ public class ItemTagsGen extends ItemTagsProvider {
 
         tag(FLItemTags.CROWBARS).add(
                 FLItems.CROWBAR.get(),
-                FLItems.NETHERITE_CROWBAR.get(),
-                FLItems.CLAW_HAMMER.get(),
-                FLItems.NETHERITE_CLAW_HAMMER.get()
+                FLItems.NETHERITE_CROWBAR.get()
         );
         tag(FLItemTags.TOOLS_CROWBAR).addTag(FLItemTags.CROWBARS);
         tag(Tags.Items.TOOLS_WRENCH).addTag(FLItemTags.CROWBARS);

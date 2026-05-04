@@ -13,13 +13,13 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class AdvancementGen implements AdvancementProvider.AdvancementGenerator  {
@@ -32,43 +32,40 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 Component.translatable("advancements.fiercelive.root.description"),
                 FSUtils.rl(FierceLive.MODID, "textures/block/spiral_stone.png"),
                 AdvancementType.TASK, false, false, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE)).save(saver, "fiercelive:root");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE)
+        ).save(saver, "fiercelive:root");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLBlocks.HALF_DIRT,
                 Component.translatable("advancements.fiercelive.half_block.title"),
                 Component.translatable("advancements.fiercelive.half_block.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.HALF_DIRT)).save(saver, "fiercelive:half_block");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.HALF_DIRT)
+        ).save(saver, "fiercelive:half_block");
 
         Advancement.Builder.advancement().parent(root).display(
                 BlockBulkRegister.ONE_CUT_BLOCKS.get(BlockMaterials.SMOOTH_STONE),
                 Component.translatable("advancements.fiercelive.cut_blocks.title"),
                 Component.translatable("advancements.fiercelive.cut_blocks.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.CUT_BLOCKS))).save(saver, "fiercelive:cut_blocks");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.CUT_BLOCKS))
+        ).save(saver, "fiercelive:cut_blocks");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLBlocks.GREEN_FUN_ROOF,
                 Component.translatable("advancements.fiercelive.green_fun_roof.title"),
                 Component.translatable("advancements.fiercelive.green_fun_roof.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.GREEN_FUN_ROOF)).save(saver, "fiercelive:green_fun_roof");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.GREEN_FUN_ROOF)
+        ).save(saver, "fiercelive:green_fun_roof");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLItems.CROWBAR,
                 Component.translatable("advancements.fiercelive.crowbar.title"),
                 Component.translatable("advancements.fiercelive.crowbar.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("kill", KilledTrigger.TriggerInstance.playerKilledEntity(
-                EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS),
-                DamageSourcePredicate.Builder.damageType().source(
-                        EntityPredicate.Builder.entity().equipment(
-                                EntityEquipmentPredicate.Builder.equipment().mainhand(
-                                        ItemPredicate.Builder.item().of(FLItemTags.CROWBARS)
-                                )
-                        )
-                )
+        ).addCriterion("used", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
+                LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(FLItems.CROWBAR)
         )).save(saver, "fiercelive:crowbar");
 
         Advancement.Builder.advancement().parent(root).display(
@@ -76,15 +73,10 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 Component.translatable("advancements.fiercelive.meteor_hammer.title"),
                 Component.translatable("advancements.fiercelive.meteor_hammer.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("kill", KilledTrigger.TriggerInstance.playerKilledEntity(
-                EntityPredicate.Builder.entity(),
-                DamageSourcePredicate.Builder.damageType().source(
-                        EntityPredicate.Builder.entity().equipment(
-                                EntityEquipmentPredicate.Builder.equipment().mainhand(
-                                        ItemPredicate.Builder.item().of(FLItems.METEOR_HAMMER)
-                                )
-                        )
-                )
+        ).addCriterion("used", ItemDurabilityTrigger.TriggerInstance.changedDurability(
+                //TODO:这里用了耐久消耗检测而不是物品使用检测，因为原版没有，如果原版更新有了，拿来用
+                Optional.of(ItemPredicate.Builder.item().of(FLItemTags.METEOR_HAMMERS).build()),
+                MinMaxBounds.Ints.ANY
         )).save(saver, "fiercelive:meteor_hammer");
 
         Advancement.Builder.advancement().parent(root).display(
@@ -94,13 +86,8 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 null, AdvancementType.TASK, true, true, false
         ).addCriterion("kill", KilledTrigger.TriggerInstance.playerKilledEntity(
                 EntityPredicate.Builder.entity(),
-                DamageSourcePredicate.Builder.damageType().source(
-                        EntityPredicate.Builder.entity().equipment(
-                                EntityEquipmentPredicate.Builder.equipment().mainhand(
-                                        ItemPredicate.Builder.item().of(ItemTags.PICKAXES)
-                                )
-                        )
-                )
+                DamageSourcePredicate.Builder.damageType().source(EntityPredicate.Builder.entity().equipment(
+                        EntityEquipmentPredicate.Builder.equipment().mainhand(ItemPredicate.Builder.item().of(ItemTags.PICKAXES))))
         )).save(saver, "fiercelive:pickaxe");
 
         Advancement.Builder.advancement().parent(root).display(
@@ -108,28 +95,32 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 Component.translatable("advancements.fiercelive.iron_corridor.title"),
                 Component.translatable("advancements.fiercelive.iron_corridor.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.IRON_CORRIDORS))).save(saver, "fiercelive:iron_corridor");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.IRON_CORRIDORS))
+        ).save(saver, "fiercelive:iron_corridor");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLItems.FOX_CARROT,
                 Component.translatable("advancements.fiercelive.fox_carrot.title"),
                 Component.translatable("advancements.fiercelive.fox_carrot.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.FOX_CARROT)).save(saver, "fiercelive:fox_carrot");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.FOX_CARROT)
+        ).save(saver, "fiercelive:fox_carrot");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLItems.RAINBOW_DYE,
                 Component.translatable("advancements.fiercelive.rainbow_dye.title"),
                 Component.translatable("advancements.fiercelive.rainbow_dye.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.RAINBOW_DYE)).save(saver, "fiercelive:rainbow_dye");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.RAINBOW_DYE)
+        ).save(saver, "fiercelive:rainbow_dye");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLBlocks.FIREPLACE_HEART,
                 Component.translatable("advancements.fiercelive.fireplace_heart.title"),
                 Component.translatable("advancements.fiercelive.fireplace_heart.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.FIREPLACE_HEART)).save(saver, "fiercelive:fireplace_heart");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.FIREPLACE_HEART)
+        ).save(saver, "fiercelive:fireplace_heart");
         
         Advancement.Builder.advancement().parent(root).display(
                 FLBlocks.ITEM_FRAME_SHELL_THIN,
@@ -145,14 +136,16 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 Component.translatable("advancements.fiercelive.iron_scaffolding.title"),
                 Component.translatable("advancements.fiercelive.iron_scaffolding.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.IRON_SCAFFOLDING)).save(saver, "fiercelive:iron_scaffolding");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLBlocks.IRON_SCAFFOLDING)
+        ).save(saver, "fiercelive:iron_scaffolding");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLItems.SACABAMBASPIS,
                 Component.translatable("advancements.fiercelive.sacabambaspis.title"),
                 Component.translatable("advancements.fiercelive.sacabambaspis.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.SACABAMBASPIS)).save(saver, "fiercelive:sacabambaspis");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.SACABAMBASPIS)
+        ).save(saver, "fiercelive:sacabambaspis");
 
     }
 }

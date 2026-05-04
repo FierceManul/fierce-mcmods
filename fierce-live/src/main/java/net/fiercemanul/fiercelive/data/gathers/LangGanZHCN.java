@@ -70,8 +70,6 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.FOX_CARROT_SEED.get(), "狐萝卜种子");
         add(FLItems.CROWBAR.get(), "撬棒");
         add(FLItems.NETHERITE_CROWBAR.get(), "下界合金撬棒");
-        add(FLItems.CLAW_HAMMER.get(), "羊角锤");
-        add(FLItems.NETHERITE_CLAW_HAMMER.get(), "下界合金羊角锤");
         add(FLItems.PUFFERFISH_ROD.get(), "河豚棒");
         add(FLItems.METEOR_HAMMER.get(), "流星锤");
         add(FLItems.NETHERITE_METEOR_HAMMER.get(), "下界合金流星锤");
@@ -96,10 +94,10 @@ public class LangGanZHCN extends LanguageProvider {
         add("advancements.fiercelive.cut_blocks.description", "哎？这边不对吧");
         add("advancements.fiercelive.green_fun_roof.title", "休闲过道");
         add("advancements.fiercelive.green_fun_roof.description", "采菊东篱下，悠然见南山。");
-        add("advancements.fiercelive.crowbar.title", "拆卸");
-        add("advancements.fiercelive.crowbar.description", "使用物理学圣剑消灭一个骷髅");
-        add("advancements.fiercelive.meteor_hammer.title", "吃我一锤");
-        add("advancements.fiercelive.meteor_hammer.description", "使用流星锤造成击杀");
+        add("advancements.fiercelive.crowbar.title", "掰扯掰扯");
+        add("advancements.fiercelive.crowbar.description", "使用物理学圣剑调整方块");
+        add("advancements.fiercelive.meteor_hammer.title", "流星一击");
+        add("advancements.fiercelive.meteor_hammer.description", "使用流星锤的横扫一击");
         add("advancements.fiercelive.pickaxe.title", "镐击");
         add("advancements.fiercelive.pickaxe.description", "使用镐子造成击杀");
         add("advancements.fiercelive.iron_corridor.title", "廊架");

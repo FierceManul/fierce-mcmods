@@ -9,7 +9,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ScaffoldingBlockItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -24,10 +27,10 @@ public final class FLItems {
             "fox_carrot", new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.3F).build()));
     public static final DeferredItem<Item> FOX_CARROT_SEED = ITEMS.register(
             "fox_carrot_seeds", () -> new ItemNameBlockItem(FLBlocks.FOX_CARROTS.get(), new Item.Properties()));
-    public static final DeferredItem<Item> CLAW_HAMMER = ITEMS.register(
-            "claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
-    public static final DeferredItem<Item> NETHERITE_CLAW_HAMMER = ITEMS.register(
-            "netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
+    //public static final DeferredItem<Item> CLAW_HAMMER = ITEMS.register(
+    //        "claw_hammer", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
+    //public static final DeferredItem<Item> NETHERITE_CLAW_HAMMER = ITEMS.register(
+    //        "netherite_claw_hammer", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
     public static final DeferredItem<Item> CROWBAR = ITEMS.register(
             "crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
     public static final DeferredItem<Item> NETHERITE_CROWBAR = ITEMS.register(

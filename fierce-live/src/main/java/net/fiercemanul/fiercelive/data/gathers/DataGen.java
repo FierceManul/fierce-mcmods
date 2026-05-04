@@ -42,7 +42,6 @@ public class DataGen {
         BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, event.getLookupProvider(), existingFileHelper);
         generator.addProvider(includeServer, blockTagsGen);
         generator.addProvider(includeServer, new ItemTagsGen(packOutput, lookupProvider, blockTagsGen.contentsGetter(), existingFileHelper));
-        generator.addProvider(includeServer, new EnchantmentTagGen(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(includeServer, new DataMapGen(packOutput, lookupProvider));
         generator.addProvider(includeServer, new AdvancementProvider(
                 packOutput,

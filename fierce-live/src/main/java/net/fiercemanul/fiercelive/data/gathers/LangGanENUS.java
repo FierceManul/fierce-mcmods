@@ -35,10 +35,10 @@ public class LangGanENUS extends LanguageProvider {
         add("advancements.fiercelive.cut_blocks.description", "哎？这边不对吧");
         add("advancements.fiercelive.green_fun_roof.title", "休闲过道");
         add("advancements.fiercelive.green_fun_roof.description", "采菊东篱下，悠然见南山。");
-        add("advancements.fiercelive.crowbar.title", "拆卸");
-        add("advancements.fiercelive.crowbar.description", "使用物理学圣剑消灭一个骷髅");
-        add("advancements.fiercelive.meteor_hammer.title", "吃我一锤");
-        add("advancements.fiercelive.meteor_hammer.description", "使用流星锤造成击杀");
+        add("advancements.fiercelive.crowbar.title", "掰扯掰扯");
+        add("advancements.fiercelive.crowbar.description", "使用物理学圣剑调整方块");
+        add("advancements.fiercelive.meteor_hammer.title", "流星一击");
+        add("advancements.fiercelive.meteor_hammer.description", "使用流星锤的横扫一击");
         add("advancements.fiercelive.pickaxe.title", "镐击");
         add("advancements.fiercelive.pickaxe.description", "使用镐子造成击杀");
         add("advancements.fiercelive.iron_corridor.title", "廊架");

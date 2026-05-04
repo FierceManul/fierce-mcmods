@@ -205,8 +205,6 @@ public class FierceLive {
 
         output.accept(FLItems.CROWBAR);
         output.accept(FLItems.NETHERITE_CROWBAR);
-        output.accept(FLItems.CLAW_HAMMER);
-        output.accept(FLItems.NETHERITE_CLAW_HAMMER);
         output.accept(FLItems.PUFFERFISH_ROD);
         output.accept(FLItems.METEOR_HAMMER);
         output.accept(FLItems.NETHERITE_METEOR_HAMMER);

@@ -1,6 +1,5 @@
 package net.fiercemanul.fiercesource.world.item;
 
-import net.fiercemanul.fiercesource.data.tags.FSItemTags;
 import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
