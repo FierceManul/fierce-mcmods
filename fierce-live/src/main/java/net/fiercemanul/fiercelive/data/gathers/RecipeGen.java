@@ -1,6 +1,5 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
-import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
@@ -9,17 +8,13 @@ import net.fiercemanul.fiercesource.data.FSBlocks;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -34,6 +29,7 @@ import static net.fiercemanul.fiercelive.data.FLBlocks.*;
 import static net.minecraft.data.recipes.RecipeCategory.BUILDING_BLOCKS;
 import static net.minecraft.data.recipes.RecipeCategory.DECORATIONS;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
+import static net.minecraft.data.recipes.ShapelessRecipeBuilder.shapeless;
 
 public class RecipeGen extends FSRecipeProvider {
 
@@ -106,6 +102,16 @@ public class RecipeGen extends FSRecipeProvider {
         doubleBlock(recipeOutput, DARK_PRISMARINE_AND_SPRUCE_PLANKS, Items.DARK_PRISMARINE, Items.SPRUCE_PLANKS);
         doubleBlock(recipeOutput, DARK_PRISMARINE_AND_MANGROVE_PLANKS, Items.DARK_PRISMARINE, Items.MANGROVE_PLANKS);
         doubleBlock(recipeOutput, BRICKS_AND_BIRCH_PLANKS, Items.BRICKS, Items.BIRCH_PLANKS);
+        concrete(recipeOutput);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, VILLAGE_PATTERNED_TILES, Items.LIGHT_GRAY_GLAZED_TERRACOTTA);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, VILLAGE_MOSAIC_TILES, Items.LIGHT_GRAY_GLAZED_TERRACOTTA);
+        shaped(BUILDING_BLOCKS, BIG_FLOWER_POT)
+                .define('Y', Items.DIRT)
+                .define('X', VILLAGE_MOSAIC_TILES)
+                .pattern("Y")
+                .pattern("X")
+                .unlockedBy(getHasName(VILLAGE_MOSAIC_TILES), has(VILLAGE_MOSAIC_TILES))
+                .save(recipeOutput);
         fakeBlocks(recipeOutput);
         textureBlocks(recipeOutput);
         colorLamps(recipeOutput);
@@ -123,7 +129,7 @@ public class RecipeGen extends FSRecipeProvider {
         smoothPlanks(recipeOutput, SMOOTH_CRIMSON_PLANKS, Items.CRIMSON_PLANKS);
         smoothPlanks(recipeOutput, SMOOTH_WARPED_PLANKS, Items.WARPED_PLANKS);
 
-        crowbar(recipeOutput);
+        tools(recipeOutput);
         food(recipeOutput);
 
 
@@ -685,8 +691,8 @@ public class RecipeGen extends FSRecipeProvider {
         stonecutting(recipeOutput, DECORATIONS, slab, corridor, 2);
     }
 
-    private static void crowbar(RecipeOutput recipeOutput) {
-        shaped(RecipeCategory.TOOLS, FLItems.CROWBAR_ITEM)
+    private static void tools(RecipeOutput recipeOutput) {
+        shaped(RecipeCategory.TOOLS, FLItems.CROWBAR)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
                 .pattern(".. ")
@@ -694,8 +700,8 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" X ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
-        netheriteSmithing(recipeOutput, FLItems.CROWBAR_ITEM.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CROWBAR_ITEM.get());
-        shaped(RecipeCategory.TOOLS, FLItems.CLAW_HAMMER_ITEM)
+        netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CROWBAR.get());
+        shaped(RecipeCategory.TOOLS, FLItems.CLAW_HAMMER)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
                 .define('I', Items.STICK)
@@ -704,7 +710,35 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" I ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
-        netheriteSmithing(recipeOutput, FLItems.CLAW_HAMMER_ITEM.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CLAW_HAMMER_ITEM.get());
+        netheriteSmithing(recipeOutput, FLItems.CLAW_HAMMER.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CLAW_HAMMER.get());
+        shaped(RecipeCategory.TOOLS, FLItems.PUFFERFISH_ROD)
+                .define('X', Items.PUFFERFISH)
+                .define('I', Items.STICK)
+                .pattern("X")
+                .pattern("I")
+                .pattern("I")
+                .unlockedBy(getHasName(Items.PUFFERFISH), has(Items.PUFFERFISH))
+                .save(recipeOutput);
+        shaped(RecipeCategory.TOOLS, FLItems.METEOR_HAMMER)
+                .define('I', Items.IRON_INGOT)
+                .define('X', FLItems.PUFFERFISH_ROD)
+                .pattern(" I ")
+                .pattern("IXI")
+                .unlockedBy(getHasName(FLItems.PUFFERFISH_ROD), has(FLItems.PUFFERFISH_ROD))
+                .save(recipeOutput);
+        netheriteSmithing(recipeOutput, FLItems.METEOR_HAMMER.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_METEOR_HAMMER.get());
+        shaped(RecipeCategory.TOOLS, FLItems.SACABAMBASPIS)
+                .define('I', Items.IRON_INGOT)
+                .define('X', ItemTags.FISHES)
+                .define('A', Tags.Items.DYES_GRAY)
+                .define('B', Tags.Items.DYES_LIGHT_GRAY)
+                .define('C', Tags.Items.DYES_WHITE)
+                .define('Y', Items.BONE_MEAL)
+                .pattern("AIB")
+                .pattern("IXI")
+                .pattern("CYC")
+                .unlockedBy("has_fishes", has(ItemTags.FISHES))
+                .save(recipeOutput);
     }
 
     private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {
@@ -731,6 +765,19 @@ public class RecipeGen extends FSRecipeProvider {
         cookie(recipeOutput, FLItems.SWEET_BERRY_COOKIE, Items.SWEET_BERRIES);
         cookie(recipeOutput, FLItems.GLOW_BERRY_COOKIE, Items.GLOW_BERRIES);
         cookie(recipeOutput, FLItems.CARAMEL_COOKIE, FLItems.CARAMEL);
+    }
+
+    private static void concrete(RecipeOutput recipeOutput) {
+        shapeless(BUILDING_BLOCKS, CONCRETE_POWDER.get(), 8)
+                .requires(Items.SAND, 4)
+                .requires(Items.GRAVEL, 4)
+                .unlockedBy(getHasName(Items.SAND), has(Items.SAND))
+                .save(recipeOutput);
+        shapeless(BUILDING_BLOCKS, GRAVEL_CONCRETE_POWDER.get(), 9)
+                .requires(Items.SAND, 4)
+                .requires(Items.GRAVEL, 5)
+                .unlockedBy(getHasName(Items.GRAVEL), has(Items.GRAVEL))
+                .save(recipeOutput);
     }
 
 }

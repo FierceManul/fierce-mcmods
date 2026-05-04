@@ -119,6 +119,13 @@ public class FierceLive {
         output.accept(FLBlocks.SPIRAL_STONE);
         output.accept(FLBlocks.DEEPSLATE_SPIRAL_STONE);
         output.accept(FLBlocks.WATERLOGGED_COBBLESTONE);
+        output.accept(FLBlocks.VILLAGE_PATTERNED_TILES);
+        output.accept(FLBlocks.VILLAGE_MOSAIC_TILES);
+        output.accept(FLBlocks.BIG_FLOWER_POT);
+        output.accept(FLBlocks.CONCRETE);
+        output.accept(FLBlocks.CONCRETE_POWDER);
+        output.accept(FLBlocks.GRAVEL_CONCRETE);
+        output.accept(FLBlocks.GRAVEL_CONCRETE_POWDER);
         output.accept(FLBlocks.SMOOTH_OAK_PLANKS);
         output.accept(FLBlocks.SMOOTH_SPRUCE_PLANKS);
         output.accept(FLBlocks.SMOOTH_BIRCH_PLANKS);
@@ -196,10 +203,14 @@ public class FierceLive {
         output.accept(FLBlocks.MEAT_BLOCK);
         output.accept(FLBlocks.ROTTEN_FLESH_BLOCK);
 
-        output.accept(FLItems.CROWBAR_ITEM);
-        output.accept(FLItems.NETHERITE_CROWBAR_ITEM);
-        output.accept(FLItems.CLAW_HAMMER_ITEM);
-        output.accept(FLItems.NETHERITE_CLAW_HAMMER_ITEM);
+        output.accept(FLItems.CROWBAR);
+        output.accept(FLItems.NETHERITE_CROWBAR);
+        output.accept(FLItems.CLAW_HAMMER);
+        output.accept(FLItems.NETHERITE_CLAW_HAMMER);
+        output.accept(FLItems.PUFFERFISH_ROD);
+        output.accept(FLItems.METEOR_HAMMER);
+        output.accept(FLItems.NETHERITE_METEOR_HAMMER);
+        output.accept(FLItems.SACABAMBASPIS);
         output.accept(FLItems.FOX_CARROT);
         output.accept(FLItems.FROSTED_BREAD);
         output.accept(FLItems.SWEET_BERRY_COOKIE);

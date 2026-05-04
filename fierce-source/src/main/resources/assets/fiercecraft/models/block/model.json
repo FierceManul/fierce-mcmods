@@ -1,6 +1,5 @@
 {
     "parent": "minecraft:block/block",
-	"gui_light": "front",
 	"display": {
         "firstperson_righthand": {
             "rotation": [ 0, 205, 0 ],

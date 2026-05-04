@@ -68,10 +68,14 @@ public class LangGanZHCN extends LanguageProvider {
 
         add(FLItems.FOX_CARROT.get(), "狐萝卜");
         add(FLItems.FOX_CARROT_SEED.get(), "狐萝卜种子");
-        add(FLItems.CROWBAR_ITEM.get(), "物理学圣剑");
-        add(FLItems.NETHERITE_CROWBAR_ITEM.get(), "下界合金撬棒");
-        add(FLItems.CLAW_HAMMER_ITEM.get(), "羊角锤");
-        add(FLItems.NETHERITE_CLAW_HAMMER_ITEM.get(), "下界合金羊角锤");
+        add(FLItems.CROWBAR.get(), "撬棒");
+        add(FLItems.NETHERITE_CROWBAR.get(), "下界合金撬棒");
+        add(FLItems.CLAW_HAMMER.get(), "羊角锤");
+        add(FLItems.NETHERITE_CLAW_HAMMER.get(), "下界合金羊角锤");
+        add(FLItems.PUFFERFISH_ROD.get(), "河豚棒");
+        add(FLItems.METEOR_HAMMER.get(), "流星锤");
+        add(FLItems.NETHERITE_METEOR_HAMMER.get(), "下界合金流星锤");
+        add(FLItems.SACABAMBASPIS.get(), "萨卡班甲鱼");
         add(FLItems.RAINBOW_DYE.get(), "彩虹染料");
         add(FLItems.FROSTED_BREAD.get(), "糖霜面包");
         add(FLItems.CARAMEL.get(), "焦糖");
@@ -82,11 +86,44 @@ public class LangGanZHCN extends LanguageProvider {
         add("item_group.fiercelive.decoration", "绿野栖居-趣物");
         add("item_group.fiercelive.building", "疏野闲章-建筑");
         add("item_group.fiercelive.colored", "疏野闲居-好色");
+        add("container.fiercelive.cabinet", "柜子");
+
+        add("advancements.fiercelive.root.title", "疏野闲章");
+        add("advancements.fiercelive.root.description", "来点闲情雅致");
+        add("advancements.fiercelive.half_block.title", "半块土");
+        add("advancements.fiercelive.half_block.description", "并不是台阶");
+        add("advancements.fiercelive.cut_blocks.title", "竖半砖？");
+        add("advancements.fiercelive.cut_blocks.description", "哎？这边不对吧");
+        add("advancements.fiercelive.green_fun_roof.title", "休闲过道");
+        add("advancements.fiercelive.green_fun_roof.description", "采菊东篱下，悠然见南山。");
+        add("advancements.fiercelive.crowbar.title", "拆卸");
+        add("advancements.fiercelive.crowbar.description", "使用物理学圣剑消灭一个骷髅");
+        add("advancements.fiercelive.meteor_hammer.title", "吃我一锤");
+        add("advancements.fiercelive.meteor_hammer.description", "使用流星锤造成击杀");
+        add("advancements.fiercelive.pickaxe.title", "镐击");
+        add("advancements.fiercelive.pickaxe.description", "使用镐子造成击杀");
+        add("advancements.fiercelive.iron_corridor.title", "廊架");
+        add("advancements.fiercelive.iron_corridor.description", "视察你的智能工业园");
+        add("advancements.fiercelive.fox_carrot.title", "呜狐！");
+        add("advancements.fiercelive.fox_carrot.description", "获得狐狸尾巴");
+        add("advancements.fiercelive.rainbow_dye.title", "哇~彩虹！");
+        add("advancements.fiercelive.rainbow_dye.description", "这可不能吃");
+        add("advancements.fiercelive.fireplace_heart.title", "温暖的家");
+        add("advancements.fiercelive.fireplace_heart.description", "获得壁炉火盆");
+        add("advancements.fiercelive.item_frame.title", "装裱");
+        add("advancements.fiercelive.item_frame.description", "获得玻璃罩");
+        add("advancements.fiercelive.iron_scaffolding.title", "防火脚手架");
+        add("advancements.fiercelive.iron_scaffolding.description", "获得铁脚手架");
+        add("advancements.fiercelive.sacabambaspis.title", "劲爆大只咸鱼");
+        add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
+
+
+
         add("fiercelive.tip.snake_vertical", "潜行时垂直摆放");
         add("fiercelive.tip.snake_horizontal", "潜行时水平摆放");
         add("fiercelive.tip.no_more_be", "非方块实体");
-        add("fiercelive.container.cabinet", "柜子");
-        add("fml.menu.mods.info.description.fiercelive", "摸鱼摸鱼摸鱼摸");
+
+        add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
     }
 
     private void applySimple() {
@@ -121,6 +158,13 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.WATERLOGGED_COBBLESTONE, "潮湿圆石");
         ROWS.put(FLBlocks.SPIRAL_STONE, "旋纹石砖");
         ROWS.put(FLBlocks.DEEPSLATE_SPIRAL_STONE, "深板岩旋纹石砖");
+        ROWS.put(FLBlocks.VILLAGE_PATTERNED_TILES, "村香花纹砖");
+        ROWS.put(FLBlocks.VILLAGE_MOSAIC_TILES, "村香马赛克砖");
+        ROWS.put(FLBlocks.BIG_FLOWER_POT, "大花盆");
+        ROWS.put(FLBlocks.CONCRETE, "混凝土");
+        ROWS.put(FLBlocks.CONCRETE_POWDER, "混凝土粉末");
+        ROWS.put(FLBlocks.GRAVEL_CONCRETE, "沙面混凝土");
+        ROWS.put(FLBlocks.GRAVEL_CONCRETE_POWDER, "沙面混凝土粉末");
         ROWS.put(FLBlocks.A_WALL_FLOWER_POT, "一号挂壁盆栽");
         ROWS.put(FLBlocks.B_WALL_FLOWER_POT, "二号挂壁盆栽");
         ROWS.put(FLBlocks.C_WALL_FLOWER_POT, "三号挂壁盆栽");
@@ -171,6 +215,8 @@ public class LangGanZHCN extends LanguageProvider {
         map.put("cracked", "裂纹");
         map.put("tile", "瓦");
         map.put("purpur", "紫珀");
+        map.put("village_patterned_tile", "村香花纹");
+        map.put("village_mosaic_tile", "村香马赛克");
         map.put("reinforced", "强化");
         map.put("wool", "羊毛");
         map.put("texture", "纹理块·");
@@ -197,6 +243,10 @@ public class LangGanZHCN extends LanguageProvider {
                      .replace("色灯", "灯")
                      .replace("灯玻璃灯", "玻璃灯")
                      .replace("色玻璃灯", "玻璃灯")
+                     .replace("泥巴红砖", "泥砖")
+                     .replace("石头红砖", "石砖")
+                     .replace("石红砖", "石砖")
+                     .replace("岩红砖", "岩砖")
                      .replace("下界石英红砖", "石英砖")
                      .replace("下界石英", "石英");
     }

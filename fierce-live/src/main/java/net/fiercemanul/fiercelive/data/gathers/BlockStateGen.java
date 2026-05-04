@@ -6,9 +6,11 @@ import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.fiercemanul.fiercelive.world.level.block.LightTubeBlock;
+import net.fiercemanul.fiercelive.world.level.block.OneCutBlock;
 import net.fiercemanul.fiercelive.world.level.block.TableBlock;
 import net.fiercemanul.fiercelive.world.level.block.state.properties.*;
 import net.fiercemanul.fiercesource.data.FSBlockStateProvider;
+import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -79,7 +81,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(CRAFTING_DESK, gen -> gen.simpleWithModel(CRAFTING_DESK));
         ROWS.put(CRAFTING_BLOCK, gen -> gen.simpleWithModel(CRAFTING_BLOCK));
         ROWS.put(ROCK_PATH, gen -> gen.simpleWithModelNatureHorizontal(ROCK_PATH));
-        ROWS.put(CRAFTING_PAD, gen -> gen.directionBlock(CRAFTING_PAD, false));
+        ROWS.put(CRAFTING_PAD, gen -> gen.pad(CRAFTING_PAD, "crafting_table_top"));
         ROWS.put(PORTABLE_WORKSTATION, gen -> gen.horizontalDirectionBlock(PORTABLE_WORKSTATION, false));
         ROWS.put(LAPTOP_TERMINAL, gen -> gen.horizontalDirectionBlock(LAPTOP_TERMINAL, false));
         ROWS.put(BOOK_AND_LAMP, gen -> gen.horizontalDirectionBlock(BOOK_AND_LAMP, false));
@@ -111,6 +113,14 @@ public class BlockStateGen extends FSBlockStateProvider {
                      gen.paneBlockWithRenderType(RAINBOW_GLASS_PANE.get(), modLoc("block/rainbow_glass"), modLoc("block/rainbow_glass_pane_top"), "translucent");
                      gen.itemGenerated(RAINBOW_GLASS_PANE.getId().getPath(), modLoc("block/rainbow_glass")).renderType("translucent");
         });
+
+        ROWS.put(VILLAGE_MOSAIC_TILES, gen -> gen.simpleNature(VILLAGE_MOSAIC_TILES));
+        ROWS.put(BIG_FLOWER_POT, gen -> gen.simpleWithModel(BIG_FLOWER_POT));
+        ROWS.put(CONCRETE, gen -> gen.simpleNature(CONCRETE));
+        ROWS.put(CONCRETE_POWDER, gen -> gen.simpleNature(CONCRETE_POWDER));
+        ROWS.put(GRAVEL_CONCRETE, gen -> gen.simpleNature(GRAVEL_CONCRETE));
+        ROWS.put(GRAVEL_CONCRETE_POWDER, gen -> gen.simpleNature(GRAVEL_CONCRETE_POWDER));
+
 
         ROWS.put(A_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(A_WALL_FLOWER_POT, "wall_flower_pot_a", false));
         ROWS.put(B_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(B_WALL_FLOWER_POT, "wall_flower_pot_b", false));
@@ -1534,7 +1544,7 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .modelForState().modelFile(modelRight).rotationY(90).addModel();
     }
 
-    public void oneCutBlock(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+    public void oneCutBlock(DeferredBlock<? extends OneCutBlock> deferredBlock, ResourceLocation material) {
         String path = deferredBlock.getId().getPath();
 
         BlockModelBuilder model = models().getBuilder(path)
@@ -2216,6 +2226,46 @@ public class BlockStateGen extends FSBlockStateProvider {
         String path = deferredBlock.getId().getPath();
         ModelFile model = models().withExistingParent(path, "block/cube_all").texture("all", mcLoc(all));
         yAxisModel(deferredBlock.get(), path, model, false);
+    }
+
+    protected void pad(DeferredHolder<Block, ? extends Block> deferredBlock, String texture) {
+        ResourceLocation id = deferredBlock.getId();
+        pad(
+                deferredBlock.get(),
+                id.getPath(),
+                models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath())),
+                FSUtils.rl("minecraft", "block/" + texture)
+        );
+    }
+
+    protected void pad(Block block, String path, ModelFile model, ResourceLocation texture) {
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.NORTH).modelForState()
+                .modelFile(model).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.SOUTH).modelForState()
+                .modelFile(model)
+                .rotationY(180).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.WEST).modelForState()
+                .modelFile(model)
+                .rotationY(270).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.EAST).modelForState()
+                .modelFile(model)
+                .rotationY(90).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.UP).modelForState()
+                .modelFile(model)
+                .rotationX(270).addModel()
+                .partialState()
+                .with(BlockStateProperties.FACING, Direction.DOWN).modelForState()
+                .modelFile(model)
+                .rotationX(90).addModel();
+        itemModels().getBuilder(path)
+                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                    .texture("layer0", texture);
     }
 
 }

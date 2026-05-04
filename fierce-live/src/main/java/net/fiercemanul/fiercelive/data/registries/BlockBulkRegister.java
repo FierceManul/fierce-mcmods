@@ -4,10 +4,8 @@ import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.gathers.*;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.world.level.block.*;
-import net.fiercemanul.fiercesource.FierceSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -30,7 +28,6 @@ import java.util.*;
 
 import static net.fiercemanul.fiercelive.data.registries.FLRegister.BLOCKS;
 import static net.fiercemanul.fiercelive.data.registries.FLRegister.ITEMS;
-import static net.minecraft.data.recipes.RecipeCategory.BUILDING_BLOCKS;
 
 public final class BlockBulkRegister {
 
@@ -47,8 +44,9 @@ public final class BlockBulkRegister {
     public static final HashMap<BlockMaterial, WoodType> WOOD_TYPE_MAP = new HashMap<>();
     public static final HashMap<BlockMaterial, BlockSetType> BLOCK_SET_TYPE_MAP = new HashMap<>();
     public static final HashMap<DeferredBlock<? extends Block>, Integer> BLOCK_TINT_MAP = new HashMap<>();
-    private static final ItemLike[] COLOR_SEA_LANTERN = new ItemLike[DyeColor.values().length];
-    private static final ItemLike[] COLOR_REINFORCED_SEA_LANTERN = new ItemLike[DyeColor.values().length];
+    public static final ItemLike[] COLOR_SEA_LANTERN = new ItemLike[DyeColor.values().length];
+    public static final ItemLike[] COLOR_REINFORCED_SEA_LANTERN = new ItemLike[DyeColor.values().length];
+    public static final Map<BlockMaterial, DeferredBlock<? extends OneCutBlock>> ONE_CUT_BLOCKS = new HashMap<>();
     public static boolean fired = false;
 
     static {
@@ -273,60 +271,62 @@ public final class BlockBulkRegister {
             }
         }
 
-        if (material.blockRl().getNamespace().equals("minecraft")
+        boolean flag = material.blockRl().getNamespace().equals("minecraft")
                 && material.hasTag(BlockMaterialTag.TOOL_PICKAXE)
                 && material.hasAllTags(BlockMaterialTag.STATE_STAND, BlockMaterialTag.MODEL_CUBE)
-                && material.hasAnyTags(BlockMaterialTag.TEXTURE_SIMPLE, BlockMaterialTag.TEXTURE_BRICKS, BlockMaterialTag.TEXTURE_FRAMED, BlockMaterialTag.TEXTURE_SMOOTH)
-                && !material.hasAnyTags(BlockMaterialTag.TEXTURE_TRANSLUCENT)) {
-            String path = material.getPath() + "_slab";
-            if (!BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("minecraft", path))) {
-                DeferredBlock<StairBlock> stair = BLOCKS.register(
-                        material.getPath() + "_stairs",
-                        () -> new StairBlock(material.getBlock().defaultBlockState(), material.getBlock().properties())
-                );
-                itemTab.add(ITEMS.registerSimpleBlockItem(stair));
+                && material.hasAnyTags(
+                BlockMaterialTag.TEXTURE_SIMPLE, BlockMaterialTag.TEXTURE_BRICKS, BlockMaterialTag.TEXTURE_FRAMED, BlockMaterialTag.TEXTURE_SMOOTH)
+                && !material.hasAnyTags(BlockMaterialTag.TEXTURE_TRANSLUCENT);
 
-                DeferredBlock<SlabBlock> slab = BLOCKS.register(path, () -> new SlabBlock(material.getBlock().properties()));
-                itemTab.add(ITEMS.registerSimpleBlockItem(slab));
+        String path = material.getPath() + "_slab";
+        if (material.hasTag(BlockMaterialTag.ADD_SLAB) || (flag && !BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("minecraft", path)))) {
+            DeferredBlock<StairBlock> stair = BLOCKS.register(
+                    material.getPath() + "_stairs",
+                    () -> new StairBlock(material.getBlock().defaultBlockState(), material.getBlock().properties())
+            );
+            itemTab.add(ITEMS.registerSimpleBlockItem(stair));
 
-                if (genData) {
-                    basicData(material, stair);
-                    BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.STAIRS, stair));
-                    ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.STAIRS, stair));
-                    BlockStateGen.ROWS.put(stair, g -> g.stair(stair, material));
-                    RecipeGen.ROWS.add((g, o) -> g.buildStair(o, stair, material));
-                    LangGanZHCN.ROWS.put(stair, material.getPath() + "楼梯");
+            DeferredBlock<SlabBlock> slab = BLOCKS.register(path, () -> new SlabBlock(material.getBlock().properties()));
+            itemTab.add(ITEMS.registerSimpleBlockItem(slab));
 
-                    basicData(material, slab);
-                    BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.SLABS, slab));
-                    ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.SLABS, slab));
-                    BlockStateGen.ROWS.put(slab, g -> g.slab(slab, material));
-                    RecipeGen.ROWS.add((g, o) -> g.buildSlab(o, slab, material));
-                    LangGanZHCN.ROWS.put(slab, material.getPath() + "台阶");
-                }
-            }
+            if (genData) {
+                basicData(material, stair);
+                BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.STAIRS, stair));
+                ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.STAIRS, stair));
+                BlockStateGen.ROWS.put(stair, g -> g.stair(stair, material));
+                RecipeGen.ROWS.add((g, o) -> g.buildStair(o, stair, material));
+                LangGanZHCN.ROWS.put(stair, material.getPath() + "楼梯");
 
-            String path2 = material.getPath() + "_wall";
-            if (!BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("minecraft", path2))) {
-                DeferredBlock<WallBlock> wall = BLOCKS.register(path2, () -> new WallBlock(material.getProperties().forceSolidOn()));
-                itemTab.add(ITEMS.registerSimpleBlockItem(wall));
-
-                if (genData) {
-                    basicData(material, wall);
-                    BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.WALLS, wall));
-                    ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.WALLS, wall));
-                    BlockStateGen.ROWS.put(wall, g -> g.wall(wall, material));
-                    RecipeGen.ROWS.add((g, o) -> g.buildWall(o, wall, material));
-                    LangGanZHCN.ROWS.put(wall, material.getPath() + "墙");
-                }
+                basicData(material, slab);
+                BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.SLABS, slab));
+                ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.SLABS, slab));
+                BlockStateGen.ROWS.put(slab, g -> g.slab(slab, material));
+                RecipeGen.ROWS.add((g, o) -> g.buildSlab(o, slab, material));
+                LangGanZHCN.ROWS.put(slab, material.getPath() + "台阶");
             }
         }
+
+        String path2 = material.getPath() + "_wall";
+        if (material.hasTag(BlockMaterialTag.ADD_WALL) || (flag && !BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("minecraft", path2)))) {
+            DeferredBlock<WallBlock> wall = BLOCKS.register(path2, () -> new WallBlock(material.getProperties().forceSolidOn()));
+            itemTab.add(ITEMS.registerSimpleBlockItem(wall));
+
+            if (genData) {
+                basicData(material, wall);
+                BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.WALLS, wall));
+                ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.WALLS, wall));
+                BlockStateGen.ROWS.put(wall, g -> g.wall(wall, material));
+                RecipeGen.ROWS.add((g, o) -> g.buildWall(o, wall, material));
+                LangGanZHCN.ROWS.put(wall, material.getPath() + "墙");
+            }
+        }
+
     }
 
     private static void cutBlocks(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
         if (!isSimpleCubeBlock(material)) return;
 
-        DeferredBlock<Block> one_cut_block = BLOCKS.register(material.getPath() + "_one_cut_block", () -> new OneCutBlock(material.getBlock().properties()));
+        DeferredBlock<OneCutBlock> one_cut_block = BLOCKS.register(material.getPath() + "_one_cut_block", () -> new OneCutBlock(material.getBlock().properties()));
         DeferredBlock<Block> thin_stairs = BLOCKS.register(material.getPath() + "_thin_stairs", () -> new ThinStairBlock(material.getBlock().properties()));
         DeferredBlock<Block> double_cut_block = BLOCKS.register(material.getPath() + "_double_cut_block", () -> new DoubleCutBlock(material.getBlock().properties()));
         DeferredBlock<Block> triple_cut_block = BLOCKS.register(material.getPath() + "_triple_cut_block", () -> new TripleCutBlock(material.getBlock().properties()));
@@ -338,6 +338,8 @@ public final class BlockBulkRegister {
         itemTab.add(ITEMS.registerSimpleBlockItem(triple_cut_block));
         itemTab.add(ITEMS.registerSimpleBlockItem(panel4px));
         itemTab.add(ITEMS.registerSimpleBlockItem(panel2px));
+
+        ONE_CUT_BLOCKS.put(material, one_cut_block);
 
         if (genData) {
             boolean isWood = material.hasTag(BlockMaterialTag.TOOL_AXE);
@@ -824,6 +826,9 @@ public final class BlockBulkRegister {
                     g.tag(BlockTags.CLIMBABLE, ladder);
                     g.tag(FLBlockTags.FRAMES, frame);
                     g.tag(FLBlockTags.FRAMES, corridor);
+                    g.tag(FLBlockTags.IRON_CORRIDORS, corridor);
+                    g.tag(FLBlockTags.IRON_CORRIDORS, slab);
+                    g.tag(FLBlockTags.IRON_CORRIDORS, stair);
                 });
                 BlockStateGen.ROWS.put(frame, g -> g.tintIronFrame(frame));
                 BlockStateGen.ROWS.put(corridor, g -> g.tintIronCorridor(corridor));
@@ -848,14 +853,6 @@ public final class BlockBulkRegister {
     public static void basicData(BlockMaterial material, DeferredBlock<? extends Block> deferredBlock) {
         BlockTagsGen.ROWS.add(g -> g.basicTags(material, deferredBlock));
         ItemTagsGen.ROWS.add(g -> g.basicTags(material, deferredBlock));
-    }
-
-    public static ItemLike getColoredSeaLamp(DyeColor color) {
-        return COLOR_SEA_LANTERN[color.getId()];
-    }
-
-    public static ItemLike getColoredReinforcedSeaLamp(DyeColor color) {
-        return COLOR_REINFORCED_SEA_LANTERN[color.getId()];
     }
 
 

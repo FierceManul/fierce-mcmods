@@ -30,9 +30,7 @@ public record BlockMaterial(
         return new BlockMaterial(
                 ResourceLocation.fromNamespaceAndPath(
                         FierceLive.MODID,
-                        rlb.getPath()
-                           .replace("bricks", "brick")
-                           .replace("tiles", "tile")
+                        fixPath(rlb.getPath())
                 ),
                 rlb,
                 () -> block,
@@ -49,7 +47,11 @@ public record BlockMaterial(
     ) {
         ResourceLocation id = deferredBlock.getId();
         return new BlockMaterial(
-                id, id,
+                ResourceLocation.fromNamespaceAndPath(
+                        id.getNamespace(),
+                        fixPath(id.getPath())
+                ),
+                id,
                 deferredBlock,
                 () -> BlockBehaviour.Properties.ofFullCopy(deferredBlock.get()),
                 mapColorHolder,
@@ -90,6 +92,11 @@ public record BlockMaterial(
     public boolean hasAnyTags(BlockMaterialTag... tags) {
         for (BlockMaterialTag tag : tags) if (this.tags.contains(tag)) return true;
         return false;
+    }
+
+    private static String fixPath(String path) {
+        return path.replace("bricks", "brick")
+                   .replace("tiles", "tile");
     }
 
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.Collections;
 import java.util.List;
@@ -112,7 +113,7 @@ public final class WrenchUtils {
     }
 
     public static boolean isWrench(ItemStack stack) {
-        return stack.is(FSItemTags.WRENCH_ITEM);
+        return stack.is(Tags.Items.TOOLS_WRENCH);
     }
 
     private WrenchUtils() {}

@@ -1,5 +1,5 @@
 {
-	"parent": "fiercecraft:block/model",
+	"parent": "fiercecraft:block/block",
 	"textures": {
 		"particle": "fiercelive:block/glowstone_lamp",
 		"tube": "fiercelive:block/glowstone_lamp",
@@ -9,6 +9,7 @@
 		{
 			"from": [4, 0, 4],
 			"to": [12, 2, 12],
+			"shade": false,
 			"faces": {
 				"north": {"uv": [4, 11, 12, 13], "texture": "#tube"},
 				"east": {"uv": [4, 11, 12, 13], "texture": "#tube"},
@@ -62,12 +63,5 @@
 				"down": {"uv": [7, 3, 9, 4], "texture": "#iron", "cullface": "down"}
 			}
 		}
-	],
-	"display": {
-		"head": {
-			"rotation": [-90, 0, 0],
-			"translation": [0, 0, -16],
-			"scale": [1.2, 1.2, 1.2]
-		}
-	}
+	]
 }

@@ -1,5 +1,6 @@
 {
 	"parent": "fiercecraft:block/model",
+	"gui_light": "front",
 	"textures": {
 		"particle": "fiercelive:block/glowstone_lamp",
 		"tube": "fiercelive:block/glowstone_lamp",
@@ -9,6 +10,7 @@
 		{
 			"from": [1, 7, 14],
 			"to": [15, 9, 16],
+			"shade": false,
 			"faces": {
 				"north": {"uv": [1, 7, 15, 9], "texture": "#tube"},
 				"east": {"uv": [1, 7, 3, 9], "texture": "#tube"},

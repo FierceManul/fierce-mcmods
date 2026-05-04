@@ -53,6 +53,11 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.WATERLOGGED_COBBLESTONE.get(),
                 FLBlocks.SPIRAL_STONE.get(),
                 FLBlocks.DEEPSLATE_SPIRAL_STONE.get(),
+                FLBlocks.VILLAGE_PATTERNED_TILES.get(),
+                FLBlocks.VILLAGE_MOSAIC_TILES.get(),
+                FLBlocks.BIG_FLOWER_POT.get(),
+                FLBlocks.CONCRETE.get(),
+                FLBlocks.GRAVEL_CONCRETE.get(),
                 FLBlocks.A_WALL_FLOWER_POT.get(),
                 FLBlocks.B_WALL_FLOWER_POT.get(),
                 FLBlocks.C_WALL_FLOWER_POT.get(),
@@ -162,7 +167,12 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.HALF_GRASS_BLOCK.get(),
                 FLBlocks.HALF_PODZOL.get(),
                 FLBlocks.HALF_MYCELIUM.get(),
+                FLBlocks.HALF_DIRT.get(),
                 FLBlocks.HALF_DIRT_PATH.get()
+        );
+        tag(BlockTags.MINEABLE_WITH_HOE).add(
+                FLBlocks.FOX_CARROT_SHEAF.get(),
+                FLBlocks.FOX_CARROT_BASKET.get()
         );
         tag(BlockTags.NEEDS_STONE_TOOL).add(
                 FLBlocks.IRON_GUARDRAIL.get(),
@@ -173,21 +183,26 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.IRON_LADDER.get(),
                 FLBlocks.IRON_SCAFFOLDING.get()
         );
-        tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get()).addTag(FLBlockTags.WOOL_SOFAS);
-        tag(BlockTags.DIRT).add(
-                FLBlocks.HALF_GRASS_BLOCK.get(),
-                FLBlocks.HALF_PODZOL.get(),
-                FLBlocks.HALF_MYCELIUM.get()
+        tag(BlockTags.CONCRETE_POWDER).add(
+                FLBlocks.CONCRETE_POWDER.get(),
+                FLBlocks.GRAVEL_CONCRETE_POWDER.get()
         );
+        tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get()).addTag(FLBlockTags.WOOL_SOFAS);
         tag(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
                 FLBlocks.HALF_GRASS_BLOCK.get(),
                 FLBlocks.HALF_PODZOL.get(),
-                FLBlocks.HALF_MYCELIUM.get()
+                FLBlocks.HALF_MYCELIUM.get(),
+                FLBlocks.HALF_DIRT.get(),
+                FLBlocks.HALF_DIRT_PATH.get()
         );
-        tag(BlockTags.MINEABLE_WITH_HOE).add(
-                FLBlocks.FOX_CARROT_SHEAF.get(),
-                FLBlocks.FOX_CARROT_BASKET.get()
+        tag(BlockTags.ENDERMAN_HOLDABLE).add(
+                FLBlocks.HALF_GRASS_BLOCK.get(),
+                FLBlocks.HALF_PODZOL.get(),
+                FLBlocks.HALF_MYCELIUM.get(),
+                FLBlocks.HALF_DIRT.get(),
+                FLBlocks.HALF_DIRT_PATH.get()
         );
+        tag(BlockTags.DIRT).add(FLBlocks.BIG_FLOWER_POT.get());
         tag(BlockTags.PLANKS).add(
                 FLBlocks.SMOOTH_OAK_PLANKS.get(),
                 FLBlocks.SMOOTH_SPRUCE_PLANKS.get(),
@@ -204,9 +219,6 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(BlockTags.CAMPFIRES).add(
                 FLBlocks.FIREPLACE_HEART.get()
         );
-        //tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).add(
-        //        FLBlocks.HALF_GRASS_BLOCK.get()
-        //);
         tag(FLBlockTags.REINFORCED_SEA_LANTERNS).add(
                 FLBlocks.REINFORCED_SEA_LANTERN.get(),
                 FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get()
@@ -230,7 +242,11 @@ public class BlockTagsGen extends BlockTagsProvider {
                 .addTag(FLBlockTags.TABLES)
                 .addTag(FLBlockTags.CABINETS);
         tag(BlockTags.TERRACOTTA).add(FLBlocks.RAINBOW_TERRACOTTA.get());
-        tag(Tags.Blocks.CONCRETES).add(FLBlocks.RAINBOW_CONCRETE.get());
+        tag(Tags.Blocks.CONCRETES).add(
+                FLBlocks.RAINBOW_CONCRETE.get(),
+                FLBlocks.CONCRETE.get(),
+                FLBlocks.GRAVEL_CONCRETE.get()
+        );
         tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get());
         tag(Tags.Blocks.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.get());
         tag(Tags.Blocks.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.get());
@@ -270,6 +286,11 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(FLBlockTags.FRAMES).add(
                 FLBlocks.IRON_FRAME.get(),
                 FLBlocks.IRON_CORRIDOR.get()
+        );
+        tag(FLBlockTags.IRON_CORRIDORS).add(
+                FLBlocks.IRON_CORRIDOR.get(),
+                FLBlocks.IRON_CORRIDOR_SLAB.get(),
+                FLBlocks.IRON_CORRIDOR_STAIRS.get()
         );
 
         ROWS.forEach(row -> row.accept(this));

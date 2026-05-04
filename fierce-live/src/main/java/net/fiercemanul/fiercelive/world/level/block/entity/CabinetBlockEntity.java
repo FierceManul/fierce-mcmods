@@ -33,7 +33,7 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("fiercelive.container.cabinet");
+        return Component.translatable("container.fiercelive.cabinet");
     }
 
     @Override

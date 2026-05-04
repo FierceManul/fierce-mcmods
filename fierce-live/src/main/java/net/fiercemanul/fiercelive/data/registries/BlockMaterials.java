@@ -98,6 +98,7 @@ public final class BlockMaterials {
     public static final HashSet<BlockMaterialTag> POLISHED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CHISELED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> BRICK_TAGS = new HashSet<>();
+    public static final HashSet<BlockMaterialTag> MY_BRICK_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> END_STONE_BRICK_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CRACKED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> SMOOTH_TAGS = new HashSet<>();
@@ -129,6 +130,7 @@ public final class BlockMaterials {
     public static final BlockMaterial ANDESITE = mc(Blocks.ANDESITE, MapColorHolders.STONE, STONE_TAGS);
     public static final BlockMaterial POLISHED_ANDESITE = mc(Blocks.POLISHED_ANDESITE, MapColorHolders.STONE, POLISHED_TAGS);
     public static final BlockMaterial TUFF = mc(Blocks.TUFF, MapColorHolders.TERRACOTTA_GRAY, STONE_TAGS);
+    public static final BlockMaterial TUFF_BRICKS = mc(Blocks.TUFF_BRICKS, MapColorHolders.TERRACOTTA_GRAY, BRICK_TAGS);
     public static final BlockMaterial CALCITE = mc(Blocks.CALCITE, MapColorHolders.TERRACOTTA_WHITE, STONE_TAGS);
     //public static final BlockMaterial DRIPSTONE_BLOCK = mc(Blocks.DRIPSTONE_BLOCK, MapColorHolders.TERRACOTTA_BROWN, STONE_TAGS);
     //public static final BlockMaterial AMETHYST_BLOCK = mc(Blocks.AMETHYST_BLOCK, MapColorHolders.COLOR_PURPLE, STONE_TAGS);
@@ -152,6 +154,8 @@ public final class BlockMaterials {
     public static final BlockMaterial PRISMARINE = mc(Blocks.PRISMARINE, MapColorHolders.COLOR_CYAN, STONE_TAGS);
     public static final BlockMaterial PRISMARINE_BRICKS = mc(Blocks.PRISMARINE_BRICKS, MapColorHolders.DIAMOND, BRICK_TAGS);
     public static final BlockMaterial DARK_PRISMARINE = mc(Blocks.DARK_PRISMARINE, MapColorHolders.DIAMOND, STONE_TAGS);
+    public static final BlockMaterial VILLAGE_PATTERNED_TILES = reg(FLBlocks.VILLAGE_PATTERNED_TILES, MapColorHolders.COLOR_LIGHT_GREEN, MY_BRICK_TAGS);
+    public static final BlockMaterial VILLAGE_MOSAIC_TILES = reg(FLBlocks.VILLAGE_MOSAIC_TILES, MapColorHolders.COLOR_LIGHT_GREEN, MY_BRICK_TAGS);
     //public static final HashSet<BlockMaterialTag> ICE_TAGS = new HashSet<>();
     //public static final BlockMaterial ICE = mc(Blocks.ICE, MapColorHolders.ICE, ICE_TAGS);
     public static final BlockMaterial PACKED_ICE = mc(Blocks.PACKED_ICE, MapColorHolders.ICE, STONE_TAGS);
@@ -203,6 +207,8 @@ public final class BlockMaterials {
     public static final BlockMaterial BLACK_TERRACOTTA = mc(Blocks.BLACK_TERRACOTTA, MapColorHolders.TERRACOTTA_BLACK, COLOR_STONE_TAGS);
     public static final BlockMaterial RAINBOW_TERRACOTTA = reg(FLBlocks.RAINBOW_TERRACOTTA, MapColorHolders.TERRACOTTA_WHITE, COLOR_STONE_TAGS);
     public static final HashSet<BlockMaterialTag> COLOR_ARTIFICIAL_STONE_TAGS = new HashSet<>();
+    public static final BlockMaterial CONCRETE = reg(FLBlocks.CONCRETE, MapColorHolders.TERRACOTTA_WHITE, STONE_TAGS);
+    public static final BlockMaterial GRAVEL_CONCRETE = reg(FLBlocks.GRAVEL_CONCRETE, MapColorHolders.TERRACOTTA_WHITE, STONE_TAGS);
     public static final BlockMaterial WHITE_CONCRETE = mc(Blocks.WHITE_CONCRETE, MapColorHolders.SNOW, COLOR_ARTIFICIAL_STONE_TAGS);
     public static final BlockMaterial ORANGE_CONCRETE = mc(Blocks.ORANGE_CONCRETE, MapColorHolders.COLOR_ORANGE, COLOR_ARTIFICIAL_STONE_TAGS);
     public static final BlockMaterial MAGENTA_CONCRETE = mc(Blocks.MAGENTA_CONCRETE, MapColorHolders.COLOR_MAGENTA, COLOR_ARTIFICIAL_STONE_TAGS);
@@ -408,6 +414,10 @@ public final class BlockMaterials {
 
         BRICK_TAGS.addAll(POLISHED_TAGS);
         tagReplace(BRICK_TAGS, BlockMaterialTag.TEXTURE_FRAMED, BlockMaterialTag.TEXTURE_BRICKS);
+
+        MY_BRICK_TAGS.addAll(BRICK_TAGS);
+        MY_BRICK_TAGS.add(BlockMaterialTag.ADD_SLAB);
+        MY_BRICK_TAGS.add(BlockMaterialTag.ADD_WALL);
 
         END_STONE_TAGS.addAll(STONE_TAGS);
         END_STONE_TAGS.add(BlockMaterialTag.TAG_DRAGON_IMMUNE);

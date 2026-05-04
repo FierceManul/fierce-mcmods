@@ -23,6 +23,11 @@ public final class FLItemTags {
     public static final TagKey<Item> CABINETS = createCommunity("cabinets");
     public static final TagKey<Item> WOOL_SOFAS = create("wool_sofas");
     public static final TagKey<Item> COLOR_LAMPS = create("color_lamps");
+    public static final TagKey<Item> IRON_CORRIDORS = create("iron_corridors");
+    public static final TagKey<Item> TOOLS_CROWBAR = createCommunity("tools/crowbar");
+    public static final TagKey<Item> CROWBARS = create("crowbars");
+    public static final TagKey<Item> WEAPON_METEOR_HAMMER = createCommunity("tools/weapon_meteor_hammer");
+    public static final TagKey<Item> METEOR_HAMMERS = create("meteor_hammers");
 
     private static TagKey<Item> create(String name) {
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

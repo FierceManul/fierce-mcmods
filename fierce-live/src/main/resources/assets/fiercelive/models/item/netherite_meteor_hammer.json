@@ -1,0 +1,6 @@
+{
+	"parent": "fiercelive:item/meteor_hammer",
+	"textures": {
+		"all": "fiercelive:item/3d/netherite_meteor_hammer"
+	}
+}

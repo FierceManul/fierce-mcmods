@@ -2,10 +2,13 @@ package net.fiercemanul.fiercelive.world.item;
 
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.LevelReader;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
@@ -25,6 +28,22 @@ public class CrowbarItem extends DiggerItem {
     @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
         return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(itemAbility);
+    }
+
+    /**
+     * 刻意的设计
+     */
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return enchantment.is(Enchantments.EFFICIENCY)
+                || enchantment.is(Enchantments.UNBREAKING)
+                || enchantment.is(Enchantments.MENDING)
+                || enchantment.is(Enchantments.SILK_TOUCH);
+    }
+
+    @Override
+    public boolean isPrimaryItemFor(ItemStack stack, Holder<Enchantment> enchantment) {
+        return supportsEnchantment(stack, enchantment);
     }
 
 }

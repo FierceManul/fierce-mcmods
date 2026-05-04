@@ -7,12 +7,10 @@ import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.data.tags.FLItemTags;
-import net.fiercemanul.fiercesource.data.tags.FSItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -64,6 +62,7 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FLItems.FOX_CARROT_SEED.get()
         );
         tag(Tags.Items.CHESTS).addTag(FLItemTags.CABINETS);
+
         this.copy(FLBlockTags.GLASS_LAMPS, FLItemTags.GLASS_LAMPS);
         this.copy(FLBlockTags.GUARDRAILS, FLItemTags.GUARDRAILS);
         this.copy(FLBlockTags.CROSS_HOLES, FLItemTags.CROSS_HOLES);
@@ -76,6 +75,8 @@ public class ItemTagsGen extends ItemTagsProvider {
         this.copy(FLBlockTags.WOOL_SOFAS, FLItemTags.WOOL_SOFAS);
         this.copy(FLBlockTags.COLOR_LAMPS, FLItemTags.COLOR_LAMPS);
         this.copy(FLBlockTags.RAINBOW_DYED, FLItemTags.RAINBOW_DYED);
+        this.copy(FLBlockTags.IRON_CORRIDORS, FLItemTags.IRON_CORRIDORS);
+
         tag(ItemTags.WOOL).add(FLBlocks.RAINBOW_WOOL.asItem()).addTag(FLItemTags.WOOL_SOFAS);
         tag(ItemTags.TERRACOTTA).add(FLBlocks.RAINBOW_TERRACOTTA.asItem());
         tag(Tags.Items.CONCRETES).add(FLBlocks.RAINBOW_CONCRETE.asItem());
@@ -90,16 +91,48 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(Tags.Items.DYED_YELLOW).add(FLBlocks.YELLOW_LAMP.asItem());
         tag(Tags.Items.DYED_CYAN).add(FLBlocks.CYAN_LAMP.asItem());
         tag(Tags.Items.DYED_PURPLE).add(FLBlocks.PURPLE_LAMP.asItem());
+        tag(Tags.Items.CONCRETES).add(
+                FLBlocks.CONCRETE.asItem(),
+                FLBlocks.GRAVEL_CONCRETE.asItem()
+        );
+        tag(Tags.Items.CONCRETE_POWDERS).add(
+                FLBlocks.CONCRETE_POWDER.asItem(),
+                FLBlocks.GRAVEL_CONCRETE_POWDER.asItem()
+        );
 
-        Item[] crowbarItem = new Item[] {
-                FLItems.CROWBAR_ITEM.get(),
-                FLItems.NETHERITE_CROWBAR_ITEM.get(),
-                FLItems.CLAW_HAMMER_ITEM.get(),
-                FLItems.NETHERITE_CLAW_HAMMER_ITEM.get()
-        };
-        tag(ItemTags.PICKAXES).add(crowbarItem);
-        tag(ItemTags.AXES).add(crowbarItem);
-        tag(FSItemTags.WRENCH_ITEM).add(crowbarItem);
+        tag(FLItemTags.CROWBARS).add(
+                FLItems.CROWBAR.get(),
+                FLItems.NETHERITE_CROWBAR.get(),
+                FLItems.CLAW_HAMMER.get(),
+                FLItems.NETHERITE_CLAW_HAMMER.get()
+        );
+        tag(FLItemTags.TOOLS_CROWBAR).addTag(FLItemTags.CROWBARS);
+        tag(Tags.Items.TOOLS_WRENCH).addTag(FLItemTags.CROWBARS);
+
+        tag(FLItemTags.METEOR_HAMMERS).add(
+                FLItems.METEOR_HAMMER.get(),
+                FLItems.NETHERITE_METEOR_HAMMER.get()
+        );
+        tag(FLItemTags.WEAPON_METEOR_HAMMER).addTag(FLItemTags.METEOR_HAMMERS);
+        tag(Tags.Items.MELEE_WEAPON_TOOLS).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        tag(ItemTags.VANISHING_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        tag(ItemTags.FIRE_ASPECT_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+
+        tag(Tags.Items.MELEE_WEAPON_TOOLS).add(
+                FLItems.PUFFERFISH_ROD.get(),
+                FLItems.SACABAMBASPIS.get()
+        );
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(
+                FLItems.PUFFERFISH_ROD.get(),
+                FLItems.SACABAMBASPIS.get()
+        );
+        tag(ItemTags.VANISHING_ENCHANTABLE).add(
+                FLItems.PUFFERFISH_ROD.get(),
+                FLItems.SACABAMBASPIS.get()
+        );
+
 
         ROWS.forEach(consumer -> consumer.accept(this));
 

@@ -1,5 +1,6 @@
 {
 	"parent": "fiercecraft:block/model_short",
+	"gui_light": "front",
 	"textures": {
 		"particle": "fiercelive:block/laptop_terminal_a",
 		"A": "fiercelive:block/laptop_terminal_a",

@@ -140,6 +140,20 @@ public final class FLBlocks {
             "spiral_stone", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
     public static final DeferredBlock<Block> DEEPSLATE_SPIRAL_STONE = regSimpleBlock(
             "deepslate_spiral_stone", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> VILLAGE_PATTERNED_TILES = regSimpleBlock(
+            "village_patterned_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
+    public static final DeferredBlock<Block> VILLAGE_MOSAIC_TILES = regSimpleBlock(
+            "village_mosaic_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
+    public static final DeferredBlock<Block> BIG_FLOWER_POT = regSimpleBlock(
+            "big_flower_pot", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.DIRT));
+    public static final DeferredBlock<Block> CONCRETE = regSimpleBlock(
+            "concrete", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE).mapColor(MapColor.TERRACOTTA_WHITE));
+    public static final DeferredBlock<Block> CONCRETE_POWDER = reg(
+            "concrete_powder", () -> new ConcretePowderBlock(CONCRETE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.TERRACOTTA_WHITE)));
+    public static final DeferredBlock<Block> GRAVEL_CONCRETE = regSimpleBlock(
+            "gravel_concrete", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE).mapColor(MapColor.TERRACOTTA_WHITE));
+    public static final DeferredBlock<Block> GRAVEL_CONCRETE_POWDER = reg(
+            "gravel_concrete_powder", () -> new ConcretePowderBlock(GRAVEL_CONCRETE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.TERRACOTTA_WHITE)));
     public static final DeferredBlock<Block> HEAVY_CHAINS = regBlock(
             "heavy_chains", HeavyChainsBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> NEO_FORGE = regBlock(
@@ -240,7 +254,7 @@ public final class FLBlocks {
             "texture_blast_furnace_top", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> TEXTURE_SMOKER = regSimpleBlock(
             "texture_smoker", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
-    //TODO:磁石在新版本便宜了，可以移除
+    //TODO:磁石在新版本便宜了，可以移除(26.1)
     public static final DeferredBlock<Block> TEXTURE_LODESTONE = regSimpleBlock(
             "texture_lodestone", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> TEXTURE_LODESTONE_SIDE = regSimpleBlock(

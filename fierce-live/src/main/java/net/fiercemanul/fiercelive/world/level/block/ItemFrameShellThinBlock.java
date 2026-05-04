@@ -2,13 +2,22 @@ package net.fiercemanul.fiercelive.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
+import net.fiercemanul.fiercesource.world.item.WrenchUtils;
 import net.fiercemanul.fiercesource.world.level.block.FacingWaterloggedBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.decoration.Painting;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -60,12 +69,33 @@ public class ItemFrameShellThinBlock extends FacingWaterloggedBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (context instanceof EntityCollisionContext ec && ec.getEntity() instanceof ItemFrame) return Shapes.empty();
+        if (isWhiteListEntity(context)) return Shapes.empty();
         return getShape(state, level, pos, context);
+    }
+
+    public static boolean isWhiteListEntity(CollisionContext context) {
+        return context instanceof EntityCollisionContext ec && (ec.getEntity() instanceof ItemFrame || ec.getEntity() instanceof Painting);
     }
 
     @Override
     public VoxelShape getVisualShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Shapes.empty();
     }
+
+    @Override
+    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
+        if (adjacentState.is(this)) {
+            Direction myFacing = state.getValue(FACING);
+            return direction.getAxis() != myFacing.getAxis() && myFacing == adjacentState.getValue(FACING);
+        }
+        return super.skipRendering(state, adjacentState, direction);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
+    ) {
+        return WrenchUtils.interact(FACING, stack, state, level, pos, player);
+    }
+
 }

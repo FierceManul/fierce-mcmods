@@ -48,6 +48,8 @@ public enum BlockMaterialTag {
     SMOOTH_PLANKS,
     ICE,
     LAMP,
-    ADD_COLOR
+    ADD_COLOR,
+    ADD_SLAB,
+    ADD_WALL
 
 }
