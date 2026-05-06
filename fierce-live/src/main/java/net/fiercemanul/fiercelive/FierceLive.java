@@ -2,6 +2,7 @@ package net.fiercemanul.fiercelive;
 
 import com.google.common.collect.ImmutableSet;
 import net.fiercemanul.fiercelive.data.FLBlocks;
+import net.fiercemanul.fiercelive.data.FLEnchantments;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockBulkRegister;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
@@ -12,10 +13,14 @@ import net.fiercemanul.fiercelive.world.level.block.CabinetBlock;
 import net.fiercemanul.fiercelive.world.level.block.HalfPodzolBlock;
 import net.fiercemanul.fiercelive.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercesource.data.FSCreativeModeTabs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -217,6 +222,12 @@ public class FierceLive {
         output.accept(FLItems.CARAMEL);
         output.accept(FLItems.FOX_CARROT_SEED);
         output.accept(FLItems.RAINBOW_DYE);
+
+        parameters.holders().lookup(Registries.ENCHANTMENT).flatMap(
+                enchantmentLookup -> enchantmentLookup.get(FLEnchantments.POISON_ASPECT)
+        ).ifPresent(enchantment -> output.accept(EnchantedBookItem.createForEnchantment(
+                new EnchantmentInstance(enchantment, enchantment.value().getMaxLevel())))
+        );
     }
 
     static {

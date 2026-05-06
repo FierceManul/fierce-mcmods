@@ -18,6 +18,8 @@ public class LangGanENUS extends LanguageProvider {
 
         add(FLBlocks.FOX_CARROTS.get(), "Fox Carrot");
 
+        add("enchantment.fiercelive.poison_aspect", "Poison Aspect");
+
         add("item_group.fiercelive.decoration", "Fierce Living - Decoration");
         add("item_group.fiercelive.building", "Fierce Living - Building");
         add("item_group.fiercelive.colored", "Fierce Living - Colored");

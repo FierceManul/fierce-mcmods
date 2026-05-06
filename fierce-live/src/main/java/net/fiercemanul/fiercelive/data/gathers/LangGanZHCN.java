@@ -2,6 +2,7 @@ package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
+import net.fiercemanul.fiercelive.data.FLEnchantments;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -80,6 +81,8 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.SWEET_BERRY_COOKIE.get(), "甜浆果曲奇");
         add(FLItems.GLOW_BERRY_COOKIE.get(), "发光浆果曲奇");
         add(FLItems.CARAMEL_COOKIE.get(), "焦糖曲奇");
+
+        add("enchantment.fiercelive.poison_aspect", "毒性附加");
 
         add("item_group.fiercelive.decoration", "绿野栖居-趣物");
         add("item_group.fiercelive.building", "疏野闲章-建筑");

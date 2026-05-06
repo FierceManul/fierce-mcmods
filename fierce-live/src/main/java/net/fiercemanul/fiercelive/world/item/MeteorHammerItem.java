@@ -1,7 +1,9 @@
 package net.fiercemanul.fiercelive.world.item;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -55,6 +57,7 @@ public class MeteorHammerItem extends SimpleTieredWeaponItem {
                 player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
                 stack.hurtAndBreak(2, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
                 player.resetAttackStrengthTicker();
+                if (player instanceof ServerPlayer serverPlayer) CriteriaTriggers.USING_ITEM.trigger(serverPlayer, stack);
                 return InteractionResultHolder.consume(stack);
             }
             else {

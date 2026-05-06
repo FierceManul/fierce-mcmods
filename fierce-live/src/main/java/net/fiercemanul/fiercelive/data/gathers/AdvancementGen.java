@@ -10,12 +10,14 @@ import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -64,19 +66,18 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 Component.translatable("advancements.fiercelive.crowbar.title"),
                 Component.translatable("advancements.fiercelive.crowbar.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("used", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(FLItems.CROWBAR)
-        )).save(saver, "fiercelive:crowbar");
+        ).addCriterion("used", CriteriaTriggers.ITEM_USED_ON_BLOCK.createCriterion(new ItemUsedOnLocationTrigger.TriggerInstance(
+                Optional.empty(), Optional.of(ContextAwarePredicate.create(
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().of(FLItems.CROWBAR)).build()))
+        ))).save(saver, "fiercelive:crowbar");
 
         Advancement.Builder.advancement().parent(root).display(
                 FLItems.METEOR_HAMMER,
                 Component.translatable("advancements.fiercelive.meteor_hammer.title"),
                 Component.translatable("advancements.fiercelive.meteor_hammer.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("used", ItemDurabilityTrigger.TriggerInstance.changedDurability(
-                //TODO:这里用了耐久消耗检测而不是物品使用检测，因为原版没有，如果原版更新有了，拿来用
-                Optional.of(ItemPredicate.Builder.item().of(FLItemTags.METEOR_HAMMERS).build()),
-                MinMaxBounds.Ints.ANY
+        ).addCriterion("used", CriteriaTriggers.USING_ITEM.createCriterion(new UsingItemTrigger.TriggerInstance(
+                Optional.empty(), Optional.of(ItemPredicate.Builder.item().of(FLItems.METEOR_HAMMER).build()))
         )).save(saver, "fiercelive:meteor_hammer");
 
         Advancement.Builder.advancement().parent(root).display(
