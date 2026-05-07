@@ -148,5 +148,13 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
         ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.SACABAMBASPIS)
         ).save(saver, "fiercelive:sacabambaspis");
 
+        Advancement.Builder.advancement().parent(root).display(
+                FLItems.PARROT,
+                Component.translatable("advancements.fiercelive.parrot.title"),
+                Component.translatable("advancements.fiercelive.parrot.description"),
+                null, AdvancementType.TASK, true, true, false
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.PARROT)
+        ).save(saver, "fiercelive:parrot");
+
     }
 }

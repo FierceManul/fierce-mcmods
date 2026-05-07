@@ -732,6 +732,15 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("CYC")
                 .unlockedBy("has_fishes", has(ItemTags.FISHES))
                 .save(recipeOutput);
+        shaped(RecipeCategory.TOOLS, FLItems.PARROT)
+                .define('I', Items.IRON_INGOT)
+                .define('A', Tags.Items.DYES_RED)
+                .define('B', Tags.Items.DYES_BLUE)
+                .pattern("AI")
+                .pattern("AI")
+                .pattern("BI")
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(recipeOutput);
     }
 
     private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {

@@ -1,9 +1,7 @@
 package net.fiercemanul.fiercelive.data;
 
-import net.fiercemanul.fiercelive.world.item.CrowbarItem;
-import net.fiercemanul.fiercelive.world.item.MeteorHammerItem;
-import net.fiercemanul.fiercelive.world.item.PufferfishRodItem;
-import net.fiercemanul.fiercelive.world.item.SimpleWeaponItem;
+import net.fiercemanul.fiercelive.world.item.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -14,8 +12,10 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ScaffoldingBlockItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredItem;
 
+import static net.fiercemanul.fiercelive.data.registries.FLRegister.ENTITY_TYPES;
 import static net.fiercemanul.fiercelive.data.registries.FLRegister.ITEMS;
 
 public final class FLItems {
@@ -55,6 +55,8 @@ public final class FLItems {
             "netherite_meteor_hammer", () -> new MeteorHammerItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 5.0F, -3F));
     public static final DeferredItem<Item> SACABAMBASPIS = ITEMS.registerItem(
             "sacabambaspis", SimpleWeaponItem::new, new Item.Properties().durability(Tiers.IRON.getUses()).attributes(createAttributes(3, -1F)));
+    public static final DeferredItem<Item> PARROT = ITEMS.registerItem(
+            "parrot", WrenchItem::new, new Item.Properties().stacksTo(1));
 
 
     public static void init() {}

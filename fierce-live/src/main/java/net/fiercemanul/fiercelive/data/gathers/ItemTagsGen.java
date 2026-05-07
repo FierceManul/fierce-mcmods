@@ -105,31 +105,30 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FLItems.NETHERITE_CROWBAR.get()
         );
         tag(FLItemTags.TOOLS_CROWBAR).addTag(FLItemTags.CROWBARS);
-        tag(Tags.Items.TOOLS_WRENCH).addTag(FLItemTags.CROWBARS);
+        tag(Tags.Items.TOOLS_WRENCH).add(FLItems.PARROT.get()).addTag(FLItemTags.CROWBARS);
 
         tag(FLItemTags.METEOR_HAMMERS).add(
                 FLItems.METEOR_HAMMER.get(),
                 FLItems.NETHERITE_METEOR_HAMMER.get()
         );
         tag(FLItemTags.WEAPON_METEOR_HAMMER).addTag(FLItemTags.METEOR_HAMMERS);
-        tag(Tags.Items.MELEE_WEAPON_TOOLS).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
-        tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
-        tag(ItemTags.VANISHING_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
         tag(ItemTags.FIRE_ASPECT_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
 
         tag(Tags.Items.MELEE_WEAPON_TOOLS).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
-        );
+        ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
-        );
+        ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+
         tag(ItemTags.VANISHING_ENCHANTABLE).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
-        );
+        ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
 
 
         ROWS.forEach(consumer -> consumer.accept(this));

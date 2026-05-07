@@ -214,6 +214,7 @@ public class FierceLive {
         output.accept(FLItems.METEOR_HAMMER);
         output.accept(FLItems.NETHERITE_METEOR_HAMMER);
         output.accept(FLItems.SACABAMBASPIS);
+        output.accept(FLItems.PARROT);
         output.accept(FLItems.FOX_CARROT);
         output.accept(FLItems.FROSTED_BREAD);
         output.accept(FLItems.SWEET_BERRY_COOKIE);
