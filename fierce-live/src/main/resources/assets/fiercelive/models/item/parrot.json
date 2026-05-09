@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"all": "fiercelive:item/3d/parrot"
+		"all": "fiercelive:item/3d/parrot",
+		"particle": "fiercelive:item/3d/parrot"
 	},
 	"elements": [
 		{

@@ -18,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ItemLike;
@@ -215,6 +214,8 @@ public class FierceLive {
         output.accept(FLItems.NETHERITE_METEOR_HAMMER);
         output.accept(FLItems.SACABAMBASPIS);
         output.accept(FLItems.PARROT);
+        output.accept(FLItems.WOODEN_DOOR);
+        output.accept(FLItems.IRON_DOOR);
         output.accept(FLItems.FOX_CARROT);
         output.accept(FLItems.FROSTED_BREAD);
         output.accept(FLItems.SWEET_BERRY_COOKIE);

@@ -1,6 +1,7 @@
 {
 	"parent": "fiercelive:item/meteor_hammer",
 	"textures": {
-		"all": "fiercelive:item/3d/pufferfish_rod"
+		"all": "fiercelive:item/3d/pufferfish_rod",
+		"particle": "fiercelive:item/3d/pufferfish_rod"
 	}
 }

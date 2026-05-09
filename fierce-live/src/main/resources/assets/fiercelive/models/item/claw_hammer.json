@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"all": "fiercelive:item/3d/claw_hammer"
+		"all": "fiercelive:item/3d/claw_hammer",
+		"particle": "fiercelive:item/3d/claw_hammer"
 	},
 	"elements": [
 		{

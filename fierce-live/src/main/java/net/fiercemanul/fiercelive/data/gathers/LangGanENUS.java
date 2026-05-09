@@ -57,6 +57,8 @@ public class LangGanENUS extends LanguageProvider {
         add("advancements.fiercelive.iron_scaffolding.description", "获得铁脚手架");
         add("advancements.fiercelive.sacabambaspis.title", "劲爆大只咸鱼");
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
+        add("advancements.fiercelive.parrot.title", "是虎钳！");
+        add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
 
 
     }

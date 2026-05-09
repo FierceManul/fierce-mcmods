@@ -132,7 +132,7 @@ public class RecipeGen extends FSRecipeProvider {
         smoothPlanks(recipeOutput, SMOOTH_CRIMSON_PLANKS, Items.CRIMSON_PLANKS);
         smoothPlanks(recipeOutput, SMOOTH_WARPED_PLANKS, Items.WARPED_PLANKS);
 
-        tools(recipeOutput);
+        toolsAndCombat(recipeOutput);
         food(recipeOutput);
 
 
@@ -694,7 +694,7 @@ public class RecipeGen extends FSRecipeProvider {
         stonecutting(recipeOutput, DECORATIONS, slab, corridor, 2);
     }
 
-    private static void tools(RecipeOutput recipeOutput) {
+    private static void toolsAndCombat(RecipeOutput recipeOutput) {
         shaped(RecipeCategory.TOOLS, FLItems.CROWBAR)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
@@ -704,7 +704,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CROWBAR.get());
-        shaped(RecipeCategory.TOOLS, FLItems.PUFFERFISH_ROD)
+        shaped(RecipeCategory.COMBAT, FLItems.PUFFERFISH_ROD)
                 .define('X', Items.PUFFERFISH)
                 .define('I', Items.STICK)
                 .pattern("X")
@@ -712,7 +712,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("I")
                 .unlockedBy(getHasName(Items.PUFFERFISH), has(Items.PUFFERFISH))
                 .save(recipeOutput);
-        shaped(RecipeCategory.TOOLS, FLItems.METEOR_HAMMER)
+        shaped(RecipeCategory.COMBAT, FLItems.METEOR_HAMMER)
                 .define('I', Items.IRON_INGOT)
                 .define('X', FLItems.PUFFERFISH_ROD)
                 .pattern(" I ")
@@ -720,7 +720,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(FLItems.PUFFERFISH_ROD), has(FLItems.PUFFERFISH_ROD))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.METEOR_HAMMER.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_METEOR_HAMMER.get());
-        shaped(RecipeCategory.TOOLS, FLItems.SACABAMBASPIS)
+        shaped(RecipeCategory.COMBAT, FLItems.SACABAMBASPIS)
                 .define('I', Items.IRON_INGOT)
                 .define('X', ItemTags.FISHES)
                 .define('A', Tags.Items.DYES_GRAY)
@@ -741,6 +741,8 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("BI")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
+        oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.WOODEN_DOOR, Items.OAK_DOOR, "");
+        oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.IRON_DOOR, Items.IRON_DOOR, "");
     }
 
     private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {

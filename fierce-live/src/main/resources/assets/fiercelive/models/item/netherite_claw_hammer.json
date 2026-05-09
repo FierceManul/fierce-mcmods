@@ -1,6 +1,7 @@
 {
 	"parent": "fiercelive:item/claw_hammer",
 	"textures": {
-		"all": "fiercelive:item/3d/netherite_claw_hammer"
+		"all": "fiercelive:item/3d/netherite_claw_hammer",
+		"particle": "fiercelive:item/3d/netherite_claw_hammer"
 	}
 }

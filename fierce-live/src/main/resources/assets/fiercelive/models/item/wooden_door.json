@@ -1,0 +1,15 @@
+{
+    "parent": "fiercelive:item/door",
+    "textures": {
+        "bottom": "minecraft:block/oak_door_bottom",
+        "top": "minecraft:block/oak_door_top"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "blocking": 1
+            },
+            "model": "fiercelive:item/wooden_door_blocking"
+        }
+    ]
+}

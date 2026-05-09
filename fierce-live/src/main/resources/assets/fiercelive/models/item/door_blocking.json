@@ -1,0 +1,21 @@
+{
+	"parent": "fiercelive:item/door",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 155, 0],
+			"translation": [0.5, -5, -7]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, 155, 0],
+			"translation": [0.5, -5, -7]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -180, 0],
+			"translation": [-9, -9.5, 3]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -180, -5],
+			"translation": [-9, -9.5, 3]
+		}
+	}
+}

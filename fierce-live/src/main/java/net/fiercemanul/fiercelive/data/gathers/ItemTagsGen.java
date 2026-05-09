@@ -39,6 +39,7 @@ public class ItemTagsGen extends ItemTagsProvider {
         super(packOutput, lookupProvider, blockTagsGen, FierceLive.MODID, existingFileHelper);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(ItemTags.PLANKS).add(
@@ -115,6 +116,12 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(ItemTags.FIRE_ASPECT_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
 
+        tag(FLItemTags.DOOR_SHIELDS).add(
+                FLItems.WOODEN_DOOR.get(),
+                FLItems.IRON_DOOR.get()
+        );
+        tag(Tags.Items.TOOLS_SHIELD).addTag(FLItemTags.DOOR_SHIELDS);
+
         tag(Tags.Items.MELEE_WEAPON_TOOLS).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
@@ -123,12 +130,18 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
-        ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        ).addTags(
+                FLItemTags.WEAPON_METEOR_HAMMER,
+                FLItemTags.DOOR_SHIELDS
+        );
 
         tag(ItemTags.VANISHING_ENCHANTABLE).add(
                 FLItems.PUFFERFISH_ROD.get(),
                 FLItems.SACABAMBASPIS.get()
-        ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
+        ).addTags(
+                FLItemTags.WEAPON_METEOR_HAMMER,
+                FLItemTags.DOOR_SHIELDS
+        );
 
 
         ROWS.forEach(consumer -> consumer.accept(this));

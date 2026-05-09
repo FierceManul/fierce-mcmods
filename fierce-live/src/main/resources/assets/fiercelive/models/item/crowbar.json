@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"all": "fiercelive:item/3d/crowbar"
+		"all": "fiercelive:item/3d/crowbar",
+		"particle": "fiercelive:item/3d/crowbar"
 	},
 	"elements": [
 		{

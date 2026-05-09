@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"all": "fiercelive:item/3d/sacabambaspis"
+		"all": "fiercelive:item/3d/sacabambaspis",
+		"particle": "fiercelive:item/3d/sacabambaspis"
 	},
 	"elements": [
 		{

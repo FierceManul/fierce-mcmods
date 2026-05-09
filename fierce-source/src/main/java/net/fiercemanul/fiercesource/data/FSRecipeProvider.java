@@ -37,16 +37,16 @@ public abstract class FSRecipeProvider extends RecipeProvider {
                                       .save(recipeOutput, BuiltInRegistries.ITEM.getKey(resultItem) + "_smithing");
     }
 
-    protected static void oneToOne(RecipeOutput pRecipeOutput, RecipeCategory category, ItemLike pResult, ItemLike pIngredient, @Nullable String pGroup) {
-        oneToOne(pRecipeOutput, category, pResult, pIngredient, pGroup, 1);
+    protected static void oneToOne(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike ingredient, @Nullable String group) {
+        oneToOne(recipeOutput, category, result, ingredient, group, 1);
     }
 
-    protected static void oneToOne(RecipeOutput pRecipeOutput, RecipeCategory pCategory, ItemLike pResult, ItemLike pIngredient, @Nullable String pGroup, int pResultCount) {
-        ShapelessRecipeBuilder.shapeless(pCategory, pResult, pResultCount)
-                              .requires(pIngredient)
-                              .group(pGroup)
-                              .unlockedBy(getHasName(pIngredient), has(pIngredient))
-                              .save(pRecipeOutput, BuiltInRegistries.ITEM.getKey(pResult.asItem()).getNamespace() + ":" + getConversionRecipeName(pResult, pIngredient));
+    protected static void oneToOne(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike ingredient, @Nullable String group, int resultCount) {
+        ShapelessRecipeBuilder.shapeless(category, result, resultCount)
+                              .requires(ingredient)
+                              .group(group)
+                              .unlockedBy(getHasName(ingredient), has(ingredient))
+                              .save(recipeOutput, BuiltInRegistries.ITEM.getKey(result.asItem()).getNamespace() + ":" + getConversionRecipeName(result, ingredient));
     }
 
     protected static void stonecutting(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {

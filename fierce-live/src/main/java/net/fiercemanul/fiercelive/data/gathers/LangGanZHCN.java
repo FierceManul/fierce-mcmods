@@ -2,7 +2,6 @@ package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
-import net.fiercemanul.fiercelive.data.FLEnchantments;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -76,6 +75,8 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.NETHERITE_METEOR_HAMMER.get(), "下界合金流星锤");
         add(FLItems.SACABAMBASPIS.get(), "萨卡班甲鱼");
         add(FLItems.PARROT.get(), "鹦鹉");
+        add(FLItems.WOODEN_DOOR.get(), "木门");
+        add(FLItems.IRON_DOOR.get(), "铁门");
         add(FLItems.RAINBOW_DYE.get(), "彩虹染料");
         add(FLItems.FROSTED_BREAD.get(), "糖霜面包");
         add(FLItems.CARAMEL.get(), "焦糖");
@@ -119,7 +120,7 @@ public class LangGanZHCN extends LanguageProvider {
         add("advancements.fiercelive.sacabambaspis.title", "劲爆大只咸鱼");
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
         add("advancements.fiercelive.parrot.title", "是虎钳！");
-        add("advancements.fiercelive.parrot.description", "获得虎钳");
+        add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
 
         add("fiercelive.tip.snake_vertical", "潜行时垂直摆放");
         add("fiercelive.tip.snake_horizontal", "潜行时水平摆放");

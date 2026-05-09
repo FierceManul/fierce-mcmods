@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"all": "fiercelive:item/3d/meteor_hammer"
+		"all": "fiercelive:item/3d/meteor_hammer",
+		"particle": "fiercelive:item/3d/meteor_hammer"
 	},
 	"elements": [
 		{
