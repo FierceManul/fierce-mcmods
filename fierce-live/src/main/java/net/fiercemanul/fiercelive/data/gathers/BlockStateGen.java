@@ -177,6 +177,8 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(TEXTURE_LODESTONE_SIDE, gen -> gen.texturedCube(TEXTURE_LODESTONE_SIDE, "block/lodestone_side"));
         ROWS.put(TEXTURE_LODESTONE_TOP, gen -> gen.texturedCube(TEXTURE_LODESTONE_TOP, "block/lodestone_top"));
 
+        ROWS.put(INFINITE_TNT, gen -> gen.simpleUpDownSide(INFINITE_TNT));
+
 
         FLRegister.BLOCKS.getEntries().forEach(deferredBlock -> {
             if (ROWS.containsKey(deferredBlock)) ROWS.get(deferredBlock).accept(this);

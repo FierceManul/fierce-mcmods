@@ -4,6 +4,7 @@ import net.fiercemanul.fiercelive.FierceLive;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public final class FLBlockTags {
@@ -28,6 +29,7 @@ public final class FLBlockTags {
     public static final TagKey<Block> COLOR_LAMPS = create("color_lamps");
     public static final TagKey<Block> FRAMES = create("frames");
     public static final TagKey<Block> IRON_CORRIDORS = create("iron_corridors");
+    public static final TagKey<Block> CHI_STONE_TECH = create("chi_stone_tech");
 
     private static TagKey<Block> create(String name) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

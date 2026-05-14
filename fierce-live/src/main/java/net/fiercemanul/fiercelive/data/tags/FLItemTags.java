@@ -29,6 +29,7 @@ public final class FLItemTags {
     public static final TagKey<Item> WEAPON_METEOR_HAMMER = createCommunity("tools/weapon_meteor_hammer");
     public static final TagKey<Item> METEOR_HAMMERS = create("meteor_hammers");
     public static final TagKey<Item> DOOR_SHIELDS = create("door_shields");
+    public static final TagKey<Item> CHI_STONE_TECH = create("chi_stone_tech");
 
     private static TagKey<Item> create(String name) {
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

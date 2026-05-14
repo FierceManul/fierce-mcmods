@@ -181,6 +181,7 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.LIT_FAKE_SMOKER, "永燃烟熏炉");
         ROWS.put(FLBlocks.LIT_FAKE_CAMPFIRE, "燃烧的假营火");
         ROWS.put(FLBlocks.LIT_FAKE_SOUL_CAMPFIRE, "燃烧的假灵魂营火");
+        ROWS.put(FLBlocks.INFINITE_TNT, "无限TNT");
     }
 
     private Map<String, String> getTranslationsB() {

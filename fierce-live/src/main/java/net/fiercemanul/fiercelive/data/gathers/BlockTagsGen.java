@@ -292,6 +292,9 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.IRON_CORRIDOR_SLAB.get(),
                 FLBlocks.IRON_CORRIDOR_STAIRS.get()
         );
+        tag(FLBlockTags.CHI_STONE_TECH).add(
+                FLBlocks.INFINITE_TNT.get()
+        );
 
         ROWS.forEach(row -> row.accept(this));
 

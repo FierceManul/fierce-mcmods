@@ -275,6 +275,8 @@ public final class FLBlocks {
             "purple_lamp", BlockBehaviour.Properties.of().strength(1.5F).mapColor(MapColor.COLOR_PURPLE).lightLevel(value -> 10).sound(SoundType.AMETHYST));
     public static final DeferredBlock<Block> RAINBOW_LAMP = regSimpleBlock(
             "rainbow_lamp", BlockBehaviour.Properties.of().strength(1.5F).mapColor(MapColor.SNOW).lightLevel(value -> 10).sound(SoundType.AMETHYST));
+    public static final DeferredBlock<Block> INFINITE_TNT = regBlock(
+            "infinite_tnt", InfiniteTntBlock::new, BlockBehaviour.Properties.of().instabreak().sound(SoundType.GRASS).mapColor(MapColor.FIRE).isRedstoneConductor(FSUtils::getFalse));
 
     private static DeferredBlock<Block> regSimpleBlock(String name, BlockBehaviour.Properties props) {
         DeferredBlock<Block> deferredBlock = FLRegister.BLOCKS.registerSimpleBlock(name, props);

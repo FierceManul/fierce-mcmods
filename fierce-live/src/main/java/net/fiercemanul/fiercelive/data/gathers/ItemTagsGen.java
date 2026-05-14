@@ -42,6 +42,21 @@ public class ItemTagsGen extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        copy(FLBlockTags.GLASS_LAMPS, FLItemTags.GLASS_LAMPS);
+        copy(FLBlockTags.GUARDRAILS, FLItemTags.GUARDRAILS);
+        copy(FLBlockTags.CROSS_HOLES, FLItemTags.CROSS_HOLES);
+        copy(FLBlockTags.CUT_BLOCKS, FLItemTags.CUT_BLOCKS);
+        copy(FLBlockTags.PILLARS, FLItemTags.PILLARS);
+        copy(FLBlockTags.SEA_LANTERNS, FLItemTags.SEA_LANTERNS);
+        copy(FLBlockTags.REINFORCED_SEA_LANTERNS, FLItemTags.REINFORCED_SEA_LANTERNS);
+        copy(FLBlockTags.CABINETS, FLItemTags.CABINETS);
+        copy(FLBlockTags.TABLES, FLItemTags.TABLES);
+        copy(FLBlockTags.WOOL_SOFAS, FLItemTags.WOOL_SOFAS);
+        copy(FLBlockTags.COLOR_LAMPS, FLItemTags.COLOR_LAMPS);
+        copy(FLBlockTags.RAINBOW_DYED, FLItemTags.RAINBOW_DYED);
+        copy(FLBlockTags.IRON_CORRIDORS, FLItemTags.IRON_CORRIDORS);
+        copy(FLBlockTags.CHI_STONE_TECH, FLItemTags.CHI_STONE_TECH);
+
         tag(ItemTags.PLANKS).add(
                 FLBlocks.SMOOTH_OAK_PLANKS.asItem(),
                 FLBlocks.SMOOTH_SPRUCE_PLANKS.asItem(),
@@ -63,20 +78,6 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FLItems.FOX_CARROT_SEED.get()
         );
         tag(Tags.Items.CHESTS).addTag(FLItemTags.CABINETS);
-
-        this.copy(FLBlockTags.GLASS_LAMPS, FLItemTags.GLASS_LAMPS);
-        this.copy(FLBlockTags.GUARDRAILS, FLItemTags.GUARDRAILS);
-        this.copy(FLBlockTags.CROSS_HOLES, FLItemTags.CROSS_HOLES);
-        this.copy(FLBlockTags.CUT_BLOCKS, FLItemTags.CUT_BLOCKS);
-        this.copy(FLBlockTags.PILLARS, FLItemTags.PILLARS);
-        this.copy(FLBlockTags.SEA_LANTERNS, FLItemTags.SEA_LANTERNS);
-        this.copy(FLBlockTags.REINFORCED_SEA_LANTERNS, FLItemTags.REINFORCED_SEA_LANTERNS);
-        this.copy(FLBlockTags.CABINETS, FLItemTags.CABINETS);
-        this.copy(FLBlockTags.TABLES, FLItemTags.TABLES);
-        this.copy(FLBlockTags.WOOL_SOFAS, FLItemTags.WOOL_SOFAS);
-        this.copy(FLBlockTags.COLOR_LAMPS, FLItemTags.COLOR_LAMPS);
-        this.copy(FLBlockTags.RAINBOW_DYED, FLItemTags.RAINBOW_DYED);
-        this.copy(FLBlockTags.IRON_CORRIDORS, FLItemTags.IRON_CORRIDORS);
 
         tag(ItemTags.WOOL).add(FLBlocks.RAINBOW_WOOL.asItem()).addTag(FLItemTags.WOOL_SOFAS);
         tag(ItemTags.TERRACOTTA).add(FLBlocks.RAINBOW_TERRACOTTA.asItem());

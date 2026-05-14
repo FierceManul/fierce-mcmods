@@ -34,8 +34,7 @@ public final class FSUtils {
     }
 
 
-    //datagen:
-    //net.neoforged.fml.loading.FMLLoader.getLaunchHandler().isData()
+
     //minecraft.getWindow().getGuiScaledWidth()
     //DataPackRegistryEvent
 }

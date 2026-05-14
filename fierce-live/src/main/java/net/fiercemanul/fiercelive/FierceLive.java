@@ -225,6 +225,8 @@ public class FierceLive {
         output.accept(FLItems.FOX_CARROT_SEED);
         output.accept(FLItems.RAINBOW_DYE);
 
+        output.accept(FLBlocks.INFINITE_TNT);
+
         parameters.holders().lookup(Registries.ENCHANTMENT).flatMap(
                 enchantmentLookup -> enchantmentLookup.get(FLEnchantments.POISON_ASPECT)
         ).ifPresent(enchantment -> output.accept(EnchantedBookItem.createForEnchantment(

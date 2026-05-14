@@ -135,6 +135,8 @@ public class RecipeGen extends FSRecipeProvider {
         toolsAndCombat(recipeOutput);
         food(recipeOutput);
 
+        infiniteTnt(recipeOutput);
+
 
         ROWS.forEach(consumer -> consumer.accept(this, recipeOutput));
 
@@ -745,13 +747,39 @@ public class RecipeGen extends FSRecipeProvider {
         oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.IRON_DOOR, Items.IRON_DOOR, "");
     }
 
+    private static void infiniteTnt(RecipeOutput recipeOutput){
+        shaped(RecipeCategory.REDSTONE, INFINITE_TNT)
+                .define('#', Items.OBSERVER)
+                .define('A', Items.NOTE_BLOCK)
+                .define('B', Items.REDSTONE)
+                .define('C', Items.PISTON)
+                .define('D', Items.TNT)
+                .pattern("#A ")
+                .pattern("B#B")
+                .pattern("CDC")
+                .unlockedBy(getHasName(Items.TNT), has(Items.TNT))
+                .save(recipeOutput, "infinite_tnt_a");
+        shaped(RecipeCategory.REDSTONE, INFINITE_TNT)
+                .define('#', Items.STICKY_PISTON)
+                .define('A', Items.SLIME_BLOCK)
+                .define('B', Items.RAIL)
+                .define('C', Items.MINECART)
+                .define('D', Items.TNT)
+                .define('E', Items.DEAD_BRAIN_CORAL_FAN)
+                .pattern("CA#")
+                .pattern("BAD")
+                .pattern("AAE")
+                .unlockedBy(getHasName(Items.TNT), has(Items.TNT))
+                .save(recipeOutput, "infinite_tnt_b");
+    }
+
     private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, cookie, 8)
-                           .define('#', Items.WHEAT)
-                           .define('X', material)
-                           .pattern("#X#")
-                           .unlockedBy(getHasName(material), has(material))
-                           .save(recipeOutput);
+        shaped(RecipeCategory.FOOD, cookie, 8)
+                .define('#', Items.WHEAT)
+                .define('X', material)
+                .pattern("#X#")
+                .unlockedBy(getHasName(material), has(material))
+                .save(recipeOutput);
     }
 
     private static void food(RecipeOutput recipeOutput) {

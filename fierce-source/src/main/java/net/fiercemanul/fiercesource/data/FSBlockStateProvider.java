@@ -48,15 +48,13 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
     }
 
     protected void simpleWithModel(DeferredHolder<Block, ? extends Block> deferredBlock) {
-        ResourceLocation id = deferredBlock.getId();
-        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
-        simple(deferredBlock.get(), id.getPath(), model);
+        Block block = deferredBlock.get();
+        simple(block, deferredBlock.getId().getPath(), models().getExistingFile(blockTexture(block)));
     }
 
     protected void simpleWithModelNoInv(DeferredHolder<Block, ? extends Block> deferredBlock) {
-        ResourceLocation id = deferredBlock.getId();
-        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + id.getPath()));
-        getVariantBuilder(deferredBlock.get()).partialState().setModels(new ConfiguredModel(model));
+        Block block = deferredBlock.get();
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().getExistingFile(blockTexture(block))));
     }
 
     protected void simpleWithModel(DeferredHolder<Block, ? extends Block> deferredBlock, ModelFile model) {
@@ -67,6 +65,12 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
         ResourceLocation id = deferredBlock.getId();
         ModelFile model = models().getExistingFile(mcLoc("block/" + modelFile));
         simple(deferredBlock.get(), id.getPath(), model);
+    }
+
+    protected void simpleUpDownSide(DeferredHolder<Block, ? extends Block> deferredBlock) {
+        ResourceLocation id = deferredBlock.getId();
+        Block block = deferredBlock.get();
+        simpleUpDownSide(block, id.getPath(), blockTexture(block));
     }
 
     protected void simpleWithModelNatureHorizontal(DeferredHolder<Block, ? extends Block> deferredBlock) {
@@ -83,6 +87,13 @@ public abstract class FSBlockStateProvider extends BlockStateProvider {
 
     protected void simple(Block block, String path, ResourceLocation modelRl, ResourceLocation texture) {
         simple(block, path, models().withExistingParent(path, modelRl).texture("all", texture).texture("particle", texture));
+    }
+
+    protected void simpleUpDownSide(Block block, String path, ResourceLocation texture) {
+        simple(block, path, models().withExistingParent(path, mcLoc("block/cube_bottom_top"))
+                                    .texture("side", FSUtils.rl(texture.getNamespace(), texture.getPath() + "_side"))
+                                    .texture("bottom", FSUtils.rl(texture.getNamespace(), texture.getPath() + "_bottom"))
+                                    .texture("top", FSUtils.rl(texture.getNamespace(), texture.getPath() + "_top")));
     }
 
     protected void simple(Block block, String path, ModelFile model) {
