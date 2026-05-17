@@ -4,7 +4,6 @@ import net.fiercemanul.fiercelive.FierceLive;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public final class FLBlockTags {
@@ -12,6 +11,7 @@ public final class FLBlockTags {
 
     public static final TagKey<Block> RAINBOW_DYED = createCommunity("dyed/rainbow");
     public static final TagKey<Block> MINEABLE_WITH_CROWBAR = create("mineable/crowbar");
+    public static final TagKey<Block> MINEABLE_WITH_GLASS_KNIFE = create("mineable/glass_knife");
     public static final TagKey<Block> GLASS_LAMPS = create("glass_lamps");
     public static final TagKey<Block> GUARDRAILS = create("guardrails");
     public static final TagKey<Block> CROSS_HOLES = create("cross_holes");

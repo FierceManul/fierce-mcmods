@@ -29,6 +29,8 @@ public final class FLItems {
             "crowbar", () -> new CrowbarItem(Tiers.IRON, new Item.Properties(), 1.0F, -1.0F));
     public static final DeferredItem<Item> NETHERITE_CROWBAR = ITEMS.register(
             "netherite_crowbar", () -> new CrowbarItem(Tiers.NETHERITE, new Item.Properties().fireResistant(), 1.0F, -1.0F));
+    public static final DeferredItem<GlassKnifeItem> GLASS_KNIFE = ITEMS.registerItem(
+            "glass_knife", GlassKnifeItem::new, GlassKnifeItem.DEFAULT_PROPERTIES);
     public static final DeferredItem<Item> RAINBOW_DYE = ITEMS.registerSimpleItem(
             "rainbow_dye", new Item.Properties());
     public static final DeferredItem<Item> CARAMEL = ITEMS.registerSimpleItem(

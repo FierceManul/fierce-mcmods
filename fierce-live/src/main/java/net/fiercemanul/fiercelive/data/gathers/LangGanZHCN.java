@@ -4,6 +4,8 @@ import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
+import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
+import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.locale.Language;
@@ -73,6 +75,7 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.PUFFERFISH_ROD.get(), "河豚棒");
         add(FLItems.METEOR_HAMMER.get(), "流星锤");
         add(FLItems.NETHERITE_METEOR_HAMMER.get(), "下界合金流星锤");
+        add(FLItems.GLASS_KNIFE.get(), "玻璃刀");
         add(FLItems.SACABAMBASPIS.get(), "萨卡班甲鱼");
         add(FLItems.PARROT.get(), "鹦鹉");
         add(FLItems.WOODEN_DOOR.get(), "木门");
@@ -83,6 +86,49 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.SWEET_BERRY_COOKIE.get(), "甜浆果曲奇");
         add(FLItems.GLOW_BERRY_COOKIE.get(), "发光浆果曲奇");
         add(FLItems.CARAMEL_COOKIE.get(), "焦糖曲奇");
+        
+        add(FLItemTags.RAINBOW_DYES, "彩虹染料");
+        add(FLItemTags.RAINBOW_DYED, "彩虹染色");
+        add(FLItemTags.GLASS_LAMPS, "玻璃灯");
+        add(FLItemTags.GUARDRAILS, "护栏");
+        add(FLItemTags.CROSS_HOLES, "十字孔");
+        add(FLItemTags.CUT_BLOCKS, "切割块");
+        add(FLItemTags.PILLARS, "柱子");
+        add(FLItemTags.SEA_LANTERNS, "海晶灯");
+        add(FLItemTags.REINFORCED_SEA_LANTERNS, "强化海晶灯");
+        add(FLItemTags.TABLES, "桌子");
+        add(FLItemTags.CABINETS, "柜子");
+        add(FLItemTags.WOOL_SOFAS, "羊毛沙发");
+        add(FLItemTags.COLOR_LAMPS, "彩灯");
+        add(FLItemTags.IRON_CORRIDORS, "铁廊架");
+        add(FLItemTags.TOOLS_CROWBAR, "撬棒");
+        add(FLItemTags.CROWBARS, "撬棒");
+        add(FLItemTags.WEAPON_METEOR_HAMMER, "流星锤");
+        add(FLItemTags.METEOR_HAMMERS, "流星锤");
+        add(FLItemTags.DOOR_SHIELDS, "门盾");
+        add(FLItemTags.CHI_STONE_TECH, "赤石科技");
+        
+        add(FLBlockTags.RAINBOW_DYED, "彩虹染色");
+        add(FLBlockTags.MINEABLE_WITH_CROWBAR, "可用撬棒挖掘");
+        add(FLBlockTags.MINEABLE_WITH_GLASS_KNIFE, "可用玻璃刀挖掘");
+        add(FLBlockTags.GLASS_LAMPS, "玻璃灯");
+        add(FLBlockTags.GUARDRAILS, "护栏");
+        add(FLBlockTags.CROSS_HOLES, "十字孔");
+        add(FLBlockTags.CUT_BLOCKS, "切割块");
+        add(FLBlockTags.PILLARS, "柱子");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_UP, "柱子强制向上连接");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_DOWN, "柱子强制向下连接");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_SIDE, "柱子强制侧面连接");
+        add(FLBlockTags.SEA_LANTERNS, "海晶灯");
+        add(FLBlockTags.REINFORCED_SEA_LANTERNS, "强化海晶灯");
+        add(FLBlockTags.TABLES, "桌子");
+        add(FLBlockTags.CABINETS, "柜子");
+        add(FLBlockTags.TABLE_CONNECT, "桌子会连接");
+        add(FLBlockTags.WOOL_SOFAS, "羊毛沙发");
+        add(FLBlockTags.COLOR_LAMPS, "彩灯");
+        add(FLBlockTags.FRAMES, "框架");
+        add(FLBlockTags.IRON_CORRIDORS, "铁廊架");
+        add(FLBlockTags.CHI_STONE_TECH, "赤石科技");
 
         add("enchantment.fiercelive.poison_aspect", "毒性附加");
 

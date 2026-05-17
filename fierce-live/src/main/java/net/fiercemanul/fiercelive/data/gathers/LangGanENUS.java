@@ -3,6 +3,8 @@ package net.fiercemanul.fiercelive.data.gathers;
 import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
+import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
+import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -17,6 +19,49 @@ public class LangGanENUS extends LanguageProvider {
         FLRegister.ITEMS.getEntries().forEach(itemRegistryObject -> add(itemRegistryObject.get(), nameFormat(itemRegistryObject.getId().getPath())));
 
         add(FLBlocks.FOX_CARROTS.get(), "Fox Carrot");
+
+        add(FLItemTags.RAINBOW_DYES, "Rainbow Dyes");
+        add(FLItemTags.RAINBOW_DYED, "Rainbow Dyed");
+        add(FLItemTags.GLASS_LAMPS, "Glass Lamps");
+        add(FLItemTags.GUARDRAILS, "Guardrails");
+        add(FLItemTags.CROSS_HOLES, "Cross Holes");
+        add(FLItemTags.CUT_BLOCKS, "Cut Blocks");
+        add(FLItemTags.PILLARS, "Pillars");
+        add(FLItemTags.SEA_LANTERNS, "Sea Lanterns");
+        add(FLItemTags.REINFORCED_SEA_LANTERNS, "Reinforced Sea Lanterns");
+        add(FLItemTags.TABLES, "Tables");
+        add(FLItemTags.CABINETS, "Cabinets");
+        add(FLItemTags.WOOL_SOFAS, "Wool Sofas");
+        add(FLItemTags.COLOR_LAMPS, "Color Lamps");
+        add(FLItemTags.IRON_CORRIDORS, "Iron Corridors");
+        add(FLItemTags.TOOLS_CROWBAR, "Crowbar");
+        add(FLItemTags.CROWBARS, "Crowbars");
+        add(FLItemTags.WEAPON_METEOR_HAMMER, "Meteor Hammer");
+        add(FLItemTags.METEOR_HAMMERS, "Meteor Hammers");
+        add(FLItemTags.DOOR_SHIELDS, "Door Shields");
+        add(FLItemTags.CHI_STONE_TECH, "Chi Stone Tech");
+
+        add(FLBlockTags.RAINBOW_DYED, "Rainbow Dyed");
+        add(FLBlockTags.MINEABLE_WITH_CROWBAR, "Mineable with Crowbar");
+        add(FLBlockTags.MINEABLE_WITH_GLASS_KNIFE, "Mineable with Glass Knife");
+        add(FLBlockTags.GLASS_LAMPS, "Glass Lamps");
+        add(FLBlockTags.GUARDRAILS, "Guardrails");
+        add(FLBlockTags.CROSS_HOLES, "Cross Holes");
+        add(FLBlockTags.CUT_BLOCKS, "Cut Blocks");
+        add(FLBlockTags.PILLARS, "Pillars");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_UP, "Pillar Force Connect Up");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_DOWN, "Pillar Force Connect Down");
+        add(FLBlockTags.PILLAR_FORCE_CONNECT_SIDE, "Pillar Force Connect Side");
+        add(FLBlockTags.SEA_LANTERNS, "Sea Lanterns");
+        add(FLBlockTags.REINFORCED_SEA_LANTERNS, "Reinforced Sea Lanterns");
+        add(FLBlockTags.TABLES, "Tables");
+        add(FLBlockTags.CABINETS, "Cabinets");
+        add(FLBlockTags.TABLE_CONNECT, "Table Connect");
+        add(FLBlockTags.WOOL_SOFAS, "Wool Sofas");
+        add(FLBlockTags.COLOR_LAMPS, "Color Lamps");
+        add(FLBlockTags.FRAMES, "Frames");
+        add(FLBlockTags.IRON_CORRIDORS, "Iron Corridors");
+        add(FLBlockTags.CHI_STONE_TECH, "Chi Stone Tech");
 
         add("enchantment.fiercelive.poison_aspect", "Poison Aspect");
 

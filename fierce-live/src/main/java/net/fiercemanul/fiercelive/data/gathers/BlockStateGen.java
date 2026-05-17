@@ -185,6 +185,7 @@ public class BlockStateGen extends FSBlockStateProvider {
             else simple(deferredBlock);
         });
 
+        itemModels().basicItem(FLItems.GLASS_KNIFE.get());
         itemModels().basicItem(FLItems.FROSTED_BREAD.get());
         itemModels().basicItem(FLItems.SWEET_BERRY_COOKIE.get());
         itemModels().basicItem(FLItems.GLOW_BERRY_COOKIE.get());

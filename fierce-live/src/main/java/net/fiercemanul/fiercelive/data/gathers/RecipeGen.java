@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
+import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
@@ -7,6 +8,7 @@ import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.fiercemanul.fiercesource.data.FSBlocks;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -29,8 +31,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 import static net.fiercemanul.fiercelive.data.FLBlocks.*;
-import static net.minecraft.data.recipes.RecipeCategory.BUILDING_BLOCKS;
-import static net.minecraft.data.recipes.RecipeCategory.DECORATIONS;
+import static net.minecraft.data.recipes.RecipeCategory.*;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
 import static net.minecraft.data.recipes.ShapelessRecipeBuilder.shapeless;
 
@@ -697,7 +698,7 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private static void toolsAndCombat(RecipeOutput recipeOutput) {
-        shaped(RecipeCategory.TOOLS, FLItems.CROWBAR)
+        shaped(TOOLS, FLItems.CROWBAR)
                 .define('.', Items.IRON_NUGGET)
                 .define('X', Items.IRON_INGOT)
                 .pattern(".. ")
@@ -705,7 +706,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern(" X ")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
-        netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_CROWBAR.get());
+        netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), TOOLS, FLItems.NETHERITE_CROWBAR.get());
         shaped(RecipeCategory.COMBAT, FLItems.PUFFERFISH_ROD)
                 .define('X', Items.PUFFERFISH)
                 .define('I', Items.STICK)
@@ -721,7 +722,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("IXI")
                 .unlockedBy(getHasName(FLItems.PUFFERFISH_ROD), has(FLItems.PUFFERFISH_ROD))
                 .save(recipeOutput);
-        netheriteSmithing(recipeOutput, FLItems.METEOR_HAMMER.get(), RecipeCategory.TOOLS, FLItems.NETHERITE_METEOR_HAMMER.get());
+        netheriteSmithing(recipeOutput, FLItems.METEOR_HAMMER.get(), TOOLS, FLItems.NETHERITE_METEOR_HAMMER.get());
         shaped(RecipeCategory.COMBAT, FLItems.SACABAMBASPIS)
                 .define('I', Items.IRON_INGOT)
                 .define('X', ItemTags.FISHES)
@@ -734,7 +735,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("CYC")
                 .unlockedBy("has_fishes", has(ItemTags.FISHES))
                 .save(recipeOutput);
-        shaped(RecipeCategory.TOOLS, FLItems.PARROT)
+        shaped(TOOLS, FLItems.PARROT)
                 .define('I', Items.IRON_INGOT)
                 .define('A', Tags.Items.DYES_RED)
                 .define('B', Tags.Items.DYES_BLUE)
@@ -745,6 +746,47 @@ public class RecipeGen extends FSRecipeProvider {
                 .save(recipeOutput);
         oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.WOODEN_DOOR, Items.OAK_DOOR, "");
         oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.IRON_DOOR, Items.IRON_DOOR, "");
+        shaped(TOOLS, FLItems.GLASS_KNIFE)
+                .define('X', Items.STICK)
+                .define('I', Items.IRON_INGOT)
+                .define('D', Items.DIAMOND)
+                .pattern("DI")
+                .pattern(" X")
+                .pattern(" X")
+                .unlockedBy(getHasName(Items.DIAMOND), has(Items.DIAMOND))
+                .save(recipeOutput);
+        glassKnifeCut(recipeOutput, Items.GLASS, Items.GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.WHITE_STAINED_GLASS, Items.WHITE_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.ORANGE_STAINED_GLASS, Items.ORANGE_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.MAGENTA_STAINED_GLASS, Items.MAGENTA_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.LIGHT_BLUE_STAINED_GLASS, Items.LIGHT_BLUE_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.YELLOW_STAINED_GLASS, Items.YELLOW_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.LIME_STAINED_GLASS, Items.LIME_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.PINK_STAINED_GLASS, Items.PINK_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.GRAY_STAINED_GLASS, Items.GRAY_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.LIGHT_GRAY_STAINED_GLASS, Items.LIGHT_GRAY_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.CYAN_STAINED_GLASS, Items.CYAN_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.PURPLE_STAINED_GLASS, Items.PURPLE_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.BLUE_STAINED_GLASS, Items.BLUE_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.BROWN_STAINED_GLASS, Items.BROWN_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.GREEN_STAINED_GLASS, Items.GREEN_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.RED_STAINED_GLASS, Items.RED_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, Items.BLACK_STAINED_GLASS, Items.BLACK_STAINED_GLASS_PANE);
+        glassKnifeCut(recipeOutput, RAINBOW_GLASS, RAINBOW_GLASS_PANE);
+    }
+
+    private static void glassKnifeCut(RecipeOutput recipeOutput, ItemLike glassBlock, ItemLike glassPane) {
+        var rl = BuiltInRegistries.ITEM.getKey(glassPane.asItem());
+        String id = FierceLive.MODID + ":";
+        if (!rl.getNamespace().equals(FierceLive.MODID)) id = id + rl.getNamespace() + "_";
+        id = id + rl.getPath() + "_from_glass_knife";
+        shaped(BUILDING_BLOCKS, glassPane, 8)
+                .define('X', FLItems.GLASS_KNIFE)
+                .define('#', glassBlock.asItem())
+                .pattern("X")
+                .pattern("#")
+                .unlockedBy(getHasName(FLItems.GLASS_KNIFE), has(FLItems.GLASS_KNIFE))
+                .save(recipeOutput, id);
     }
 
     private static void infiniteTnt(RecipeOutput recipeOutput){
@@ -762,7 +804,7 @@ public class RecipeGen extends FSRecipeProvider {
         shaped(RecipeCategory.REDSTONE, INFINITE_TNT)
                 .define('#', Items.STICKY_PISTON)
                 .define('A', Items.SLIME_BLOCK)
-                .define('B', Items.RAIL)
+                .define('B', Items.DETECTOR_RAIL)
                 .define('C', Items.MINECART)
                 .define('D', Items.TNT)
                 .define('E', Items.DEAD_BRAIN_CORAL_FAN)

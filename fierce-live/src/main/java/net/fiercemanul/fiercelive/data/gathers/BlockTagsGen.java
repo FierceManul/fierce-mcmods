@@ -42,6 +42,10 @@ public class BlockTagsGen extends BlockTagsProvider {
                 BlockTags.MINEABLE_WITH_PICKAXE,
                 BlockTags.MINEABLE_WITH_AXE
         );
+        tag(FLBlockTags.MINEABLE_WITH_GLASS_KNIFE).addTags(
+                Tags.Blocks.GLASS_BLOCKS,
+                Tags.Blocks.GLASS_PANES
+        );
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 FLBlocks.SOUL_CRYSTAL_ORNAMENT.get(),
                 FLBlocks.ITEM_FRAME_SHELL_THIN.get(),

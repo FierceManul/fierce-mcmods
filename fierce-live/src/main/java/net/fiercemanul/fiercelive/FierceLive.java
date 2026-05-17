@@ -33,6 +33,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -209,6 +210,7 @@ public class FierceLive {
 
         output.accept(FLItems.CROWBAR);
         output.accept(FLItems.NETHERITE_CROWBAR);
+        output.accept(FLItems.GLASS_KNIFE);
         output.accept(FLItems.PUFFERFISH_ROD);
         output.accept(FLItems.METEOR_HAMMER);
         output.accept(FLItems.NETHERITE_METEOR_HAMMER);
@@ -249,6 +251,7 @@ public class FierceLive {
 
         NeoForge.EVENT_BUS.addListener(this::registerCommandsEvent);
         NeoForge.EVENT_BUS.addListener(this::blockPlacedEvent);
+        NeoForge.EVENT_BUS.addListener(this::serverAboutToStartEvent);
 
         modEventBus.addListener(this::registerCapabilitiesEvent);
     }
@@ -287,6 +290,10 @@ public class FierceLive {
                     11
             );
         }
+    }
+
+    private void serverAboutToStartEvent(ServerAboutToStartEvent event) {
+        FLItems.GLASS_KNIFE.get().applySilkTouch(event.getServer().registryAccess());
     }
 
 

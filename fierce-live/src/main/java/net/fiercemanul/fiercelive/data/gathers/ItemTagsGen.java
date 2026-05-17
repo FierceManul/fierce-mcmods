@@ -144,6 +144,8 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FLItemTags.DOOR_SHIELDS
         );
 
+        tag(Tags.Items.MINING_TOOL_TOOLS).add(FLItems.GLASS_KNIFE.get()).addTags(FLItemTags.CROWBARS);
+
 
         ROWS.forEach(consumer -> consumer.accept(this));
 
