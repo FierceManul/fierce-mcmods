@@ -138,8 +138,16 @@ public final class FLBlocks {
             "smooth_warped_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_PLANKS));
     public static final DeferredBlock<Block> SPIRAL_STONE = regSimpleBlock(
             "spiral_stone", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
-    public static final DeferredBlock<Block> DEEPSLATE_SPIRAL_STONE = regSimpleBlock(
-            "deepslate_spiral_stone", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> SPIRAL_DEEPSLATE = regSimpleBlock(
+            "spiral_deepslate", BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final DeferredBlock<Block> SPIRAL_TUFF = regSimpleBlock(
+            "spiral_tuff", BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_BRICKS));
+    public static final DeferredBlock<Block> SPIRAL_BLACKSTONE = regSimpleBlock(
+            "spiral_blackstone", BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_BLACKSTONE_BRICKS));
+    public static final DeferredBlock<Block> SPIRAL_END_STONE = regSimpleBlock(
+            "spiral_end_stone", BlockBehaviour.Properties.ofFullCopy(Blocks.END_STONE_BRICKS));
+    public static final DeferredBlock<Block> INTERLACE_BRICKS = regSimpleBlock(
+            "interlace_bricks", BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS));
     public static final DeferredBlock<Block> VILLAGE_PATTERNED_TILES = regSimpleBlock(
             "village_patterned_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> VILLAGE_MOSAIC_TILES = regSimpleBlock(

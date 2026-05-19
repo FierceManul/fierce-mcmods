@@ -79,9 +79,15 @@ public class RecipeGen extends FSRecipeProvider {
         stonecutting(recipeOutput, DECORATIONS, IRON_CORRIDOR_STAIRS, IRON_CORRIDOR, 2);
         stonecutting(recipeOutput, DECORATIONS, IRON_LADDER, Items.IRON_BARS);
         stonecutting(recipeOutput, DECORATIONS, SPIRAL_STONE, Items.STONE);
-        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.DEEPSLATE);
-        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.COBBLED_DEEPSLATE);
-        stonecutting(recipeOutput, DECORATIONS, DEEPSLATE_SPIRAL_STONE, Items.POLISHED_DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.COBBLED_DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.POLISHED_DEEPSLATE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_TUFF, Items.TUFF);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_TUFF, Items.POLISHED_TUFF);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_BLACKSTONE, Items.BLACKSTONE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_BLACKSTONE, Items.POLISHED_BLACKSTONE);
+        stonecutting(recipeOutput, DECORATIONS, SPIRAL_END_STONE, Items.END_STONE);
+        stonecutting(recipeOutput, DECORATIONS, INTERLACE_BRICKS, Items.BRICKS);
         wallFlowerPot(recipeOutput, A_WALL_FLOWER_POT, Items.AZURE_BLUET, Items.DANDELION, Items.POPPY);
         wallFlowerPot(recipeOutput, B_WALL_FLOWER_POT, Items.LILY_OF_THE_VALLEY, Items.CORNFLOWER, Items.OXEYE_DAISY);
         wallFlowerPot(recipeOutput, C_WALL_FLOWER_POT, Items.RED_TULIP, Items.PINK_TULIP, Items.ORANGE_TULIP);

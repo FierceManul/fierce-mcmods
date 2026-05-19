@@ -122,7 +122,11 @@ public class FierceLive {
         output.accept(FLBlocks.IRON_LADDER);
         output.accept(FLBlocks.IRON_SCAFFOLDING);
         output.accept(FLBlocks.SPIRAL_STONE);
-        output.accept(FLBlocks.DEEPSLATE_SPIRAL_STONE);
+        output.accept(FLBlocks.SPIRAL_DEEPSLATE);
+        output.accept(FLBlocks.SPIRAL_TUFF);
+        output.accept(FLBlocks.SPIRAL_BLACKSTONE);
+        output.accept(FLBlocks.SPIRAL_END_STONE);
+        output.accept(FLBlocks.INTERLACE_BRICKS);
         output.accept(FLBlocks.WATERLOGGED_COBBLESTONE);
         output.accept(FLBlocks.VILLAGE_PATTERNED_TILES);
         output.accept(FLBlocks.VILLAGE_MOSAIC_TILES);

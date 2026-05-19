@@ -68,7 +68,7 @@ public class DoubleCutBlock extends WaterloggedBlock {
                         if ((i & 0b1) != 0) shape = Shapes.or(shape, box(0, 0, 0, 8, 16, 8));
                         if ((i & 0b10) != 0) shape = Shapes.or(shape, box(8, 0, 0, 16, 16, 8));
                         if ((i & 0b100) != 0) shape = Shapes.or(shape, box(0, 0, 8, 8, 16, 16));
-                        if ((i & 0b1000) != 0) shape = Shapes.or(shape, box(8, 0, 0, 16, 16, 16));
+                        if ((i & 0b1000) != 0) shape = Shapes.or(shape, box(8, 0, 8, 16, 16, 16));
                     }
                 }
                 case Z -> {

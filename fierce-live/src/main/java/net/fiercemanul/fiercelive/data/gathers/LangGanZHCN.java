@@ -206,7 +206,11 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.ROTTEN_FLESH_BLOCK, "腐肉块");
         ROWS.put(FLBlocks.WATERLOGGED_COBBLESTONE, "潮湿圆石");
         ROWS.put(FLBlocks.SPIRAL_STONE, "旋纹石砖");
-        ROWS.put(FLBlocks.DEEPSLATE_SPIRAL_STONE, "深板岩旋纹石砖");
+        ROWS.put(FLBlocks.SPIRAL_DEEPSLATE, "旋纹深板岩砖");
+        ROWS.put(FLBlocks.SPIRAL_TUFF, "旋纹凝灰岩砖");
+        ROWS.put(FLBlocks.SPIRAL_BLACKSTONE, "旋纹黑石砖");
+        ROWS.put(FLBlocks.SPIRAL_END_STONE, "旋纹末地石砖");
+        ROWS.put(FLBlocks.INTERLACE_BRICKS, "交错红砖块");
         ROWS.put(FLBlocks.VILLAGE_PATTERNED_TILES, "村香花纹砖");
         ROWS.put(FLBlocks.VILLAGE_MOSAIC_TILES, "村香马赛克砖");
         ROWS.put(FLBlocks.BIG_FLOWER_POT, "大花盆");
@@ -267,6 +271,7 @@ public class LangGanZHCN extends LanguageProvider {
         map.put("purpur", "紫珀");
         map.put("village_patterned_tile", "村香花纹");
         map.put("village_mosaic_tile", "村香马赛克");
+        map.put("interlace_", "交错");
         map.put("reinforced", "强化");
         map.put("wool", "羊毛");
         map.put("texture", "纹理块·");

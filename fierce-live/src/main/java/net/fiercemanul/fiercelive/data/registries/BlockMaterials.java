@@ -137,6 +137,7 @@ public final class BlockMaterials {
     public static final BlockMaterial OBSIDIAN = mc(Blocks.OBSIDIAN, MapColorHolders.COLOR_BLACK, OBSIDIAN_TAGS);
     public static final BlockMaterial CRYING_OBSIDIAN = mc(Blocks.CRYING_OBSIDIAN, MapColorHolders.COLOR_BLACK, OBSIDIAN_TAGS);
     public static final BlockMaterial BRICKS = mc(Blocks.BRICKS, MapColorHolders.COLOR_RED, BRICK_TAGS);
+    public static final BlockMaterial INTERLACE_BRICKS = reg(FLBlocks.INTERLACE_BRICKS, MapColorHolders.COLOR_RED, BRICK_TAGS);
     public static final HashSet<BlockMaterialTag> SANDSTONE_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CHISELED_SANDSTONE_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CUT_SANDSTONE_TAGS = new HashSet<>();
