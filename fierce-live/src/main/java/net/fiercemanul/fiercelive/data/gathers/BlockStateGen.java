@@ -85,7 +85,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(PORTABLE_WORKSTATION, gen -> gen.horizontalDirectionBlock(PORTABLE_WORKSTATION, false));
         ROWS.put(LAPTOP_TERMINAL, gen -> gen.horizontalDirectionBlock(LAPTOP_TERMINAL, false));
         ROWS.put(BOOK_AND_LAMP, gen -> gen.horizontalDirectionBlock(BOOK_AND_LAMP, false));
-        ROWS.put(NEO_FORGE, gen -> gen.horizontalDirectionBlock(NEO_FORGE, false));
+        ROWS.put(NEO_FORGE, gen -> horizontalDirectionBlock(NEO_FORGE, false));
         ROWS.put(FIREPLACE_HEART, gen -> {});
         ROWS.put(FIREWOOD, gen -> gen.horizontalAxisBlock(FIREWOOD, false));
         ROWS.put(SOUL_CRYSTAL_ORNAMENT, BlockStateGen::soulCrystalOrnament);
@@ -93,6 +93,8 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(ITEM_FRAME_SHELL_BIG, gen -> {});
         ROWS.put(LIGHT_TUBE, gen -> lightTube());
         ROWS.put(LIGHT_PLATE, gen -> lightPlate());
+        ROWS.put(GLOW_PEARL, gen -> simpleWithModel(GLOW_PEARL));
+        ROWS.put(GLOW_PEARL_ARROW, gen -> directionBlock(GLOW_PEARL_ARROW, false));
         ROWS.put(HEAVY_CHAINS, gen -> heavyChains());
         ROWS.put(HALF_GRASS_BLOCK, gen -> halfBlock());
         ROWS.put(HALF_DIRT, gen -> {});

@@ -4,32 +4,25 @@ import net.fiercemanul.fiercesource.FierceSource;
 import net.fiercemanul.fiercesource.client.gui.screens.FierceMediaScreen;
 import net.fiercemanul.fiercesource.client.level.menu.ClientFierceMediaMenu;
 import net.fiercemanul.fiercesource.client.particle.SoulCrystalParticleProvider;
-import net.fiercemanul.fiercesource.data.FSBlocks;
-import net.fiercemanul.fiercesource.data.FSMenuTypes;
-import net.fiercemanul.fiercesource.data.FSParticleTypes;
-import net.fiercemanul.fiercesource.data.UIStyleLoader;
-import net.minecraft.client.Minecraft;
+import net.fiercemanul.fiercesource.client.renderer.entity.ThrownBlockRenderer;
+import net.fiercemanul.fiercesource.data.*;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = FierceSource.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientRegisterEvents {
 
 
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        FierceSource.LOGGER.info("HELLO FROM CLIENT SETUP");
-        FierceSource.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-    }
+    //@SubscribeEvent
+    //public static void onClientSetup(FMLClientSetupEvent event) {
+    //    FierceSource.LOGGER.info("HELLO FROM CLIENT SETUP");
+    //    FierceSource.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    //}
 
     @SubscribeEvent
     public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
@@ -61,6 +54,11 @@ public final class ClientRegisterEvents {
     @SubscribeEvent
     public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
         event.registerReloadListener(new UIStyleLoader());
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenderer(EntityRenderersEvent.RegisterRenderers register) {
+        register.registerEntityRenderer(FSEntities.THROWN_BLOCK.get(), ThrownBlockRenderer::new);
     }
 
 }

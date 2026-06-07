@@ -4,12 +4,15 @@ import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.fiercemanul.fiercelive.world.item.FakeBlockEntityItem;
 import net.fiercemanul.fiercelive.world.level.block.*;
 import net.fiercemanul.fiercesource.util.FSUtils;
+import net.fiercemanul.fiercesource.world.item.ThrowableBlockItem;
 import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
 import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
 import net.fiercemanul.fiercesource.world.level.block.HorizonAxisBlock;
 import net.fiercemanul.fiercesource.world.level.block.HorizonFacingBlock;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ScaffoldingBlockItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -17,8 +20,11 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import static net.fiercemanul.fiercelive.data.registries.FLRegister.BLOCKS;
 
 public final class FLBlocks {
 
@@ -52,6 +58,10 @@ public final class FLBlocks {
             "light_tube", LightTubeBlock::new, BlockBehaviour.Properties.of().strength(0.3F).lightLevel(value -> 15).noCollission());
     public static final DeferredBlock<Block> LIGHT_PLATE = regBlock(
             "light_plate", LightPlateBlock::new, BlockBehaviour.Properties.of().strength(0.3F).lightLevel(value -> 15).noCollission());
+    public static final DeferredBlock<Block> GLOW_PEARL = regBlock(
+            "glow_pearl", GlowPearlBlock::new, BlockBehaviour.Properties.of().instabreak().lightLevel(value -> 15).mapColor(MapColor.SAND), ThrowableBlockItem::new);
+    public static final DeferredBlock<Block> GLOW_PEARL_ARROW = BLOCKS.registerBlock(
+            "glow_pearl_arrow", GlowPearlArrowBlock::new, BlockBehaviour.Properties.of().instabreak().lightLevel(value -> 15).mapColor(MapColor.SAND));
     public static final DeferredBlock<Block> GREEN_FUN_ROOF = regBlock(
             "green_fun_roof", GreenFunRoofBlock::new, BlockBehaviour.Properties.of().strength(2.0F).ignitedByLava().mapColor(MapColor.PODZOL).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> HALF_GRASS_BLOCK = regBlock(
@@ -65,7 +75,7 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> HALF_DIRT_PATH = regBlock(
             "half_dirt_path", HalfPathBlock::new, BlockBehaviour.Properties.of().strength(0.65F).mapColor(MapColor.DIRT).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> FIREWOOD = regBlock(
-            "firewood", Firewood::new, BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.WOOD).ignitedByLava().mapColor(MapColor.PODZOL));
+            "firewood", FirewoodBlock::new, BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.WOOD).ignitedByLava().mapColor(MapColor.PODZOL));
     public static final DeferredBlock<Block> FIREPLACE_HEART = regBlock(
             "fireplace_heart", FireplaceHeartBlock::new, BlockBehaviour.Properties.of().strength(5.0F, 6.0F).requiresCorrectToolForDrops().lightLevel(BlockUtils.litBlockEmission(15)).noOcclusion().sound(SoundType.METAL));
     public static final DeferredBlock<Block> ROCK_PATH = regBlock(
@@ -82,10 +92,10 @@ public final class FLBlocks {
             "rotten_flesh_block", RottenFleshBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.COLOR_BROWN).sound(SoundType.WOOL));
     public static final DeferredBlock<Block> WATERLOGGED_COBBLESTONE = regBlock(
             "waterlogged_cobblestone", WaterloggedCobblestone::new, BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE));
-    public static final DeferredBlock<Block> FOX_CARROTS = FLRegister.BLOCKS.registerBlock(
+    public static final DeferredBlock<Block> FOX_CARROTS = BLOCKS.registerBlock(
             "fox_carrots", FoxCarrotBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().pushReaction(PushReaction.DESTROY).randomTicks().sound(SoundType.CROP).noCollission().noOcclusion());
     public static final DeferredBlock<Block> FOX_CARROT_SHEAF = regBlock(
-            "fox_carrot_sheaf", FoxCarrotSheaf::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.SNOW).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY));
+            "fox_carrot_sheaf", FoxCarrotSheafBlock::new, BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.SNOW).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY));
     public static final DeferredBlock<Block> FOX_CARROT_BASKET = regSimpleBlock(
             "fox_carrot_basket", BlockBehaviour.Properties.of().strength(0.5F).mapColor(MapColor.SNOW).sound(SoundType.MOSS));
     public static final DeferredBlock<Block> A_WALL_FLOWER_POT = regBlock(
@@ -112,8 +122,8 @@ public final class FLBlocks {
             "iron_corridor_stairs", IronCorridorStairBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).mapColor(MapColor.METAL).isValidSpawn(Blocks::never));
     public static final DeferredBlock<IronLadderBlock> IRON_LADDER = reg(
             "iron_ladder", () -> new IronLadderBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS), IRON_FRAME.get()));
-    public static final DeferredBlock<Block> IRON_SCAFFOLDING = FLRegister.BLOCKS.registerBlock(
-            "iron_scaffolding", IronScaffoldingBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.METAL).isValidSpawn(Blocks::never).pushReaction(PushReaction.DESTROY).isRedstoneConductor(FSUtils::getFalse));
+    public static final DeferredBlock<Block> IRON_SCAFFOLDING = regBlock(
+            "iron_scaffolding", IronScaffoldingBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.METAL).isValidSpawn(Blocks::never).pushReaction(PushReaction.DESTROY).isRedstoneConductor(FSUtils::getFalse), ScaffoldingBlockItem::new);
     public static final DeferredBlock<Block> SMOOTH_OAK_PLANKS = regSimpleBlock(
             "smooth_oak_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_SPRUCE_PLANKS = regSimpleBlock(
@@ -287,25 +297,35 @@ public final class FLBlocks {
             "infinite_tnt", InfiniteTntBlock::new, BlockBehaviour.Properties.of().instabreak().sound(SoundType.GRASS).mapColor(MapColor.FIRE).isRedstoneConductor(FSUtils::getFalse));
 
     private static DeferredBlock<Block> regSimpleBlock(String name, BlockBehaviour.Properties props) {
-        DeferredBlock<Block> deferredBlock = FLRegister.BLOCKS.registerSimpleBlock(name, props);
+        DeferredBlock<Block> deferredBlock = BLOCKS.registerSimpleBlock(name, props);
         FLRegister.ITEMS.registerSimpleBlockItem(deferredBlock);
         return deferredBlock;
     }
 
     private static <B extends Block> DeferredBlock<B> regBlock(String name, Function<BlockBehaviour.Properties, ? extends B> func, BlockBehaviour.Properties props) {
-        DeferredBlock<B> deferredBlock = FLRegister.BLOCKS.registerBlock(name, func, props);
+        DeferredBlock<B> deferredBlock = BLOCKS.registerBlock(name, func, props);
         FLRegister.ITEMS.registerSimpleBlockItem(deferredBlock);
         return deferredBlock;
     }
 
+    private static <B extends Block> DeferredBlock<B> regBlock(
+            String name,
+            Function<BlockBehaviour.Properties, ? extends B> func, BlockBehaviour.Properties props,
+            BiFunction<Block, Item.Properties, BlockItem> itemFunc
+    ) {
+        DeferredBlock<B> deferredBlock = BLOCKS.registerBlock(name, func, props);
+        FLRegister.ITEMS.register(name, () -> itemFunc.apply(deferredBlock.get(), new Item.Properties()));
+        return deferredBlock;
+    }
+
     public static  <B extends Block> DeferredBlock<B> reg(String name, Supplier<? extends B> sup) {
-        DeferredBlock<B> deferredBlock = FLRegister.BLOCKS.register(name, sup);
+        DeferredBlock<B> deferredBlock = BLOCKS.register(name, sup);
         FLRegister.ITEMS.registerSimpleBlockItem(deferredBlock);
         return deferredBlock;
     }
 
     private static <B extends Block> DeferredBlock<B> regFakeBe(String name, Function<BlockBehaviour.Properties, ? extends B> func, BlockBehaviour.Properties props) {
-        DeferredBlock<B> deferredBlock = FLRegister.BLOCKS.registerBlock(name, func, props);
+        DeferredBlock<B> deferredBlock = BLOCKS.registerBlock(name, func, props);
         FLRegister.ITEMS.register(name, () -> new FakeBlockEntityItem(deferredBlock.get(), new Item.Properties()));
         return deferredBlock;
     }

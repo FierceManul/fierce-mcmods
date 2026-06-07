@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class Pillar12PXBlock extends ThinPillar {
+public class Pillar12PXBlock extends ThinPillarBlock {
 
 
     public static final MapCodec<Pillar12PXBlock> CODEC = simpleCodec(Pillar12PXBlock::new);

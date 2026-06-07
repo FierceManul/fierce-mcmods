@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercelive.world.entity;
 
 import com.google.common.collect.ImmutableMap;
-import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.FLEntities;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -54,7 +54,7 @@ public class Seat extends VehicleEntity {
     }
 
     public Seat(Level pLevel, double pX, double pY, double pZ) {
-        super(FierceLive.SEAT.get(), pLevel);
+        super(FLEntities.SEAT.get(), pLevel);
         this.setPos(pX, pY, pZ);
         this.xo = pX;
         this.yo = pY;
@@ -87,9 +87,9 @@ public class Seat extends VehicleEntity {
     }
 
     @Override
-    public InteractionResult interact(Player pPlayer, InteractionHand pHand) {
-        if (pPlayer.isSecondaryUseActive()) return InteractionResult.PASS;
-        else if (!this.level().isClientSide) return pPlayer.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
+        else if (!this.level().isClientSide) return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
         else return InteractionResult.SUCCESS;
     }
 

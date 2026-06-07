@@ -57,6 +57,8 @@ public class RecipeGen extends FSRecipeProvider {
         reinforcedLamp(recipeOutput, REINFORCED_SEA_LANTERN, Items.SEA_LANTERN);
         lightTube(recipeOutput);
         lightPlate(recipeOutput);
+        stonecutting(recipeOutput, DECORATIONS, GLOW_PEARL, Items.GLOWSTONE, 4);
+        glowPearlArrow(recipeOutput);
         greenFunRoof(recipeOutput);
         fireplaceHeart(recipeOutput);
         waterloggedCobblestone(recipeOutput);
@@ -339,6 +341,19 @@ public class RecipeGen extends FSRecipeProvider {
                 .define('X', Items.IRON_INGOT)
                 .pattern("X#X")
                 .unlockedBy(getHasName(smooth_glowstone), has(smooth_glowstone))
+                .save(recipeOutput);
+    }
+
+    private void glowPearlArrow(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder
+                .shaped(DECORATIONS, FLItems.GLOW_PEARL_ARROW)
+                .define('#', GLOW_PEARL)
+                .define('X', Items.STICK)
+                .define('Y', Items.FEATHER)
+                .pattern("#")
+                .pattern("X")
+                .pattern("Y")
+                .unlockedBy(getHasName(GLOW_PEARL), has(GLOW_PEARL))
                 .save(recipeOutput);
     }
 

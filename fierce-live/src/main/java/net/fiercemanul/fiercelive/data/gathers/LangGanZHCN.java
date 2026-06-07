@@ -70,6 +70,7 @@ public class LangGanZHCN extends LanguageProvider {
 
         add(FLItems.FOX_CARROT.get(), "狐萝卜");
         add(FLItems.FOX_CARROT_SEED.get(), "狐萝卜种子");
+        add(FLItems.GLOW_PEARL_ARROW.get(), "明珠箭");
         add(FLItems.CROWBAR.get(), "撬棒");
         add(FLItems.NETHERITE_CROWBAR.get(), "下界合金撬棒");
         add(FLItems.PUFFERFISH_ROD.get(), "河豚棒");
@@ -185,6 +186,8 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.ITEM_FRAME_SHELL_BIG, "物品展示框护罩");
         ROWS.put(FLBlocks.LIGHT_TUBE, "光管");
         ROWS.put(FLBlocks.LIGHT_PLATE, "光板");
+        ROWS.put(FLBlocks.GLOW_PEARL, "明珠");
+        ROWS.put(FLBlocks.GLOW_PEARL_ARROW, "明珠箭");
         ROWS.put(FLBlocks.FIREWOOD, "柴堆");
         ROWS.put(FLBlocks.FIREPLACE_HEART, "壁炉火盆");
         ROWS.put(FLBlocks.ROCK_PATH, "石径");

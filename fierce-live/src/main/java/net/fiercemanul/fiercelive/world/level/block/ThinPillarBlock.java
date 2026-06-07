@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 
-public abstract class ThinPillar extends RotatedPillarWaterloggedBlock {
+public abstract class ThinPillarBlock extends RotatedPillarWaterloggedBlock {
 
 
-    public ThinPillar(Properties properties) {
+    public ThinPillarBlock(Properties properties) {
         super(properties);
     }
 

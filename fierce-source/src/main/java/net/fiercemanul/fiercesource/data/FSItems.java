@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercesource.data;
 
+import net.fiercemanul.fiercesource.world.item.TestItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -9,7 +10,7 @@ public final class FSItems {
 
 
     public static final DeferredItem<Item>
-            TEST_ITEM = ITEMS.registerSimpleItem("test_item");
+            TEST_ITEM = ITEMS.registerItem("test_item", TestItem::new);
     public static final DeferredItem<Item>
             MANA_ICON = ITEMS.registerSimpleItem("mana_icon");
     public static final DeferredItem<Item>

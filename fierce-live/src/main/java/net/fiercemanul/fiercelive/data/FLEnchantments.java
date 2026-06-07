@@ -8,6 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public interface FLEnchantments {
 
+
     ResourceKey<Enchantment> POISON_ASPECT = ResourceKey.create(Registries.ENCHANTMENT, FSUtils.rl(FierceLive.MODID, "poison_aspect"));
 
 }

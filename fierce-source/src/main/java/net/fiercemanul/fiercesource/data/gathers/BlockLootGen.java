@@ -21,7 +21,7 @@ public class BlockLootGen extends BlockLootSubProvider {
     protected void generate() {}
 
     @Override
-    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
         dropSelf(FSBlocks.LARGE_SOUL_CRYSTAL.getBlock());
         dropSelf(FSBlocks.MEDIUM_SOUL_CRYSTAL.getBlock());
         dropSelf(FSBlocks.SMALL_SOUL_CRYSTAL.getBlock());
@@ -43,7 +43,7 @@ public class BlockLootGen extends BlockLootSubProvider {
         dropSelf(FSBlocks.SMOOTH_DEEP_STONE.getBlock());
 
         this.map.forEach((key, builder) -> {
-            if (builder != null) pGenerator.accept(key, builder);
+            if (builder != null) generator.accept(key, builder);
         });
         this.map.clear();
     }

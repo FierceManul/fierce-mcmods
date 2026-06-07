@@ -11,6 +11,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,51 +24,50 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.neoforged.neoforge.registries.RegistryBuilder;
+import net.neoforged.neoforge.registries.*;
 
 import java.util.function.Function;
 
-public class FCRegistries {
+public interface FCRegistries {
 
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FierceSource.FC_MODID);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(FierceSource.FC_MODID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FierceSource.FC_MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FierceSource.FC_MODID);
-    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, FierceSource.FC_MODID);
-    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Registries.PARTICLE_TYPE, FierceSource.FC_MODID);
+    DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FierceSource.FC_MODID);
+    DeferredRegister.Items ITEMS = DeferredRegister.createItems(FierceSource.FC_MODID);
+    DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, FierceSource.FC_MODID);
+    DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FierceSource.FC_MODID);
+    DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FierceSource.FC_MODID);
+    DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, FierceSource.FC_MODID);
+    DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Registries.PARTICLE_TYPE, FierceSource.FC_MODID);
 
-    public static final ResourceKey<Registry<AppDataType<?>>> APP_DATA_TYPE_KEYS = ResourceKey.createRegistryKey(FSUtils.rl("app_data_type"));
-    public static final Registry<AppDataType<?>> APP_DATA_TYPE_REGISTRY = new RegistryBuilder<>(APP_DATA_TYPE_KEYS).sync(true).create();
-    public static final DeferredRegister<AppDataType<?>> APP_DATA_TYPES = DeferredRegister.create(APP_DATA_TYPE_REGISTRY, FierceSource.FC_MODID);
+    ResourceKey<Registry<AppDataType<?>>> APP_DATA_TYPE_KEYS = ResourceKey.createRegistryKey(FSUtils.rl("app_data_type"));
+    Registry<AppDataType<?>> APP_DATA_TYPE_REGISTRY = new RegistryBuilder<>(APP_DATA_TYPE_KEYS).sync(true).create();
+    DeferredRegister<AppDataType<?>> APP_DATA_TYPES = DeferredRegister.create(APP_DATA_TYPE_REGISTRY, FierceSource.FC_MODID);
 
-    public static final ResourceKey<Registry<MenuAppType<?>>> MENU_APP_TYPE_KEYS = ResourceKey.createRegistryKey(FSUtils.rl("menu_app_type"));
-    public static final Registry<MenuAppType<?>> MENU_APP_TYPE_REGISTRY = new RegistryBuilder<>(MENU_APP_TYPE_KEYS).sync(true).create();
-    public static final DeferredRegister<MenuAppType<?>> MENU_APP_TYPES = DeferredRegister.create(MENU_APP_TYPE_REGISTRY, FierceSource.FC_MODID);
+    ResourceKey<Registry<MenuAppType<?>>> MENU_APP_TYPE_KEYS = ResourceKey.createRegistryKey(FSUtils.rl("menu_app_type"));
+    Registry<MenuAppType<?>> MENU_APP_TYPE_REGISTRY = new RegistryBuilder<>(MENU_APP_TYPE_KEYS).sync(true).create();
+    DeferredRegister<MenuAppType<?>> MENU_APP_TYPES = DeferredRegister.create(MENU_APP_TYPE_REGISTRY, FierceSource.FC_MODID);
 
-    public static ItemBlockGroup<Block, BlockItem> simple (String name, BlockBehaviour.Properties props) {
+    static ItemBlockGroup<Block, BlockItem> simple(String name, BlockBehaviour.Properties props) {
         DeferredBlock<Block> block = BLOCKS.registerSimpleBlock(name, props);
         return new ItemBlockGroup<>(block, ITEMS.registerSimpleBlockItem(block));
     }
 
-    public static <B extends Block> ItemBlockGroup<B, BlockItem> simpleBlockItem (
+    static <B extends Block> ItemBlockGroup<B, BlockItem> simpleBlockItem(
             String name, Function<BlockBehaviour.Properties, B> func, BlockBehaviour.Properties props) {
         DeferredBlock<B> block = BLOCKS.registerBlock(name, func, props);
         return new ItemBlockGroup<>(block, ITEMS.registerSimpleBlockItem(block));
     }
 
-    public static ItemBlockGroup<ItemBlock, BlockItem> dust (
+    static ItemBlockGroup<ItemBlock, BlockItem> dust(
             String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> func) {
         DeferredBlock<ItemBlock> block = BLOCKS.registerBlock(name, p -> new ItemBlock(p, ItemBlock.DUST_SHAPE), func.apply(BlockBehaviour.Properties.of().instabreak().noCollission().pushReaction(PushReaction.DESTROY)));
         return new ItemBlockGroup<>(block, ITEMS.registerSimpleBlockItem(block));
     }
 
-    public static void initRegistries(IEventBus modEventBus, ModContainer modContainer) {
+    static void initRegistries(IEventBus modEventBus, ModContainer modContainer) {
         FSBlocks.init();
         FSItems.init();
+        FSEntities.init();
         FSBlockEntityTypes.init();
         FSCreativeModeTabs.init();
         FSMenuTypes.init();
@@ -73,20 +75,42 @@ public class FCRegistries {
         AppDataTypes.init();
         MenuAppTypes.init();
 
-        FCRegistries.BLOCKS.register(modEventBus);
-        FCRegistries.ITEMS.register(modEventBus);
-        FCRegistries.BLOCK_ENTITY_TYPES.register(modEventBus);
-        FCRegistries.CREATIVE_MODE_TABS.register(modEventBus);
-        FCRegistries.MENU_TYPES.register(modEventBus);
-        FCRegistries.PARTICLE_TYPES.register(modEventBus);
-        FCRegistries.APP_DATA_TYPES.register(modEventBus);
-        FCRegistries.MENU_APP_TYPES.register(modEventBus);
+        BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
+        ENTITY_TYPES.register(modEventBus);
+        BLOCK_ENTITY_TYPES.register(modEventBus);
+        CREATIVE_MODE_TABS.register(modEventBus);
+        MENU_TYPES.register(modEventBus);
+        PARTICLE_TYPES.register(modEventBus);
+        APP_DATA_TYPES.register(modEventBus);
+        MENU_APP_TYPES.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    public static void registerRegistries(NewRegistryEvent event) {
+    static void registerRegistries(NewRegistryEvent event) {
         event.register(APP_DATA_TYPE_REGISTRY);
         event.register(MENU_APP_TYPE_REGISTRY);
     }
+
+    static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> regEntityType(
+            String name,
+            EntityType.EntityFactory<T> factory,
+            MobCategory category,
+            Function<EntityType.Builder<T>, EntityType.Builder<T>> builder
+    ) {
+        return regEntityType(ENTITY_TYPES, name, factory, category, builder);
+    }
+
+    static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> regEntityType(
+            DeferredRegister<EntityType<?>> register,
+            String name,
+            EntityType.EntityFactory<T> factory,
+            MobCategory category,
+            Function<EntityType.Builder<T>, EntityType.Builder<T>> builder
+    ) {
+        return register.register(name, () -> builder.apply(EntityType.Builder.of(factory, category)).build(name));
+    }
+
+
 }

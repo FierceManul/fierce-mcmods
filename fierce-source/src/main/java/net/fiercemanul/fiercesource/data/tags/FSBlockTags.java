@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.Block;
 
 public class FSBlockTags {
 
+
     public static final TagKey<Block> SOUL_CRYSTALS = BlockTags.create(FSUtils.rl("soul_crystals"));
     public static final TagKey<Block> HAO_STONES = BlockTags.create(FSUtils.rl("hao_stones"));
     public static final TagKey<Block> DEEP_STONES = BlockTags.create(FSUtils.rl("deep_stones"));
+    public static final TagKey<Block> CANT_THROW = BlockTags.create(FSUtils.rl("cant_throw"));
+    public static final TagKey<Block> THROWN_BAN = BlockTags.create(FSUtils.rl("thrown_block/ban"));
+
 }

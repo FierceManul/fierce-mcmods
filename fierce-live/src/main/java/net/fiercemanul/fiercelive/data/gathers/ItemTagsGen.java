@@ -146,6 +146,8 @@ public class ItemTagsGen extends ItemTagsProvider {
 
         tag(Tags.Items.MINING_TOOL_TOOLS).add(FLItems.GLASS_KNIFE.get()).addTags(FLItemTags.CROWBARS);
 
+        tag(ItemTags.ARROWS).add(FLItems.GLOW_PEARL_ARROW.get());
+
 
         ROWS.forEach(consumer -> consumer.accept(this));
 

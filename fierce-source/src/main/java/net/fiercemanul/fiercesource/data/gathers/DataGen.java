@@ -25,21 +25,27 @@ public class DataGen {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> pRegistries = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         boolean includeServer = event.includeServer();
         boolean includeClient = event.includeClient();
 
+        generator.addProvider(includeServer, DamageTypeGen.getProvider(packOutput, lookupProvider));
+
+        BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, lookupProvider, existingFileHelper);
+        generator.addProvider(includeServer, blockTagsGen);
+        generator.addProvider(includeServer, new ItemTagsGen(packOutput, lookupProvider, blockTagsGen.contentsGetter(), existingFileHelper));
+        generator.addProvider(includeServer, new EntityTypeTagGen(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(includeServer, new DamageTypeTagGen(packOutput, lookupProvider, existingFileHelper));
+
+        generator.addProvider(includeServer, new RecipeGen(generator.getPackOutput(), lookupProvider));
         generator.addProvider(includeServer, new LootTableProvider(
                 packOutput,
                 Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(BlockLootGen::new, LootContextParamSets.BLOCK)),
-                pRegistries
+                lookupProvider
         ));
-        generator.addProvider(includeServer, new RecipeGen(generator.getPackOutput(), pRegistries));
-        BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, event.getLookupProvider(), existingFileHelper);
-        generator.addProvider(includeServer, blockTagsGen);
-        generator.addProvider(includeServer, new ItemTagsGen(packOutput, event.getLookupProvider(), blockTagsGen.contentsGetter(), existingFileHelper));
+
         generator.addProvider(includeClient, new BlockStateGen(packOutput, existingFileHelper));
-        generator.addProvider(includeClient, new UIStyleGen(packOutput, event.getLookupProvider()));
+        generator.addProvider(includeClient, new UIStyleGen(packOutput, lookupProvider));
     }
 }

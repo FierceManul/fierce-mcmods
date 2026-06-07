@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.data.FLBlocks;
+import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.fiercemanul.fiercelive.world.level.block.IronLadderBlock;
 import net.fiercemanul.fiercelive.world.level.block.state.properties.FLBlockStateProperties;
@@ -55,6 +56,7 @@ public class BlockLootGen extends BlockLootSubProvider {
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
         ROWS.put(FLBlocks.FOX_CARROTS, b -> {});
         ROWS.put(FLBlocks.IRON_LADDER, b -> ironLadder(FLBlocks.IRON_LADDER));
+        ROWS.put(FLBlocks.GLOW_PEARL_ARROW, b -> dropOther(FLBlocks.GLOW_PEARL_ARROW.get(), FLItems.GLOW_PEARL_ARROW));
 
         FLRegister.BLOCKS.getEntries().forEach(deferredBlock -> {
             if (ROWS.containsKey(deferredBlock)) ROWS.get(deferredBlock).accept(this);

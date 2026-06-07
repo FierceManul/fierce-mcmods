@@ -2,6 +2,7 @@ package net.fiercemanul.fiercelive.client;
 
 import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
+import net.fiercemanul.fiercelive.data.FLEntities;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockBulkRegister;
 import net.minecraft.client.renderer.BiomeColors;
@@ -68,7 +69,8 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void registerEntityRenderer(EntityRenderersEvent.RegisterRenderers register) {
         //register.registerBlockEntityRenderer(FierceLive.STAR_BLOCK_ENTITY.get(), StarBlockRender::new);
-        register.registerEntityRenderer(FierceLive.SEAT.get(), NoopRenderer::new);
+        register.registerEntityRenderer(FLEntities.SEAT.get(), NoopRenderer::new);
+        register.registerEntityRenderer(FLEntities.FAKE_GLOW_PEARL_ARROW.get(), NoopRenderer::new);
     }
 
     /*@SubscribeEvent

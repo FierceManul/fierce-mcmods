@@ -19,5 +19,6 @@
     "block.fiercecraft.world_locator": "世界定位器",
     "item.fiercecraft.miji": "秘笈",
     "item.fiercecraft.pos_recorder": "记位器",
+    "entity.fiercecraft.thrown_block": "投掷的%s",
     "itemGroup.fiercecraft": "狂野工艺"
 }

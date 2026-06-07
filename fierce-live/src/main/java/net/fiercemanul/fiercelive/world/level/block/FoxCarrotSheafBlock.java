@@ -10,17 +10,17 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class FoxCarrotSheaf extends WaterloggedBlock {
+public class FoxCarrotSheafBlock extends WaterloggedBlock {
 
 
-    public static final MapCodec<FoxCarrotSheaf> CODEC = simpleCodec(FoxCarrotSheaf::new);
+    public static final MapCodec<FoxCarrotSheafBlock> CODEC = simpleCodec(FoxCarrotSheafBlock::new);
     protected static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
 
-    public FoxCarrotSheaf(Properties pProperties) {
+    public FoxCarrotSheafBlock(Properties pProperties) {
         super(pProperties);
     }
 
-    protected MapCodec<? extends FoxCarrotSheaf> codec() {
+    protected MapCodec<? extends FoxCarrotSheafBlock> codec() {
         return CODEC;
     }
 

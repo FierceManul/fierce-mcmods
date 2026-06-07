@@ -19,5 +19,6 @@
     "block.fiercecraft.world_locator": "World Locator",
     "item.fiercecraft.miji": "Manual",
     "item.fiercecraft.pos_recorder": "Pos Recorder",
+    "entity.fiercecraft.thrown_block": "Thrown %s",
     "itemGroup.fiercecraft": "Fierce Craft"
 }

@@ -17,10 +17,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class Firewood extends HorizonAxisWaterloggedBlock {
+public class FirewoodBlock extends HorizonAxisWaterloggedBlock {
 
 
-    public static final MapCodec<? extends Firewood> CODEC = simpleCodec(Firewood::new);
+    public static final MapCodec<? extends FirewoodBlock> CODEC = simpleCodec(FirewoodBlock::new);
     private static final VoxelShapeHelper SHAPE_HELPER = new VoxelShapeHelper()
             .applyCube(0.0, 0.0, 2.0, 16.0, 4.0, 14.0)
             .applyCube(0.0, 4.0, 4.0, 16.0, 8.0, 12.0)
@@ -28,12 +28,12 @@ public class Firewood extends HorizonAxisWaterloggedBlock {
     public static final VoxelShape SHAPE_X = SHAPE_HELPER.north();
     public static final VoxelShape SHAPE_Z = SHAPE_HELPER.west();
 
-    public Firewood(Properties properties) {
+    public FirewoodBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends Firewood> codec() {
+    protected MapCodec<? extends FirewoodBlock> codec() {
         return CODEC;
     }
 
