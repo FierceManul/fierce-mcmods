@@ -30,7 +30,6 @@ public class FierceSource {
     public static final String FC_MODID = "fiercecraft";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-
     public FierceSource(IEventBus modEventBus, ModContainer modContainer) {
 
         FCRegistries.initRegistries(modEventBus, modContainer);

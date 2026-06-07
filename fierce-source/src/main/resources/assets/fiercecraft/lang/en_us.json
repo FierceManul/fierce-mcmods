@@ -20,5 +20,10 @@
     "item.fiercecraft.miji": "Manual",
     "item.fiercecraft.pos_recorder": "Pos Recorder",
     "entity.fiercecraft.thrown_block": "Thrown %s",
-    "itemGroup.fiercecraft": "Fierce Craft"
+    "itemGroup.fiercecraft": "Fierce Craft",
+    "config.fiercesource.forceManaConsume": "强制消耗灵能",
+    "config.fiercesource.thrownBlockSaveMode": "投掷方块安全模式",
+    "config.fiercesource.forceVanillaCreativeModeTabFront": "原版创造标签在首",
+
+    "fml.menu.mods.info.description.fiercesource": "A code repository for the Fierce series of mods"
 }

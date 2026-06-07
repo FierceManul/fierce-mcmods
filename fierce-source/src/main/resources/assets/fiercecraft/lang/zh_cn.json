@@ -20,5 +20,10 @@
     "item.fiercecraft.miji": "秘笈",
     "item.fiercecraft.pos_recorder": "记位器",
     "entity.fiercecraft.thrown_block": "投掷的%s",
-    "itemGroup.fiercecraft": "狂野工艺"
+    "itemGroup.fiercecraft": "狂野工艺",
+    "config.fiercesource.forceManaConsume": "强制消耗灵能",
+    "config.fiercesource.thrownBlockSaveMode": "投掷方块安全模式",
+    "config.fiercesource.forceVanillaCreativeModeTabFront": "原版创造标签在首",
+
+    "fml.menu.mods.info.description.fiercesource": "狂野系列模组的代码库"
 }

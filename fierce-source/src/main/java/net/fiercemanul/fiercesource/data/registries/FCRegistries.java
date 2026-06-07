@@ -85,7 +85,7 @@ public interface FCRegistries {
         APP_DATA_TYPES.register(modEventBus);
         MENU_APP_TYPES.register(modEventBus);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
     }
 
     static void registerRegistries(NewRegistryEvent event) {

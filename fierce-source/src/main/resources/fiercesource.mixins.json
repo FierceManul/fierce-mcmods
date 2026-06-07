@@ -1,0 +1,15 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.fiercemanul.fiercesource.mixins",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "CreativeModeTabRegistryMixin"
+    ],
+    "client": [
+    ],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
