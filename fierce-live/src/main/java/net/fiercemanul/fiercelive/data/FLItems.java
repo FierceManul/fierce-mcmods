@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercelive.data;
 
 import net.fiercemanul.fiercelive.world.item.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,9 +36,9 @@ public final class FLItems {
     public static final DeferredItem<GlassKnifeItem> GLASS_KNIFE = ITEMS.registerItem(
             "glass_knife", GlassKnifeItem::new, GlassKnifeItem.DEFAULT_PROPERTIES);
     public static final DeferredItem<Item> RAINBOW_DYE = ITEMS.registerSimpleItem(
-            "rainbow_dye", new Item.Properties());
+            "rainbow_dye");
     public static final DeferredItem<Item> CARAMEL = ITEMS.registerSimpleItem(
-            "caramel", new Item.Properties());
+            "caramel");
     public static final DeferredItem<Item> FROSTED_BREAD = ITEMS.registerSimpleItem(
             "frosted_bread", new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.6F).build()));
     public static final DeferredItem<Item> SWEET_BERRY_COOKIE = ITEMS.registerSimpleItem(
@@ -60,6 +61,8 @@ public final class FLItems {
             "wooden_door", ShieldItem::new, new Item.Properties().durability(168));
     public static final DeferredItem<Item> IRON_DOOR = ITEMS.registerItem(
             "iron_door", ShieldItem::new, new Item.Properties().durability(1008));
+    public static final DeferredItem<Item> INFINITE_SNOWBALL = ITEMS.registerItem(
+            "infinite_snowball", InfiniteSnowballItem::new, new Item.Properties().stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
 
 
     public static void init() {}

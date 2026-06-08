@@ -2,34 +2,25 @@ package net.fiercemanul.fiercelive.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-public class InfiniteTntBlock extends Block {
+public class InfiniteTntBlock extends DuperBlock {
 
 
     public static final MapCodec<InfiniteTntBlock> CODEC = simpleCodec(InfiniteTntBlock::new);
-    protected static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public InfiniteTntBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
 
     @Override
@@ -38,27 +29,13 @@ public class InfiniteTntBlock extends Block {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(POWERED);
+    protected void doDupe(BlockState state, Level level, BlockPos pos) {
+        onCaughtFire(state, level, pos, null, null);
     }
 
     @Override
     public void onCaughtFire(BlockState state, Level world, BlockPos pos, @Nullable net.minecraft.core.Direction face, @Nullable LivingEntity igniter) {
         Blocks.TNT.onCaughtFire(state, world, pos, face, igniter);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
-    }
-
-    @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        boolean signal = level.hasNeighborSignal(pos);
-        if (state.getValue(POWERED) != signal) {
-            level.setBlock(pos, state.setValue(POWERED, signal), 3);
-            onCaughtFire(state, level, pos, null, null);
-        }
     }
 
     @Override
@@ -81,12 +58,6 @@ public class InfiniteTntBlock extends Block {
                 level.removeBlock(blockpos, false);
             }
         }
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        onCaughtFire(state, level, pos, null, null);
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

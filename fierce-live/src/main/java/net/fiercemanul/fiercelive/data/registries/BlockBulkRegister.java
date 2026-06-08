@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercelive.data.registries;
 
+import net.fiercemanul.fiercelive.data.BlockMaterials;
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.gathers.*;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;

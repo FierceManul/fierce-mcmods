@@ -30,6 +30,8 @@ public final class FLItemTags {
     public static final TagKey<Item> METEOR_HAMMERS = create("meteor_hammers");
     public static final TagKey<Item> DOOR_SHIELDS = create("door_shields");
     public static final TagKey<Item> CHI_STONE_TECH = create("chi_stone_tech");
+    //TODO:检查原版是否已经有这个tag
+    public static final TagKey<Item> DEAD_CORAL_FANS = createCommunity("dead_coral_fans");
 
     private static TagKey<Item> create(String name) {
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

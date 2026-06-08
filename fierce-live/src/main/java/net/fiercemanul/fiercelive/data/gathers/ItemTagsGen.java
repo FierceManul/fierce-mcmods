@@ -2,7 +2,6 @@ package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.FLBlocks;
-import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
@@ -14,6 +13,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.common.Tags;
@@ -24,6 +24,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+
+import static net.fiercemanul.fiercelive.data.FLItems.*;
 
 
 public class ItemTagsGen extends ItemTagsProvider {
@@ -75,7 +77,7 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FLBlocks.SMOOTH_WARPED_PLANKS.asItem()
         );
         tag(Tags.Items.SEEDS).add(
-                FLItems.FOX_CARROT_SEED.get()
+                FOX_CARROT_SEED.get()
         );
         tag(Tags.Items.CHESTS).addTag(FLItemTags.CABINETS);
 
@@ -84,7 +86,7 @@ public class ItemTagsGen extends ItemTagsProvider {
         tag(Tags.Items.CONCRETES).add(FLBlocks.RAINBOW_CONCRETE.asItem());
         tag(Tags.Items.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.asItem());
         tag(Tags.Items.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.asItem());
-        tag(FLItemTags.RAINBOW_DYES).add(FLItems.RAINBOW_DYE.get());
+        tag(FLItemTags.RAINBOW_DYES).add(RAINBOW_DYE.get());
         tag(Tags.Items.DYES).addTag(FLItemTags.RAINBOW_DYES);
         tag(Tags.Items.DYED).addTag(FLItemTags.RAINBOW_DYED);
         tag(Tags.Items.DYED_RED).add(FLBlocks.RED_LAMP.asItem());
@@ -103,50 +105,60 @@ public class ItemTagsGen extends ItemTagsProvider {
         );
 
         tag(FLItemTags.CROWBARS).add(
-                FLItems.CROWBAR.get(),
-                FLItems.NETHERITE_CROWBAR.get()
+                CROWBAR.get(),
+                NETHERITE_CROWBAR.get()
         );
         tag(FLItemTags.TOOLS_CROWBAR).addTag(FLItemTags.CROWBARS);
-        tag(Tags.Items.TOOLS_WRENCH).add(FLItems.PARROT.get()).addTag(FLItemTags.CROWBARS);
+        tag(Tags.Items.TOOLS_WRENCH).add(PARROT.get()).addTag(FLItemTags.CROWBARS);
 
         tag(FLItemTags.METEOR_HAMMERS).add(
-                FLItems.METEOR_HAMMER.get(),
-                FLItems.NETHERITE_METEOR_HAMMER.get()
+                METEOR_HAMMER.get(),
+                NETHERITE_METEOR_HAMMER.get()
         );
         tag(FLItemTags.WEAPON_METEOR_HAMMER).addTag(FLItemTags.METEOR_HAMMERS);
         tag(ItemTags.FIRE_ASPECT_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
         tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
 
         tag(FLItemTags.DOOR_SHIELDS).add(
-                FLItems.WOODEN_DOOR.get(),
-                FLItems.IRON_DOOR.get()
+                WOODEN_DOOR.get(),
+                IRON_DOOR.get()
         );
         tag(Tags.Items.TOOLS_SHIELD).addTag(FLItemTags.DOOR_SHIELDS);
 
         tag(Tags.Items.MELEE_WEAPON_TOOLS).add(
-                FLItems.PUFFERFISH_ROD.get(),
-                FLItems.SACABAMBASPIS.get()
+                PUFFERFISH_ROD.get(),
+                SACABAMBASPIS.get()
         ).addTag(FLItemTags.WEAPON_METEOR_HAMMER);
 
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(
-                FLItems.PUFFERFISH_ROD.get(),
-                FLItems.SACABAMBASPIS.get()
+                PUFFERFISH_ROD.get(),
+                SACABAMBASPIS.get()
         ).addTags(
                 FLItemTags.WEAPON_METEOR_HAMMER,
                 FLItemTags.DOOR_SHIELDS
         );
 
         tag(ItemTags.VANISHING_ENCHANTABLE).add(
-                FLItems.PUFFERFISH_ROD.get(),
-                FLItems.SACABAMBASPIS.get()
+                PUFFERFISH_ROD.get(),
+                SACABAMBASPIS.get()
         ).addTags(
                 FLItemTags.WEAPON_METEOR_HAMMER,
                 FLItemTags.DOOR_SHIELDS
         );
 
-        tag(Tags.Items.MINING_TOOL_TOOLS).add(FLItems.GLASS_KNIFE.get()).addTags(FLItemTags.CROWBARS);
+        tag(Tags.Items.MINING_TOOL_TOOLS).add(GLASS_KNIFE.get()).addTags(FLItemTags.CROWBARS);
 
-        tag(ItemTags.ARROWS).add(FLItems.GLOW_PEARL_ARROW.get());
+        tag(ItemTags.ARROWS).add(GLOW_PEARL_ARROW.get());
+
+        tag(FLItemTags.DEAD_CORAL_FANS).add(
+                Items.DEAD_BRAIN_CORAL_FAN,
+                Items.DEAD_BUBBLE_CORAL_FAN,
+                Items.DEAD_FIRE_CORAL_FAN,
+                Items.DEAD_HORN_CORAL_FAN,
+                Items.DEAD_TUBE_CORAL_FAN
+        );
+
+        tag(FLItemTags.CHI_STONE_TECH).add(INFINITE_SNOWBALL.get());
 
 
         ROWS.forEach(consumer -> consumer.accept(this));

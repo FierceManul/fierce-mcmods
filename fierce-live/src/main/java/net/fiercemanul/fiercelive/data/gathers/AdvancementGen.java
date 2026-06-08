@@ -1,10 +1,10 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.BlockMaterials;
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockBulkRegister;
-import net.fiercemanul.fiercelive.data.registries.BlockMaterials;
 import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.advancements.Advancement;
@@ -155,6 +155,14 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
                 null, AdvancementType.TASK, true, true, false
         ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(FLItems.PARROT)
         ).save(saver, "fiercelive:parrot");
+
+        Advancement.Builder.advancement().parent(root).display(
+                FLBlocks.INFINITE_TNT,
+                Component.translatable("advancements.fiercelive.chi_stone_tech.title"),
+                Component.translatable("advancements.fiercelive.chi_stone_tech.description"),
+                null, AdvancementType.TASK, true, true, false
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.CHI_STONE_TECH))
+        ).save(saver, "fiercelive:chi_stone_tech");
 
     }
 }

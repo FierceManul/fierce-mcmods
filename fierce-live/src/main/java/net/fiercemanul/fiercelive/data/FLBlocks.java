@@ -294,7 +294,11 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> RAINBOW_LAMP = regSimpleBlock(
             "rainbow_lamp", BlockBehaviour.Properties.of().strength(1.5F).mapColor(MapColor.SNOW).lightLevel(value -> 10).sound(SoundType.AMETHYST));
     public static final DeferredBlock<Block> INFINITE_TNT = regBlock(
-            "infinite_tnt", InfiniteTntBlock::new, BlockBehaviour.Properties.of().instabreak().sound(SoundType.GRASS).mapColor(MapColor.FIRE).isRedstoneConductor(FSUtils::getFalse));
+            "infinite_tnt", InfiniteTntBlock::new, BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.GRASS).mapColor(MapColor.FIRE).isRedstoneConductor(FSUtils::getFalse));
+    public static final DeferredBlock<Block> INFINITE_RAIL_CARPET = regBlock(
+            "infinite_rail_carpet", InfiniteRailCarpetBlock::new, BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.SLIME_BLOCK).mapColor(MapColor.WOOL).isRedstoneConductor(FSUtils::getFalse));
+    public static final DeferredBlock<Block> SNOWBALL_GENERATOR = regBlock(
+            "snowball_generator", InfiniteSnowballBlock::new, BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.SAND).mapColor(MapColor.SNOW).isRedstoneConductor(FSUtils::getFalse));
 
     private static DeferredBlock<Block> regSimpleBlock(String name, BlockBehaviour.Properties props) {
         DeferredBlock<Block> deferredBlock = BLOCKS.registerSimpleBlock(name, props);

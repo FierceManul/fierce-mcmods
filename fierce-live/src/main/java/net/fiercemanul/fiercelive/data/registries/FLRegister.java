@@ -1,10 +1,7 @@
 package net.fiercemanul.fiercelive.data.registries;
 
 import net.fiercemanul.fiercelive.FierceLive;
-import net.fiercemanul.fiercelive.data.FLBlocks;
-import net.fiercemanul.fiercelive.data.FLCreativeModeTab;
-import net.fiercemanul.fiercelive.data.FLEntities;
-import net.fiercemanul.fiercelive.data.FLItems;
+import net.fiercemanul.fiercelive.data.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
@@ -40,7 +37,7 @@ public interface FLRegister {
     }
 
     static void afterRegister(FMLCommonSetupEvent event) {
-        FLDispenseItemBehavior.init();
+        FLDispenseItemBehaviors.init();
     }
 
 }

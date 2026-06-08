@@ -19,7 +19,7 @@ public final class FLCreativeModeTab {
             "fiercelive_decoration",
             () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.decoration"))
                                  .withTabsBefore(FSCreativeModeTabs.MAIN_TAB.getKey())
-                                 .icon(() -> FLBlocks.SOUL_CRYSTAL_ORNAMENT.asItem().getDefaultInstance())
+                                 .icon(FLBlocks.SOUL_CRYSTAL_ORNAMENT::toStack)
                                  .displayItems(FLCreativeModeTab::applyDecorationBlocks)
                                  .build()
     );
@@ -27,7 +27,7 @@ public final class FLCreativeModeTab {
             "fiercelive_building",
             () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.building"))
                                  .withTabsBefore(DECORATION_TAB.getKey())
-                                 .icon(() -> FLBlocks.SMOOTH_OAK_PLANKS.asItem().getDefaultInstance())
+                                 .icon(FLBlocks.SMOOTH_OAK_PLANKS::toStack)
                                  .displayItems((parameters, output) -> {
                                      for (ItemLike item : BlockBulkRegister.BUILDING_BLOCKS) output.accept(item);
                                  }).build()
@@ -36,7 +36,7 @@ public final class FLCreativeModeTab {
             "fiercelive_colored",
             () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.colored"))
                                  .withTabsBefore(BUILDING_TAB.getKey())
-                                 .icon(() -> FLBlocks.RAINBOW_GLASS.asItem().getDefaultInstance())
+                                 .icon(FLBlocks.RAINBOW_GLASS::toStack)
                                  .displayItems((parameters, output) -> {
                                      for (ItemLike item : BlockBulkRegister.COLORED_BLOCKS) output.accept(item);
                                  }).build()
@@ -194,6 +194,9 @@ public final class FLCreativeModeTab {
         output.accept(FLItems.RAINBOW_DYE);
 
         output.accept(FLBlocks.INFINITE_TNT);
+        output.accept(FLBlocks.INFINITE_RAIL_CARPET);
+        output.accept(FLBlocks.SNOWBALL_GENERATOR);
+        output.accept(FLItems.INFINITE_SNOWBALL);
 
         parameters.holders().lookup(Registries.ENCHANTMENT).flatMap(
                 enchantmentLookup -> enchantmentLookup.get(FLEnchantments.POISON_ASPECT)

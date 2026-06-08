@@ -81,6 +81,7 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItems.PARROT.get(), "鹦鹉");
         add(FLItems.WOODEN_DOOR.get(), "木门");
         add(FLItems.IRON_DOOR.get(), "铁门");
+        add(FLItems.INFINITE_SNOWBALL.get(), "无限雪球");
         add(FLItems.RAINBOW_DYE.get(), "彩虹染料");
         add(FLItems.FROSTED_BREAD.get(), "糖霜面包");
         add(FLItems.CARAMEL.get(), "焦糖");
@@ -136,6 +137,11 @@ public class LangGanZHCN extends LanguageProvider {
         add("item_group.fiercelive.decoration", "绿野栖居-趣物");
         add("item_group.fiercelive.building", "疏野闲章-建筑");
         add("item_group.fiercelive.colored", "疏野闲居-好色");
+        
+        add("tip.fiercelive.snake_vertical", "潜行时垂直摆放");
+        add("tip.fiercelive.snake_horizontal", "潜行时水平摆放");
+        add("tip.fiercelive.no_more_be", "非方块实体");
+        
         add("container.fiercelive.cabinet", "柜子");
 
         add("advancements.fiercelive.root.title", "疏野闲章");
@@ -168,10 +174,8 @@ public class LangGanZHCN extends LanguageProvider {
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
         add("advancements.fiercelive.parrot.title", "是虎钳！");
         add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
-
-        add("fiercelive.tip.snake_vertical", "潜行时垂直摆放");
-        add("fiercelive.tip.snake_horizontal", "潜行时水平摆放");
-        add("fiercelive.tip.no_more_be", "非方块实体");
+        add("advancements.fiercelive.chi_stone_tech.title", "赤石科技");
+        add("advancements.fiercelive.chi_stone_tech.description", "获得赤石科技");
 
         add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
     }
@@ -235,6 +239,8 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.LIT_FAKE_CAMPFIRE, "燃烧的假营火");
         ROWS.put(FLBlocks.LIT_FAKE_SOUL_CAMPFIRE, "燃烧的假灵魂营火");
         ROWS.put(FLBlocks.INFINITE_TNT, "无限TNT");
+        ROWS.put(FLBlocks.INFINITE_RAIL_CARPET, "无限轨毯");
+        ROWS.put(FLBlocks.SNOWBALL_GENERATOR, "雪球生产机");
     }
 
     private Map<String, String> getTranslationsB() {

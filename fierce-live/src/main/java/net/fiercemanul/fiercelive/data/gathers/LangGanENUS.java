@@ -68,11 +68,12 @@ public class LangGanENUS extends LanguageProvider {
         add("item_group.fiercelive.decoration", "Fierce Living - Decoration");
         add("item_group.fiercelive.building", "Fierce Living - Building");
         add("item_group.fiercelive.colored", "Fierce Living - Colored");
-        add("fiercelive.tip.snake_vertical", "Snake place to vertical");
-        add("fiercelive.tip.snake_horizontal", "Snake place to horizontal");
-        add("fiercelive.tip.no_more_be", "Not BlockEntity");
+        
+        add("tip.fiercelive.snake_vertical", "Snake place to vertical");
+        add("tip.fiercelive.snake_horizontal", "Snake place to horizontal");
+        add("tip.fiercelive.no_more_be", "Not BlockEntity");
+        
         add("fiercelive.container.cabinet", "Cabinet");
-        add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
 
         add("advancements.fiercelive.root.title", "Fierce Living");
         add("advancements.fiercelive.root.description", "来点闲情雅致");
@@ -104,6 +105,10 @@ public class LangGanENUS extends LanguageProvider {
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
         add("advancements.fiercelive.parrot.title", "是虎钳！");
         add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
+        add("advancements.fiercelive.chi_stone_tech.title", "赤石科技");
+        add("advancements.fiercelive.chi_stone_tech.description", "获得赤石科技");
+        
+        add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
 
 
     }

@@ -119,7 +119,10 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.CYAN_LAMP.get(),
                 FLBlocks.PURPLE_LAMP.get(),
                 FLBlocks.RAINBOW_LAMP.get(),
-                FLBlocks.ROCK_PATH.get()
+                FLBlocks.ROCK_PATH.get(),
+                FLBlocks.INFINITE_TNT.get(),
+                FLBlocks.INFINITE_RAIL_CARPET.get(),
+                FLBlocks.SNOWBALL_GENERATOR.get()
         ).addTags(
                 FLBlockTags.REINFORCED_SEA_LANTERNS
         );
@@ -301,7 +304,9 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.IRON_CORRIDOR_STAIRS.get()
         );
         tag(FLBlockTags.CHI_STONE_TECH).add(
-                FLBlocks.INFINITE_TNT.get()
+                FLBlocks.INFINITE_TNT.get(),
+                FLBlocks.INFINITE_RAIL_CARPET.get(),
+                FLBlocks.SNOWBALL_GENERATOR.get()
         );
 
         ROWS.forEach(row -> row.accept(this));

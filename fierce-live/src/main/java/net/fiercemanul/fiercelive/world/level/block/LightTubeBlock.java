@@ -114,6 +114,6 @@ public class LightTubeBlock extends FacingWaterloggedBlock {
 
     @Override
     public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("fiercelive.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
+        pTooltip.add(Component.translatable("tip.fiercelive.snake_vertical").withStyle(ChatFormatting.GRAY));
     }
 }

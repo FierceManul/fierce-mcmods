@@ -144,7 +144,7 @@ public class RecipeGen extends FSRecipeProvider {
         toolsAndCombat(recipeOutput);
         food(recipeOutput);
 
-        infiniteTnt(recipeOutput);
+        duper(recipeOutput);
 
 
         ROWS.forEach(consumer -> consumer.accept(this, recipeOutput));
@@ -433,15 +433,15 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
                 .save(recipeOutput);
         SimpleCookingRecipeBuilder
-                .smelting(Ingredient.of(ROTTEN_FLESH_BLOCK), RecipeCategory.MISC, Items.LEATHER, 0.3F, 400)
+                .smelting(Ingredient.of(ROTTEN_FLESH_BLOCK), MISC, Items.LEATHER, 0.3F, 400)
                 .unlockedBy(getHasName(ROTTEN_FLESH_BLOCK), has(ROTTEN_FLESH_BLOCK))
                 .save(recipeOutput, getItemName(Items.LEATHER) + "_from_smelting_" + getItemName(ROTTEN_FLESH_BLOCK));
         SimpleCookingRecipeBuilder
-                .smoking(Ingredient.of(ROTTEN_FLESH_BLOCK), RecipeCategory.MISC, Items.LEATHER, 0.3F, 200)
+                .smoking(Ingredient.of(ROTTEN_FLESH_BLOCK), MISC, Items.LEATHER, 0.3F, 200)
                 .unlockedBy(getHasName(ROTTEN_FLESH_BLOCK), has(ROTTEN_FLESH_BLOCK))
                 .save(recipeOutput, getItemName(Items.LEATHER) + "_from_smoking_" + getItemName(ROTTEN_FLESH_BLOCK));
         SimpleCookingRecipeBuilder
-                .campfireCooking(Ingredient.of(ROTTEN_FLESH_BLOCK), RecipeCategory.MISC, Items.LEATHER, 0.3F, 1200)
+                .campfireCooking(Ingredient.of(ROTTEN_FLESH_BLOCK), MISC, Items.LEATHER, 0.3F, 1200)
                 .unlockedBy(getHasName(ROTTEN_FLESH_BLOCK), has(ROTTEN_FLESH_BLOCK))
                 .save(recipeOutput, getItemName(Items.LEATHER) + "_from_camping_" + getItemName(ROTTEN_FLESH_BLOCK));
     }
@@ -604,7 +604,7 @@ public class RecipeGen extends FSRecipeProvider {
 
     private static void rainbowDye(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder
-                .shaped(RecipeCategory.MISC, FLItems.RAINBOW_DYE, 3)
+                .shaped(MISC, FLItems.RAINBOW_DYE, 3)
                 .define('#', Items.PRISMARINE_CRYSTALS)
                 .define('r', Items.RED_DYE)
                 .define('g', Items.GREEN_DYE)
@@ -728,7 +728,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.CROWBAR.get(), TOOLS, FLItems.NETHERITE_CROWBAR.get());
-        shaped(RecipeCategory.COMBAT, FLItems.PUFFERFISH_ROD)
+        shaped(COMBAT, FLItems.PUFFERFISH_ROD)
                 .define('X', Items.PUFFERFISH)
                 .define('I', Items.STICK)
                 .pattern("X")
@@ -736,7 +736,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("I")
                 .unlockedBy(getHasName(Items.PUFFERFISH), has(Items.PUFFERFISH))
                 .save(recipeOutput);
-        shaped(RecipeCategory.COMBAT, FLItems.METEOR_HAMMER)
+        shaped(COMBAT, FLItems.METEOR_HAMMER)
                 .define('I', Items.IRON_INGOT)
                 .define('X', FLItems.PUFFERFISH_ROD)
                 .pattern(" I ")
@@ -744,7 +744,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .unlockedBy(getHasName(FLItems.PUFFERFISH_ROD), has(FLItems.PUFFERFISH_ROD))
                 .save(recipeOutput);
         netheriteSmithing(recipeOutput, FLItems.METEOR_HAMMER.get(), TOOLS, FLItems.NETHERITE_METEOR_HAMMER.get());
-        shaped(RecipeCategory.COMBAT, FLItems.SACABAMBASPIS)
+        shaped(COMBAT, FLItems.SACABAMBASPIS)
                 .define('I', Items.IRON_INGOT)
                 .define('X', ItemTags.FISHES)
                 .define('A', Tags.Items.DYES_GRAY)
@@ -765,8 +765,8 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("BI")
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
-        oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.WOODEN_DOOR, Items.OAK_DOOR, "");
-        oneToOne(recipeOutput, RecipeCategory.COMBAT, FLItems.IRON_DOOR, Items.IRON_DOOR, "");
+        oneToOne(recipeOutput, COMBAT, FLItems.WOODEN_DOOR, Items.OAK_DOOR, "");
+        oneToOne(recipeOutput, COMBAT, FLItems.IRON_DOOR, Items.IRON_DOOR, "");
         shaped(TOOLS, FLItems.GLASS_KNIFE)
                 .define('X', Items.STICK)
                 .define('I', Items.IRON_INGOT)
@@ -810,8 +810,8 @@ public class RecipeGen extends FSRecipeProvider {
                 .save(recipeOutput, id);
     }
 
-    private static void infiniteTnt(RecipeOutput recipeOutput){
-        shaped(RecipeCategory.REDSTONE, INFINITE_TNT)
+    private static void duper(RecipeOutput recipeOutput) {
+        shaped(REDSTONE, INFINITE_TNT)
                 .define('#', Items.OBSERVER)
                 .define('A', Items.NOTE_BLOCK)
                 .define('B', Items.REDSTONE)
@@ -822,22 +822,50 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("CDC")
                 .unlockedBy(getHasName(Items.TNT), has(Items.TNT))
                 .save(recipeOutput, "infinite_tnt_a");
-        shaped(RecipeCategory.REDSTONE, INFINITE_TNT)
+        shaped(REDSTONE, INFINITE_TNT)
                 .define('#', Items.STICKY_PISTON)
                 .define('A', Items.SLIME_BLOCK)
                 .define('B', Items.DETECTOR_RAIL)
                 .define('C', Items.MINECART)
                 .define('D', Items.TNT)
-                .define('E', Items.DEAD_BRAIN_CORAL_FAN)
+                .define('E', FLItemTags.DEAD_CORAL_FANS)
                 .pattern("CA#")
                 .pattern("BAD")
                 .pattern("AAE")
                 .unlockedBy(getHasName(Items.TNT), has(Items.TNT))
                 .save(recipeOutput, "infinite_tnt_b");
+        shaped(REDSTONE, INFINITE_RAIL_CARPET)
+                .define('#', Items.STICKY_PISTON)
+                .define('A', Items.SLIME_BLOCK)
+                .define('B', Items.OBSERVER)
+                .define('C', Items.DEAD_BRAIN_CORAL_FAN)
+                .pattern(" A#")
+                .pattern(" AB")
+                .pattern("CA ")
+                .unlockedBy(getHasName(Items.STICKY_PISTON), has(Items.STICKY_PISTON))
+                .save(recipeOutput);
+        shaped(REDSTONE, SNOWBALL_GENERATOR)
+                .define('#', Items.PISTON)
+                .define('A', Items.SNOW_BLOCK)
+                .define('B', Items.CARVED_PUMPKIN)
+                .pattern(" B ")
+                .pattern("#A#")
+                .pattern("#A#")
+                .unlockedBy(getHasName(Items.CARVED_PUMPKIN), has(Items.CARVED_PUMPKIN))
+                .save(recipeOutput);
+        shaped(COMBAT, FLItems.INFINITE_SNOWBALL)
+                .define('#', Items.SNOW_BLOCK)
+                .define('A', Items.CARVED_PUMPKIN)
+                .define('B', Items.SNOWBALL)
+                .pattern(" A")
+                .pattern("B#")
+                .pattern(" #")
+                .unlockedBy(getHasName(Items.CARVED_PUMPKIN), has(Items.CARVED_PUMPKIN))
+                .save(recipeOutput);
     }
 
     private static void cookie(RecipeOutput recipeOutput, ItemLike cookie, ItemLike material) {
-        shaped(RecipeCategory.FOOD, cookie, 8)
+        shaped(FOOD, cookie, 8)
                 .define('#', Items.WHEAT)
                 .define('X', material)
                 .pattern("#X#")
@@ -846,14 +874,14 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private static void food(RecipeOutput recipeOutput) {
-        shaped(RecipeCategory.FOOD, FLItems.FROSTED_BREAD)
+        shaped(FOOD, FLItems.FROSTED_BREAD)
                 .define('Y', Items.SUGAR)
                 .define('X', Items.BREAD)
                 .pattern("Y")
                 .pattern("X")
                 .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
                 .save(recipeOutput);
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.SUGAR), RecipeCategory.FOOD, FLItems.CARAMEL, 0.35F, 200)
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.SUGAR), FOOD, FLItems.CARAMEL, 0.35F, 200)
                                   .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
                                   .save(recipeOutput);
         simpleCookingRecipe(recipeOutput, "smoking", RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, 100, Items.SUGAR, FLItems.CARAMEL, 0.35F);

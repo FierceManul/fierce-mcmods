@@ -306,7 +306,7 @@ public class DoubleCutBlock extends WaterloggedBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("fiercelive.tip.snake_vertical").withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tip.fiercelive.snake_vertical").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 

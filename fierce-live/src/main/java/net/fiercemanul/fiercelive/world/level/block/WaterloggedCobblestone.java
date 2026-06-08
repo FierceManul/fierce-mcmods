@@ -28,7 +28,7 @@ public class WaterloggedCobblestone extends SimpleCapabilityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("fiercelive.tip.no_more_be").withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.add(Component.translatable("tip.fiercelive.no_more_be").withStyle(ChatFormatting.DARK_PURPLE));
         super.appendHoverText(stack, context, tooltip, tooltipFlag);
     }
 

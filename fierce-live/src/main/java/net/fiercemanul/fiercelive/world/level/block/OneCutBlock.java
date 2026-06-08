@@ -188,7 +188,7 @@ public class OneCutBlock extends WaterloggedBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("fiercelive.tip.snake_horizontal").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tip.fiercelive.snake_horizontal").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

@@ -180,6 +180,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(TEXTURE_LODESTONE_TOP, gen -> gen.texturedCube(TEXTURE_LODESTONE_TOP, "block/lodestone_top"));
 
         ROWS.put(INFINITE_TNT, gen -> gen.simpleUpDownSide(INFINITE_TNT));
+        ROWS.put(INFINITE_RAIL_CARPET, gen -> gen.simpleUpDownSide(INFINITE_RAIL_CARPET));
 
 
         FLRegister.BLOCKS.getEntries().forEach(deferredBlock -> {
@@ -193,6 +194,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         itemModels().basicItem(FLItems.GLOW_BERRY_COOKIE.get());
         itemModels().basicItem(FLItems.CARAMEL_COOKIE.get());
         itemModels().basicItem(FLItems.CARAMEL.get());
+        itemModels().basicItem(FLItems.INFINITE_SNOWBALL.get());
 
     }
 

@@ -1,7 +1,7 @@
-package net.fiercemanul.fiercelive.data.registries;
+package net.fiercemanul.fiercelive.data;
 
 import net.fiercemanul.fiercelive.FierceLive;
-import net.fiercemanul.fiercelive.data.FLBlocks;
+import net.fiercemanul.fiercelive.data.registries.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
