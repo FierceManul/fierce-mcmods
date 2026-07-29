@@ -7,6 +7,7 @@ import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.world.level.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -38,16 +39,21 @@ public final class BlockBulkRegister {
     private static final int[] TINT_COLOR_LIGHT_LEVELS = new int[DyeColor.values().length];
     private static final Item[] DYES = new Item[DyeColor.values().length];
     public static final Set<DeferredBlock<Block>> CABINETS = new HashSet<>();
+    public static final Set<DeferredBlock<TextButtonBlock>> TEXT_BUTTON = new HashSet<>();
     public static final LinkedList<ItemLike>
             BUILDING_BLOCKS = new LinkedList<>(),
             COLORED_BLOCKS = new LinkedList<>();
     public static final LinkedHashSet<BlockMaterial> MATERIALS = new LinkedHashSet<>();
     public static final HashMap<BlockMaterial, WoodType> WOOD_TYPE_MAP = new HashMap<>();
     public static final HashMap<BlockMaterial, BlockSetType> BLOCK_SET_TYPE_MAP = new HashMap<>();
+    public static final HashMap<BlockMaterial, DyeColor> DYE_COLOR_MAP = new HashMap<>();
     public static final HashMap<DeferredBlock<? extends Block>, Integer> BLOCK_TINT_MAP = new HashMap<>();
     public static final ItemLike[] COLOR_SEA_LANTERN = new ItemLike[DyeColor.values().length];
     public static final ItemLike[] COLOR_REINFORCED_SEA_LANTERN = new ItemLike[DyeColor.values().length];
     public static final Map<BlockMaterial, DeferredBlock<? extends OneCutBlock>> ONE_CUT_BLOCKS = new HashMap<>();
+    public static final List<DeferredBlock<? extends BigButtonBlock>> BIG_BUTTON_BLOCKS_IN_TAB = new ArrayList<>();
+    private static final Map<BlockMaterial, BlockMaterial> ROOF_MAP_A = new HashMap<>();
+    private static final boolean genData = DatagenModLoader.isRunningDataGen();
     public static boolean fired = false;
 
     static {
@@ -114,6 +120,23 @@ public final class BlockBulkRegister {
         }*/
     }
 
+    private static void makeRoofMap() {
+        ROOF_MAP_A.put(BlockMaterials.OAK_LOG, BlockMaterials.SMOOTH_OAK_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.SPRUCE_LOG, BlockMaterials.SMOOTH_SPRUCE_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.BIRCH_LOG, BlockMaterials.SMOOTH_BIRCH_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.JUNGLE_LOG, BlockMaterials.SMOOTH_JUNGLE_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.ACACIA_LOG, BlockMaterials.SMOOTH_ACACIA_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.DARK_OAK_LOG, BlockMaterials.SMOOTH_DARK_OAK_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.MANGROVE_LOG, BlockMaterials.SMOOTH_MANGROVE_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.BAMBOO_BLOCK, BlockMaterials.SMOOTH_BAMBOO_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.CHERRY_LOG, BlockMaterials.SMOOTH_CHERRY_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.CRIMSON_STEM, BlockMaterials.SMOOTH_CRIMSON_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.WARPED_STEM, BlockMaterials.SMOOTH_WARPED_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.BRICKS, BlockMaterials.SMOOTH_BIRCH_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.DEEPSLATE_TILES, BlockMaterials.SMOOTH_SPRUCE_PLANKS);
+        ROOF_MAP_A.put(BlockMaterials.DARK_PRISMARINE, BlockMaterials.SMOOTH_MANGROVE_PLANKS);
+    }
+
     private BlockBulkRegister() {}
 
     public static BlockMaterial registerBlockMaterial(BlockMaterial blockMaterial) {
@@ -139,25 +162,28 @@ public final class BlockBulkRegister {
     }
 
     private static void register() {
-        final boolean genData = DatagenModLoader.isRunningDataGen();
+        makeRoofMap();
         MATERIALS.forEach(material -> {
             List<ItemLike> itemList = material.hasTag(BlockMaterialTag.TEXTURE_COLORED) ? COLORED_BLOCKS : BUILDING_BLOCKS;
-            vanillaBlocks(material, itemList, genData);
-            cutBlocks(material, itemList, genData);
-            pillars(material, itemList, genData);
-            horizonPanels(material, itemList, genData);
-            windHoles(material, itemList, genData);
-            crossHoles(material, itemList, genData);
-            guardrail(material, itemList, genData);
-            gardenChair(material, itemList, genData);
-            windows(material, itemList, genData);
-            table(material, itemList, genData);
-            chair(material, itemList, genData);
-            woolSofa(material, itemList, genData);
-            cabinet(material, itemList, genData);
-            lamps(material, itemList, genData);
+            itemList.add(material);
+            vanillaBlocks(material, itemList);
+            cutBlocks(material, itemList);
+            wool(material, itemList);
+            roof(material, itemList);
+            pillars(material, itemList);
+            horizonPanels(material, itemList);
+            windHoles(material, itemList);
+            crossHoles(material, itemList);
+            guardrail(material, itemList);
+            gardenChair(material, itemList);
+            windows(material, itemList);
+            table(material, itemList);
+            chair(material, itemList);
+            cabinet(material, itemList);
+            lamps(material, itemList);
+            buttons(material, itemList);
         });
-        frames(genData);
+        frames();
     }
 
     public static boolean isSimpleCubeBlock(BlockMaterial material) {
@@ -182,7 +208,7 @@ public final class BlockBulkRegister {
 
     //TODO:麻酱没有很统一的做好方块属性，也没复用，这里复用了，留意麻酱的更新。
 
-    private static void vanillaBlocks(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void vanillaBlocks(BlockMaterial material, List<ItemLike> itemTab) {
         if (!material.hasTag(BlockMaterialTag.STATE_STAND)) return;
         if (material.hasTag(BlockMaterialTag.SMOOTH_PLANKS)) {
             DeferredBlock<StairBlock> stair = BLOCKS.register(
@@ -322,9 +348,22 @@ public final class BlockBulkRegister {
             }
         }
 
+        if (material == BlockMaterials.RAINBOW_WOOL) {
+            DeferredBlock<Block> carpet = BLOCKS.register("rainbow_carpet", () -> new WoolCarpetBlock(DyeColor.WHITE, material.getBlock().properties()));
+            itemTab.add(ITEMS.registerSimpleBlockItem(carpet));
+            if (genData) {
+                basicData(material, carpet);
+                BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.WOOL_CARPETS, carpet));
+                ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.WOOL_CARPETS, carpet));
+                BlockStateGen.ROWS.put(carpet, g -> g.carpet(carpet, FLBlocks.RAINBOW_WOOL));
+                RecipeGen.ROWS.add((g, o) -> g.cut(o, carpet, FLBlocks.RAINBOW_WOOL, 16));
+                LangGanZHCN.ROWS.put(carpet, "彩虹地毯");
+            }
+        }
+
     }
 
-    private static void cutBlocks(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void cutBlocks(BlockMaterial material, List<ItemLike> itemTab) {
         if (!isSimpleCubeBlock(material)) return;
 
         DeferredBlock<OneCutBlock> one_cut_block = BLOCKS.register(material.getPath() + "_one_cut_block", () -> new OneCutBlock(material.getBlock().properties()));
@@ -384,7 +423,58 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void pillars(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void wool(BlockMaterial material, List<ItemLike> itemTab) {
+        if (!material.hasTag(BlockMaterialTag.TOOL_SHEARS)) return;
+        String s = material.getPath().replace("_wool", "");
+        DeferredBlock<Block> woolSofa = BLOCKS.register(s + "_wool_sofa", () -> new WoolSofaBlock(material.getBlock().properties()));
+        DeferredBlock<Block> wool = BLOCKS.register(s + "_plaid_wool", () -> new Block(material.getBlock().properties()));
+        DeferredBlock<Block> carpet = BLOCKS.register(s + "_plaid_carpet", () -> new WoolCarpetBlock(DYE_COLOR_MAP.getOrDefault(material, DyeColor.WHITE), material.getBlock().properties()));
+        DeferredBlock<Block> fishingChair = BLOCKS.register(s + "_fishing_chair", () -> new FishingChairBlock(material.getBlock().properties()));
+        itemTab.add(ITEMS.registerSimpleBlockItem(woolSofa));
+        itemTab.add(ITEMS.registerSimpleBlockItem(wool));
+        itemTab.add(ITEMS.registerSimpleBlockItem(carpet));
+        itemTab.add(ITEMS.registerSimpleBlockItem(fishingChair));
+
+        if (genData) {
+            basicData(material, woolSofa);
+            basicData(material, wool);
+            basicData(material, carpet);
+            basicData(material, fishingChair);
+            BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.WOOL_SOFAS, woolSofa));
+            BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.WOOL_CARPETS, carpet));
+            ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.WOOL_CARPETS, carpet));
+            BlockStateGen.ROWS.put(woolSofa, g -> g.woolSofa(woolSofa, g.blockTexture(material)));
+            BlockStateGen.ROWS.put(carpet, g -> g.carpet(carpet, wool));
+            BlockStateGen.ROWS.put(fishingChair, g -> g.fishingChair(fishingChair, g.blockTexture(material), g.blockTexture(wool)));
+            RecipeGen.ROWS.add((g, o) -> g.woolSofa(o, woolSofa, material));
+            RecipeGen.ROWS.add((g, o) -> g.cutOneToOne(o, wool, material));
+            RecipeGen.ROWS.add((g, o) -> g.cut(o, carpet, wool, 16));
+            RecipeGen.ROWS.add((g, o) -> g.cutD(o, fishingChair, material, 2));
+            LangGanZHCN.ROWS.put(woolSofa, s + "羊毛沙发");
+            LangGanZHCN.ROWS.put(wool, s + "格纹羊毛");
+            LangGanZHCN.ROWS.put(carpet, s + "格纹地毯");
+            LangGanZHCN.ROWS.put(fishingChair, s + "钓鱼凳");
+        }
+    }
+
+    private static void roof(BlockMaterial material, List<ItemLike> itemTab) {
+        if (!ROOF_MAP_A.containsKey(material)) return;
+        BlockMaterial material2 = ROOF_MAP_A.get(material);
+        String string = material.getPath().replace("_log", "").replace("_tile", "");
+
+        DeferredBlock<RoofBlock> roof = BLOCKS.register(string + "_roof", () -> new RoofBlock(material.getProperties().mapColor(material.mapColorHolder().side())));
+        itemTab.add(ITEMS.registerSimpleBlockItem(roof));
+
+        if (genData) {
+            basicData(material, roof);
+            basicData(material2, roof);
+            BlockStateGen.ROWS.put(roof, g -> g.roof(roof, material, material2));
+            RecipeGen.ROWS.add((g, o) -> g.roof(o, roof, material, material2));
+            LangGanZHCN.ROWS.put(roof, string + "屋顶");
+        }
+    }
+
+    private static void pillars(BlockMaterial material, List<ItemLike> itemTab) {
         if (!canMakePillar(material)) return;
 
         DeferredBlock<Block> pillar12 = BLOCKS.register(material.getPath() + "_12px_pillar", () -> new Pillar12PXBlock(material.getBlock().properties()));
@@ -437,18 +527,18 @@ public final class BlockBulkRegister {
             RecipeGen.ROWS.add((g, o) -> g.cut(o, connector8, material, 2));
             RecipeGen.ROWS.add((g, o) -> g.pillar12px(o, pillar12, material));
             RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, connector12, material));
-            LangGanZHCN.ROWS.put(pillar4, material.getPath() + "4号柱");
-            LangGanZHCN.ROWS.put(connector4, material.getPath() + "4号柱接头");
-            LangGanZHCN.ROWS.put(pillar6, material.getPath() + "6号柱");
-            LangGanZHCN.ROWS.put(connector6, material.getPath() + "6号柱接头");
-            LangGanZHCN.ROWS.put(pillar8, material.getPath() + "8号柱");
-            LangGanZHCN.ROWS.put(connector8, material.getPath() + "8号柱接头");
-            LangGanZHCN.ROWS.put(pillar12, material.getPath() + "12号柱");
-            LangGanZHCN.ROWS.put(connector12, material.getPath() + "12号柱接头");
+            LangGanZHCN.ROWS.put(pillar4, material.getPath() + "四号柱");
+            LangGanZHCN.ROWS.put(connector4, material.getPath() + "四号柱接头");
+            LangGanZHCN.ROWS.put(pillar6, material.getPath() + "六号柱");
+            LangGanZHCN.ROWS.put(connector6, material.getPath() + "六号柱接头");
+            LangGanZHCN.ROWS.put(pillar8, material.getPath() + "八号柱");
+            LangGanZHCN.ROWS.put(connector8, material.getPath() + "八号柱接头");
+            LangGanZHCN.ROWS.put(pillar12, material.getPath() + "十二号柱");
+            LangGanZHCN.ROWS.put(connector12, material.getPath() + "十二号柱接头");
         }
     }
 
-    private static void horizonPanels(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void horizonPanels(BlockMaterial material, List<ItemLike> itemTab) {
         if (!material.getPath().contains("glass")) return;
         DeferredBlock<Block> panel = BLOCKS.register(material.getPath() + "_horizon_panel", () -> new HorizonPanelBlock(material.getBlock().properties()));
         itemTab.add(ITEMS.registerSimpleBlockItem(panel));
@@ -461,7 +551,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void crossHoles(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void crossHoles(BlockMaterial material, List<ItemLike> itemTab) {
         if (material.hasAllTags(
                 BlockMaterialTag.TOOL_PICKAXE,
                 BlockMaterialTag.STATE_STAND,
@@ -489,7 +579,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void windHoles(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void windHoles(BlockMaterial material, List<ItemLike> itemTab) {
         if (!isSimpleStrongCubeBlock(material)) return;
 
         DeferredBlock<Block> hole = BLOCKS.register(material.getPath() + "_wind_hole", () -> new WindHoleBlock(material.getBlock().properties()));
@@ -503,7 +593,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void guardrail(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void guardrail(BlockMaterial material, List<ItemLike> itemTab) {
         if (material.hasAllTags(
                 BlockMaterialTag.TOOL_AXE,
                 BlockMaterialTag.STATE_STAND,
@@ -573,7 +663,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void gardenChair(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void gardenChair(BlockMaterial material, List<ItemLike> itemTab) {
         if (isSimpleStrongCubeBlock(material)) {
             String path = material.getPath();
             DeferredBlock<Block> gardenChair = material.hasTag(BlockMaterialTag.TOOL_AXE)
@@ -589,7 +679,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void windows(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void windows(BlockMaterial material, List<ItemLike> itemTab) {
         if (!material.hasAllTags(BlockMaterialTag.TOOL_AXE, BlockMaterialTag.STATE_STAND, BlockMaterialTag.TEXTURE_SMOOTH)) return;
         String path = material.getPath();
         DeferredBlock<Block> window = BLOCKS.register(
@@ -606,7 +696,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void table(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void table(BlockMaterial material, List<ItemLike> itemTab) {
         if (isSimpleStrongCubeBlock(material) || material.hasTag(BlockMaterialTag.TEXTURE_TRANSLUCENT)) {
             String path = material.getPath();
             DeferredBlock<Block> table = BLOCKS.register(path + "_table", () -> new TableBlock(material.getBlock().properties()));
@@ -622,7 +712,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void chair(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void chair(BlockMaterial material, List<ItemLike> itemTab) {
         if (!isSimpleStrongCubeBlock(material)) return;
         String path = material.getPath();
         DeferredBlock<Block> chair = BLOCKS.register(path + "_chair", () -> new SimpleChairBlock(material.getBlock().properties()));
@@ -636,21 +726,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void woolSofa(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
-        if (!material.hasTag(BlockMaterialTag.TOOL_SHEARS)) return;
-        DeferredBlock<Block> woolSofa = BLOCKS.register(material.getPath() + "_wool_sofa", () -> new WoolSofaBlock(material.getBlock().properties()));
-        itemTab.add(ITEMS.registerSimpleBlockItem(woolSofa));
-
-        if (genData) {
-            basicData(material, woolSofa);
-            BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.WOOL_SOFAS, woolSofa));
-            BlockStateGen.ROWS.put(woolSofa, g -> g.woolSofa(woolSofa, g.blockTexture(material)));
-            RecipeGen.ROWS.add((g, o) -> g.woolSofa(o, woolSofa, material));
-            LangGanZHCN.ROWS.put(woolSofa, material.getPath() + "沙发");
-        }
-    }
-
-    private static void cabinet(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void cabinet(BlockMaterial material, List<ItemLike> itemTab) {
         if (!material.hasAllTags(BlockMaterialTag.TOOL_AXE, BlockMaterialTag.STATE_STAND, BlockMaterialTag.TEXTURE_SMOOTH)) return;
         String path = material.getPath();
         DeferredBlock<Block> cabinetA = BLOCKS.register(path + "_cabinet", () -> new CabinetTypeABlock(material.getBlock().properties()));
@@ -691,7 +767,7 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void lamps(BlockMaterial material, List<ItemLike> itemTab, boolean genData) {
+    private static void lamps(BlockMaterial material, List<ItemLike> itemTab) {
         if (!material.hasTag(BlockMaterialTag.LAMP)) return;
 
         String path = material.getPath() + "_glass_lamp";
@@ -771,7 +847,55 @@ public final class BlockBulkRegister {
         }
     }
 
-    private static void frames(boolean genData) {
+    private static void buttons(BlockMaterial material, List<ItemLike> itemTab) {
+        BlockSetType setType;
+        int ticksToStayPressed;
+        if (material.hasTag(BlockMaterialTag.SMOOTH_PLANKS)) {
+            ticksToStayPressed = 30;
+            setType = BLOCK_SET_TYPE_MAP.get(material);
+        }
+        else if (material == BlockMaterials.STONE || material == BlockMaterials.POLISHED_BLACKSTONE) {
+            setType = BlockSetType.STONE;
+            ticksToStayPressed = 20;
+        }
+        else if (material.hasTag(BlockMaterialTag.TOOL_SHEARS)) {
+            setType = BlockSetType.OAK;
+            ticksToStayPressed = 60;
+        }
+        else {
+            setType = null;
+            ticksToStayPressed = 30;
+        }
+
+        if (setType != null) {
+            DeferredBlock<BigButtonBlock> bigButton = BLOCKS.register(
+                    material.getPath() + "_big_button",
+                    () -> new BigButtonBlock(
+                            setType,
+                            ticksToStayPressed,
+                            BlockBehaviour.Properties.of().strength(0.5F).noCollission().pushReaction(PushReaction.DESTROY)
+                    )
+            );
+            itemTab.add(ITEMS.registerSimpleBlockItem(bigButton));
+            if (material == BlockMaterials.SMOOTH_OAK_PLANKS || material == BlockMaterials.STONE) BIG_BUTTON_BLOCKS_IN_TAB.add(bigButton);
+
+            if (genData) {
+                BlockTagsGen.ROWS.add(g -> g.woodenStoneTagOrBasicTags(material, BlockTags.WOODEN_BUTTONS, BlockTags.STONE_BUTTONS, bigButton));
+                if (!material.hasAnyTags(BlockMaterialTag.TOOL_AXE, BlockMaterialTag.TOOL_PICKAXE)) BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.BUTTONS, bigButton));
+                ItemTagsGen.ROWS.add(g -> g.basicTags(material, bigButton));
+                ItemTagsGen.ROWS.add(g -> g.tag(
+                        material.hasTag(BlockMaterialTag.TOOL_AXE) ? ItemTags.WOODEN_BUTTONS
+                                                                   : material.hasTag(BlockMaterialTag.TOOL_PICKAXE) ? ItemTags.STONE_BUTTONS : ItemTags.BUTTONS,
+                        bigButton
+                ));
+                BlockStateGen.ROWS.put(bigButton, g -> g.bigButton(bigButton, material));
+                RecipeGen.ROWS.add((g, o) -> g.cut(o, RecipeCategory.REDSTONE, bigButton, material, 1));
+                LangGanZHCN.ROWS.put(bigButton, material.getPath() + "大按钮");
+            }
+        }
+    }
+
+    private static void frames() {
         for (DyeColor color : DyeColor.values()) {
             DeferredBlock<Block> frame = BLOCKS.registerBlock(
                     color.getName() + "_iron_frame",

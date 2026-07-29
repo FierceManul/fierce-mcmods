@@ -58,7 +58,7 @@ public class IronCorridorSlabBlock extends SlabBlock {
     public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
             if (!level.isClientSide()) {
-                level.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, true), 3);
+                level.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, true), Block.UPDATE_ALL);
                 level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
             }
             return true;

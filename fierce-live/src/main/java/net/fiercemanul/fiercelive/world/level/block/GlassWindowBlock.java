@@ -170,7 +170,7 @@ public class GlassWindowBlock extends HorizonFacingWaterloggedBlock {
             playSound(null, level, pos, open);
             level.gameEvent(null, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         }
-        level.setBlock(pos, state.setValue(OPEN_TYPE, newOpenType), 2);
+        level.setBlock(pos, state.setValue(OPEN_TYPE, newOpenType), Block.UPDATE_CLIENTS);
     }
 
     private static DoorHingeSide getHinge(Direction direction, double x, double z, Direction face) {
@@ -260,7 +260,7 @@ public class GlassWindowBlock extends HorizonFacingWaterloggedBlock {
 
     private void toggle(BlockState state, Level level, BlockPos pos, @Nullable Entity entity) {
         OpenType openType = state.getValue(OPEN_TYPE).toggleByHand();
-        level.setBlock(pos, state.setValue(OPEN_TYPE, openType), 2);
+        level.setBlock(pos, state.setValue(OPEN_TYPE, openType), Block.UPDATE_CLIENTS);
         if (entity != null) {
             Direction direction = state.getValue(FACING);
             DoorHingeSide doorHingeSide = state.getValue(HINGE);
@@ -270,7 +270,7 @@ public class GlassWindowBlock extends HorizonFacingWaterloggedBlock {
             if (state1.getBlock() instanceof GlassWindowBlock
                     && state1.getValue(HINGE) != doorHingeSide
                     && state1.getValue(FACING).equals(state.getValue(FACING)))
-                level.setBlock(pos1, state1.setValue(OPEN_TYPE, openType), 2);
+                level.setBlock(pos1, state1.setValue(OPEN_TYPE, openType), Block.UPDATE_CLIENTS);
         }
         boolean open = openType.isOpen();
         playSound(entity, level, pos, open);

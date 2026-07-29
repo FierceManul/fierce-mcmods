@@ -1,6 +1,8 @@
 package net.fiercemanul.fiercelive.world.level.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -35,16 +37,36 @@ public abstract class DuperBlock extends Block {
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         boolean signal = level.hasNeighborSignal(pos);
-        if (state.getValue(POWERED) != signal) {
-            level.setBlock(pos, state.setValue(POWERED, signal), 3);
-            doDupe(state, level, pos);
-        }
+        if (state.getValue(POWERED) == signal) return;
+        level.setBlock(pos, state.setValue(POWERED, signal), Block.UPDATE_ALL);
+        level.playSound(
+                null,
+                pos,
+                SoundEvents.PISTON_EXTEND,
+                SoundSource.BLOCKS,
+                0.5F,
+                level.random.nextFloat() * 0.25F + 0.6F
+        );
+        doDupe(state, level, pos);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        level.playSound(
+                null,
+                pos,
+                SoundEvents.PISTON_CONTRACT,
+                SoundSource.BLOCKS,
+                0.5F,
+                level.random.nextFloat() * 0.15F + 0.6F
+        );
         doDupe(state, level, pos);
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected boolean isSignalSource(BlockState state) {
+        return true;
     }
 
     protected abstract void doDupe(BlockState state, Level level, BlockPos pos);

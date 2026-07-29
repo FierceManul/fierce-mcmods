@@ -1,7 +1,6 @@
 package net.fiercemanul.fiercesource.data.gathers;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.data.ItemTagsGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

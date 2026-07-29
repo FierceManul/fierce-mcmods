@@ -1,9 +1,9 @@
 {
 	"parent": "minecraft:block/block",
 	"textures": {
-		"particle": "fiercecraft:block/creative_mana_output_a",
-		"all": "fiercecraft:block/creative_mana_output_a",
-		"b": "fiercecraft:block/creative_mana_output_b"
+		"particle": "fiercecraft:block/creative_mana_provider_a",
+		"all": "fiercecraft:block/creative_mana_provider_a",
+		"b": "fiercecraft:block/creative_mana_provider_b"
 	},
 	"elements": [
 		{

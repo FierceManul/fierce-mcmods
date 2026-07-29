@@ -210,7 +210,7 @@ public class OneCutBlock extends WaterloggedBlock {
                 case Z -> state = state.setValue(AXIS, Direction.Axis.X)
                                        .setValue(TYPE, type == SlabType.TOP ? SlabType.BOTTOM : SlabType.TOP);
             }
-            return level.setBlock(pos, state, 11)
+            return level.setBlock(pos, state, Block.UPDATE_ALL_IMMEDIATE)
                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }

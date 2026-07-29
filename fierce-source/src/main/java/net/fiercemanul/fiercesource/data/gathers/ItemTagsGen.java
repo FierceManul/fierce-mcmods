@@ -1,6 +1,7 @@
-package net.fiercemanul.fiercesource.data;
+package net.fiercemanul.fiercesource.data.gathers;
 
 import net.fiercemanul.fiercesource.FierceSource;
+import net.fiercemanul.fiercesource.data.FSItems;
 import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
 import net.fiercemanul.fiercesource.data.tags.FSItemTags;
 import net.minecraft.core.HolderLookup;
@@ -30,6 +31,6 @@ public class ItemTagsGen extends ItemTagsProvider {
         copy(FSBlockTags.SOUL_CRYSTALS, FSItemTags.SOUL_CRYSTALS);
         copy(FSBlockTags.HAO_STONES, FSItemTags.HAO_STONES);
         copy(FSBlockTags.DEEP_STONES, FSItemTags.DEEP_STONES);
-        tag(FSItemTags.SOUL_CRYSTALS).add(FSBlocks.SOUL_CRYSTAL_SHARD.getItem());
+        tag(FSItemTags.SOUL_CRYSTALS).add(FSItems.SOUL_CRYSTAL_SHARD.asItem());
     }
 }

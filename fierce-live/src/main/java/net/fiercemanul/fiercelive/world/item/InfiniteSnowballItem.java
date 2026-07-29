@@ -1,11 +1,14 @@
 package net.fiercemanul.fiercelive.world.item;
 
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SnowballItem;
@@ -33,13 +36,17 @@ public class InfiniteSnowballItem extends SnowballItem {
         );
         if (!level.isClientSide) {
             Snowball snowball = new Snowball(level, player);
-            snowball.setItem(itemstack);
             snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(snowball);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+    }
+
+    @Override
+    public Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
+        return new Snowball(level, pos.x(), pos.y(), pos.z());
     }
 
 }

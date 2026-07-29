@@ -54,7 +54,7 @@ public class FierceSource {
         event.registerBlock(
                 FSCapabilities.BLOCK_MANA_CAP,
                 (level, pos, state, blockEntity, context) -> InfiniteManaContainer.INSTANCE,
-                FSBlocks.CREATIVE_MANA_BLOCK.getBlock()
+                FSBlocks.CREATIVE_MANA_BLOCK.get()
         );
     }
 

@@ -6,6 +6,7 @@ import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.tags.FLItemTags;
 import net.fiercemanul.fiercesource.data.FSBlocks;
+import net.fiercemanul.fiercesource.data.FSItems;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -80,16 +81,17 @@ public class RecipeGen extends FSRecipeProvider {
         corridorSlab(recipeOutput, IRON_CORRIDOR_SLAB, IRON_CORRIDOR);
         stonecutting(recipeOutput, DECORATIONS, IRON_CORRIDOR_STAIRS, IRON_CORRIDOR, 2);
         stonecutting(recipeOutput, DECORATIONS, IRON_LADDER, Items.IRON_BARS);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_STONE, Items.STONE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.DEEPSLATE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.COBBLED_DEEPSLATE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_DEEPSLATE, Items.POLISHED_DEEPSLATE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_TUFF, Items.TUFF);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_TUFF, Items.POLISHED_TUFF);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_BLACKSTONE, Items.BLACKSTONE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_BLACKSTONE, Items.POLISHED_BLACKSTONE);
-        stonecutting(recipeOutput, DECORATIONS, SPIRAL_END_STONE, Items.END_STONE);
-        stonecutting(recipeOutput, DECORATIONS, INTERLACE_BRICKS, Items.BRICKS);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_STONE, Items.STONE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_DEEPSLATE, Items.DEEPSLATE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_DEEPSLATE, Items.COBBLED_DEEPSLATE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_DEEPSLATE, Items.POLISHED_DEEPSLATE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_TUFF, Items.TUFF);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_TUFF, Items.POLISHED_TUFF);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_BLACKSTONE, Items.BLACKSTONE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_BLACKSTONE, Items.POLISHED_BLACKSTONE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, SPIRAL_END_STONE, Items.END_STONE);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, INTERLACE_BRICKS, Items.BRICKS);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, BLACK_IRON_BLOCK, Items.IRON_BLOCK);
         wallFlowerPot(recipeOutput, A_WALL_FLOWER_POT, Items.AZURE_BLUET, Items.DANDELION, Items.POPPY);
         wallFlowerPot(recipeOutput, B_WALL_FLOWER_POT, Items.LILY_OF_THE_VALLEY, Items.CORNFLOWER, Items.OXEYE_DAISY);
         wallFlowerPot(recipeOutput, C_WALL_FLOWER_POT, Items.RED_TULIP, Items.PINK_TULIP, Items.ORANGE_TULIP);
@@ -209,6 +211,18 @@ public class RecipeGen extends FSRecipeProvider {
         stonecutting(recipeOutput, category, result, material, count);
     }
 
+    public void roof(RecipeOutput recipeOutput, ItemLike result, ItemLike material, ItemLike material2) {
+        ShapedRecipeBuilder
+                .shaped(BUILDING_BLOCKS, result, 4)
+                .define('X', material)
+                .define('#', material2)
+                .pattern("X ")
+                .pattern("#X")
+                .pattern(" #")
+                .unlockedBy(getHasName(material), has(material))
+                .save(recipeOutput);
+    }
+
     public void glassWindow(RecipeOutput recipeOutput, ItemLike result, ItemLike item) {
         ShapedRecipeBuilder
                 .shaped(DECORATIONS, result, 4)
@@ -271,7 +285,7 @@ public class RecipeGen extends FSRecipeProvider {
         ShapedRecipeBuilder
                 .shaped(DECORATIONS, SOUL_CRYSTAL_ORNAMENT)
                 .define('#', FSBlocks.SMALL_SOUL_CRYSTAL)
-                .define('X', FSBlocks.SOUL_CRYSTAL_SHARD)
+                .define('X', FSItems.SOUL_CRYSTAL_SHARD)
                 .define('P', SMOOTH_MANGROVE_PLANKS)
                 .pattern(" X ")
                 .pattern("X#X")
@@ -674,7 +688,7 @@ public class RecipeGen extends FSRecipeProvider {
     }
 
     private void smoothPlanks(RecipeOutput recipeOutput, ItemLike smoothPlanks, ItemLike wood) {
-        cut(recipeOutput, BUILDING_BLOCKS, smoothPlanks, wood);
+        stonecutting(recipeOutput, BUILDING_BLOCKS, smoothPlanks, wood);
     }
 
     public void woodenGuardrail(RecipeOutput recipeOutput, ItemLike woodenGuardrail, ItemLike material) {

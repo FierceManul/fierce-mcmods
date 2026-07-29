@@ -188,7 +188,8 @@ public class HalfPodzolBlock extends Block implements SimpleWaterloggedBlock {
                         pPos,
                         pState.setValue(LAYERS, 0)
                               .setValue(BlockStateProperties.WATERLOGGED, true),
-                        3);
+                        Block.UPDATE_ALL
+                );
                 pLevel.scheduleTick(pPos, pFluidState.getType(), pFluidState.getType().getTickDelay(pLevel));
             }
             return true;

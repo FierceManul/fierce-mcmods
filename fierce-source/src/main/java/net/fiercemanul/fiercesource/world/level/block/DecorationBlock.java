@@ -13,21 +13,22 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ItemBlock extends WrenchDismantleBlock {
+public class DecorationBlock extends Block {
 
 
-    public static final VoxelShape DUST_SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 6.0, 14.0);
-    public static final MapCodec<ItemBlock> CODEC = simpleCodec(properties -> new ItemBlock(properties, DUST_SHAPE));
+    public static final VoxelShape DUST_SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 3.0, 14.0);
+    public static final VoxelShape SHARD_SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 2.0, 12.0);
+    public static final MapCodec<DecorationBlock> CODEC = simpleCodec(p -> new DecorationBlock(p, DUST_SHAPE));
     private final VoxelShape shape;
 
 
-    public ItemBlock(Properties properties, VoxelShape shape) {
+    public DecorationBlock(Properties properties, VoxelShape shape) {
         super(properties);
         this.shape = shape;
     }
 
     @Override
-    protected MapCodec<? extends ItemBlock> codec() {
+    protected MapCodec<? extends DecorationBlock> codec() {
         return CODEC;
     }
 
@@ -57,4 +58,5 @@ public class ItemBlock extends WrenchDismantleBlock {
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         return true;
     }
+
 }

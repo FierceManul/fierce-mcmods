@@ -29,7 +29,7 @@ public final class FLBlockTags {
     public static final TagKey<Block> COLOR_LAMPS = create("color_lamps");
     public static final TagKey<Block> FRAMES = create("frames");
     public static final TagKey<Block> IRON_CORRIDORS = create("iron_corridors");
-    public static final TagKey<Block> CHI_STONE_TECH = create("chi_stone_tech");
+    public static final TagKey<Block> HANDY_REDSTONE = create("handy_redstone");
 
     private static TagKey<Block> create(String name) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath(FierceLive.MODID, name));

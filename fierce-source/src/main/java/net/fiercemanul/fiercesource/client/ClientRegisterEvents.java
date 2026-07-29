@@ -28,7 +28,7 @@ public final class ClientRegisterEvents {
     public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
         event.register(
                 (state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFA0FFFF : 0xFFFF00FF,
-                FSBlocks.TEST_BLOCK.getBlock()
+                FSBlocks.TEST_BLOCK.get()
         );
     }
 
@@ -36,7 +36,7 @@ public final class ClientRegisterEvents {
     public static void registerColorHandlers(RegisterColorHandlersEvent.Item event) {
         event.register(
                 (stack, tintIndex) -> tintIndex == 0 ? 0xFFA0FFFF : 0xFF00FFFF,
-                FSBlocks.TEST_BLOCK.getItem()
+                FSBlocks.TEST_BLOCK.get()
         );
     }
 

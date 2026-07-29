@@ -4,6 +4,7 @@ import net.fiercemanul.fiercelive.FierceLive;
 import net.fiercemanul.fiercelive.data.registries.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -14,6 +15,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static net.fiercemanul.fiercelive.data.registries.BlockBulkRegister.*;
 
 public final class BlockMaterials {
 
@@ -519,29 +522,47 @@ public final class BlockMaterials {
 
 
 
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_OAK_PLANKS, WoodType.OAK);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_SPRUCE_PLANKS, WoodType.SPRUCE);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_BIRCH_PLANKS, WoodType.BIRCH);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_JUNGLE_PLANKS, WoodType.JUNGLE);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_ACACIA_PLANKS, WoodType.ACACIA);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_DARK_OAK_PLANKS, WoodType.DARK_OAK);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_MANGROVE_PLANKS, WoodType.MANGROVE);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_BAMBOO_PLANKS, WoodType.BAMBOO);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_CHERRY_PLANKS, WoodType.CHERRY);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_CRIMSON_PLANKS, WoodType.CRIMSON);
-        BlockBulkRegister.WOOD_TYPE_MAP.put(SMOOTH_WARPED_PLANKS, WoodType.WARPED);
+        WOOD_TYPE_MAP.put(SMOOTH_OAK_PLANKS, WoodType.OAK);
+        WOOD_TYPE_MAP.put(SMOOTH_SPRUCE_PLANKS, WoodType.SPRUCE);
+        WOOD_TYPE_MAP.put(SMOOTH_BIRCH_PLANKS, WoodType.BIRCH);
+        WOOD_TYPE_MAP.put(SMOOTH_JUNGLE_PLANKS, WoodType.JUNGLE);
+        WOOD_TYPE_MAP.put(SMOOTH_ACACIA_PLANKS, WoodType.ACACIA);
+        WOOD_TYPE_MAP.put(SMOOTH_DARK_OAK_PLANKS, WoodType.DARK_OAK);
+        WOOD_TYPE_MAP.put(SMOOTH_MANGROVE_PLANKS, WoodType.MANGROVE);
+        WOOD_TYPE_MAP.put(SMOOTH_BAMBOO_PLANKS, WoodType.BAMBOO);
+        WOOD_TYPE_MAP.put(SMOOTH_CHERRY_PLANKS, WoodType.CHERRY);
+        WOOD_TYPE_MAP.put(SMOOTH_CRIMSON_PLANKS, WoodType.CRIMSON);
+        WOOD_TYPE_MAP.put(SMOOTH_WARPED_PLANKS, WoodType.WARPED);
 
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_OAK_PLANKS, BlockSetType.OAK);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_SPRUCE_PLANKS, BlockSetType.SPRUCE);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_BIRCH_PLANKS, BlockSetType.BIRCH);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_JUNGLE_PLANKS, BlockSetType.JUNGLE);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_ACACIA_PLANKS, BlockSetType.ACACIA);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_DARK_OAK_PLANKS, BlockSetType.DARK_OAK);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_MANGROVE_PLANKS, BlockSetType.MANGROVE);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_BAMBOO_PLANKS, BlockSetType.BAMBOO);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_CHERRY_PLANKS, BlockSetType.CHERRY);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_CRIMSON_PLANKS, BlockSetType.CRIMSON);
-        BlockBulkRegister.BLOCK_SET_TYPE_MAP.put(SMOOTH_WARPED_PLANKS, BlockSetType.WARPED);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_OAK_PLANKS, BlockSetType.OAK);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_SPRUCE_PLANKS, BlockSetType.SPRUCE);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_BIRCH_PLANKS, BlockSetType.BIRCH);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_JUNGLE_PLANKS, BlockSetType.JUNGLE);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_ACACIA_PLANKS, BlockSetType.ACACIA);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_DARK_OAK_PLANKS, BlockSetType.DARK_OAK);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_MANGROVE_PLANKS, BlockSetType.MANGROVE);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_BAMBOO_PLANKS, BlockSetType.BAMBOO);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_CHERRY_PLANKS, BlockSetType.CHERRY);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_CRIMSON_PLANKS, BlockSetType.CRIMSON);
+        BLOCK_SET_TYPE_MAP.put(SMOOTH_WARPED_PLANKS, BlockSetType.WARPED);
+
+        DYE_COLOR_MAP.put(WHITE_WOOL, DyeColor.WHITE);
+        DYE_COLOR_MAP.put(ORANGE_WOOL, DyeColor.ORANGE);
+        DYE_COLOR_MAP.put(MAGENTA_WOOL, DyeColor.MAGENTA);
+        DYE_COLOR_MAP.put(LIGHT_BLUE_WOOL, DyeColor.LIGHT_BLUE);
+        DYE_COLOR_MAP.put(YELLOW_WOOL, DyeColor.YELLOW);
+        DYE_COLOR_MAP.put(LIME_WOOL, DyeColor.LIME);
+        DYE_COLOR_MAP.put(PINK_WOOL, DyeColor.PINK);
+        DYE_COLOR_MAP.put(GRAY_WOOL, DyeColor.GRAY);
+        DYE_COLOR_MAP.put(LIGHT_GRAY_WOOL, DyeColor.LIGHT_GRAY);
+        DYE_COLOR_MAP.put(CYAN_WOOL, DyeColor.CYAN);
+        DYE_COLOR_MAP.put(PURPLE_WOOL, DyeColor.PURPLE);
+        DYE_COLOR_MAP.put(BLUE_WOOL, DyeColor.BLUE);
+        DYE_COLOR_MAP.put(BROWN_WOOL, DyeColor.BROWN);
+        DYE_COLOR_MAP.put(GREEN_WOOL, DyeColor.GREEN);
+        DYE_COLOR_MAP.put(RED_WOOL, DyeColor.RED);
+        DYE_COLOR_MAP.put(BLACK_WOOL, DyeColor.BLACK);
+        DYE_COLOR_MAP.put(RAINBOW_WOOL, DyeColor.WHITE);
 
     }
 

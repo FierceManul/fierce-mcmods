@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -97,7 +98,7 @@ public class HeavyChainsBlock extends FacingWaterloggedBlock {
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         if (WrenchUtils.isWrench(stack) && player.isShiftKeyDown())
-            return level.setBlock(pos, state.setValue(FACING, state.getValue(FACING).getOpposite()), 11)
+            return level.setBlock(pos, state.setValue(FACING, state.getValue(FACING).getOpposite()), Block.UPDATE_ALL_IMMEDIATE)
                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

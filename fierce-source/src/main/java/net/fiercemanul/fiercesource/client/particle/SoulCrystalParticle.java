@@ -4,6 +4,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.renderer.LightTexture;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -11,68 +12,45 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class SoulCrystalParticle extends TextureSheetParticle {
 
 
-    protected final SpriteSet spriteSet;
     protected final float size;
+    protected final float maxAlpha;
 
-    protected SoulCrystalParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet spriteSet) {
-        this(pLevel, pX, pY, pZ, 0.0, 0.0, 0.0, spriteSet);
-    }
-
-    protected SoulCrystalParticle(ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet spriteSet) {
-        this(
-                pLevel,
-                spriteSet,
-                pX,
-                pY,
-                pZ,
-                pXSpeed,
-                pYSpeed,
-                pZSpeed,
-                1.0F,
-                1.0F,
-                1.0F,
-                SoulCrystalParticleProvider.DEFAULT_SIZE.get(),
-                SoulCrystalParticleProvider.DEFAULT_LIFETIME.get()
-        );
-    }
-
-    protected SoulCrystalParticle(
-            ClientLevel pLevel, SpriteSet spriteSet, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, float pRed, float pGreen, float pBlue, float pSize, int pLifeTick
+    public SoulCrystalParticle(
+            ClientLevel level,
+            double x, double y, double z,
+            float red, float green, float blue, float maxAlpha,
+            float size, int lifeTick,
+            SpriteSet spriteSet
     ) {
-        super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
-        this.size = pSize;
-        this.rCol = pRed;
-        this.gCol = pGreen;
-        this.bCol = pBlue;
-        this.alpha = 0.0F;
-        this.lifetime = pLifeTick;
-        this.xd *= pXSpeed;
-        this.yd *= pYSpeed;
-        this.zd *= pZSpeed;
+        super(level, x, y, z);
         this.friction = 0.8F;
-        this.gravity = 0.0F;
+        this.gravity = 0;
         this.hasPhysics = false;
-
-        this.spriteSet = spriteSet;
-        this.setSpriteFromAge(this.spriteSet);
+        this.maxAlpha = maxAlpha;
+        this.size = size;
+        setColor(red, green, blue);
+        setAlpha(0);
+        setSize(size, size * 2);
+        setLifetime(lifeTick * 3);
+        setSpriteFromAge(spriteSet);
     }
 
     @Override
-    protected int getLightColor(float pPartialTick) {
-        return 15728880;
+    protected int getLightColor(float partialTick) {
+        return LightTexture.FULL_BRIGHT;
     }
 
     @Override
     public void tick() {
-        setSpriteFromAge(this.spriteSet);
         float f = (float) Math.sin((double) age / lifetime * Math.PI);
-        setAlpha(f);
+        setAlpha(f * maxAlpha);
         quadSize = size * f;
-        super.tick();
+        if (age++ >= lifetime) remove();
     }
 
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
+
 }

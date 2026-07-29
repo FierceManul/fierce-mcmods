@@ -17,42 +17,33 @@ public class BlockStateGen extends FSBlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simple(CREATIVE_MANA_BLOCK.deferredBlock());
-        directionBlock(CREATIVE_MANA_OUTPUT.deferredBlock(), false);
-        simpleWithModel(HYPERCUBE.deferredBlock());
-        simpleWithModel(WORLD_LOCATOR.deferredBlock());
+        simple(CREATIVE_MANA_BLOCK);
+        directionBlock(CREATIVE_MANA_PROVIDER, false);
+        simpleWithModel(FSItems.HYPERCUBE);
+        simpleWithModel(WORLD_LOCATOR);
 
-        simpleWithModel(
-                SMALL_SOUL_CRYSTAL.deferredBlock(),
-                models().getExistingFile(MODEL_SMALL_CRYSTAL)
-        );
-        simpleWithModel(
-                MEDIUM_SOUL_CRYSTAL.deferredBlock(),
-                models().getExistingFile(MODEL_MEDIUM_CRYSTAL)
-        );
-        simpleWithModel(
-                LARGE_SOUL_CRYSTAL.deferredBlock(),
-                models().getExistingFile(MODEL_LARGE_CRYSTAL)
-        );
+        simpleWithModel(SMALL_SOUL_CRYSTAL, models().getExistingFile(MODEL_SMALL_CRYSTAL));
+        simpleWithModel(MEDIUM_SOUL_CRYSTAL, models().getExistingFile(MODEL_MEDIUM_CRYSTAL));
+        simpleWithModel(LARGE_SOUL_CRYSTAL, models().getExistingFile(MODEL_LARGE_CRYSTAL));
+        smallCrystal(SMALL_MANA_CRYSTAL);
+        mediumCrystal(MEDIUM_MANA_CRYSTAL);
+        largeCrystal(LARGE_MANA_CRYSTAL);
 
-        smallCrystal(SMALL_MANA_CRYSTAL.deferredBlock());
-        mediumCrystal(MEDIUM_MANA_CRYSTAL.deferredBlock());
-        largeCrystal(LARGE_MANA_CRYSTAL.deferredBlock());
+        rotationDecoratedItem(FSItems.SOUL_CRYSTAL_SHARD);
+        decoratedItem(FSItems.SOUL_CRYSTAL_DUST);
 
-        largeCrystalWithIcon(TEST_BLOCK.deferredBlock());
+        simpleNature(HAO_STONE);
+        simple(POLISHED_HAO_STONE);
+        simple(SMOOTH_HAO_STONE);
+        simple(DEEP_STONE);
+        simple(POLISHED_DEEP_STONE);
+        simple(SMOOTH_DEEP_STONE);
 
-        rotationDecoratedItem(SOUL_CRYSTAL_SHARD.deferredBlock());
-        decoratedItem(SOUL_CRYSTAL_DUST.deferredBlock());
-
-        simpleNature(HAO_STONE.deferredBlock());
-        simple(POLISHED_HAO_STONE.deferredBlock());
-        simple(SMOOTH_HAO_STONE.deferredBlock());
-        simple(DEEP_STONE.deferredBlock());
-        simple(POLISHED_DEEP_STONE.deferredBlock());
-        simple(SMOOTH_DEEP_STONE.deferredBlock());
-
+        largeCrystalWithIcon(TEST_BLOCK);
+        simple(PLACEHOLDER);
         itemModels().basicItem(FSItems.TEST_ITEM.get());
         itemModels().basicItem(FSItems.FE_ICON.get());
         itemModels().basicItem(FSItems.MANA_ICON.get());
+
     }
 }

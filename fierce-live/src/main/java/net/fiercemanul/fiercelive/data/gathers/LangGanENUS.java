@@ -39,7 +39,7 @@ public class LangGanENUS extends LanguageProvider {
         add(FLItemTags.WEAPON_METEOR_HAMMER, "Meteor Hammer");
         add(FLItemTags.METEOR_HAMMERS, "Meteor Hammers");
         add(FLItemTags.DOOR_SHIELDS, "Door Shields");
-        add(FLItemTags.CHI_STONE_TECH, "Chi Stone Tech");
+        add(FLItemTags.HANDY_REDSTONE, "Chi Stone Tech");
 
         add(FLBlockTags.RAINBOW_DYED, "Rainbow Dyed");
         add(FLBlockTags.MINEABLE_WITH_CROWBAR, "Mineable with Crowbar");
@@ -61,12 +61,12 @@ public class LangGanENUS extends LanguageProvider {
         add(FLBlockTags.COLOR_LAMPS, "Color Lamps");
         add(FLBlockTags.FRAMES, "Frames");
         add(FLBlockTags.IRON_CORRIDORS, "Iron Corridors");
-        add(FLBlockTags.CHI_STONE_TECH, "Chi Stone Tech");
+        add(FLBlockTags.HANDY_REDSTONE, "Chi Stone Tech");
 
         add("enchantment.fiercelive.poison_aspect", "Poison Aspect");
 
-        add("item_group.fiercelive.decoration", "Fierce Living - Decoration");
-        add("item_group.fiercelive.building", "Fierce Living - Building");
+        add("item_group.fiercelive.goods", "Fierce Living - Goods");
+        add("item_group.fiercelive.templateite", "Fierce Living - Templateite");
         add("item_group.fiercelive.colored", "Fierce Living - Colored");
         
         add("tip.fiercelive.snake_vertical", "Snake place to vertical");
@@ -105,8 +105,8 @@ public class LangGanENUS extends LanguageProvider {
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
         add("advancements.fiercelive.parrot.title", "是虎钳！");
         add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
-        add("advancements.fiercelive.chi_stone_tech.title", "赤石科技");
-        add("advancements.fiercelive.chi_stone_tech.description", "获得赤石科技");
+        add("advancements.fiercelive.handy_redstone.title", "咸鱼红石");
+        add("advancements.fiercelive.handy_redstone.description", "获得任意红石科技咸鱼版");
         
         add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
 

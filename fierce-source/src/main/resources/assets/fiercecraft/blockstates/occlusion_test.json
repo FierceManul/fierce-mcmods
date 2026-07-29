@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "external=false": {
+      "model": "fiercecraft:block/occlusion_test"
+    },
+    "external=true": {
+      "model": "fiercecraft:block/occlusion_test_external"
+    }
+  }
+}

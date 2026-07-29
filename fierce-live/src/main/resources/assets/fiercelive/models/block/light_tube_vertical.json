@@ -1,5 +1,5 @@
 {
-	"parent": "fiercecraft:block/block",
+	"parent": "minecraft:block/block",
 	"textures": {
 		"particle": "fiercelive:block/glowstone_lamp",
 		"tube": "fiercelive:block/glowstone_lamp",

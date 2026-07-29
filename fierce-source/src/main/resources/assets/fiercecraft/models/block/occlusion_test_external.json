@@ -1,0 +1,7 @@
+{
+	"parent": "fiercecraft:block/occlusion_test",
+	"textures": {
+		"particle": "fiercecraft:block/occlusion_test_external",
+		"all": "fiercecraft:block/occlusion_test_external"
+	}
+}

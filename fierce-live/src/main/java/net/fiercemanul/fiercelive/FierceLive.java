@@ -1,6 +1,5 @@
 package net.fiercemanul.fiercelive;
 
-import com.google.common.collect.ImmutableSet;
 import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockBulkRegister;
@@ -9,10 +8,8 @@ import net.fiercemanul.fiercelive.server.commands.SitCommand;
 import net.fiercemanul.fiercelive.world.capabilities.InfinityWaterHandler;
 import net.fiercemanul.fiercelive.world.level.block.CabinetBlock;
 import net.fiercemanul.fiercelive.world.level.block.HalfPodzolBlock;
-import net.fiercemanul.fiercelive.world.level.block.entity.CabinetBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -24,22 +21,12 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 @Mod(FierceLive.MODID)
 public class FierceLive {
 
 
     public static final String MODID = "fiercelive";
-    //public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StarBlockEntity>> STAR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
-    //        "star_block", () -> BlockEntityType.Builder.of(StarBlockEntity::new, FLBlocks.STAR_BLOCK.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = FLRegister.BLOCK_ENTITIES.register(
-            "cabinet", () -> {
-                ImmutableSet.Builder<Block> validBlocksBuilder = new ImmutableSet.Builder<>();
-                BlockBulkRegister.CABINETS.forEach(deferredBlock -> validBlocksBuilder.add(deferredBlock.get()));
-                return new BlockEntityType<>(CabinetBlockEntity::new, validBlocksBuilder.build(), null);
-            }
-    );
 
     public FierceLive(IEventBus modEventBus, ModContainer modContainer) {
         FLRegister.register(modEventBus);
@@ -82,7 +69,7 @@ public class FierceLive {
                             HalfPodzolBlock.LAYERS,
                             Integer.min(replacedBlock.getValue(HalfPodzolBlock.LAYERS) + 1, 4)
                     ),
-                    11
+                    Block.UPDATE_ALL_IMMEDIATE
             );
         }
     }

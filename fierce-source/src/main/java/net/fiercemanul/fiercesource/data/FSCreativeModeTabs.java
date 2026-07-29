@@ -21,11 +21,13 @@ public final class FSCreativeModeTabs {
                     .builder()
                     .title(Component.translatable("itemGroup.fiercecraft"))
                     .withTabsBefore(net.minecraft.world.item.CreativeModeTabs.SPAWN_EGGS)
-                    .icon(() -> LARGE_MANA_CRYSTAL.getItem().getDefaultInstance())
+                    .icon(LARGE_MANA_CRYSTAL::toStack)
                     .displayItems((parameters, output) -> {
                         for (CreativeModeTabItem tabItem : TAB_ITEMS) output.accept(tabItem.itemLike());
                         if (parameters.hasPermissions()) {
-                            output.accept(TEST_BLOCK.getItem());
+                            output.accept(PLACEHOLDER);
+                            output.accept(OCCLUSION_TEST);
+                            output.accept(TEST_BLOCK);
                             output.accept(TEST_ITEM);
                         }
                     })
@@ -35,8 +37,8 @@ public final class FSCreativeModeTabs {
 
     public static void init() {
         priority = 0;
-        TAB_ITEMS.add(new CreativeModeTabItem(SOUL_CRYSTAL_SHARD, getPriority()));
-        TAB_ITEMS.add(new CreativeModeTabItem(SOUL_CRYSTAL_DUST, getPriority()));
+        TAB_ITEMS.add(new CreativeModeTabItem(FSItems.SOUL_CRYSTAL_SHARD, getPriority()));
+        TAB_ITEMS.add(new CreativeModeTabItem(FSItems.SOUL_CRYSTAL_DUST, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(SMALL_SOUL_CRYSTAL, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(MEDIUM_SOUL_CRYSTAL, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(LARGE_SOUL_CRYSTAL, getPriority()));
@@ -44,8 +46,8 @@ public final class FSCreativeModeTabs {
         TAB_ITEMS.add(new CreativeModeTabItem(MEDIUM_MANA_CRYSTAL, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(LARGE_MANA_CRYSTAL, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(CREATIVE_MANA_BLOCK, getPriority(100)));
-        TAB_ITEMS.add(new CreativeModeTabItem(CREATIVE_MANA_OUTPUT, getPriority()));
-        TAB_ITEMS.add(new CreativeModeTabItem(HYPERCUBE, getPriority(100)));
+        TAB_ITEMS.add(new CreativeModeTabItem(CREATIVE_MANA_PROVIDER, getPriority()));
+        TAB_ITEMS.add(new CreativeModeTabItem(FSItems.HYPERCUBE, getPriority(100)));
         TAB_ITEMS.add(new CreativeModeTabItem(WORLD_LOCATOR, getPriority()));
         TAB_ITEMS.add(new CreativeModeTabItem(HAO_STONE, getPriority(100)));
         TAB_ITEMS.add(new CreativeModeTabItem(POLISHED_HAO_STONE, getPriority()));

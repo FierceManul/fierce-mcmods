@@ -10,12 +10,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class FSRecipeProvider extends RecipeProvider {
 
+
+    protected ResourceLocation applyBackup(DeferredHolder<?, ?> deferredHolder) {
+        return applyBackup(deferredHolder.getId());
+    }
 
     protected ResourceLocation applyBackup(ItemBlockGroup<?, ?> group) {
         return applyBackup(group.deferredItem().getId());

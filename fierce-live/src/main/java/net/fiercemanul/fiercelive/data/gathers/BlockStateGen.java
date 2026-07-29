@@ -5,6 +5,7 @@ import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
+import net.fiercemanul.fiercelive.world.level.block.BigButtonBlock;
 import net.fiercemanul.fiercelive.world.level.block.LightTubeBlock;
 import net.fiercemanul.fiercelive.world.level.block.OneCutBlock;
 import net.fiercemanul.fiercelive.world.level.block.TableBlock;
@@ -122,7 +123,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(CONCRETE_POWDER, gen -> gen.simpleNature(CONCRETE_POWDER));
         ROWS.put(GRAVEL_CONCRETE, gen -> gen.simpleNature(GRAVEL_CONCRETE));
         ROWS.put(GRAVEL_CONCRETE_POWDER, gen -> gen.simpleNature(GRAVEL_CONCRETE_POWDER));
-
+        ROWS.put(BLACK_IRON_BLOCK, gen -> gen.texturedCube(BLACK_IRON_BLOCK, FierceLive.MODID + ":block/black_iron"));
 
         ROWS.put(A_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(A_WALL_FLOWER_POT, "wall_flower_pot_a", false));
         ROWS.put(B_WALL_FLOWER_POT, gen -> gen.horizontalDirectionBlock(B_WALL_FLOWER_POT, "wall_flower_pot_b", false));
@@ -182,7 +183,6 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(INFINITE_TNT, gen -> gen.simpleUpDownSide(INFINITE_TNT));
         ROWS.put(INFINITE_RAIL_CARPET, gen -> gen.simpleUpDownSide(INFINITE_RAIL_CARPET));
 
-
         FLRegister.BLOCKS.getEntries().forEach(deferredBlock -> {
             if (ROWS.containsKey(deferredBlock)) ROWS.get(deferredBlock).accept(this);
             else simple(deferredBlock);
@@ -206,6 +206,11 @@ public class BlockStateGen extends FSBlockStateProvider {
     public ResourceLocation blockTexture(BlockMaterial material, String s) {
         ResourceLocation rl = BuiltInRegistries.BLOCK.getKey(material.getBlock());
         return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), "block/" + rl.getPath() + "_" + s);
+    }
+
+    public ResourceLocation blockTexture(DeferredBlock<? extends Block> deferredBlock) {
+        ResourceLocation rl = deferredBlock.getId();
+        return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), "block/" + rl.getPath());
     }
 
     public ResourceLocation getSimpleCubeMaterialResource(BlockMaterial material) {
@@ -245,12 +250,19 @@ public class BlockStateGen extends FSBlockStateProvider {
         return new ResourceLocation[]{blockTexture(material), blockTexture(material), blockTexture(material)};
     }
 
-    public void pillar(DeferredBlock<Block> deferredBlock, int px, BlockMaterial material) {
+    public void carpet(DeferredBlock<? extends Block> carpet, DeferredBlock<? extends Block> wool) {
+        ResourceLocation rl = wool.getId();
+        simpleWithModel(carpet, models().withExistingParent(carpet.getId().getPath(), mcLoc("block/carpet"))
+                                               .texture("wool", ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), "block/" + rl.getPath()))
+        );
+    }
+
+    public void pillar(DeferredBlock<? extends Block> deferredBlock, int px, BlockMaterial material) {
         var rls = getPillarMaterialResource(material);
         pillar(deferredBlock, px, rls[0], rls[1]);
     }
 
-    private void pillar(DeferredBlock<Block> deferredBlock, int px,  ResourceLocation side, ResourceLocation end) {
+    private void pillar(DeferredBlock<? extends Block> deferredBlock, int px,  ResourceLocation side, ResourceLocation end) {
         String path = deferredBlock.getId().getPath();
         ModelFile modelFile = models()
                 .withExistingParent(path, modLoc("block/pillar_" + px + "px"))
@@ -258,12 +270,12 @@ public class BlockStateGen extends FSBlockStateProvider {
         yAxisModel(deferredBlock.get(), path, modelFile, false);
     }
 
-    public void pillarConnector(DeferredBlock<Block> deferredBlock, int px, BlockMaterial material) {
+    public void pillarConnector(DeferredBlock<? extends Block> deferredBlock, int px, BlockMaterial material) {
         var rls = getPillarMaterialResource(material);
         pillarConnector(deferredBlock, px, rls[0], rls[1]);
     }
 
-    private void pillarConnector(DeferredBlock<Block> deferredBlock, int px, ResourceLocation side, ResourceLocation end) {
+    private void pillarConnector(DeferredBlock<? extends Block> deferredBlock, int px, ResourceLocation side, ResourceLocation end) {
         String path = deferredBlock.getId().getPath();
         ModelFile modelCore = models()
                 .withExistingParent(path + "_core", modLoc("block/pillar_connector_" + px + "px_core"))
@@ -1436,6 +1448,19 @@ public class BlockStateGen extends FSBlockStateProvider {
         );
     }
 
+    public void fishingChair(DeferredBlock<Block> deferredBlock, ResourceLocation a, ResourceLocation b) {
+        String path = deferredBlock.getId().getPath();
+
+        horizontalDirectionModel(
+                deferredBlock.get(),
+                path,
+                models().withExistingParent(path, modLoc("block/fishing_chair"))
+                        .texture("a", a)
+                        .texture("b", b),
+                false
+        );
+    }
+
     public void gardenChair(DeferredBlock<Block> deferredBlock, BlockMaterial material) {
         if (material.hasTag(BlockMaterialTag.TOOL_AXE)) woodenGardenChair(deferredBlock, blockTexture(material));
         else stoneGardenChair(deferredBlock, getSimpleCubeMaterialResource(material));
@@ -1470,7 +1495,6 @@ public class BlockStateGen extends FSBlockStateProvider {
     }
 
     public void woolSofa(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
-        Block block = deferredBlock.get();
         String path = deferredBlock.getId().getPath();
 
         ModelFile modelSingle = models().withExistingParent(path + "_single", modLoc("block/wool_sofa_single")).texture("all", material);
@@ -1478,7 +1502,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ModelFile modelLeft = models().withExistingParent(path + "_left", modLoc("block/wool_sofa_left")).texture("all", material);
         ModelFile modelRight = models().withExistingParent(path + "_right", modLoc("block/wool_sofa_right")).texture("all", material);
 
-        longChair(block, modelSingle, modelCenter, modelLeft, modelRight);
+        longChair(deferredBlock.get(), modelSingle, modelCenter, modelLeft, modelRight);
 
         itemModels().getBuilder(path).parent(modelSingle);
     }
@@ -1604,7 +1628,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         itemModels().getBuilder(path).parent(model);
     }
 
-    public void thinStairs(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+    public void thinStairs(DeferredBlock<? extends Block> deferredBlock, ResourceLocation material) {
         String path = deferredBlock.getId().getPath();
 
         BlockModelBuilder straight = models().getBuilder(path)
@@ -1617,18 +1641,40 @@ public class BlockStateGen extends FSBlockStateProvider {
                                           .parent(models().getExistingFile(modLoc("block/thin_stair_outer")))
                                           .texture("all", material);
 
-        thinStairStates(deferredBlock.get(), straight, inner, outer);
-        itemModels().getBuilder(deferredBlock.getId().getPath()).parent(straight);
+        thinStairStates(deferredBlock.get(), straight, inner, outer, true);
+        itemModels().getBuilder(path).parent(straight);
     }
 
-    private void thinStairStates(Block block, ModelFile straight, ModelFile inner, ModelFile outer) {
+    public void roof(DeferredBlock<? extends Block> deferredBlock, BlockMaterial material, BlockMaterial material2) {
+        String path = deferredBlock.getId().getPath();
+        ResourceLocation all = getSimpleCubeMaterialResource(material2);
+        ResourceLocation top = getSimpleCubeMaterialResource(material);
+
+        BlockModelBuilder straight = models().getBuilder(path)
+                                             .parent(models().getExistingFile(modLoc("block/roof")))
+                                             .texture("all", all)
+                                             .texture("top", top);
+        BlockModelBuilder inner = models().getBuilder(path + "_inner")
+                                          .parent(models().getExistingFile(modLoc("block/roof_inner")))
+                                          .texture("all", all)
+                                          .texture("top", top);
+        BlockModelBuilder outer = models().getBuilder(path + "_outer")
+                                          .parent(models().getExistingFile(modLoc("block/roof_outer")))
+                                          .texture("all", all)
+                                          .texture("top", top);
+
+        thinStairStates(deferredBlock.get(), straight, inner, outer, false);
+        itemModels().getBuilder(path).parent(straight);
+    }
+
+    private void thinStairStates(Block block, ModelFile straight, ModelFile inner, ModelFile outer, boolean lockUV) {
         getVariantBuilder(block).forAllStatesExcept(state -> {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             StairsShape shape = state.getValue(BlockStateProperties.STAIRS_SHAPE);
             int yRot = (int) facing.getClockWise().toYRot();
             if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) yRot += 270;
             yRot %= 360;
-            boolean uvlock = yRot != 0;
+            boolean uvlock = lockUV && yRot != 0;
             return ConfiguredModel.builder()
                                   .modelFile(shape == StairsShape.STRAIGHT ? straight : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? inner : outer)
                                   .rotationY(yRot).uvLock(uvlock).build();
@@ -2129,6 +2175,20 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH).end()
                 .part().modelFile(ladder).rotationY(270).addModel()
                 .condition(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST).end();
+    }
+
+    public void bigButton(DeferredBlock<? extends BigButtonBlock> button, BlockMaterial material) {
+        String path = button.getId().getPath();
+        ResourceLocation texture = blockTexture(material);
+        buttonBlock(
+                button.get(),
+                models().withExistingParent(path, modLoc("block/big_button"))
+                        .texture("texture", texture),
+                models().withExistingParent(path + "_pressed", modLoc("block/big_button_pressed"))
+                        .texture("texture", texture)
+        );
+        itemModels().withExistingParent(path, modLoc("block/big_button_inventory"))
+                    .texture("texture", texture);
     }
 
     public void stair(DeferredBlock<StairBlock> stair, BlockMaterial material) {

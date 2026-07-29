@@ -66,6 +66,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.BIG_FLOWER_POT.get(),
                 FLBlocks.CONCRETE.get(),
                 FLBlocks.GRAVEL_CONCRETE.get(),
+                FLBlocks.BLACK_IRON_BLOCK.get(),
                 FLBlocks.A_WALL_FLOWER_POT.get(),
                 FLBlocks.B_WALL_FLOWER_POT.get(),
                 FLBlocks.C_WALL_FLOWER_POT.get(),
@@ -186,6 +187,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.FOX_CARROT_BASKET.get()
         );
         tag(BlockTags.NEEDS_STONE_TOOL).add(
+                FLBlocks.BLACK_IRON_BLOCK.get(),
                 FLBlocks.IRON_GUARDRAIL.get(),
                 FLBlocks.IRON_FRAME.get(),
                 FLBlocks.IRON_CORRIDOR.get(),
@@ -258,6 +260,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.CONCRETE.get(),
                 FLBlocks.GRAVEL_CONCRETE.get()
         );
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(FLBlocks.BLACK_IRON_BLOCK.get());
         tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get());
         tag(Tags.Blocks.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.get());
         tag(Tags.Blocks.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.get());
@@ -303,7 +306,7 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FLBlocks.IRON_CORRIDOR_SLAB.get(),
                 FLBlocks.IRON_CORRIDOR_STAIRS.get()
         );
-        tag(FLBlockTags.CHI_STONE_TECH).add(
+        tag(FLBlockTags.HANDY_REDSTONE).add(
                 FLBlocks.INFINITE_TNT.get(),
                 FLBlocks.INFINITE_RAIL_CARPET.get(),
                 FLBlocks.SNOWBALL_GENERATOR.get()
@@ -317,6 +320,15 @@ public class BlockTagsGen extends BlockTagsProvider {
         if (material.hasTag(BlockMaterialTag.TOOL_AXE)) tag(tag).add(block.get());
         if (material.hasTag(BlockMaterialTag.TOOL_SHOVEL)) tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block.get());
         if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block.get());
+        if (material.hasTag(BlockMaterialTag.TOOL_HOE)) tag(BlockTags.MINEABLE_WITH_HOE).add(block.get());
+        if (material.hasTag(BlockMaterialTag.TOOL_SHEARS)) tag(BlockTags.WOOL).add(block.get());
+        specialTags(material, block);
+    }
+
+    public void woodenStoneTagOrBasicTags(BlockMaterial material, TagKey<Block> woodTag, TagKey<Block> stoneTag, DeferredBlock<? extends Block> block) {
+        if (material.hasTag(BlockMaterialTag.TOOL_AXE)) tag(woodTag).add(block.get());
+        if (material.hasTag(BlockMaterialTag.TOOL_SHOVEL)) tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block.get());
+        if (material.hasTag(BlockMaterialTag.TOOL_PICKAXE)) tag(stoneTag).add(block.get());
         if (material.hasTag(BlockMaterialTag.TOOL_HOE)) tag(BlockTags.MINEABLE_WITH_HOE).add(block.get());
         if (material.hasTag(BlockMaterialTag.TOOL_SHEARS)) tag(BlockTags.WOOL).add(block.get());
         specialTags(material, block);

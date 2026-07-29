@@ -7,13 +7,12 @@ import net.fiercemanul.fiercesource.data.FSEntities;
 import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
 import net.fiercemanul.fiercesource.world.level.block.ThrowableBlock;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -395,7 +394,7 @@ public class ThrownBlock extends Projectile implements IEntityWithComplexSpawn {
 
         if (state.hasProperty(BlockStateProperties.WATERLOGGED) && level().getFluidState(pos).getType() == Fluids.WATER)
             state = state.setValue(BlockStateProperties.WATERLOGGED, true);
-        if (level().setBlock(pos, state, 3)) {
+        if (level().setBlock(pos, state, Block.UPDATE_ALL)) {
             Player player = getOwner() instanceof Player p ? p : null;
             if (blockEntityData != null && state.hasBlockEntity()) {
                 BlockEntity blockentity = level().getBlockEntity(pos);
@@ -525,24 +524,21 @@ public class ThrownBlock extends Projectile implements IEntityWithComplexSpawn {
         if (!level().isClientSide) return;
         //TODO:检查原版更改 ParticleEngine.destroy
         //原版方法用方块坐标，此处需要实体坐标，并且碰撞箱不敏感
+        Level level = level();
         for (int l = 0; l < 4; l++) {
             for (int i1 = 0; i1 < 4; i1++) {
                 for (int j1 = 0; j1 < 4; j1++) {
                     double d4 = (l + 0.5) / 4;
                     double d5 = (i1 + 0.5) / 4;
                     double d6 = (j1 + 0.5) / 4;
-                    Minecraft.getInstance().particleEngine.add(
-                            new TerrainParticle(
-                                    (ClientLevel) level(),
-                                    position().x -0.5 + d4,
-                                    position().y + d5,
-                                    position().z -0.5 + d6,
-                                    d4 - 0.5,
-                                    d5 - 0.5,
-                                    d6 - 0.5,
-                                    blockState,
-                                    blockPosition()
-                            ).updateSprite(blockState, blockPosition())
+                    level.addParticle(
+                            new BlockParticleOption(ParticleTypes.BLOCK, blockState).setPos(blockPosition()),
+                            position().x -0.5 + d4,
+                            position().y + d5,
+                            position().z -0.5 + d6,
+                            d4 - 0.5,
+                            d5 - 0.5,
+                            d6 - 0.5
                     );
                 }
             }

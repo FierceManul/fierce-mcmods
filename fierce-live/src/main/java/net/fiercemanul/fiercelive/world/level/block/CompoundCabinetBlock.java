@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercelive.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.FLBlockEntities;
 import net.fiercemanul.fiercelive.world.level.block.entity.CabinetBlockEntity;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.minecraft.core.BlockPos;
@@ -96,7 +96,7 @@ public abstract class CompoundCabinetBlock extends CabinetBlock {
             BlockState pState, Level pLevel, BlockPos pPos
     ) {
         return DoubleBlockCombiner.combineWithNeigbour(
-                FierceLive.CABINET_BLOCK_ENTITY.get(),
+                FLBlockEntities.CABINET_BLOCK_ENTITY.get(),
                 this::getCombinerType,
                 this::getConnectedDirection,
                 FACING,

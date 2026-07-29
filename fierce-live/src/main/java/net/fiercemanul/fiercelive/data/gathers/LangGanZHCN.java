@@ -108,7 +108,7 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLItemTags.WEAPON_METEOR_HAMMER, "流星锤");
         add(FLItemTags.METEOR_HAMMERS, "流星锤");
         add(FLItemTags.DOOR_SHIELDS, "门盾");
-        add(FLItemTags.CHI_STONE_TECH, "赤石科技");
+        add(FLItemTags.HANDY_REDSTONE, "赤石科技");
         
         add(FLBlockTags.RAINBOW_DYED, "彩虹染色");
         add(FLBlockTags.MINEABLE_WITH_CROWBAR, "可用撬棒挖掘");
@@ -130,13 +130,13 @@ public class LangGanZHCN extends LanguageProvider {
         add(FLBlockTags.COLOR_LAMPS, "彩灯");
         add(FLBlockTags.FRAMES, "框架");
         add(FLBlockTags.IRON_CORRIDORS, "铁廊架");
-        add(FLBlockTags.CHI_STONE_TECH, "赤石科技");
+        add(FLBlockTags.HANDY_REDSTONE, "赤石科技");
 
         add("enchantment.fiercelive.poison_aspect", "毒性附加");
 
-        add("item_group.fiercelive.decoration", "绿野栖居-趣物");
-        add("item_group.fiercelive.building", "疏野闲章-建筑");
-        add("item_group.fiercelive.colored", "疏野闲居-好色");
+        add("item_group.fiercelive.goods", "绿野栖居-趣物");
+        add("item_group.fiercelive.templateite", "疏野闲章-模产");
+        add("item_group.fiercelive.colored", "灵域闲居-缤纷");
         
         add("tip.fiercelive.snake_vertical", "潜行时垂直摆放");
         add("tip.fiercelive.snake_horizontal", "潜行时水平摆放");
@@ -174,8 +174,8 @@ public class LangGanZHCN extends LanguageProvider {
         add("advancements.fiercelive.sacabambaspis.description", "获得萨卡班甲鱼");
         add("advancements.fiercelive.parrot.title", "是虎钳！");
         add("advancements.fiercelive.parrot.description", "获得飞天老虎钳");
-        add("advancements.fiercelive.chi_stone_tech.title", "赤石科技");
-        add("advancements.fiercelive.chi_stone_tech.description", "获得赤石科技");
+        add("advancements.fiercelive.handy_redstone.title", "咸鱼红石");
+        add("advancements.fiercelive.handy_redstone.description", "获得任意红石科技咸鱼版");
 
         add("fml.menu.mods.info.description.fiercelive", "知足常乐。");
     }
@@ -225,6 +225,7 @@ public class LangGanZHCN extends LanguageProvider {
         ROWS.put(FLBlocks.CONCRETE_POWDER, "混凝土粉末");
         ROWS.put(FLBlocks.GRAVEL_CONCRETE, "沙面混凝土");
         ROWS.put(FLBlocks.GRAVEL_CONCRETE_POWDER, "沙面混凝土粉末");
+        ROWS.put(FLBlocks.BLACK_IRON_BLOCK, "黑铁块");
         ROWS.put(FLBlocks.A_WALL_FLOWER_POT, "一号挂壁盆栽");
         ROWS.put(FLBlocks.B_WALL_FLOWER_POT, "二号挂壁盆栽");
         ROWS.put(FLBlocks.C_WALL_FLOWER_POT, "三号挂壁盆栽");
@@ -304,6 +305,7 @@ public class LangGanZHCN extends LanguageProvider {
         return string.replace("_", "")
                      .replace("板板", "板")
                      .replace("柱柱", "柱")
+                     .replace("竹子", "竹")
                      .replace("色灯", "灯")
                      .replace("灯玻璃灯", "玻璃灯")
                      .replace("色玻璃灯", "玻璃灯")

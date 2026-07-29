@@ -5,10 +5,7 @@ import net.fiercemanul.fiercelive.world.item.FakeBlockEntityItem;
 import net.fiercemanul.fiercelive.world.level.block.*;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.item.ThrowableBlockItem;
-import net.fiercemanul.fiercesource.world.level.block.BlockUtils;
-import net.fiercemanul.fiercesource.world.level.block.FacingBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonAxisBlock;
-import net.fiercemanul.fiercesource.world.level.block.HorizonFacingBlock;
+import net.fiercemanul.fiercesource.world.level.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -30,7 +27,7 @@ public final class FLBlocks {
 
 
     public static final DeferredBlock<Block> SOUL_CRYSTAL_ORNAMENT = regBlock(
-            "soul_crystal_ornament", SoulCrystalOrnamentBlock::new, BlockBehaviour.Properties.of().strength(1.5F, 20.0F).lightLevel(value -> 15).emissiveRendering(FSUtils::getTrue).sound(SoundType.LARGE_AMETHYST_BUD).mapColor(MapColor.WOOL));
+            "soul_crystal_ornament", SoulCrystalOrnamentBlock::new, SoulCrystalBlock.getProperties(15, MapColor.WOOL));
     public static final DeferredBlock<Block> PORTABLE_WORKSTATION = regBlock(
             "portable_workstation", PortableWorkstationBlock::new, BlockBehaviour.Properties.of().strength(0.25F, 6.0F).lightLevel(value -> 7).noCollission().noOcclusion().mapColor(MapColor.COLOR_BLACK));
     public static final DeferredBlock<Block> LAPTOP_TERMINAL = regBlock(
@@ -172,6 +169,8 @@ public final class FLBlocks {
             "gravel_concrete", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE).mapColor(MapColor.TERRACOTTA_WHITE));
     public static final DeferredBlock<Block> GRAVEL_CONCRETE_POWDER = reg(
             "gravel_concrete_powder", () -> new ConcretePowderBlock(GRAVEL_CONCRETE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.TERRACOTTA_WHITE)));
+    public static final DeferredBlock<Block> BLACK_IRON_BLOCK = regSimpleBlock(
+            "black_iron_block", BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK));
     public static final DeferredBlock<Block> HEAVY_CHAINS = regBlock(
             "heavy_chains", HeavyChainsBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> NEO_FORGE = regBlock(

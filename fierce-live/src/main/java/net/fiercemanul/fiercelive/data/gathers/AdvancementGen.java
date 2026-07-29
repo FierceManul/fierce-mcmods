@@ -158,11 +158,11 @@ public class AdvancementGen implements AdvancementProvider.AdvancementGenerator 
 
         Advancement.Builder.advancement().parent(root).display(
                 FLBlocks.INFINITE_TNT,
-                Component.translatable("advancements.fiercelive.chi_stone_tech.title"),
-                Component.translatable("advancements.fiercelive.chi_stone_tech.description"),
+                Component.translatable("advancements.fiercelive.handy_redstone.title"),
+                Component.translatable("advancements.fiercelive.handy_redstone.description"),
                 null, AdvancementType.TASK, true, true, false
-        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.CHI_STONE_TECH))
-        ).save(saver, "fiercelive:chi_stone_tech");
+        ).addCriterion("item", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(FLItemTags.HANDY_REDSTONE))
+        ).save(saver, "fiercelive:handy_redstone");
 
     }
 }

@@ -1,5 +1,7 @@
 package net.fiercemanul.fiercesource.client.particle;
 
+import net.fiercemanul.fiercesource.world.level.block.SoulCrystalBlock;
+import net.fiercemanul.fiercesource.world.level.block.SoulCrystalType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
@@ -7,129 +9,81 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class SoulCrystalParticleProvider implements ParticleProvider<SimpleParticleType> {
-
+public class SoulCrystalParticleProvider implements ParticleProvider<BlockParticleOption> {
 
 
     private static final RandomSource RANDOM = RandomSource.create();
-    public static final Supplier<Integer> DEFAULT_LIFETIME = () -> 16 + RANDOM.nextInt(8);
-    public static final Supplier<Float> DEFAULT_SIZE = () -> RANDOM.nextFloat() * 0.03F + 0.07F;
-    public static final Supplier<Float> DEFAULT_SIZE_MEDIUM = () -> RANDOM.nextFloat() * 0.02F + 0.06F;
-    public static final Supplier<Float> DEFAULT_SIZE_SMALL = () -> RANDOM.nextFloat() * 0.01F + 0.05F;
-    @Nullable
-    private static SpriteSet spriteSet;
+    private final SpriteSet spriteSet;
 
     public SoulCrystalParticleProvider(SpriteSet spriteSet) {
-        SoulCrystalParticleProvider.spriteSet = spriteSet;
+        this.spriteSet = spriteSet;
     }
 
     @Nullable
     @Override
     public Particle createParticle(
-            SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed
+            BlockParticleOption type, ClientLevel level,
+            double x, double y, double z,
+            double xSpeed, double ySpeed, double zSpeed
     ) {
-        return spriteSet != null ? new SoulCrystalParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, spriteSet) : null;
-    }
+        BlockState state = type.getState();
+        BlockPos blockpos = BlockPos.containing(x, y, z);
+        if (!(state.getBlock() instanceof SoulCrystalBlock block)) return null;
+        SoulCrystalType.ParticleDate date = block.getSoulCrystalType().getParticleDate(state);
+        int lightEmission = state.getLightEmission(level, blockpos);
+        if (lightEmission <= 0) return null;
 
-    public static void spawnParticle(double pX, double pY, double pZ, float pRed, float pGreen, float pBlue, float pSize) {
-        spawnParticle(pX, pY, pZ, 0.0, 0.0, 0.0, pRed, pGreen, pBlue, pSize, DEFAULT_LIFETIME.get());
-    }
+        float pr = 1 - RANDOM.nextFloat() * date.offset();
 
-    public static void spawnParticle(double pX, double pY, double pZ, float pRed, float pGreen, float pBlue, float pSize, int pLifeTick) {
-        spawnParticle(pX, pY, pZ, 0.0, 0.0, 0.0, pRed, pGreen, pBlue, pSize, pLifeTick);
-    }
+        Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        AABB aabb = date.particleAABB();
+        double aabbX = aabb.getXsize();
+        double aabbY = aabb.getYsize();
+        double aabbZ = aabb.getZsize();
+        double dx = camPos.x + 0.5 - x;
+        double dy = camPos.y + 0.5 - y;
+        double dz = camPos.z + 0.5 - z;
+        //面向摄像机的面
+        Direction directionX = dx >= 0 ? Direction.EAST : Direction.WEST;
+        Direction directionY = dy >= 0 ? Direction.UP : Direction.DOWN;
+        Direction directionZ = dz >= 0 ? Direction.SOUTH : Direction.NORTH;
+        //面权重
+        double xw = Math.abs(dx * aabbY * aabbZ);
+        double yw = Math.abs(dy * aabbX * aabbZ);
+        double zw = Math.abs(dz * aabbX * aabbY);
+        double r1 = RANDOM.nextDouble() * (xw + zw + yw);
+        Direction direction = r1 <= xw ? directionX : r1 <= xw + zw ? directionZ : directionY;
+        //遮挡时忽略
+        var ds = date.coveredDirection();
+        if (ds.contains(direction)) return null;
 
-    public static void spawnParticle(double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, float pRed, float pGreen, float pBlue, float pSize, int pLifeTick) {
-        if (spriteSet == null) return;
-        ClientLevel level = Minecraft.getInstance().level;
-        if (level == null) return;
-        Minecraft.getInstance().particleEngine.add(
-                new SoulCrystalParticle(
-                        level,
-                        spriteSet,
-                        pX,
-                        pY,
-                        pZ,
-                        pXSpeed,
-                        pYSpeed,
-                        pZSpeed,
-                        pRed,
-                        pGreen,
-                        pBlue,
-                        pSize,
-                        pLifeTick
-                ));
-    }
-
-    public static void spawnEmptyLargeSoulCrystalParticle(BlockPos pPos) {
-        spawnLargeSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
-    }
-
-    public static void spawnLargeSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
-        Direction direction = Direction.getRandom(RANDOM);
         double stepX = direction.getStepX();
         double stepY = direction.getStepY();
         double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.625 + 0.1875 : 0.5 + stepX * 0.1875 + stepX * RANDOM.nextDouble() * 0.125;
-        double y = stepY == 0 ? RANDOM.nextDouble() * 1.125 - 0.0625 : 0.5 + stepY * 0.5 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.625 + 0.1875 : 0.5 + stepZ * 0.1875 + stepZ * RANDOM.nextDouble() * 0.125;
-        spawnParticle(
-                pPos.getX() + x,
-                pPos.getY() + y,
-                pPos.getZ() + z,
-                r, g, b,
-                DEFAULT_SIZE.get()
+        float size = date.size() * pr;
+        double x1 = stepX == 0 ? RANDOM.nextDouble() * aabbX + aabb.minX : stepX < 0 ? aabb.minX - size : aabb.maxX + size;
+        double y1 = stepY == 0 ? RANDOM.nextDouble() * aabbY + aabb.minY : stepY < 0 ? aabb.minY - size : aabb.maxY + size;
+        double z1 = stepZ == 0 ? RANDOM.nextDouble() * aabbZ + aabb.minZ : stepZ < 0 ? aabb.minZ - size : aabb.maxZ + size;
+
+        float maxAlpha = lightEmission / 15F * pr;
+        int lifetime = Math.round(date.lifeTick() * pr);
+        return new SoulCrystalParticle(
+                level, x + x1, y + y1, z + z1,
+                date.r(), date.g(), date.b(), maxAlpha,
+                size, lifetime,
+                spriteSet
         );
     }
 
-    public static void spawnEmptyMediumSoulCrystalParticle(BlockPos pPos) {
-        spawnMediumSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
-    }
-
-    public static void spawnMediumSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
-        Direction direction = Direction.getRandom(RANDOM);
-        double stepX = direction.getStepX();
-        double stepY = direction.getStepY();
-        double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5625 + 0.21875 : 0.5 + stepX * 0.15625 + stepX * RANDOM.nextDouble() * 0.125;
-        double y = stepY == 0 ? RANDOM.nextDouble() : 0.5 + stepY * 0.28125 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5625 + 0.21875 : 0.5 + stepZ * 0.15625 + stepZ * RANDOM.nextDouble() * 0.125;
-        spawnParticle(
-                pPos.getX() + x,
-                pPos.getY() + y,
-                pPos.getZ() + z,
-                r, g, b,
-                DEFAULT_SIZE_MEDIUM.get()
-        );
-    }
-
-    public static void spawnEmptySmallSoulCrystalParticle(BlockPos pPos) {
-        spawnSmallSoulCrystalParticle(pPos, 1.0F, 1.0F, 1.0F);
-    }
-
-    public static void spawnSmallSoulCrystalParticle(BlockPos pPos, float r, float g, float b) {
-        Direction direction = Direction.getRandom(RANDOM);
-        double stepX = direction.getStepX();
-        double stepY = direction.getStepY();
-        double stepZ = direction.getStepZ();
-        double x = stepX == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepX * 0.125 + stepX * RANDOM.nextDouble() * 0.125;
-        double y = stepY == 0 ? RANDOM.nextDouble() * 0.875 + 0.0625 : 0.5 + stepY * 0.375 + stepY * RANDOM.nextDouble() * 0.0625;
-        double z = stepZ == 0 ? RANDOM.nextDouble() * 0.5 + 0.25 : 0.5 + stepZ * 0.125 + stepZ * RANDOM.nextDouble() * 0.125;
-        spawnParticle(
-                pPos.getX() + x,
-                pPos.getY() + y,
-                pPos.getZ() + z,
-                r, g, b,
-                DEFAULT_SIZE_SMALL.get()
-        );
-    }
 }

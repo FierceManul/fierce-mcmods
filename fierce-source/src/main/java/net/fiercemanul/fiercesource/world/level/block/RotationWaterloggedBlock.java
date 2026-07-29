@@ -14,19 +14,19 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-public class RotationWaterlogBlock extends RotationBlock implements SimpleWaterloggedBlock {
+public class RotationWaterloggedBlock extends RotationBlock implements SimpleWaterloggedBlock {
 
 
-    public static final MapCodec<RotationWaterlogBlock> CODEC = simpleCodec(RotationWaterlogBlock::new);
+    public static final MapCodec<RotationWaterloggedBlock> CODEC = simpleCodec(RotationWaterloggedBlock::new);
     protected static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public RotationWaterlogBlock(Properties properties) {
+    public RotationWaterloggedBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(ROTATION, 0).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected MapCodec<? extends RotationWaterlogBlock> codec() {
+    protected MapCodec<? extends RotationWaterloggedBlock> codec() {
         return CODEC;
     }
 

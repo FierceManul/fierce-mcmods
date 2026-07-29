@@ -8,7 +8,7 @@
     "block.fiercecraft.medium_mana_crystal": "中靈樞",
     "block.fiercecraft.large_mana_crystal": "大靈樞",
     "block.fiercecraft.creative_mana_block": "九天靈泉",
-    "block.fiercecraft.creative_mana_output": "九天靈樞",
+    "block.fiercecraft.creative_mana_provider": "九天靈樞",
     "block.fiercecraft.hao_stone": "皓岩",
     "block.fiercecraft.polished_hao_stone": "磨制皓岩",
     "block.fiercecraft.smooth_hao_stone": "平滑皓岩",
@@ -17,13 +17,22 @@
     "block.fiercecraft.smooth_deep_stone": "平滑淵岩",
     "block.fiercecraft.hypercube": "太虚方",
     "block.fiercecraft.world_locator": "界定锚",
+    "block.fiercecraft.placeholder": "占位",
+    "block.fiercecraft.occlusion_test": "剔除测试",
     "item.fiercecraft.miji": "秘笈",
     "item.fiercecraft.pos_recorder": "记位器",
     "entity.fiercecraft.thrown_block": "投掷的%s",
-    "itemGroup.fiercecraft": "狂野工藝",
-    "config.fiercesource.forceManaConsume": "强制消耗灵能",
-    "config.fiercesource.thrownBlockSaveMode": "投掷方块安全模式",
-    "config.fiercesource.forceVanillaCreativeModeTabFront": "原版创造标签在首",
+    "itemGroup.fiercecraft": "灵域纪元",
 
-    "fml.menu.mods.info.description.fiercesource": "狂野系列模组的代码库"
+    "fiercesource.configuration.title": "灵气觉醒配置",
+    "fiercesource.configuration.section.fiercesource.common.toml": "灵气觉醒通用配置",
+    "fiercesource.configuration.section.fiercesource.common.toml.title": "灵气觉醒通用配置",
+    "config.fiercesource.forceManaConsume": "强制消耗灵能",
+    "config.fiercesource.forceManaConsume.tooltip": "是否无主模块时依然消耗灵能",
+    "config.fiercesource.thrownBlockSaveMode": "投掷方块安全模式",
+    "config.fiercesource.thrownBlockSaveMode.tooltip": "如果投掷方块引起崩溃可以开启，优先使用黑名单tag#fiercecraft:thrown_block/ban",
+    "config.fiercesource.forceVanillaCreativeModeTabFront": "原版创造标签在首",
+    "config.fiercesource.forceVanillaCreativeModeTabFront.tooltip": "是否强制原版创造模式库存标签在首页",
+
+    "fml.menu.mods.info.description.fiercesource": "灵域系列模组的代码库"
 }

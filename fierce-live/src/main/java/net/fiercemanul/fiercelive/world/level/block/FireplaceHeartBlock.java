@@ -115,29 +115,29 @@ public class FireplaceHeartBlock extends WaterloggedBlock {
     }
 
     @Override
-    public boolean placeLiquid(LevelAccessor pLevel, BlockPos pPos, BlockState pState, FluidState pFluidState) {
-        boolean flag = super.placeLiquid(pLevel, pPos, pState, pFluidState);
+    public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState pState, FluidState pFluidState) {
+        boolean flag = super.placeLiquid(level, pos, pState, pFluidState);
         if(flag) {
-            pLevel.setBlock(pPos, pLevel.getBlockState(pPos).setValue(LIT, false), 0);
+            level.setBlock(pos, level.getBlockState(pos).setValue(LIT, false), 0);
             if (pState.getValue(LIT)) {
-                if (pLevel.isClientSide()) for (int i = 0; i < 20; ++i) CampfireBlock.makeParticles((Level) pLevel, pPos, false, true);
-                else pLevel.playSound(null, pPos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                if (level.isClientSide()) for (int i = 0; i < 20; ++i) CampfireBlock.makeParticles((Level) level, pos, false, true);
+                else level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-                pLevel.gameEvent(null, GameEvent.BLOCK_CHANGE, pPos);
+                level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
             }
         }
         return flag;
     }
 
     @Override
-    public void onProjectileHit(Level pLevel, BlockState pState, BlockHitResult pHit, Projectile pProjectile) {
+    public void onProjectileHit(Level level, BlockState pState, BlockHitResult pHit, Projectile pProjectile) {
         BlockPos blockpos = pHit.getBlockPos();
-        if (!pLevel.isClientSide
+        if (!level.isClientSide
                 && pProjectile.isOnFire()
-                && pProjectile.mayInteract(pLevel, blockpos)
+                && pProjectile.mayInteract(level, blockpos)
                 && !pState.getValue(LIT)
                 && !pState.getValue(WATERLOGGED)) {
-            pLevel.setBlock(blockpos, pState.setValue(BlockStateProperties.LIT, true), 11);
+            level.setBlock(blockpos, pState.setValue(BlockStateProperties.LIT, true), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
 

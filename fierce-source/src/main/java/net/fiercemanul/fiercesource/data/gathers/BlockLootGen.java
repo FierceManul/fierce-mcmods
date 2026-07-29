@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.data.gathers;
 
-import net.fiercemanul.fiercesource.data.FSBlocks;
+import net.fiercemanul.fiercesource.data.FSItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceKey;
@@ -9,6 +9,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Collections;
 import java.util.function.BiConsumer;
+
+import static net.fiercemanul.fiercesource.data.FSBlocks.*;
 
 public class BlockLootGen extends BlockLootSubProvider {
 
@@ -22,25 +24,25 @@ public class BlockLootGen extends BlockLootSubProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
-        dropSelf(FSBlocks.LARGE_SOUL_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.MEDIUM_SOUL_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.SMALL_SOUL_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.LARGE_MANA_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.MEDIUM_MANA_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.SMALL_MANA_CRYSTAL.getBlock());
-        dropSelf(FSBlocks.CREATIVE_MANA_BLOCK.getBlock());
-        dropSelf(FSBlocks.CREATIVE_MANA_OUTPUT.getBlock());
-        dropSelf(FSBlocks.WORLD_LOCATOR.getBlock());
+        dropSelf(LARGE_SOUL_CRYSTAL.get());
+        dropSelf(MEDIUM_SOUL_CRYSTAL.get());
+        dropSelf(SMALL_SOUL_CRYSTAL.get());
+        dropSelf(LARGE_MANA_CRYSTAL.get());
+        dropSelf(MEDIUM_MANA_CRYSTAL.get());
+        dropSelf(SMALL_MANA_CRYSTAL.get());
+        dropSelf(CREATIVE_MANA_BLOCK.get());
+        dropSelf(CREATIVE_MANA_PROVIDER.get());
+        dropSelf(WORLD_LOCATOR.get());
 
-        dropSelf(FSBlocks.SOUL_CRYSTAL_SHARD.getBlock());
-        dropSelf(FSBlocks.SOUL_CRYSTAL_DUST.getBlock());
+        dropSelf(FSItems.SOUL_CRYSTAL_SHARD.get());
+        dropSelf(FSItems.SOUL_CRYSTAL_DUST.get());
 
-        dropSelf(FSBlocks.HAO_STONE.getBlock());
-        dropSelf(FSBlocks.POLISHED_HAO_STONE.getBlock());
-        dropSelf(FSBlocks.SMOOTH_HAO_STONE.getBlock());
-        dropSelf(FSBlocks.DEEP_STONE.getBlock());
-        dropSelf(FSBlocks.POLISHED_DEEP_STONE.getBlock());
-        dropSelf(FSBlocks.SMOOTH_DEEP_STONE.getBlock());
+        dropSelf(HAO_STONE.get());
+        dropSelf(POLISHED_HAO_STONE.get());
+        dropSelf(SMOOTH_HAO_STONE.get());
+        dropSelf(DEEP_STONE.get());
+        dropSelf(POLISHED_DEEP_STONE.get());
+        dropSelf(SMOOTH_DEEP_STONE.get());
 
         this.map.forEach((key, builder) -> {
             if (builder != null) generator.accept(key, builder);

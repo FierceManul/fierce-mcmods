@@ -24,10 +24,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class CreativeManaOutputBlock extends FacingWaterloggedBlock implements EntityBlock {
+public class CreativeManaProviderBlock extends FacingWaterloggedBlock implements EntityBlock {
 
 
-    public static final MapCodec<CreativeManaOutputBlock> CODEC = simpleCodec(CreativeManaOutputBlock::new);
+    public static final MapCodec<CreativeManaProviderBlock> CODEC = simpleCodec(CreativeManaProviderBlock::new);
     private static final VoxelShapeHelper SHAPE_HELPER = new VoxelShapeHelper()
             .applyCube(2.0, 2.0, 0.0, 14.0, 14.0, 2.0)
             .applyCube(3.0, 3.0, 2.0, 13.0, 13.0, 4.0)
@@ -39,12 +39,12 @@ public class CreativeManaOutputBlock extends FacingWaterloggedBlock implements E
     public static final VoxelShape SHAPE_UP = SHAPE_HELPER.up();
     public static final VoxelShape SHAPE_DOWN = SHAPE_HELPER.down();
 
-    public CreativeManaOutputBlock(Properties properties) {
+    public CreativeManaProviderBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends CreativeManaOutputBlock> codec() {
+    protected MapCodec<? extends CreativeManaProviderBlock> codec() {
         return CODEC;
     }
 

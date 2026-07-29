@@ -17,7 +17,7 @@ public final class FLCreativeModeTab {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DECORATION_TAB = CREATIVE_MODE_TABS.register(
             "fiercelive_decoration",
-            () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.decoration"))
+            () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.goods"))
                                  .withTabsBefore(FSCreativeModeTabs.MAIN_TAB.getKey())
                                  .icon(FLBlocks.SOUL_CRYSTAL_ORNAMENT::toStack)
                                  .displayItems(FLCreativeModeTab::applyDecorationBlocks)
@@ -25,7 +25,7 @@ public final class FLCreativeModeTab {
     );
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BUILDING_TAB = CREATIVE_MODE_TABS.register(
             "fiercelive_building",
-            () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.building"))
+            () -> CreativeModeTab.builder().title(Component.translatable("item_group.fiercelive.templateite"))
                                  .withTabsBefore(DECORATION_TAB.getKey())
                                  .icon(FLBlocks.SMOOTH_OAK_PLANKS::toStack)
                                  .displayItems((parameters, output) -> {
@@ -97,6 +97,7 @@ public final class FLCreativeModeTab {
         output.accept(FLBlocks.CONCRETE_POWDER);
         output.accept(FLBlocks.GRAVEL_CONCRETE);
         output.accept(FLBlocks.GRAVEL_CONCRETE_POWDER);
+        output.accept(FLBlocks.BLACK_IRON_BLOCK);
         output.accept(FLBlocks.SMOOTH_OAK_PLANKS);
         output.accept(FLBlocks.SMOOTH_SPRUCE_PLANKS);
         output.accept(FLBlocks.SMOOTH_BIRCH_PLANKS);
@@ -193,16 +194,18 @@ public final class FLCreativeModeTab {
         output.accept(FLItems.FOX_CARROT_SEED);
         output.accept(FLItems.RAINBOW_DYE);
 
-        output.accept(FLBlocks.INFINITE_TNT);
-        output.accept(FLBlocks.INFINITE_RAIL_CARPET);
-        output.accept(FLBlocks.SNOWBALL_GENERATOR);
-        output.accept(FLItems.INFINITE_SNOWBALL);
-
         parameters.holders().lookup(Registries.ENCHANTMENT).flatMap(
                 enchantmentLookup -> enchantmentLookup.get(FLEnchantments.POISON_ASPECT)
         ).ifPresent(enchantment -> output.accept(EnchantedBookItem.createForEnchantment(
                 new EnchantmentInstance(enchantment, enchantment.value().getMaxLevel())))
         );
+
+        output.accept(FLBlocks.INFINITE_TNT);
+        output.accept(FLBlocks.INFINITE_RAIL_CARPET);
+        output.accept(FLBlocks.SNOWBALL_GENERATOR);
+        output.accept(FLItems.INFINITE_SNOWBALL);
+        BlockBulkRegister.BIG_BUTTON_BLOCKS_IN_TAB.forEach(output::accept);
+
     }
 
     public static void init() {}

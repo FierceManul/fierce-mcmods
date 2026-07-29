@@ -57,7 +57,7 @@ public class ItemTagsGen extends ItemTagsProvider {
         copy(FLBlockTags.COLOR_LAMPS, FLItemTags.COLOR_LAMPS);
         copy(FLBlockTags.RAINBOW_DYED, FLItemTags.RAINBOW_DYED);
         copy(FLBlockTags.IRON_CORRIDORS, FLItemTags.IRON_CORRIDORS);
-        copy(FLBlockTags.CHI_STONE_TECH, FLItemTags.CHI_STONE_TECH);
+        copy(FLBlockTags.HANDY_REDSTONE, FLItemTags.HANDY_REDSTONE);
 
         tag(ItemTags.PLANKS).add(
                 FLBlocks.SMOOTH_OAK_PLANKS.asItem(),
@@ -158,7 +158,7 @@ public class ItemTagsGen extends ItemTagsProvider {
                 Items.DEAD_TUBE_CORAL_FAN
         );
 
-        tag(FLItemTags.CHI_STONE_TECH).add(INFINITE_SNOWBALL.get());
+        tag(FLItemTags.HANDY_REDSTONE).add(INFINITE_SNOWBALL.get());
 
 
         ROWS.forEach(consumer -> consumer.accept(this));

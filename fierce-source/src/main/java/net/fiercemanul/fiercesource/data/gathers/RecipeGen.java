@@ -1,5 +1,6 @@
 package net.fiercemanul.fiercesource.data.gathers;
 
+import net.fiercemanul.fiercesource.data.FSItems;
 import net.fiercemanul.fiercesource.data.FSRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -36,7 +37,7 @@ public class RecipeGen extends FSRecipeProvider {
 
         RecipeOutput backupRecipeOutput = recipeOutput.withConditions(new NotCondition(new ModLoadedCondition("fiercecraft")));
         
-        shaped(RecipeCategory.MISC, HYPERCUBE)
+        shaped(RecipeCategory.MISC, FSItems.HYPERCUBE)
                 .define('#', Items.ENDER_CHEST)
                 .define('X', SMALL_SOUL_CRYSTAL)
                 .define('O', Items.ENDER_EYE)
@@ -44,31 +45,31 @@ public class RecipeGen extends FSRecipeProvider {
                 .pattern("X#X")
                 .pattern("OXO")
                 .unlockedBy(getHasName(Items.ENDER_CHEST), has(Items.ENDER_CHEST))
-                .save(backupRecipeOutput, applyBackup(HYPERCUBE));
+                .save(backupRecipeOutput, applyBackup(FSItems.HYPERCUBE));
 
         shaped(RecipeCategory.TOOLS, WORLD_LOCATOR)
-                .define('#', HYPERCUBE)
+                .define('#', FSItems.HYPERCUBE)
                 .define('X', Items.ENDER_EYE)
                 .define('I', Items.CHAIN)
                 .pattern("IXI")
                 .pattern("X#X")
                 .pattern("IXI")
-                .unlockedBy(getHasName(HYPERCUBE), has(HYPERCUBE))
+                .unlockedBy(getHasName(FSItems.HYPERCUBE), has(FSItems.HYPERCUBE))
                 .save(backupRecipeOutput, applyBackup(WORLD_LOCATOR));
 
-        shapeless(RecipeCategory.MISC, SOUL_CRYSTAL_SHARD)
+        shapeless(RecipeCategory.MISC, FSItems.SOUL_CRYSTAL_SHARD)
                 .requires(Items.AMETHYST_SHARD)
                 .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
-                .save(backupRecipeOutput, applyBackup(SOUL_CRYSTAL_SHARD));
+                .save(backupRecipeOutput, applyBackup(FSItems.SOUL_CRYSTAL_SHARD));
 
         shaped(RecipeCategory.MISC, SMALL_SOUL_CRYSTAL)
                 .define('X', Items.GLOWSTONE_DUST)
-                .define('O', SOUL_CRYSTAL_SHARD)
+                .define('O', FSItems.SOUL_CRYSTAL_SHARD)
                 .pattern(" O ")
                 .pattern("OXO")
                 .pattern(" O ")
                 .unlockedBy(getHasName(Items.GLOWSTONE_DUST), has(Items.GLOWSTONE_DUST))
-                .unlockedBy(getHasName(SOUL_CRYSTAL_SHARD), has(SOUL_CRYSTAL_SHARD))
+                .unlockedBy(getHasName(FSItems.SOUL_CRYSTAL_SHARD), has(FSItems.SOUL_CRYSTAL_SHARD))
                 .save(backupRecipeOutput, applyBackup(SMALL_SOUL_CRYSTAL));
 
         shaped(RecipeCategory.MISC, MEDIUM_SOUL_CRYSTAL)

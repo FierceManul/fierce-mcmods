@@ -22,7 +22,7 @@ public class WaterloggedBlock extends Block implements SimpleWaterloggedBlock {
 
     public WaterloggedBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
+        this.registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
     }
 
     @Override

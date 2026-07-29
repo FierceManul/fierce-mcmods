@@ -31,7 +31,7 @@ public final class WrenchUtils {
     }
 
     public static boolean wrenchRotate(BlockState state, Level level, BlockPos pos) {
-        return level.setBlock(pos, state.rotate(level, pos, Rotation.CLOCKWISE_90), 11);
+        return level.setBlock(pos, state.rotate(level, pos, Rotation.CLOCKWISE_90), Block.UPDATE_ALL_IMMEDIATE);
     }
 
     public static <T extends Comparable<T>> ItemInteractionResult interact(
@@ -44,7 +44,7 @@ public final class WrenchUtils {
     }
 
     public static <T extends Comparable<T>> boolean wrenchInteract(Property<T> property, BlockState state, Level level, BlockPos pos) {
-        return level.setBlock(pos, state.setValue(property, Util.findNextInIterable(property.getPossibleValues(), state.getValue(property))), 11);
+        return level.setBlock(pos, state.setValue(property, Util.findNextInIterable(property.getPossibleValues(), state.getValue(property))), Block.UPDATE_ALL_IMMEDIATE);
     }
 
     public static ItemInteractionResult interact(
@@ -57,7 +57,7 @@ public final class WrenchUtils {
     }
 
     public static boolean wrenchInteract(BooleanProperty property, BlockState state, Level level, BlockPos pos) {
-        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), 11);
+        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), Block.UPDATE_ALL_IMMEDIATE);
     }
 
     public static ItemInteractionResult interact(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player) {
@@ -93,7 +93,7 @@ public final class WrenchUtils {
                 hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ()),
                 PipeBlock.PROPERTY_BY_DIRECTION.get(hit.getDirection())
         );
-        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), 11);
+        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), Block.UPDATE_ALL_IMMEDIATE);
     }
 
     public static ItemInteractionResult interactMachine(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
@@ -108,7 +108,7 @@ public final class WrenchUtils {
      */
     public static boolean wrenchMachine(BlockState state, Level level, BlockPos pos, BlockHitResult hit) {
         BooleanProperty property = PipeBlock.PROPERTY_BY_DIRECTION.get(hit.getDirection());
-        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), 11);
+        return level.setBlock(pos, state.setValue(property, !state.getValue(property)), Block.UPDATE_ALL_IMMEDIATE);
     }
 
     public static boolean isWrench(ItemStack stack) {

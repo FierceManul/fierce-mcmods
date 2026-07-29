@@ -36,14 +36,14 @@ public class ThinStairBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<StairsShape> SHAPE = BlockStateProperties.STAIRS_SHAPE;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape[] SHAPES = makeShapes(
-            new VoxelShapeHelper().applyCube(0.0, 8.0, 0.0, 16.0, 16.0, 8.0)
-                                  .applyCube(0.0, 0.0, 8.0, 16.0, 8.0, 16.0),
-            new VoxelShapeHelper().applyCube(0.0, 8.0, 0.0, 16.0, 16.0, 8.0)
-                                  .applyCube(0.0, 8.0, 8.0, 8.0, 16.0, 16.0)
-                                  .applyCube(8.0, 0.0, 8.0, 16.0, 8.0, 16.0),
-            new VoxelShapeHelper().applyCube(0.0, 8.0, 0.0, 8.0, 16.0, 8.0)
-                                  .applyCube(8.0, 0.0, 0.0, 16.0, 8.0, 8.0)
-                                  .applyCube(0.0, 0.0, 8.0, 16.0, 8.0, 16.0)
+            new VoxelShapeHelper().applyCube(0, 8, 0, 16, 16, 8)
+                                  .applyCube(0, 0, 8, 16, 8, 16),
+            new VoxelShapeHelper().applyCube(0, 8, 0, 16, 16, 8)
+                                  .applyCube(0, 8, 8, 8, 16, 16)
+                                  .applyCube(8, 0, 8, 16, 8, 16),
+            new VoxelShapeHelper().applyCube(0, 8, 0, 8, 16, 8)
+                                  .applyCube(8, 0, 0, 16, 8, 8)
+                                  .applyCube(0, 0, 8, 16, 8, 16)
     );
 
     public static VoxelShape[] makeShapes(VoxelShapeHelper straight, VoxelShapeHelper inner, VoxelShapeHelper outer) {

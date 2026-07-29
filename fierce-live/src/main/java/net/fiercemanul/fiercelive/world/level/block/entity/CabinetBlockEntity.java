@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercelive.world.level.block.entity;
 
-import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.FLBlockEntities;
 import net.fiercemanul.fiercelive.world.level.block.CabinetBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -27,8 +27,8 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
 
 
-    public CabinetBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(FierceLive.CABINET_BLOCK_ENTITY.get(), pPos, pBlockState);
+    public CabinetBlockEntity(BlockPos pos, BlockState state) {
+        super(FLBlockEntities.CABINET_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
