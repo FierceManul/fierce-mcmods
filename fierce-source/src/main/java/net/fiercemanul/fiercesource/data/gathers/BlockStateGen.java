@@ -18,7 +18,7 @@ public class BlockStateGen extends FSBlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simple(CREATIVE_MANA_BLOCK);
-        directionBlock(CREATIVE_MANA_PROVIDER, false);
+        simple(CREATIVE_MANA_PROVIDER);
         simpleWithModel(FSItems.HYPERCUBE);
         simpleWithModel(WORLD_LOCATOR);
 

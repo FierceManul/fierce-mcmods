@@ -13,7 +13,9 @@ public class FishingChairBlock extends SimpleChairBlock {
 
     public static final MapCodec<FishingChairBlock> CODEC = simpleCodec(FishingChairBlock::new);
     protected static final VoxelShapeHelper SHAPE = new VoxelShapeHelper()
-            .applyCube(1, 0, 1, 15, 7, 15)
+            .applyCube(1, 0, 1, 3, 7, 15)
+            .applyCube(13, 0, 1, 15, 7, 15)
+            .applyCube(1, 5, 1, 15, 7, 15)
             .applyCube(1, 7, 14, 15, 16, 15)
             .applyCube(1, 7, 3, 2, 13, 14)
             .applyCube(14, 7, 3, 15, 13, 14);

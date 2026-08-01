@@ -667,8 +667,8 @@ public final class BlockBulkRegister {
         if (isSimpleStrongCubeBlock(material)) {
             String path = material.getPath();
             DeferredBlock<Block> gardenChair = material.hasTag(BlockMaterialTag.TOOL_AXE)
-                                               ? BLOCKS.register(path + "_garden_chair", () -> new GardenChairBlock(material.getProperties().noOcclusion()))
-                                               : BLOCKS.register(path + "_garden_chair", () -> new GardenChairBlock(material.getBlock().properties()));
+                                               ? BLOCKS.register(path + "_garden_chair", () -> new WoodenGardenChairBlock(material.getBlock().properties()))
+                                               : BLOCKS.register(path + "_garden_chair", () -> new StoneGardenChairBlock(material.getBlock().properties()));
             itemTab.add(ITEMS.registerSimpleBlockItem(gardenChair));
             if (genData) {
                 basicData(material, gardenChair);
