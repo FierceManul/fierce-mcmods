@@ -5,6 +5,7 @@ import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.gathers.*;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
 import net.fiercemanul.fiercelive.world.level.block.*;
+import net.fiercemanul.fiercesource.world.level.block.VerticalFacingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -169,6 +170,7 @@ public final class BlockBulkRegister {
             vanillaBlocks(material, itemList);
             cutBlocks(material, itemList);
             wool(material, itemList);
+            dirty(material, itemList);
             roof(material, itemList);
             pillars(material, itemList);
             horizonPanels(material, itemList);
@@ -454,6 +456,29 @@ public final class BlockBulkRegister {
             LangGanZHCN.ROWS.put(wool, s + "格纹羊毛");
             LangGanZHCN.ROWS.put(carpet, s + "格纹地毯");
             LangGanZHCN.ROWS.put(fishingChair, s + "钓鱼凳");
+        }
+    }
+
+    private static void dirty(BlockMaterial material, List<ItemLike> itemTab) {
+        if (!material.getPath().contains("concrete")) return;
+        DeferredBlock<Block> dirty = BLOCKS.register("dirty_" + material.getPath(), () -> new VerticalFacingBlock(material.getBlock().properties()));
+        DeferredBlock<Block> broken = BLOCKS.register("broken_" + material.getPath(), () -> new Block(material.getBlock().properties()));
+        itemTab.add(ITEMS.registerSimpleBlockItem(dirty));
+        itemTab.add(ITEMS.registerSimpleBlockItem(broken));
+
+        if (genData) {
+            basicData(material, dirty);
+            basicData(material, broken);
+            BlockTagsGen.ROWS.add(g -> g.tag(Tags.Blocks.CONCRETES, dirty));
+            BlockTagsGen.ROWS.add(g -> g.tag(Tags.Blocks.CONCRETES, broken));
+            ItemTagsGen.ROWS.add(g -> g.tag(Tags.Items.CONCRETES, dirty));
+            ItemTagsGen.ROWS.add(g -> g.tag(Tags.Items.CONCRETES, broken));
+            BlockStateGen.ROWS.put(dirty, g -> g.dirty(dirty, material));
+            BlockStateGen.ROWS.put(broken, g -> g.broken(broken, material));
+            RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, dirty, material));
+            RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, broken, material));
+            LangGanZHCN.ROWS.put(dirty, "肮脏的" + material.getPath());
+            LangGanZHCN.ROWS.put(broken, "破损的" + material.getPath());
         }
     }
 

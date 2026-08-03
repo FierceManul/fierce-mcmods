@@ -12,6 +12,7 @@ import net.fiercemanul.fiercelive.world.level.block.TableBlock;
 import net.fiercemanul.fiercelive.world.level.block.state.properties.*;
 import net.fiercemanul.fiercesource.data.FSBlockStateProvider;
 import net.fiercemanul.fiercesource.util.FSUtils;
+import net.fiercemanul.fiercesource.world.level.block.FSBlockStateProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -59,6 +60,8 @@ public class BlockStateGen extends FSBlockStateProvider {
     @Nullable
     private ModelFile tint_sea_lantern, tint_sea_lantern_glass_lamp, tint_reinforced_sea_lantern;
 
+    private final ModelFile[] dirty = new ModelFile[2], broken = new ModelFile[4];
+
     public BlockStateGen(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, FierceLive.MODID, exFileHelper);
     }
@@ -75,6 +78,19 @@ public class BlockStateGen extends FSBlockStateProvider {
                                                                        .texture("all", modLoc("block/white_sea_lantern")))
                                               .end();
         tint_reinforced_sea_lantern = models().getExistingFile(modLoc("block/tint_reinforced_sea_lantern"));
+
+        for (int i = 0; i < dirty.length; i++) {
+            String dirtyName = "dirty" + (i > 0 ? "_" + i : "");
+            dirty[i] = models().withExistingParent(dirtyName, modLoc("block/horizon_overlay"))
+                               .texture("overlay", modLoc("block/" + dirtyName))
+                               .renderType("translucent");
+        }
+        for (int i = 0; i < broken.length; i++) {
+            String brokenName = "broken" + (i > 0 ? "_" + i : "");
+            broken[i] = models().withExistingParent(brokenName, modLoc("block/overlay"))
+                                .texture("overlay", modLoc("block/" + brokenName))
+                                .renderType("translucent");
+        }
 
         ROWS.put(FOX_CARROTS, gen -> {});
         ROWS.put(FOX_CARROT_SHEAF, gen -> gen.simpleWithModel(FOX_CARROT_SHEAF));
@@ -537,6 +553,83 @@ public class BlockStateGen extends FSBlockStateProvider {
                 .modelFile(modelPath).rotationY(180).nextModel()
                 .modelFile(modelPath).rotationY(270).addModel();
         itemModels().withExistingParent(HALF_DIRT_PATH.getId().getPath(), modLoc("block/half_dirt_path"));
+    }
+
+    public void dirty(DeferredHolder<Block, ? extends Block> deferredBlock, BlockMaterial material) {
+        var model = models().getExistingFile(material.blockRl());
+        getMultipartBuilder(deferredBlock.get())
+                .part()
+                .modelFile(model)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(90)
+                .rotationY(90)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(270)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(270)
+                .rotationY(90)
+                .addModel().end()
+                .part()
+                .modelFile(dirty[0])
+                .nextModel()
+                .modelFile(dirty[1])
+                .addModel()
+                .condition(FSBlockStateProperties.VERTICAL_FACING, Direction.DOWN).end()
+                .part()
+                .modelFile(dirty[0]).rotationX(180)
+                .nextModel()
+                .modelFile(dirty[1]).rotationX(180)
+                .addModel().condition(FSBlockStateProperties.VERTICAL_FACING, Direction.UP)
+                .end();
+        itemModels().withExistingParent(deferredBlock.getId().getPath(), "block/block")
+                    .texture("particle", blockTexture(material))
+                    .customLoader(CompositeModelBuilder::begin)
+                    .child("part_a", itemModels().nested().parent(models().getExistingFile(material.blockRl())).renderType("solid"))
+                    .child("part_b", itemModels().nested().parent(dirty[0]));
+    }
+
+    public void broken(DeferredHolder<Block, ? extends Block> deferredBlock, BlockMaterial material) {
+        var model = models().getExistingFile(material.blockRl());
+        var builder = getMultipartBuilder(deferredBlock.get())
+                .part()
+                .modelFile(model)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(90)
+                .rotationY(90)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(270)
+                .nextModel()
+                .modelFile(model)
+                .rotationX(270)
+                .rotationY(90)
+                .addModel().end()
+                .part();
+        for (int i = 0; i < broken.length; i++) {
+            builder = builder.modelFile(broken[i])
+                             .nextModel()
+                             .modelFile(broken[i])
+                             .rotationX(90)
+                             .rotationY(90)
+                             .nextModel()
+                             .modelFile(broken[i])
+                             .rotationX(270)
+                             .nextModel()
+                             .modelFile(broken[i])
+                             .rotationX(270)
+                             .rotationY(90);
+            if (i == broken.length - 1) builder.addModel().end();
+            else builder = builder.nextModel();
+        }
+        itemModels().withExistingParent(deferredBlock.getId().getPath(), "block/block")
+                    .texture("particle", blockTexture(material))
+                    .customLoader(CompositeModelBuilder::begin)
+                    .child("part_a", itemModels().nested().parent(models().getExistingFile(material.blockRl())).renderType("solid"))
+                    .child("part_b", itemModels().nested().parent(broken[0]));
     }
 
     private void lightTube() {
