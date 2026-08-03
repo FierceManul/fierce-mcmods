@@ -1090,6 +1090,16 @@ public class BlockStateGen extends FSBlockStateProvider {
         );
     }
 
+    public void windHoleB(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+        String path = deferredBlock.getId().getPath();
+        zAxisModel(
+                deferredBlock.get(), path,
+                models().withExistingParent(path, modLoc("block/wind_hole_b"))
+                        .texture("all", material),
+                true
+        );
+    }
+
     public void glassWindow(DeferredBlock<Block> deferredBlock) {
         String path = deferredBlock.getId().getPath();
 

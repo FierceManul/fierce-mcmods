@@ -30,6 +30,6 @@ public final class FLBlockEntities {
             }
     );
 
-
+    public static void init() {}
 
 }

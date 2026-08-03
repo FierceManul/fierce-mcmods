@@ -28,6 +28,7 @@ public interface FLRegister {
         CREATIVE_MODE_TABS.register(modEventBus);
 
         FLBlocks.init();
+        FLBlockEntities.init();
         FLItems.init();
         FLEntities.init();
         FLCreativeModeTab.init();
