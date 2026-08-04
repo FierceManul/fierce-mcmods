@@ -19,12 +19,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class WindHoleTypeBBlock extends RotatedPillarWaterloggedBlock {
+public class WindHoleTypeCBlock extends RotatedPillarWaterloggedBlock {
 
 
-    public static final MapCodec<? extends WindHoleTypeBBlock> CODEC = simpleCodec(WindHoleTypeBBlock::new);
+    public static final MapCodec<? extends WindHoleTypeCBlock> CODEC = simpleCodec(WindHoleTypeCBlock::new);
     private static final VoxelShapeHelper SHAPE_HELPER = new VoxelShapeHelper()
-            .applyCube(0, 0, 5, 16, 16, 11);
+            .applyCube(0, 0, 5, 16, 6, 11)
+            .applyCube(0, 10, 5, 16, 16, 11)
+            .applyCube(0, 6, 5, 6, 10, 11)
+            .applyCube(10, 6, 5, 16, 10, 11);
     public static final VoxelShape SHAPE_X = SHAPE_HELPER.west();
     public static final VoxelShape SHAPE_Y = SHAPE_HELPER.up();
     public static final VoxelShape SHAPE_Z = SHAPE_HELPER.north();
@@ -33,17 +36,20 @@ public class WindHoleTypeBBlock extends RotatedPillarWaterloggedBlock {
             .applyCube(0, 13, 5, 16, 16, 11)
             .applyCube(0, 3, 5, 3, 13, 11)
             .applyCube(13, 3, 5, 16, 13, 11)
-            .applyCube(3, 3, 6, 13, 13, 10);
+            .applyCube(3, 3, 6, 6, 13, 10)
+            .applyCube(10, 3, 6, 13, 13, 10)
+            .applyCube(6, 3, 6, 10, 6, 10)
+            .applyCube(6, 10, 6, 10, 13, 10);
     public static final VoxelShape COLLISION_SHAPE_X = COLLISION_SHAPE_HELPER.west();
     public static final VoxelShape COLLISION_SHAPE_Y = COLLISION_SHAPE_HELPER.up();
     public static final VoxelShape COLLISION_SHAPE_Z = COLLISION_SHAPE_HELPER.north();
 
-    public WindHoleTypeBBlock(Properties properties) {
+    public WindHoleTypeCBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public MapCodec<? extends WindHoleTypeBBlock> codec() {
+    public MapCodec<? extends WindHoleTypeCBlock> codec() {
         return CODEC;
     }
 
@@ -55,8 +61,8 @@ public class WindHoleTypeBBlock extends RotatedPillarWaterloggedBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return switch (state.getValue(AXIS)) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return switch (pState.getValue(AXIS)) {
             case X -> SHAPE_X;
             case Y -> SHAPE_Y;
             case Z -> SHAPE_Z;

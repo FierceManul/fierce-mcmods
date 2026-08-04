@@ -609,18 +609,24 @@ public final class BlockBulkRegister {
 
         DeferredBlock<Block> hole = BLOCKS.register(material.getPath() + "_wind_hole", () -> new WindHoleBlock(material.getBlock().properties()));
         DeferredBlock<Block> holeB = BLOCKS.register(material.getPath() + "_wind_hole_b", () -> new WindHoleTypeBBlock(material.getBlock().properties()));
+        DeferredBlock<Block> holeC = BLOCKS.register(material.getPath() + "_wind_hole_c", () -> new WindHoleTypeCBlock(material.getBlock().properties()));
         itemTab.add(ITEMS.registerSimpleBlockItem(hole));
         itemTab.add(ITEMS.registerSimpleBlockItem(holeB));
+        itemTab.add(ITEMS.registerSimpleBlockItem(holeC));
 
         if (genData) {
             basicData(material, hole);
             basicData(material, holeB);
-            BlockStateGen.ROWS.put(hole, g -> g.windHole(hole, g.getSimpleCubeMaterialResource(material)));
-            BlockStateGen.ROWS.put(holeB, g -> g.windHoleB(holeB, g.getSimpleCubeMaterialResource(material)));
+            basicData(material, holeC);
+            BlockStateGen.ROWS.put(hole, g -> g.windHole(hole, g.getSimpleCubeMaterialResource(material), ""));
+            BlockStateGen.ROWS.put(holeB, g -> g.windHole(holeB, g.getSimpleCubeMaterialResource(material), "_b"));
+            BlockStateGen.ROWS.put(holeC, g -> g.windHole(holeC, g.getSimpleCubeMaterialResource(material), "_c"));
             RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, hole, material));
             RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, holeB, material));
+            RecipeGen.ROWS.add((g, o) -> g.cutOneToTwo(o, holeC, material));
             LangGanZHCN.ROWS.put(hole, material.getPath() + "一号风口");
             LangGanZHCN.ROWS.put(holeB, material.getPath() + "二号风口");
+            LangGanZHCN.ROWS.put(holeC, material.getPath() + "三号风口");
         }
     }
 

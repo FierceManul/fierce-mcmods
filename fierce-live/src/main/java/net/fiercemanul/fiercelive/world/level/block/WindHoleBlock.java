@@ -24,14 +24,14 @@ public class WindHoleBlock extends RotatedPillarWaterloggedBlock {
 
     public static final MapCodec<? extends WindHoleBlock> CODEC = simpleCodec(WindHoleBlock::new);
     private static final VoxelShapeHelper SHAPE_HELPER = new VoxelShapeHelper()
-            .applyCube(0.0, 0.0, 5.0, 16.0, 3.0, 11.0)
-            .applyCube(0.0, 13.0, 5.0, 16.0, 16.0, 11.0)
-            .applyCube(0.0, 3.0, 5.0, 3.0, 13.0, 11.0)
-            .applyCube(13.0, 3.0, 5.0, 16.0, 13.0, 11.0)
-            .applyCube(3.0, 3.0, 6.0, 6.0, 6.0, 10.0)
-            .applyCube(10.0, 3.0, 6.0, 13.0, 6.0, 10.0)
-            .applyCube(13.0, 13.0, 10.0, 13.0, 13.0, 10.0)
-            .applyCube(3.0, 10.0, 6.0, 6.0, 13.0, 10.0);
+            .applyCube(0, 0, 5, 16, 3, 11)
+            .applyCube(0, 13, 5, 16, 16, 11)
+            .applyCube(0, 3, 5, 3, 13, 11)
+            .applyCube(13, 3, 5, 16, 13, 11)
+            .applyCube(3, 3, 6, 6, 6, 10)
+            .applyCube(10, 3, 6, 13, 6, 10)
+            .applyCube(10, 10, 6, 13, 13, 10)
+            .applyCube(3, 10, 6, 6, 13, 10);
     public static final VoxelShape SHAPE_X = SHAPE_HELPER.west();
     public static final VoxelShape SHAPE_Y = SHAPE_HELPER.up();
     public static final VoxelShape SHAPE_Z = SHAPE_HELPER.north();

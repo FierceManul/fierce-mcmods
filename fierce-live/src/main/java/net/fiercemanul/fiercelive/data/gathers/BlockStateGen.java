@@ -1080,21 +1080,11 @@ public class BlockStateGen extends FSBlockStateProvider {
         if (tint_reinforced_sea_lantern != null) simple(deferredBlock.get(), deferredBlock.getId().getPath(), tint_reinforced_sea_lantern);
     }
 
-    public void windHole(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
+    public void windHole(DeferredBlock<Block> deferredBlock, ResourceLocation material, String flag) {
         String path = deferredBlock.getId().getPath();
         zAxisModel(
                 deferredBlock.get(), path,
-                models().withExistingParent(path, modLoc("block/wind_hole"))
-                        .texture("all", material),
-                true
-        );
-    }
-
-    public void windHoleB(DeferredBlock<Block> deferredBlock, ResourceLocation material) {
-        String path = deferredBlock.getId().getPath();
-        zAxisModel(
-                deferredBlock.get(), path,
-                models().withExistingParent(path, modLoc("block/wind_hole_b"))
+                models().withExistingParent(path, modLoc("block/wind_hole" + flag))
                         .texture("all", material),
                 true
         );
