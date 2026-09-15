@@ -1,7 +1,6 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
-import net.fiercemanul.fiercelive.data.FLBlocks;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
 import net.fiercemanul.fiercelive.data.tags.FLBlockTags;
@@ -21,6 +20,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+
+import static net.fiercemanul.fiercelive.data.FLBlocks.*;
 
 
 public class BlockTagsGen extends BlockTagsProvider {
@@ -47,198 +48,211 @@ public class BlockTagsGen extends BlockTagsProvider {
                 Tags.Blocks.GLASS_PANES
         );
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-                FLBlocks.SOUL_CRYSTAL_ORNAMENT.get(),
-                FLBlocks.ITEM_FRAME_SHELL_THIN.get(),
-                FLBlocks.ITEM_FRAME_SHELL_BIG.get(),
+                SOUL_CRYSTAL_ORNAMENT.get(),
+                ITEM_FRAME_SHELL_THIN.get(),
+                ITEM_FRAME_SHELL_BIG.get(),
                 //FLBlocks.STAR_BLOCK.get(),
-                FLBlocks.FIREPLACE_HEART.get(),
-                FLBlocks.REINFORCED_GLOWSTONE_LAMP.get(),
-                FLBlocks.REINFORCED_SEA_LANTERN.get(),
-                FLBlocks.WATERLOGGED_COBBLESTONE.get(),
-                FLBlocks.SPIRAL_STONE.get(),
-                FLBlocks.SPIRAL_DEEPSLATE.get(),
-                FLBlocks.SPIRAL_TUFF.get(),
-                FLBlocks.SPIRAL_BLACKSTONE.get(),
-                FLBlocks.SPIRAL_END_STONE.get(),
-                FLBlocks.INTERLACE_BRICKS.get(),
-                FLBlocks.VILLAGE_PATTERNED_TILES.get(),
-                FLBlocks.VILLAGE_MOSAIC_TILES.get(),
-                FLBlocks.BIG_FLOWER_POT.get(),
-                FLBlocks.CONCRETE.get(),
-                FLBlocks.GRAVEL_CONCRETE.get(),
-                FLBlocks.BLACK_IRON_BLOCK.get(),
-                FLBlocks.A_WALL_FLOWER_POT.get(),
-                FLBlocks.B_WALL_FLOWER_POT.get(),
-                FLBlocks.C_WALL_FLOWER_POT.get(),
-                FLBlocks.D_WALL_FLOWER_POT.get(),
-                FLBlocks.E_WALL_FLOWER_POT.get(),
-                FLBlocks.F_WALL_FLOWER_POT.get(),
-                FLBlocks.IRON_GUARDRAIL.get(),
-                FLBlocks.IRON_FRAME.get(),
-                FLBlocks.IRON_CORRIDOR.get(),
-                FLBlocks.IRON_CORRIDOR_SLAB.get(),
-                FLBlocks.IRON_CORRIDOR_STAIRS.get(),
-                FLBlocks.IRON_LADDER.get(),
-                FLBlocks.IRON_SCAFFOLDING.get(),
-                FLBlocks.HEAVY_CHAINS.get(),
-                FLBlocks.RAINBOW_CONCRETE.get(),
-                FLBlocks.RAINBOW_TERRACOTTA.get(),
-                FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get(),
-                FLBlocks.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE.get(),
-                FLBlocks.SPRUCE_PLANKS_AND_GRAY_CONCRETE.get(),
-                FLBlocks.WHITE_CONCRETE_AND_LIGHT_GRAY_CONCRETE.get(),
-                FLBlocks.DEEPSLATE_TILES_AND_SPRUCE_PLANKS.get(),
-                FLBlocks.DEEPSLATE_TILES_AND_MANGROVE_PLANKS.get(),
-                FLBlocks.DARK_PRISMARINE_AND_SPRUCE_PLANKS.get(),
-                FLBlocks.DARK_PRISMARINE_AND_MANGROVE_PLANKS.get(),
-                FLBlocks.BRICKS_AND_BIRCH_PLANKS.get(),
-                FLBlocks.FAKE_HOPPER.get(),
-                FLBlocks.FAKE_FURNACE.get(),
-                FLBlocks.LIT_FAKE_FURNACE.get(),
-                FLBlocks.FAKE_BLAST_FURNACE.get(),
-                FLBlocks.LIT_FAKE_BLAST_FURNACE.get(),
-                FLBlocks.FAKE_SMOKER.get(),
-                FLBlocks.LIT_FAKE_SMOKER.get(),
-                FLBlocks.FAKE_GOLD_BLOCK.get(),
-                FLBlocks.FAKE_IRON_BLOCK.get(),
-                FLBlocks.FAKE_DIAMOND_BLOCK.get(),
-                FLBlocks.FAKE_NETHERITE_BLOCK.get(),
-                FLBlocks.FAKE_BEDROCK.get(),
-                FLBlocks.TEXTURE_FURNACE.get(),
-                FLBlocks.TEXTURE_FURNACE_TOP.get(),
-                FLBlocks.TEXTURE_BLAST_FURNACE.get(),
-                FLBlocks.TEXTURE_BLAST_FURNACE_TOP.get(),
-                FLBlocks.TEXTURE_SMOKER.get(),
-                FLBlocks.TEXTURE_SMITHING_TABLE_TOP.get(),
-                FLBlocks.TEXTURE_LODESTONE.get(),
-                FLBlocks.TEXTURE_LODESTONE_SIDE.get(),
-                FLBlocks.TEXTURE_LODESTONE_TOP.get(),
-                FLBlocks.RED_LAMP.get(),
-                FLBlocks.GREEN_LAMP.get(),
-                FLBlocks.BLUE_LAMP.get(),
-                FLBlocks.YELLOW_LAMP.get(),
-                FLBlocks.CYAN_LAMP.get(),
-                FLBlocks.PURPLE_LAMP.get(),
-                FLBlocks.RAINBOW_LAMP.get(),
-                FLBlocks.ROCK_PATH.get(),
-                FLBlocks.INFINITE_TNT.get(),
-                FLBlocks.INFINITE_RAIL_CARPET.get(),
-                FLBlocks.SNOWBALL_GENERATOR.get()
+                FIREPLACE_HEART.get(),
+                REINFORCED_GLOWSTONE_LAMP.get(),
+                REINFORCED_SEA_LANTERN.get(),
+                WATERLOGGED_COBBLESTONE.get(),
+                SPIRAL_STONE.get(),
+                SPIRAL_DEEPSLATE.get(),
+                SPIRAL_TUFF.get(),
+                SPIRAL_BLACKSTONE.get(),
+                SPIRAL_END_STONE.get(),
+                INTERLACE_BRICKS.get(),
+                VILLAGE_PATTERNED_TILES.get(),
+                VILLAGE_MOSAIC_TILES.get(),
+                BIG_FLOWER_POT.get(),
+                CONCRETE.get(),
+                GRAVEL_CONCRETE.get(),
+                BLACK_IRON_BLOCK.get(),
+                A_WALL_FLOWER_POT.get(),
+                B_WALL_FLOWER_POT.get(),
+                C_WALL_FLOWER_POT.get(),
+                D_WALL_FLOWER_POT.get(),
+                E_WALL_FLOWER_POT.get(),
+                F_WALL_FLOWER_POT.get(),
+                IRON_GUARDRAIL.get(),
+                IRON_FRAME.get(),
+                IRON_CORRIDOR.get(),
+                IRON_CORRIDOR_SLAB.get(),
+                IRON_CORRIDOR_STAIRS.get(),
+                IRON_LADDER.get(),
+                IRON_SCAFFOLDING.get(),
+                HEAVY_CHAINS.get(),
+                RAINBOW_CONCRETE.get(),
+                RAINBOW_TERRACOTTA.get(),
+                RAINBOW_REINFORCED_SEA_LANTERN.get(),
+                OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE.get(),
+                SPRUCE_PLANKS_AND_GRAY_CONCRETE.get(),
+                WHITE_CONCRETE_AND_LIGHT_GRAY_CONCRETE.get(),
+                DEEPSLATE_TILES_AND_SPRUCE_PLANKS.get(),
+                DEEPSLATE_TILES_AND_MANGROVE_PLANKS.get(),
+                DARK_PRISMARINE_AND_SPRUCE_PLANKS.get(),
+                DARK_PRISMARINE_AND_MANGROVE_PLANKS.get(),
+                BRICKS_AND_BIRCH_PLANKS.get(),
+                FAKE_HOPPER.get(),
+                FAKE_FURNACE.get(),
+                LIT_FAKE_FURNACE.get(),
+                FAKE_BLAST_FURNACE.get(),
+                LIT_FAKE_BLAST_FURNACE.get(),
+                FAKE_SMOKER.get(),
+                LIT_FAKE_SMOKER.get(),
+                FAKE_GOLD_BLOCK.get(),
+                FAKE_IRON_BLOCK.get(),
+                FAKE_DIAMOND_BLOCK.get(),
+                FAKE_NETHERITE_BLOCK.get(),
+                FAKE_REINFORCED_DEEPSLATE.get(),
+                FAKE_BEDROCK.get(),
+                TEXTURE_FURNACE.get(),
+                TEXTURE_FURNACE_TOP.get(),
+                TEXTURE_BLAST_FURNACE.get(),
+                TEXTURE_BLAST_FURNACE_TOP.get(),
+                TEXTURE_SMOKER.get(),
+                TEXTURE_SMITHING_TABLE_TOP.get(),
+                TEXTURE_LODESTONE.get(),
+                TEXTURE_LODESTONE_SIDE.get(),
+                TEXTURE_LODESTONE_TOP.get(),
+                RED_LAMP.get(),
+                GREEN_LAMP.get(),
+                BLUE_LAMP.get(),
+                YELLOW_LAMP.get(),
+                CYAN_LAMP.get(),
+                PURPLE_LAMP.get(),
+                RAINBOW_LAMP.get(),
+                ROCK_PATH.get(),
+                QUARTZ_SQUAT_TOILET.get(),
+                IRON_SQUAT_TOILET.get(),
+                QUARTZ_TOILET.get(),
+                IRON_TOILET.get(),
+                SINK.get(),
+                MANGROVE_SINK.get(),
+                MIRROR.get(),
+                CABINET_MIRROR.get(),
+                SHOWER_SET.get(),
+                INFINITE_TNT.get(),
+                INFINITE_RAIL_CARPET.get(),
+                SNOWBALL_GENERATOR.get()
         ).addTags(
                 FLBlockTags.REINFORCED_SEA_LANTERNS
         );
         tag(BlockTags.MINEABLE_WITH_AXE).add(
-                FLBlocks.SMOOTH_OAK_PLANKS.get(),
-                FLBlocks.SMOOTH_SPRUCE_PLANKS.get(),
-                FLBlocks.SMOOTH_BIRCH_PLANKS.get(),
-                FLBlocks.SMOOTH_JUNGLE_PLANKS.get(),
-                FLBlocks.SMOOTH_ACACIA_PLANKS.get(),
-                FLBlocks.SMOOTH_DARK_OAK_PLANKS.get(),
-                FLBlocks.SMOOTH_MANGROVE_PLANKS.get(),
-                FLBlocks.SMOOTH_BAMBOO_PLANKS.get(),
-                FLBlocks.SMOOTH_CHERRY_PLANKS.get(),
-                FLBlocks.SMOOTH_CRIMSON_PLANKS.get(),
-                FLBlocks.SMOOTH_WARPED_PLANKS.get(),
-                FLBlocks.GREEN_FUN_ROOF.get(),
-                FLBlocks.FIREWOOD.get(),
-                FLBlocks.OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE.get(),
-                FLBlocks.SPRUCE_PLANKS_AND_GRAY_CONCRETE.get(),
-                FLBlocks.OAK_PLANKS_AND_SPRUCE_PLANKS.get(),
-                FLBlocks.DEEPSLATE_TILES_AND_SPRUCE_PLANKS.get(),
-                FLBlocks.DEEPSLATE_TILES_AND_MANGROVE_PLANKS.get(),
-                FLBlocks.DARK_PRISMARINE_AND_SPRUCE_PLANKS.get(),
-                FLBlocks.DARK_PRISMARINE_AND_MANGROVE_PLANKS.get(),
-                FLBlocks.BRICKS_AND_BIRCH_PLANKS.get(),
-                FLBlocks.REINFORCED_GLOWSTONE_LAMP.get(),
-                FLBlocks.FAKE_BARREL.get(),
-                FLBlocks.FAKE_CAMPFIRE.get(),
-                FLBlocks.LIT_FAKE_CAMPFIRE.get(),
-                FLBlocks.LIT_FAKE_SOUL_CAMPFIRE.get(),
-                FLBlocks.FAKE_CHEST.get(),
-                FLBlocks.FAKE_CHISELED_BOOKSHELF.get(),
-                FLBlocks.FAKE_LECTERN.get(),
-                FLBlocks.FAKE_BEEHIVE.get(),
-                FLBlocks.TEXTURE_CHISELED_BOOKSHELF.get(),
-                FLBlocks.TEXTURE_CHISELED_BOOKSHELF_TOP.get(),
-                FLBlocks.TEXTURE_CHISELED_BOOKSHELF_SIDE.get(),
-                FLBlocks.TEXTURE_LOOM.get(),
-                FLBlocks.TEXTURE_BEEHIVE_TOP.get(),
-                FLBlocks.TEXTURE_SMITHING_TABLE_BOTTOM.get(),
-                FLBlocks.TEXTURE_COMPOSTER_BOTTOM.get(),
-                FLBlocks.TEXTURE_BEE_NEST_TOP.get(),
-                FLBlocks.CRAFTING_PAD.get(),
-                FLBlocks.CRAFTING_DESK.get(),
-                FLBlocks.CRAFTING_BLOCK.get()
+                SMOOTH_OAK_PLANKS.get(),
+                SMOOTH_SPRUCE_PLANKS.get(),
+                SMOOTH_BIRCH_PLANKS.get(),
+                SMOOTH_JUNGLE_PLANKS.get(),
+                SMOOTH_ACACIA_PLANKS.get(),
+                SMOOTH_DARK_OAK_PLANKS.get(),
+                SMOOTH_MANGROVE_PLANKS.get(),
+                SMOOTH_BAMBOO_PLANKS.get(),
+                SMOOTH_CHERRY_PLANKS.get(),
+                SMOOTH_CRIMSON_PLANKS.get(),
+                SMOOTH_WARPED_PLANKS.get(),
+                GREEN_FUN_ROOF.get(),
+                FIREWOOD.get(),
+                MANGROVE_SINK.get(),
+                MIRROR.get(),
+                CABINET_MIRROR.get(),
+                OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE.get(),
+                SPRUCE_PLANKS_AND_GRAY_CONCRETE.get(),
+                OAK_PLANKS_AND_SPRUCE_PLANKS.get(),
+                DEEPSLATE_TILES_AND_SPRUCE_PLANKS.get(),
+                DEEPSLATE_TILES_AND_MANGROVE_PLANKS.get(),
+                DARK_PRISMARINE_AND_SPRUCE_PLANKS.get(),
+                DARK_PRISMARINE_AND_MANGROVE_PLANKS.get(),
+                BRICKS_AND_BIRCH_PLANKS.get(),
+                REINFORCED_GLOWSTONE_LAMP.get(),
+                FAKE_BARREL.get(),
+                FAKE_CAMPFIRE.get(),
+                LIT_FAKE_CAMPFIRE.get(),
+                LIT_FAKE_SOUL_CAMPFIRE.get(),
+                FAKE_CHEST.get(),
+                FAKE_CHISELED_BOOKSHELF.get(),
+                FAKE_LECTERN.get(),
+                FAKE_BEEHIVE.get(),
+                TEXTURE_CHISELED_BOOKSHELF.get(),
+                TEXTURE_CHISELED_BOOKSHELF_TOP.get(),
+                TEXTURE_CHISELED_BOOKSHELF_SIDE.get(),
+                TEXTURE_LOOM.get(),
+                TEXTURE_BEEHIVE_TOP.get(),
+                TEXTURE_SMITHING_TABLE_BOTTOM.get(),
+                TEXTURE_COMPOSTER_BOTTOM.get(),
+                TEXTURE_BEE_NEST_TOP.get(),
+                CRAFTING_PAD.get(),
+                CRAFTING_DESK.get(),
+                CRAFTING_BLOCK.get()
         ).addTags(
                 FLBlockTags.CABINETS,
                 FLBlockTags.REINFORCED_SEA_LANTERNS
         );
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-                FLBlocks.MEAT_BLOCK.get(),
-                FLBlocks.ROTTEN_FLESH_BLOCK.get(),
-                FLBlocks.HALF_GRASS_BLOCK.get(),
-                FLBlocks.HALF_PODZOL.get(),
-                FLBlocks.HALF_MYCELIUM.get(),
-                FLBlocks.HALF_DIRT.get(),
-                FLBlocks.HALF_DIRT_PATH.get()
+                MEAT_BLOCK.get(),
+                ROTTEN_FLESH_BLOCK.get(),
+                HALF_GRASS_BLOCK.get(),
+                HALF_PODZOL.get(),
+                HALF_MYCELIUM.get(),
+                HALF_DIRT.get(),
+                HALF_DIRT_PATH.get()
         );
         tag(BlockTags.MINEABLE_WITH_HOE).add(
-                FLBlocks.FOX_CARROT_SHEAF.get(),
-                FLBlocks.FOX_CARROT_BASKET.get()
+                FOX_CARROT_SHEAF.get(),
+                FOX_CARROT_BASKET.get()
         );
         tag(BlockTags.NEEDS_STONE_TOOL).add(
-                FLBlocks.BLACK_IRON_BLOCK.get(),
-                FLBlocks.IRON_GUARDRAIL.get(),
-                FLBlocks.IRON_FRAME.get(),
-                FLBlocks.IRON_CORRIDOR.get(),
-                FLBlocks.IRON_CORRIDOR_SLAB.get(),
-                FLBlocks.IRON_CORRIDOR_STAIRS.get(),
-                FLBlocks.IRON_LADDER.get(),
-                FLBlocks.IRON_SCAFFOLDING.get()
+                BLACK_IRON_BLOCK.get(),
+                IRON_GUARDRAIL.get(),
+                IRON_FRAME.get(),
+                IRON_CORRIDOR.get(),
+                IRON_CORRIDOR_SLAB.get(),
+                IRON_CORRIDOR_STAIRS.get(),
+                IRON_LADDER.get(),
+                IRON_SCAFFOLDING.get()
         );
         tag(BlockTags.CONCRETE_POWDER).add(
-                FLBlocks.CONCRETE_POWDER.get(),
-                FLBlocks.GRAVEL_CONCRETE_POWDER.get()
+                CONCRETE_POWDER.get(),
+                GRAVEL_CONCRETE_POWDER.get()
         );
-        tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get()).addTag(FLBlockTags.WOOL_SOFAS);
+        tag(BlockTags.WOOL).add(RAINBOW_WOOL.get()).addTag(FLBlockTags.WOOL_SOFAS);
         tag(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
-                FLBlocks.HALF_GRASS_BLOCK.get(),
-                FLBlocks.HALF_PODZOL.get(),
-                FLBlocks.HALF_MYCELIUM.get(),
-                FLBlocks.HALF_DIRT.get(),
-                FLBlocks.HALF_DIRT_PATH.get()
+                HALF_GRASS_BLOCK.get(),
+                HALF_PODZOL.get(),
+                HALF_MYCELIUM.get(),
+                HALF_DIRT.get(),
+                HALF_DIRT_PATH.get()
         );
         tag(BlockTags.ENDERMAN_HOLDABLE).add(
-                FLBlocks.HALF_GRASS_BLOCK.get(),
-                FLBlocks.HALF_PODZOL.get(),
-                FLBlocks.HALF_MYCELIUM.get(),
-                FLBlocks.HALF_DIRT.get(),
-                FLBlocks.HALF_DIRT_PATH.get()
+                HALF_GRASS_BLOCK.get(),
+                HALF_PODZOL.get(),
+                HALF_MYCELIUM.get(),
+                HALF_DIRT.get(),
+                HALF_DIRT_PATH.get()
         );
-        tag(BlockTags.DIRT).add(FLBlocks.BIG_FLOWER_POT.get());
+        tag(BlockTags.DIRT).add(BIG_FLOWER_POT.get());
         tag(BlockTags.PLANKS).add(
-                FLBlocks.SMOOTH_OAK_PLANKS.get(),
-                FLBlocks.SMOOTH_SPRUCE_PLANKS.get(),
-                FLBlocks.SMOOTH_BIRCH_PLANKS.get(),
-                FLBlocks.SMOOTH_JUNGLE_PLANKS.get(),
-                FLBlocks.SMOOTH_ACACIA_PLANKS.get(),
-                FLBlocks.SMOOTH_DARK_OAK_PLANKS.get(),
-                FLBlocks.SMOOTH_MANGROVE_PLANKS.get(),
-                FLBlocks.SMOOTH_BAMBOO_PLANKS.get(),
-                FLBlocks.SMOOTH_CHERRY_PLANKS.get(),
-                FLBlocks.SMOOTH_CRIMSON_PLANKS.get(),
-                FLBlocks.SMOOTH_WARPED_PLANKS.get()
+                SMOOTH_OAK_PLANKS.get(),
+                SMOOTH_SPRUCE_PLANKS.get(),
+                SMOOTH_BIRCH_PLANKS.get(),
+                SMOOTH_JUNGLE_PLANKS.get(),
+                SMOOTH_ACACIA_PLANKS.get(),
+                SMOOTH_DARK_OAK_PLANKS.get(),
+                SMOOTH_MANGROVE_PLANKS.get(),
+                SMOOTH_BAMBOO_PLANKS.get(),
+                SMOOTH_CHERRY_PLANKS.get(),
+                SMOOTH_CRIMSON_PLANKS.get(),
+                SMOOTH_WARPED_PLANKS.get()
         );
         tag(BlockTags.CAMPFIRES).add(
-                FLBlocks.FIREPLACE_HEART.get()
+                FIREPLACE_HEART.get()
         );
         tag(FLBlockTags.REINFORCED_SEA_LANTERNS).add(
-                FLBlocks.REINFORCED_SEA_LANTERN.get(),
-                FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get()
+                REINFORCED_SEA_LANTERN.get(),
+                RAINBOW_REINFORCED_SEA_LANTERN.get()
         );
         tag(FLBlockTags.SEA_LANTERNS).add(
                 Blocks.SEA_LANTERN,
-                FLBlocks.RAINBOW_SEA_LANTERN.get()
+                RAINBOW_SEA_LANTERN.get()
         ).addTags(
                 FLBlockTags.REINFORCED_SEA_LANTERNS
         );
@@ -254,62 +268,75 @@ public class BlockTagsGen extends BlockTagsProvider {
         tag(FLBlockTags.TABLE_CONNECT)
                 .addTag(FLBlockTags.TABLES)
                 .addTag(FLBlockTags.CABINETS);
-        tag(BlockTags.TERRACOTTA).add(FLBlocks.RAINBOW_TERRACOTTA.get());
+        tag(BlockTags.TERRACOTTA).add(RAINBOW_TERRACOTTA.get());
         tag(Tags.Blocks.CONCRETES).add(
-                FLBlocks.RAINBOW_CONCRETE.get(),
-                FLBlocks.CONCRETE.get(),
-                FLBlocks.GRAVEL_CONCRETE.get()
+                RAINBOW_CONCRETE.get(),
+                CONCRETE.get(),
+                GRAVEL_CONCRETE.get()
         );
-        tag(BlockTags.BEACON_BASE_BLOCKS).add(FLBlocks.BLACK_IRON_BLOCK.get());
-        tag(BlockTags.WOOL).add(FLBlocks.RAINBOW_WOOL.get());
-        tag(Tags.Blocks.GLASS_BLOCKS).add(FLBlocks.RAINBOW_GLASS.get());
-        tag(Tags.Blocks.GLASS_PANES).add(FLBlocks.RAINBOW_GLASS_PANE.get());
-        tag(BlockTags.IMPERMEABLE).add(FLBlocks.RAINBOW_GLASS.get());
-        tag(Tags.Blocks.DYED_RED).add(FLBlocks.RED_LAMP.get());
-        tag(Tags.Blocks.DYED_GREEN).add(FLBlocks.GREEN_LAMP.get());
-        tag(Tags.Blocks.DYED_BLUE).add(FLBlocks.BLUE_LAMP.get());
-        tag(Tags.Blocks.DYED_YELLOW).add(FLBlocks.YELLOW_LAMP.get());
-        tag(Tags.Blocks.DYED_CYAN).add(FLBlocks.CYAN_LAMP.get());
-        tag(Tags.Blocks.DYED_PURPLE).add(FLBlocks.PURPLE_LAMP.get());
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(BLACK_IRON_BLOCK.get());
+        tag(BlockTags.WOOL).add(RAINBOW_WOOL.get());
+        tag(Tags.Blocks.GLASS_BLOCKS).add(RAINBOW_GLASS.get());
+        tag(Tags.Blocks.GLASS_PANES).add(RAINBOW_GLASS_PANE.get());
+        tag(BlockTags.IMPERMEABLE).add(RAINBOW_GLASS.get());
+        tag(Tags.Blocks.DYED_RED).add(RED_LAMP.get());
+        tag(Tags.Blocks.DYED_GREEN).add(GREEN_LAMP.get());
+        tag(Tags.Blocks.DYED_BLUE).add(BLUE_LAMP.get());
+        tag(Tags.Blocks.DYED_YELLOW).add(YELLOW_LAMP.get());
+        tag(Tags.Blocks.DYED_CYAN).add(CYAN_LAMP.get());
+        tag(Tags.Blocks.DYED_PURPLE).add(PURPLE_LAMP.get());
         tag(FLBlockTags.COLOR_LAMPS).add(
-                FLBlocks.RED_LAMP.get(),
-                FLBlocks.GREEN_LAMP.get(),
-                FLBlocks.BLUE_LAMP.get(),
-                FLBlocks.YELLOW_LAMP.get(),
-                FLBlocks.CYAN_LAMP.get(),
-                FLBlocks.PURPLE_LAMP.get(),
-                FLBlocks.RAINBOW_LAMP.get()
+                RED_LAMP.get(),
+                GREEN_LAMP.get(),
+                BLUE_LAMP.get(),
+                YELLOW_LAMP.get(),
+                CYAN_LAMP.get(),
+                PURPLE_LAMP.get(),
+                RAINBOW_LAMP.get()
         );
         tag(FLBlockTags.RAINBOW_DYED).add(
-                FLBlocks.RAINBOW_CONCRETE.get(),
-                FLBlocks.RAINBOW_GLASS.get(),
-                FLBlocks.RAINBOW_GLASS_PANE.get(),
-                FLBlocks.RAINBOW_LAMP.get(),
-                FLBlocks.RAINBOW_SEA_LANTERN.get(),
-                FLBlocks.RAINBOW_REINFORCED_SEA_LANTERN.get(),
-                FLBlocks.RAINBOW_WOOL.get(),
-                FLBlocks.RAINBOW_TERRACOTTA.get()
+                RAINBOW_CONCRETE.get(),
+                RAINBOW_GLASS.get(),
+                RAINBOW_GLASS_PANE.get(),
+                RAINBOW_LAMP.get(),
+                RAINBOW_SEA_LANTERN.get(),
+                RAINBOW_REINFORCED_SEA_LANTERN.get(),
+                RAINBOW_WOOL.get(),
+                RAINBOW_TERRACOTTA.get()
         );
         tag(Tags.Blocks.DYED).addTag(FLBlockTags.RAINBOW_DYED);
         tag(BlockTags.CLIMBABLE).add(
-                FLBlocks.IRON_FRAME.get(),
-                FLBlocks.IRON_CORRIDOR.get(),
-                FLBlocks.IRON_LADDER.get(),
-                FLBlocks.IRON_SCAFFOLDING.get()
+                IRON_FRAME.get(),
+                IRON_CORRIDOR.get(),
+                IRON_LADDER.get(),
+                IRON_SCAFFOLDING.get()
         );
         tag(FLBlockTags.FRAMES).add(
-                FLBlocks.IRON_FRAME.get(),
-                FLBlocks.IRON_CORRIDOR.get()
+                IRON_FRAME.get(),
+                IRON_CORRIDOR.get()
         );
         tag(FLBlockTags.IRON_CORRIDORS).add(
-                FLBlocks.IRON_CORRIDOR.get(),
-                FLBlocks.IRON_CORRIDOR_SLAB.get(),
-                FLBlocks.IRON_CORRIDOR_STAIRS.get()
+                IRON_CORRIDOR.get(),
+                IRON_CORRIDOR_SLAB.get(),
+                IRON_CORRIDOR_STAIRS.get()
         );
         tag(FLBlockTags.HANDY_REDSTONE).add(
-                FLBlocks.INFINITE_TNT.get(),
-                FLBlocks.INFINITE_RAIL_CARPET.get(),
-                FLBlocks.SNOWBALL_GENERATOR.get()
+                INFINITE_TNT.get(),
+                INFINITE_RAIL_CARPET.get(),
+                SNOWBALL_GENERATOR.get()
+        );
+        tag(BlockTags.DRAGON_IMMUNE).add(
+                Blocks.END_STONE_BRICKS,
+                Blocks.END_STONE_BRICK_SLAB,
+                Blocks.END_STONE_BRICK_STAIRS,
+                Blocks.END_STONE_BRICK_WALL,
+                Blocks.PURPUR_BLOCK,
+                Blocks.PURPUR_SLAB,
+                Blocks.PURPUR_STAIRS,
+                Blocks.PURPUR_PILLAR,
+                Blocks.END_ROD,
+                Blocks.ENDER_CHEST,
+                Blocks.CHEST
         );
 
         ROWS.forEach(row -> row.accept(this));

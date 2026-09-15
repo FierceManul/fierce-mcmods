@@ -1,6 +1,5 @@
 package net.fiercemanul.fiercelive.world.level.block;
 
-import net.fiercemanul.fiercelive.world.level.block.state.properties.FLBlockStateProperties;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -86,8 +85,8 @@ public abstract class GuardrailBlock extends FLStairBlock {
                 block instanceof SlabBlock && state.getValue(BlockStateProperties.SLAB_TYPE) == SlabType.BOTTOM
         ) || (
                 block instanceof OneCutBlock
-                        && state.getValue(BlockStateProperties.FACING) == Direction.DOWN
-                        && !state.getValue(FLBlockStateProperties.DOUBLE)
+                        && state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y
+                        && state.getValue(BlockStateProperties.SLAB_TYPE) == SlabType.BOTTOM
         );
         if (!slabLike) {
             VoxelShape shape = state.getCollisionShape(level, pos);

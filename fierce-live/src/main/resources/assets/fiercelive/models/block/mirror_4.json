@@ -1,0 +1,6 @@
+{
+	"parent": "fiercelive:block/mirror",
+	"textures": {
+		"mirror": "fiercelive:block/mirror_4"
+	}
+}

@@ -56,7 +56,7 @@ public abstract class CompoundCabinetBlock extends CabinetBlock {
                 @Override
                 public Component getDisplayName() {
                     if (pFirst.hasCustomName()) return pFirst.getDisplayName();
-                    else return pSecond.hasCustomName() ? pSecond.getDisplayName() : Component.translatable("fiercelive.container.cabinet");
+                    else return pSecond.hasCustomName() ? pSecond.getDisplayName() : Component.translatable("container.fiercelive.cabinet");
                 }
             });
         }

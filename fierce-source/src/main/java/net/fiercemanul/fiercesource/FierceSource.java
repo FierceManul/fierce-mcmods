@@ -11,6 +11,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -20,7 +21,10 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforgespi.language.IModInfo;
 import org.slf4j.Logger;
+
+import java.util.*;
 
 @Mod(FierceSource.MODID)
 public class FierceSource {
@@ -47,6 +51,16 @@ public class FierceSource {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+        //统计没被依赖的模组
+        List<IModInfo> modList = ModList.get().getMods();
+        Set<String> libMods = new HashSet<>();
+        modList.forEach(mi -> mi.getDependencies().forEach(mv -> libMods.add(mv.getModId())));
+        Map<String, String> mods = new TreeMap<>();
+        modList.forEach(mi -> {
+            String modId = mi.getModId();
+            if (!libMods.contains(modId)) mods.put(modId, mi.getDisplayName());
+        });
+        LOGGER.info("未被依赖的模组: {}", mods.values());
 
     }
 

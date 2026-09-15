@@ -1,0 +1,50 @@
+{
+	"parent": "fiercecraft:block/model",
+	"elements": [
+		{
+			"from": [4, 0, 2],
+			"to": [12, 5, 16],
+			"faces": {
+				"north": {"uv": [3, 3, 11, 8], "texture": "#a"},
+				"east": {"uv": [0, 11, 14, 16], "texture": "#a"},
+				"south": {"uv": [11, 0, 16, 8], "rotation": 90, "texture": "#a", "cullface": "south"},
+				"west": {"uv": [14, 11, 0, 16], "texture": "#a"},
+				"down": {"uv": [1, 0, 9, 14], "texture": "#c", "cullface": "down"}
+			}
+		},
+		{
+			"from": [3, 5, 1],
+			"to": [13, 8, 16],
+			"faces": {
+				"north": {"uv": [1, 0, 11, 3], "texture": "#a"},
+				"east": {"uv": [0, 8, 15, 11], "texture": "#a"},
+				"south": {"uv": [13, 0, 16, 10], "rotation": 90, "texture": "#b", "cullface": "south"},
+				"west": {"uv": [15, 8, 0, 11], "texture": "#a"},
+				"up": {"uv": [0, 0, 10, 15], "texture": "#b"},
+				"down": {"uv": [0, 0, 10, 15], "texture": "#c"}
+			}
+		},
+		{
+			"from": [3, 8, 13],
+			"to": [13, 11, 16],
+			"faces": {
+				"north": {"uv": [13, 0, 16, 10], "rotation": 90, "texture": "#c"},
+				"east": {"uv": [0, 5, 3, 8], "texture": "#a"},
+				"south": {"uv": [10, 0, 13, 10], "rotation": 90, "texture": "#b", "cullface": "south"},
+				"west": {"uv": [3, 5, 0, 8], "texture": "#a"},
+				"up": {"uv": [0, 12, 10, 15], "texture": "#b"}
+			}
+		},
+		{
+			"from": [13, 7, 9],
+			"to": [15, 8, 13],
+			"faces": {
+				"north": {"uv": [10, 14, 12, 15], "texture": "#c"},
+				"east": {"uv": [10, 15, 14, 16], "texture": "#c"},
+				"south": {"uv": [12, 14, 14, 15], "texture": "#c"},
+				"up": {"uv": [10, 10, 12, 14], "texture": "#c"},
+				"down": {"uv": [12, 10, 14, 14], "texture": "#c"}
+			}
+		}
+	]
+}

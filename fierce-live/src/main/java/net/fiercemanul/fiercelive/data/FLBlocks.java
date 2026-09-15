@@ -3,6 +3,7 @@ package net.fiercemanul.fiercelive.data;
 import net.fiercemanul.fiercelive.data.registries.FLRegister;
 import net.fiercemanul.fiercelive.world.item.FakeBlockEntityItem;
 import net.fiercemanul.fiercelive.world.level.block.*;
+import net.fiercemanul.fiercelive.world.level.block.state.properties.FLBlockStateProperties;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.item.ThrowableBlockItem;
 import net.fiercemanul.fiercesource.world.level.block.*;
@@ -29,9 +30,9 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> SOUL_CRYSTAL_ORNAMENT = regBlock(
             "soul_crystal_ornament", SoulCrystalOrnamentBlock::new, SoulCrystalBlock.getProperties(15, MapColor.WOOL));
     public static final DeferredBlock<Block> PORTABLE_WORKSTATION = regBlock(
-            "portable_workstation", PortableWorkstationBlock::new, BlockBehaviour.Properties.of().strength(0.25F, 6.0F).lightLevel(value -> 7).noCollission().noOcclusion().mapColor(MapColor.COLOR_BLACK));
+            "portable_workstation", PortableWorkstationBlock::new, BlockBehaviour.Properties.of().strength(0.25F, 6F).lightLevel(value -> 7).noCollission().noOcclusion().mapColor(MapColor.COLOR_BLACK));
     public static final DeferredBlock<Block> LAPTOP_TERMINAL = regBlock(
-            "laptop_terminal", LaptopTerminalBlock::new, BlockBehaviour.Properties.of().strength(0.25F, 6.0F).lightLevel(value -> 7).noCollission().noOcclusion().mapColor(MapColor.COLOR_BLACK));
+            "laptop_terminal", LaptopTerminalBlock::new, BlockBehaviour.Properties.of().strength(0.25F, 6F).lightLevel(value -> 7).noCollission().noOcclusion().mapColor(MapColor.COLOR_BLACK));
     public static final DeferredBlock<Block> BOOK_AND_LAMP = regBlock(
             "book_and_lamp", BookAndLampBlock::new, BlockBehaviour.Properties.of().strength(0.25F).lightLevel(value -> 7).noCollission().noOcclusion());
     public static final DeferredBlock<Block> ITEM_FRAME_SHELL_THIN = regBlock(
@@ -40,17 +41,17 @@ public final class FLBlocks {
             "item_frame_shell", ItemFrameShellBigBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS));
     //TODO:星空方块要做成非方块实体，用渲染器，天空盒和末地折跃门的结合。
     //public static final DeferredBlock<Block> STAR_BLOCK = regBlock(
-    //        "star_block", StarBlock::new, BlockBehaviour.Properties.of().strength(0.3F, 6.0F).lightLevel(value -> 7).isValidSpawn(FSUtils::getFalse).isRedstoneConductor(FSUtils::getFalse).sound(SoundType.GLASS).noOcclusion());
+    //        "star_block", StarBlock::new, BlockBehaviour.Properties.of().strength(0.3F, 6F).lightLevel(value -> 7).isValidSpawn(FSUtils::getFalse).isRedstoneConductor(FSUtils::getFalse).sound(SoundType.GLASS).noOcclusion());
     public static final DeferredBlock<Block> GLOWSTONE_LAMP = regSimpleBlock(
             "glowstone_lamp", BlockBehaviour.Properties.ofFullCopy(Blocks.GLOWSTONE));
     public static final DeferredBlock<Block> REINFORCED_GLOWSTONE_LAMP = regSimpleBlock(
-            "reinforced_glowstone_lamp", BlockBehaviour.Properties.ofFullCopy(Blocks.GLOWSTONE).strength(1.5F, 6.0F));
+            "reinforced_glowstone_lamp", BlockBehaviour.Properties.ofFullCopy(Blocks.GLOWSTONE).strength(1.5F, 6F));
     public static final DeferredBlock<Block> RAINBOW_SEA_LANTERN = regSimpleBlock(
             "rainbow_sea_lantern", BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).mapColor(MapColor.SNOW));
     public static final DeferredBlock<Block> REINFORCED_SEA_LANTERN = regSimpleBlock(
-            "reinforced_sea_lantern", BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).strength(1.5F, 6.0F));
+            "reinforced_sea_lantern", BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).strength(1.5F, 6F));
     public static final DeferredBlock<Block> RAINBOW_REINFORCED_SEA_LANTERN = regSimpleBlock(
-            "rainbow_reinforced_sea_lantern", BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).strength(1.5F, 6.0F).mapColor(MapColor.SNOW));
+            "rainbow_reinforced_sea_lantern", BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).strength(1.5F, 6F).mapColor(MapColor.SNOW));
     public static final DeferredBlock<Block> LIGHT_TUBE = regBlock(
             "light_tube", LightTubeBlock::new, BlockBehaviour.Properties.of().strength(0.3F).lightLevel(value -> 15).noCollission());
     public static final DeferredBlock<Block> LIGHT_PLATE = regBlock(
@@ -60,7 +61,7 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> GLOW_PEARL_ARROW = BLOCKS.registerBlock(
             "glow_pearl_arrow", GlowPearlArrowBlock::new, BlockBehaviour.Properties.of().instabreak().lightLevel(value -> 15).mapColor(MapColor.SAND));
     public static final DeferredBlock<Block> GREEN_FUN_ROOF = regBlock(
-            "green_fun_roof", GreenFunRoofBlock::new, BlockBehaviour.Properties.of().strength(2.0F).ignitedByLava().mapColor(MapColor.PODZOL).sound(SoundType.WOOD));
+            "green_fun_roof", GreenFunRoofBlock::new, BlockBehaviour.Properties.of().strength(2F).ignitedByLava().mapColor(MapColor.PODZOL).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> HALF_GRASS_BLOCK = regBlock(
             "half_grass_block", HalfGrassBlock::new, BlockBehaviour.Properties.of().strength(0.6F).mapColor(MapColor.GRASS).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> HALF_PODZOL = regBlock(
@@ -72,9 +73,9 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> HALF_DIRT_PATH = regBlock(
             "half_dirt_path", HalfPathBlock::new, BlockBehaviour.Properties.of().strength(0.65F).mapColor(MapColor.DIRT).sound(SoundType.GRASS));
     public static final DeferredBlock<Block> FIREWOOD = regBlock(
-            "firewood", FirewoodBlock::new, BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.WOOD).ignitedByLava().mapColor(MapColor.PODZOL));
+            "firewood", FirewoodBlock::new, BlockBehaviour.Properties.of().strength(2F).sound(SoundType.WOOD).ignitedByLava().mapColor(MapColor.PODZOL));
     public static final DeferredBlock<Block> FIREPLACE_HEART = regBlock(
-            "fireplace_heart", FireplaceHeartBlock::new, BlockBehaviour.Properties.of().strength(5.0F, 6.0F).requiresCorrectToolForDrops().lightLevel(BlockUtils.litBlockEmission(15)).noOcclusion().sound(SoundType.METAL));
+            "fireplace_heart", FireplaceHeartBlock::new, BlockBehaviour.Properties.of().strength(5F, 6F).requiresCorrectToolForDrops().lightLevel(BlockUtils.litBlockEmission(15)).noOcclusion().sound(SoundType.METAL));
     public static final DeferredBlock<Block> ROCK_PATH = regBlock(
             "rock_path", RockPathBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> CRAFTING_PAD = regBlock(
@@ -121,6 +122,24 @@ public final class FLBlocks {
             "iron_ladder", () -> new IronLadderBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS), IRON_FRAME.get()));
     public static final DeferredBlock<Block> IRON_SCAFFOLDING = regBlock(
             "iron_scaffolding", IronScaffoldingBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.METAL).isValidSpawn(Blocks::never).pushReaction(PushReaction.DESTROY).isRedstoneConductor(FSUtils::getFalse), ScaffoldingBlockItem::new);
+    public static final DeferredBlock<Block> QUARTZ_SQUAT_TOILET = regBlock(
+            "quartz_squat_toilet", SquatToiletBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ));
+    public static final DeferredBlock<Block> IRON_SQUAT_TOILET = regBlock(
+            "iron_squat_toilet", SquatToiletBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK));
+    public static final DeferredBlock<Block> QUARTZ_TOILET = regBlock(
+            "quartz_toilet", ToiletBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ));
+    public static final DeferredBlock<Block> IRON_TOILET = regBlock(
+            "iron_toilet", ToiletBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ));
+    public static final DeferredBlock<Block> SINK = regBlock(
+            "sink", SinkBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ));
+    public static final DeferredBlock<Block> MANGROVE_SINK = regBlock(
+            "mangrove_sink", WoodenSinkBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ));
+    public static final DeferredBlock<Block> MIRROR = regBlock(
+            "mirror", MirrorBlock::new, BlockBehaviour.Properties.of().strength(0.3F).lightLevel(state -> state.getValue(FLBlockStateProperties.MIRROR_TYPE) == 1 ? 15 : 0).instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS));
+    public static final DeferredBlock<Block> CABINET_MIRROR = regBlock(
+            "cabinet_mirror", CabinetMirrorBlock::new, BlockBehaviour.Properties.of().strength(0.3F).lightLevel(state -> state.getValue(FLBlockStateProperties.MIRROR_TYPE) == 1 ? 15 : 0).instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS));
+    public static final DeferredBlock<Block> SHOWER_SET = regBlock(
+            "shower_set", ShowerSetBlock::new, BlockBehaviour.Properties.of().strength(2F, 6F).noCollission().sound(SoundType.METAL).noOcclusion());
     public static final DeferredBlock<Block> SMOOTH_OAK_PLANKS = regSimpleBlock(
             "smooth_oak_planks", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
     public static final DeferredBlock<Block> SMOOTH_SPRUCE_PLANKS = regSimpleBlock(
@@ -156,11 +175,11 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> INTERLACE_BRICKS = regSimpleBlock(
             "interlace_bricks", BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS));
     public static final DeferredBlock<Block> VILLAGE_PATTERNED_TILES = regSimpleBlock(
-            "village_patterned_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
+            "village_patterned_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> VILLAGE_MOSAIC_TILES = regSimpleBlock(
-            "village_mosaic_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
+            "village_mosaic_tiles", BlockBehaviour.Properties.of().strength(1.5F, 6F).requiresCorrectToolForDrops().mapColor(MapColor.COLOR_LIGHT_GREEN).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> BIG_FLOWER_POT = regSimpleBlock(
-            "big_flower_pot", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).requiresCorrectToolForDrops().mapColor(MapColor.DIRT));
+            "big_flower_pot", BlockBehaviour.Properties.of().strength(1.5F, 6F).requiresCorrectToolForDrops().mapColor(MapColor.DIRT));
     public static final DeferredBlock<Block> CONCRETE = regSimpleBlock(
             "concrete", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_CONCRETE).mapColor(MapColor.TERRACOTTA_WHITE));
     public static final DeferredBlock<Block> CONCRETE_POWDER = reg(
@@ -174,7 +193,7 @@ public final class FLBlocks {
     public static final DeferredBlock<Block> HEAVY_CHAINS = regBlock(
             "heavy_chains", HeavyChainsBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> NEO_FORGE = regBlock(
-            "neoforge", NeoForgeBlock::new, BlockBehaviour.Properties.of().strength(0.5F, 3.0F).sound(SoundType.WOOL).mapColor(MapColor.COLOR_ORANGE));
+            "neoforge", NeoForgeBlock::new, BlockBehaviour.Properties.of().strength(0.5F, 3F).sound(SoundType.WOOL).mapColor(MapColor.COLOR_ORANGE));
     public static final DeferredBlock<Block> RAINBOW_WOOL = regSimpleBlock(
             "rainbow_wool", BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL));
     public static final DeferredBlock<Block> RAINBOW_TERRACOTTA = regSimpleBlock(
@@ -186,23 +205,23 @@ public final class FLBlocks {
     public static final DeferredBlock<StainedGlassPaneBlock> RAINBOW_GLASS_PANE = reg(
             "rainbow_glass_pane", () -> new StainedGlassPaneBlock(DyeColor.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_STAINED_GLASS_PANE)));
     public static final DeferredBlock<Block> OAK_PLANKS_AND_LIGHT_GRAY_CONCRETE = regSimpleBlock(
-            "oak_planks_and_light_gray_concrete", BlockBehaviour.Properties.of().strength(2.0F, 3.0F).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
+            "oak_planks_and_light_gray_concrete", BlockBehaviour.Properties.of().strength(2F, 3F).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> SPRUCE_PLANKS_AND_GRAY_CONCRETE = regSimpleBlock(
-            "spruce_planks_and_gray_concrete", BlockBehaviour.Properties.of().strength(2.0F, 3.0F).mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
+            "spruce_planks_and_gray_concrete", BlockBehaviour.Properties.of().strength(2F, 3F).mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> OAK_PLANKS_AND_SPRUCE_PLANKS = regSimpleBlock(
-            "oak_planks_and_spruce_planks", BlockBehaviour.Properties.of().strength(2.0F, 3.0F).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
+            "oak_planks_and_spruce_planks", BlockBehaviour.Properties.of().strength(2F, 3F).mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).sound(SoundType.WOOD));
     public static final DeferredBlock<Block> WHITE_CONCRETE_AND_LIGHT_GRAY_CONCRETE = regSimpleBlock(
             "white_concrete_and_light_gray_concrete", BlockBehaviour.Properties.of().strength(1.8F).mapColor(DyeColor.WHITE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops());
     public static final DeferredBlock<Block> DEEPSLATE_TILES_AND_SPRUCE_PLANKS = regSimpleBlock(
-            "deepslate_tiles_and_spruce_planks", BlockBehaviour.Properties.of().strength(3.5F, 6.0F).mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE_TILES));
+            "deepslate_tiles_and_spruce_planks", BlockBehaviour.Properties.of().strength(3.5F, 6F).mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE_TILES));
     public static final DeferredBlock<Block> DEEPSLATE_TILES_AND_MANGROVE_PLANKS = regSimpleBlock(
-            "deepslate_tiles_and_mangrove_planks", BlockBehaviour.Properties.of().strength(3.5F, 6.0F).mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE_TILES));
+            "deepslate_tiles_and_mangrove_planks", BlockBehaviour.Properties.of().strength(3.5F, 6F).mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE_TILES));
     public static final DeferredBlock<Block> DARK_PRISMARINE_AND_SPRUCE_PLANKS = regSimpleBlock(
-            "dark_prismarine_and_spruce_planks", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM));
+            "dark_prismarine_and_spruce_planks", BlockBehaviour.Properties.of().strength(1.5F, 6F).mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> DARK_PRISMARINE_AND_MANGROVE_PLANKS = regSimpleBlock(
-            "dark_prismarine_and_mangrove_planks", BlockBehaviour.Properties.of().strength(1.5F, 6.0F).mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM));
+            "dark_prismarine_and_mangrove_planks", BlockBehaviour.Properties.of().strength(1.5F, 6F).mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> BRICKS_AND_BIRCH_PLANKS = regSimpleBlock(
-            "bricks_and_birch_planks", BlockBehaviour.Properties.of().strength(2.0F, 6.0F).mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM));
+            "bricks_and_birch_planks", BlockBehaviour.Properties.of().strength(2F, 6F).mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM));
     public static final DeferredBlock<Block> FAKE_HOPPER = regBlock(
             "fake_hopper", FakeHopperBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredBlock<Block> FAKE_FURNACE = regFakeBe(
@@ -241,6 +260,8 @@ public final class FLBlocks {
             "fake_iron_block", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> FAKE_NETHERITE_BLOCK = regSimpleBlock(
             "fake_netherite_block", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> FAKE_REINFORCED_DEEPSLATE = regBlock(
+            "fake_reinforced_deepslate", RotatedPillarBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE));
     public static final DeferredBlock<Block> FAKE_BEDROCK = regSimpleBlock(
             "fake_bedrock", BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
     public static final DeferredBlock<Block> TEXTURE_CHISELED_BOOKSHELF = regSimpleBlock(

@@ -264,6 +264,7 @@ public final class BlockBulkRegister {
                 ItemTagsGen.ROWS.add(g -> g.basicTags(material, slab));
                 ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.WOODEN_SLABS, slab));
                 BlockStateGen.ROWS.put(slab, g -> g.slab(slab, material));
+                BlockLootGen.ROWS.put(slab, g -> g.oneCutBlock(slab));
                 RecipeGen.ROWS.add((g, o) -> g.buildSlab(o, slab, material));
                 LangGanZHCN.ROWS.put(slab, material.getPath() + "台阶");
 
@@ -330,6 +331,7 @@ public final class BlockBulkRegister {
                 BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.SLABS, slab));
                 ItemTagsGen.ROWS.add(g -> g.tag(ItemTags.SLABS, slab));
                 BlockStateGen.ROWS.put(slab, g -> g.slab(slab, material));
+                BlockLootGen.ROWS.put(slab, g -> g.oneCutBlock(slab));
                 RecipeGen.ROWS.add((g, o) -> g.buildSlab(o, slab, material));
                 LangGanZHCN.ROWS.put(slab, material.getPath() + "台阶");
             }
@@ -660,6 +662,7 @@ public final class BlockBulkRegister {
             itemTab.add(ITEMS.registerSimpleBlockItem(guardrail));
             if (genData) {
                 basicData(material, guardrail);
+                BlockTagsGen.ROWS.add(g -> g.tag(BlockTags.MINEABLE_WITH_PICKAXE, guardrail));
                 BlockTagsGen.ROWS.add(g -> g.tag(FLBlockTags.GUARDRAILS, guardrail));
                 BlockStateGen.ROWS.put(guardrail, g -> g.glassGuardrail(guardrail, g.blockTexture(material)));
                 RecipeGen.ROWS.add((g, o) -> g.cutD(o, guardrail, material, 4));
@@ -997,12 +1000,13 @@ public final class BlockBulkRegister {
                 BlockStateGen.ROWS.put(slab, g -> g.tintIronCorridorSlab(slab));
                 BlockStateGen.ROWS.put(stair, g -> g.tintIronCorridorStairs(stair));
                 BlockStateGen.ROWS.put(ladder, g -> g.tintIronLadder(ladder));
+                BlockLootGen.ROWS.put(slab, g -> g.oneCutBlock(slab));
+                BlockLootGen.ROWS.put(ladder, g -> g.ironLadder(ladder));
                 RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, frame, FLBlocks.IRON_FRAME, dye));
                 RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, corridor, FLBlocks.IRON_CORRIDOR, dye));
                 RecipeGen.ROWS.add((g, o) -> g.corridorSlab(o, slab, corridor));
                 RecipeGen.ROWS.add((g, o) -> g.cutD(o, stair, corridor, 2));
                 RecipeGen.ROWS.add((g, o) -> g.colorDyed(o, ladder, FLBlocks.IRON_LADDER, dye));
-                BlockLootGen.ROWS.put(ladder, g -> g.ironLadder(ladder));
                 LangGanZHCN.ROWS.put(frame, color.name().toLowerCase() + "铁框架");
                 LangGanZHCN.ROWS.put(corridor, color.name().toLowerCase() + "铁廊架");
                 LangGanZHCN.ROWS.put(slab, color.name().toLowerCase() + "铁廊架台阶");

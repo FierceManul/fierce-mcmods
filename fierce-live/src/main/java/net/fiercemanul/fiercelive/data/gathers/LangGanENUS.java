@@ -73,7 +73,7 @@ public class LangGanENUS extends LanguageProvider {
         add("tip.fiercelive.snake_horizontal", "Snake place to horizontal");
         add("tip.fiercelive.no_more_be", "Not BlockEntity");
         
-        add("fiercelive.container.cabinet", "Cabinet");
+        add("container.fiercelive.cabinet", "Cabinet");
 
         add("advancements.fiercelive.root.title", "Fierce Living");
         add("advancements.fiercelive.root.description", "来点闲情雅致");

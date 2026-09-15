@@ -68,6 +68,20 @@ public class RecipeGen extends FSRecipeProvider {
         meatBlock(recipeOutput);
         foxCarrot(recipeOutput);
         ironScaffolding(recipeOutput);
+        stonecutting(recipeOutput, DECORATIONS, QUARTZ_SQUAT_TOILET, Items.QUARTZ_BLOCK);
+        stonecutting(recipeOutput, DECORATIONS, IRON_SQUAT_TOILET, Items.IRON_BLOCK);
+        stonecutting(recipeOutput, DECORATIONS, QUARTZ_TOILET, Items.QUARTZ_BLOCK);
+        stonecutting(recipeOutput, DECORATIONS, IRON_TOILET, Items.IRON_BLOCK);
+        stonecutting(recipeOutput, DECORATIONS, SINK, Items.QUARTZ_BLOCK);
+        shaped(DECORATIONS, MANGROVE_SINK)
+                .define('Y', SINK)
+                .define('X', SMOOTH_MANGROVE_PLANKS)
+                .pattern("Y")
+                .pattern("X")
+                .unlockedBy(getHasName(SINK), has(SINK))
+                .save(recipeOutput);
+        mirror(recipeOutput);
+        stonecutting(recipeOutput, DECORATIONS, SHOWER_SET, Items.IRON_BARS);
         stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_GRASS_BLOCK, Items.GRASS_BLOCK, 2);
         stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_DIRT_PATH, Items.DIRT_PATH, 2);
         stonecutting(recipeOutput, BUILDING_BLOCKS, HALF_PODZOL, Items.PODZOL, 2);
@@ -471,6 +485,23 @@ public class RecipeGen extends FSRecipeProvider {
                 .save(recipeOutput);
     }
 
+    private static void mirror(RecipeOutput recipeOutput) {
+        shaped(DECORATIONS, MIRROR)
+                .define('A', Items.IRON_INGOT)
+                .define('B', Items.GLASS_PANE)
+                .define('C', Items.GLOWSTONE_DUST)
+                .pattern(" C")
+                .pattern("AB")
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(recipeOutput);
+        shaped(DECORATIONS, CABINET_MIRROR)
+                .define('A', SMOOTH_MANGROVE_PLANKS)
+                .define('B', MIRROR)
+                .pattern("AB")
+                .unlockedBy(getHasName(MIRROR), has(MIRROR))
+                .save(recipeOutput);
+    }
+
     private static void wallFlowerPot(RecipeOutput recipeOutput, ItemLike result, Item flowerA, Item flowerB, Item flowerC) {
         ShapedRecipeBuilder
                 .shaped(DECORATIONS, result)
@@ -581,6 +612,7 @@ public class RecipeGen extends FSRecipeProvider {
         fakeBlocks(recipeOutput, FAKE_GOLD_BLOCK, Items.YELLOW_DYE);
         fakeBlocks(recipeOutput, FAKE_DIAMOND_BLOCK, Items.LIGHT_BLUE_DYE);
         fakeBlocks(recipeOutput, FAKE_NETHERITE_BLOCK, Items.BROWN_DYE);
+        fakeReinforcedDeepslate(recipeOutput);
         fakeBlocks(recipeOutput, FAKE_BEDROCK, Items.BLACK_DYE);
     }
 
@@ -592,6 +624,17 @@ public class RecipeGen extends FSRecipeProvider {
                            .pattern("SDS")
                            .pattern("SSS")
                            .unlockedBy(getHasName(dye), has(dye))
+                           .save(recipeOutput);
+    }
+
+    private static void fakeReinforcedDeepslate(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(BUILDING_BLOCKS, FAKE_REINFORCED_DEEPSLATE, 8)
+                           .define('S', Items.DEEPSLATE)
+                           .define('D', Items.YELLOW_DYE)
+                           .pattern("SSS")
+                           .pattern("SDS")
+                           .pattern("SSS")
+                           .unlockedBy(getHasName(Items.YELLOW_DYE), has(Items.YELLOW_DYE))
                            .save(recipeOutput);
     }
 
@@ -852,7 +895,7 @@ public class RecipeGen extends FSRecipeProvider {
                 .define('#', Items.STICKY_PISTON)
                 .define('A', Items.SLIME_BLOCK)
                 .define('B', Items.OBSERVER)
-                .define('C', Items.DEAD_BRAIN_CORAL_FAN)
+                .define('C', FLItemTags.DEAD_CORAL_FANS)
                 .pattern(" A#")
                 .pattern(" AB")
                 .pattern("CA ")

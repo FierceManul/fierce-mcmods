@@ -1,6 +1,7 @@
 package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
+import net.fiercemanul.fiercelive.data.BlockMaterials;
 import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterial;
 import net.fiercemanul.fiercelive.data.registries.BlockMaterialTag;
@@ -126,6 +127,15 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(IRON_CORRIDOR_STAIRS, gen -> ironCorridorStairs());
         ROWS.put(IRON_LADDER, gen -> ironLadder(IRON_LADDER));
         ROWS.put(IRON_SCAFFOLDING, gen -> {});
+        ROWS.put(QUARTZ_SQUAT_TOILET,g -> g.squat_toilet(QUARTZ_SQUAT_TOILET));
+        ROWS.put(IRON_SQUAT_TOILET,g -> g.squat_toilet(IRON_SQUAT_TOILET));
+        ROWS.put(QUARTZ_TOILET,g -> g.toilet(QUARTZ_TOILET, getSimpleCubeMaterialResource(BlockMaterials.QUARTZ_BLOCK)));
+        ROWS.put(IRON_TOILET,g -> g.toilet(IRON_TOILET, blockTexture(Blocks.IRON_BLOCK)));
+        ROWS.put(SINK, g -> g.horizontalDirectionBlock(SINK, false));
+        ROWS.put(MANGROVE_SINK, g -> g.horizontalDirectionBlock(MANGROVE_SINK, false));
+        ROWS.put(MIRROR, g -> mirror(MIRROR));
+        ROWS.put(CABINET_MIRROR, g -> mirror(CABINET_MIRROR, "mirror_cabinet"));
+        ROWS.put(SHOWER_SET, g -> g.horizontalDirectionBlock(SHOWER_SET, false));
 
         ROWS.put(RAINBOW_GLASS, gen -> gen.simpleWithModel(RAINBOW_GLASS));
         ROWS.put(RAINBOW_GLASS_PANE, gen -> {
@@ -177,6 +187,7 @@ public class BlockStateGen extends FSBlockStateProvider {
         ROWS.put(FAKE_GOLD_BLOCK, gen -> gen.simpleWithMcModel(FAKE_GOLD_BLOCK, "gold_block"));
         ROWS.put(FAKE_IRON_BLOCK, gen -> gen.simpleWithMcModel(FAKE_IRON_BLOCK, "iron_block"));
         ROWS.put(FAKE_NETHERITE_BLOCK, gen -> gen.simpleWithMcModel(FAKE_NETHERITE_BLOCK, "netherite_block"));
+        ROWS.put(FAKE_REINFORCED_DEEPSLATE, gen -> gen.fakeReinforcedDeepslate(FAKE_REINFORCED_DEEPSLATE, "reinforced_deepslate"));
         ROWS.put(FAKE_BEDROCK, gen -> gen.simpleWithMcModel(FAKE_BEDROCK, "bedrock"));
         ROWS.put(TEXTURE_CHISELED_BOOKSHELF, gen -> gen.texturedCubeColumn(TEXTURE_CHISELED_BOOKSHELF, "block/chiseled_bookshelf_side", "block/chiseled_bookshelf_top"));
         ROWS.put(TEXTURE_CHISELED_BOOKSHELF_TOP, gen -> gen.texturedCube(TEXTURE_CHISELED_BOOKSHELF_TOP, "block/chiseled_bookshelf_top"));
@@ -227,6 +238,11 @@ public class BlockStateGen extends FSBlockStateProvider {
     public ResourceLocation blockTexture(DeferredBlock<? extends Block> deferredBlock) {
         ResourceLocation rl = deferredBlock.getId();
         return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), "block/" + rl.getPath());
+    }
+
+    public ResourceLocation blockTexture(DeferredBlock<? extends Block> deferredBlock, String s) {
+        ResourceLocation rl = deferredBlock.getId();
+        return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), "block/" + rl.getPath() + "_" + s);
     }
 
     public ResourceLocation getSimpleCubeMaterialResource(BlockMaterial material) {
@@ -737,6 +753,42 @@ public class BlockStateGen extends FSBlockStateProvider {
         itemModels().getBuilder(HEAVY_CHAINS.getId().getPath()).parent(modelFile);
     }
 
+    private void mirror(DeferredBlock<Block> deferredBlock) {
+        mirror(deferredBlock, deferredBlock.getId().getPath());
+    }
+
+    private void mirror(DeferredBlock<Block> deferredBlock, String modelName) {
+        ResourceLocation id = deferredBlock.getId();
+        ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + modelName));
+        var builder = getVariantBuilder(deferredBlock.get());
+        for (int i = 0; i < 8; i++) {
+            ModelFile modelN;
+            if (i == 0) modelN = model;
+            else if (i == 1) modelN = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + modelName + "_on"));
+            else modelN = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "block/" + modelName + "_" + (i - 2)));
+            builder.partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                   .with(FLBlockStateProperties.MIRROR_TYPE, i).modelForState()
+                   .modelFile(modelN).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                   .with(FLBlockStateProperties.MIRROR_TYPE, i).modelForState()
+                   .modelFile(modelN)
+                   .rotationY(180).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                   .with(FLBlockStateProperties.MIRROR_TYPE, i).modelForState()
+                   .modelFile(modelN)
+                   .rotationY(270).addModel()
+                   .partialState()
+                   .with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                   .with(FLBlockStateProperties.MIRROR_TYPE, i).modelForState()
+                   .modelFile(modelN)
+                   .rotationY(90).addModel();
+        }
+        itemModels().getBuilder(id.getPath()).parent(model);
+    }
+
     private void doubleBlock(DeferredBlock<Block> deferredBlock, ResourceLocation materialTop, ResourceLocation materialBottom) {
         String path = deferredBlock.getId().getPath();
         ModelFile modelFile = models().withExistingParent(path, modLoc("block/double_block"))
@@ -1101,6 +1153,29 @@ public class BlockStateGen extends FSBlockStateProvider {
         glassWindowStatePart(builder, Direction.EAST, 90, path);
 
         itemModels().withExistingParent(path, modLoc("block/" + path + "_single"));
+    }
+
+    public void toilet(DeferredBlock<Block> deferredBlock, ResourceLocation particleTexture) {
+        String path = deferredBlock.getId().getPath();
+        horizontalDirectionModel(
+                deferredBlock.get(), path,
+                models().withExistingParent(path, modLoc("block/toilet"))
+                        .texture("a", blockTexture(deferredBlock, "a"))
+                        .texture("b", blockTexture(deferredBlock, "b"))
+                        .texture("c", blockTexture(deferredBlock, "c"))
+                        .texture("particle", particleTexture)
+                , false
+        );
+    }
+
+    public void squat_toilet(DeferredBlock<Block> deferredBlock) {
+        String path = deferredBlock.getId().getPath();
+        horizontalDirectionModel(
+                deferredBlock.get(), path,
+                models().withExistingParent(path, modLoc("block/squat_toilet"))
+                        .texture("toilet", blockTexture(deferredBlock))
+                , false
+        );
     }
 
     private VariantBlockStateBuilder glassWindowStatePart(
@@ -2385,6 +2460,12 @@ public class BlockStateGen extends FSBlockStateProvider {
     protected void texturedPillarCube(DeferredHolder<Block, ? extends Block> deferredBlock, String all) {
         String path = deferredBlock.getId().getPath();
         ModelFile model = models().withExistingParent(path, "block/cube_all").texture("all", mcLoc(all));
+        yAxisModel(deferredBlock.get(), path, model, false);
+    }
+
+    protected void fakeReinforcedDeepslate(DeferredHolder<Block, ? extends Block> deferredBlock, String modelFile) {
+        String path = deferredBlock.getId().getPath();
+        ModelFile model = models().getExistingFile(mcLoc("block/" + modelFile));
         yAxisModel(deferredBlock.get(), path, model, false);
     }
 

@@ -12,6 +12,7 @@ public class FLBlockStateProperties {
     public static final DirectionProperty ATTACH = DirectionProperty.create("attach", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     public static final DirectionProperty HORIZONTAL_ATTACH = DirectionProperty.create("attach", Direction.Plane.HORIZONTAL);
     public static final IntegerProperty HALF_LAYERS = IntegerProperty.create("layers", 0, 4);
+    public static final IntegerProperty MIRROR_TYPE = IntegerProperty.create("type", 0, 7);
     public static final BooleanProperty DOUBLE = BooleanProperty.create("double");
     public static final BooleanProperty PART_A = BooleanProperty.create("part_a");
     public static final BooleanProperty PART_B = BooleanProperty.create("part_b");

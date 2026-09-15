@@ -96,7 +96,9 @@ public class IronLadderBlock extends HorizonFacingWaterloggedBlock {
             if (state.getValue(FRAMED)) {
                 if (level.setBlock(pos, state.setValue(FRAMED, false), Block.UPDATE_ALL_IMMEDIATE)) player.addItem(frameBlock.asItem().getDefaultInstance());
             }
-            else return WrenchUtils.interact(stack, state, level, pos, player);
+            else return WrenchUtils.dismantle(stack, state, level, pos, player)
+                        ? ItemInteractionResult.sidedSuccess(level.isClientSide)
+                        : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

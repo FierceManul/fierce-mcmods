@@ -55,6 +55,7 @@ public class BlockLootGen extends BlockLootSubProvider {
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> generator) {
         ROWS.put(FLBlocks.FOX_CARROTS, b -> {});
+        ROWS.put(FLBlocks.IRON_CORRIDOR_SLAB, b -> oneCutBlock(FLBlocks.IRON_CORRIDOR_SLAB));
         ROWS.put(FLBlocks.IRON_LADDER, b -> ironLadder(FLBlocks.IRON_LADDER));
         ROWS.put(FLBlocks.GLOW_PEARL_ARROW, b -> dropOther(FLBlocks.GLOW_PEARL_ARROW.get(), FLItems.GLOW_PEARL_ARROW));
 

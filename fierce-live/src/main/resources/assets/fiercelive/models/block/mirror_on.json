@@ -1,0 +1,40 @@
+{
+	"parent": "fiercecraft:block/model",
+	"textures": {
+		"particle": "fiercelive:block/mirror",
+		"mirror": "fiercelive:block/mirror",
+		"wood": "fiercelive:block/smooth_mangrove_planks"
+	},
+	"elements": [
+		{
+			"from": [0, 4, 15],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 12], "texture": "#mirror"},
+				"east": {"uv": [0, 0, 1, 12], "texture": "#wood", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 12], "texture": "#wood", "cullface": "south"},
+				"west": {"uv": [15, 0, 16, 12], "texture": "#wood", "cullface": "west"},
+				"up": {"uv": [0, 15, 16, 16], "texture": "#wood", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 1], "texture": "#wood"}
+			}
+		},
+		{
+			"from": [2, 15, 14],
+			"to": [14, 16, 15],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 1], "texture": "#wood"},
+				"east": {"uv": [1, 0, 2, 1], "texture": "#wood"},
+				"west": {"uv": [14, 0, 15, 1], "texture": "#wood"},
+				"up": {"uv": [2, 14, 14, 15], "texture": "#wood", "cullface": "up"}
+			}
+		},
+		{
+			"from": [2, 15, 14],
+			"to": [14, 15, 15],
+			"shade": false,
+			"faces": {
+				"down": {"uv": [2, 13, 14, 14], "texture": "#mirror"}
+			}
+		}
+	]
+}

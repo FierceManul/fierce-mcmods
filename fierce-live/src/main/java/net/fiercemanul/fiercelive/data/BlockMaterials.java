@@ -97,11 +97,11 @@ public final class BlockMaterials {
 
     public static final HashSet<BlockMaterialTag> STONE_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> OBSIDIAN_TAGS = new HashSet<>();
-    public static final HashSet<BlockMaterialTag> END_STONE_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> POLISHED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CHISELED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> BRICK_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> MY_BRICK_TAGS = new HashSet<>();
+    public static final HashSet<BlockMaterialTag> END_STONE_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> END_STONE_BRICK_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> CRACKED_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> SMOOTH_TAGS = new HashSet<>();
@@ -182,15 +182,16 @@ public final class BlockMaterials {
     public static final HashSet<BlockMaterialTag> CHISELED_QUARTZ_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> SMOOTH_QUARTZ_TAGS = new HashSet<>();
     public static final HashSet<BlockMaterialTag> LOG_STONE_TAGS = new HashSet<>();
+    public static final HashSet<BlockMaterialTag> PURPUR_PILLAR_TAGS = new HashSet<>();
     public static final BlockMaterial QUARTZ_BLOCK = mcFixId(Blocks.QUARTZ_BLOCK, "_block", MapColorHolders.QUARTZ, QUARTZ_TAGS);
     public static final BlockMaterial CHISELED_QUARTZ_BLOCK = mc(Blocks.CHISELED_QUARTZ_BLOCK, MapColorHolders.QUARTZ, CHISELED_QUARTZ_TAGS);
     public static final BlockMaterial QUARTZ_PILLAR = mc(Blocks.QUARTZ_PILLAR, MapColorHolders.QUARTZ, LOG_STONE_TAGS);
     public static final BlockMaterial SMOOTH_QUARTZ = mc(Blocks.SMOOTH_QUARTZ, MapColorHolders.QUARTZ, SMOOTH_QUARTZ_TAGS);
     public static final BlockMaterial QUARTZ_BRICKS = mc(Blocks.QUARTZ_BRICKS, MapColorHolders.QUARTZ, BRICK_TAGS);
-    public static final BlockMaterial END_STONE = mc(Blocks.END_STONE, MapColorHolders.SAND, STONE_TAGS);
-    public static final BlockMaterial END_STONE_BRICKS = mc(Blocks.END_STONE_BRICKS, MapColorHolders.SAND, BRICK_TAGS);
-    public static final BlockMaterial PURPUR_BLOCK = mcFixId(Blocks.PURPUR_BLOCK, "_block", MapColorHolders.COLOR_MAGENTA, BRICK_TAGS);
-    public static final BlockMaterial PURPUR_PILLAR = mc(Blocks.PURPUR_PILLAR, MapColorHolders.COLOR_MAGENTA, LOG_STONE_TAGS);
+    public static final BlockMaterial END_STONE = mc(Blocks.END_STONE, MapColorHolders.SAND, END_STONE_TAGS);
+    public static final BlockMaterial END_STONE_BRICKS = mc(Blocks.END_STONE_BRICKS, MapColorHolders.SAND, END_STONE_BRICK_TAGS);
+    public static final BlockMaterial PURPUR_BLOCK = mcFixId(Blocks.PURPUR_BLOCK, "_block", MapColorHolders.COLOR_MAGENTA, END_STONE_BRICK_TAGS);
+    public static final BlockMaterial PURPUR_PILLAR = mc(Blocks.PURPUR_PILLAR, MapColorHolders.COLOR_MAGENTA, PURPUR_PILLAR_TAGS);
     public static final HashSet<BlockMaterialTag> COLOR_STONE_TAGS = new HashSet<>();
     public static final BlockMaterial TERRACOTTA = mc(Blocks.TERRACOTTA, MapColorHolders.COLOR_ORANGE, STONE_TAGS);
     public static final BlockMaterial WHITE_TERRACOTTA = mc(Blocks.WHITE_TERRACOTTA, MapColorHolders.TERRACOTTA_WHITE, COLOR_STONE_TAGS);
@@ -485,6 +486,9 @@ public final class BlockMaterials {
 
         LOG_STONE_TAGS.addAll(PILLAR_TAGS);
         tagReplace(LOG_STONE_TAGS, BlockMaterialTag.MODEL_PILLAR, BlockMaterialTag.MODEL_LOG);
+
+        PURPUR_PILLAR_TAGS.addAll(LOG_STONE_TAGS);
+        PURPUR_PILLAR_TAGS.add(BlockMaterialTag.TAG_DRAGON_IMMUNE);
 
         COLOR_STONE_TAGS.addAll(STONE_TAGS);
         COLOR_STONE_TAGS.add(BlockMaterialTag.TEXTURE_COLORED);

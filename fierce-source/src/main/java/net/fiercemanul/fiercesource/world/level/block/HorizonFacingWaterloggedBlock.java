@@ -23,7 +23,7 @@ public class HorizonFacingWaterloggedBlock extends HorizonFacingBlock implements
 
     public HorizonFacingWaterloggedBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+        this.registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
