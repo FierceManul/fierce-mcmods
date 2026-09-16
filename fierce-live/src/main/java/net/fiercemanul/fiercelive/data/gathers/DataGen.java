@@ -2,6 +2,8 @@ package net.fiercemanul.fiercelive.data.gathers;
 
 import net.fiercemanul.fiercelive.FierceLive;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
@@ -9,11 +11,13 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = FierceLive.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -39,10 +43,10 @@ public class DataGen {
                 lookupProvider
         ));
         generator.addProvider(includeServer, new RecipeGen(packOutput, lookupProvider));
-        BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, event.getLookupProvider(), existingFileHelper);
+        BlockTagsGen blockTagsGen = new BlockTagsGen(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(includeServer, blockTagsGen);
         generator.addProvider(includeServer, new ItemTagsGen(packOutput, lookupProvider, blockTagsGen.contentsGetter(), existingFileHelper));
-        generator.addProvider(includeServer, EnchantmentGen.getProvider(packOutput, lookupProvider));
+        generator.addProvider(includeServer, new EnchantmentTagsGen(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(includeServer, new DataMapGen(packOutput, lookupProvider));
         generator.addProvider(includeServer, new AdvancementProvider(
                 packOutput,
@@ -53,6 +57,13 @@ public class DataGen {
         generator.addProvider(includeClient, new BlockStateGen(packOutput, existingFileHelper));
         generator.addProvider(includeClient, new LangGanENUS(packOutput));
         generator.addProvider(includeClient, new LangGanZHCN(existingFileHelper, packOutput));
+
+        generator.addProvider(includeServer, new DatapackBuiltinEntriesProvider(
+                packOutput,
+                lookupProvider,
+                new RegistrySetBuilder().add(Registries.ENCHANTMENT, EnchantmentGen::bootstrap),
+                Set.of(FierceLive.MODID)
+        ));
 
     }
 }
