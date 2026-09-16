@@ -1,10 +1,13 @@
 package net.fiercemanul.fiercelive.world.level.block;
 
 import com.mojang.serialization.MapCodec;
+import net.fiercemanul.fiercelive.data.FLItems;
 import net.fiercemanul.fiercesource.util.VoxelShapeHelper;
 import net.fiercemanul.fiercesource.world.level.block.FacingWaterloggedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -85,6 +89,11 @@ public class GlowPearlArrowBlock extends FacingWaterloggedBlock {
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         if (pathComputationType == PathComputationType.LAND) return state.getValue(FACING) == Direction.DOWN;
         return super.isPathfindable(state, pathComputationType);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        return FLItems.GLOW_PEARL_ARROW.toStack();
     }
 
 }
