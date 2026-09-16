@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.world.entity;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.config.Config;
+import net.fiercemanul.fiercesource.config.CommonConfig;
 import net.fiercemanul.fiercesource.data.FSDamageTypes;
 import net.fiercemanul.fiercesource.data.FSEntities;
 import net.fiercemanul.fiercesource.data.tags.FSBlockTags;
@@ -713,7 +713,7 @@ public class ThrownBlock extends Projectile implements IEntityWithComplexSpawn {
      * <p>不过绝大多数情况下都是安全的</p>
      */
     protected static boolean isSaveBlock(BlockState blockState) {
-        return !(Config.thrownBlockSaveMode || blockState.is(FSBlockTags.THROWN_BAN));
+        return !(CommonConfig.thrownBlockSaveMode || blockState.is(FSBlockTags.THROWN_BAN));
     }
 
     public static boolean isValid(ItemStack stack) {

@@ -7,7 +7,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 @EventBusSubscriber(modid = FierceSource.MODID, bus = EventBusSubscriber.Bus.MOD)
-public class Config {
+public class CommonConfig {
 
 
     private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
@@ -32,10 +32,10 @@ public class Config {
 
     @SubscribeEvent
     public static void onLoad(ModConfigEvent event) {
+        if (event.getConfig().getSpec() != COMMON_SPEC) return;
         forceManaConsume = FORCE_MANA_CONSUME.get();
         thrownBlockSaveMode = THROWN_BLOCK_SAVE_MODE.get();
         forceVanillaCreativeModeTabFront = FORCE_VANILLA_CREATIVE_MODE_TAB_FRONT.get();
-
     }
 
 }

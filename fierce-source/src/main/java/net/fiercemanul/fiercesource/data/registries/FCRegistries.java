@@ -1,7 +1,7 @@
 package net.fiercemanul.fiercesource.data.registries;
 
 import net.fiercemanul.fiercesource.FierceSource;
-import net.fiercemanul.fiercesource.config.Config;
+import net.fiercemanul.fiercesource.config.CommonConfig;
 import net.fiercemanul.fiercesource.data.*;
 import net.fiercemanul.fiercesource.util.FSUtils;
 import net.fiercemanul.fiercesource.world.level.app.DataType.AppDataType;
@@ -132,7 +132,7 @@ public interface FCRegistries {
         APP_DATA_TYPES.register(modEventBus);
         MENU_APP_TYPES.register(modEventBus);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC);
     }
 
     static void registerRegistries(NewRegistryEvent event) {

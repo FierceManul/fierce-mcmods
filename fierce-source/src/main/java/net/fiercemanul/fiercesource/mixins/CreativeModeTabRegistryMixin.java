@@ -1,6 +1,6 @@
 package net.fiercemanul.fiercesource.mixins;
 
-import net.fiercemanul.fiercesource.config.Config;
+import net.fiercemanul.fiercesource.config.CommonConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.common.CreativeModeTabRegistry;
@@ -29,7 +29,7 @@ public abstract class CreativeModeTabRegistryMixin {
     @Redirect(method = "recalculateItemCreativeModeTabs", at = @At(value = "INVOKE",
             target = "Lnet/neoforged/neoforge/common/CreativeModeTabRegistry;setCreativeModeTabOrder(Ljava/util/List;)V"))
     private static void redirectSetCreativeModeTabOrder(List<CreativeModeTab> tierList) {
-        if (Config.forceVanillaCreativeModeTabFront) {
+        if (CommonConfig.forceVanillaCreativeModeTabFront) {
             List<CreativeModeTab> vanillaTabs = new ArrayList<>();
             for (CreativeModeTab tab : tierList) if (getName(tab).getNamespace().equals("minecraft")) vanillaTabs.add(tab);
             for (int i = 0; i < vanillaTabs.size(); i++) {
